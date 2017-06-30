@@ -1,6 +1,2 @@
-/*
-import _windowOne from './window-one';
+export {default as SignIn} from './sign-in'
 
-export const WindowOne = _windowOne;
-
-*/
