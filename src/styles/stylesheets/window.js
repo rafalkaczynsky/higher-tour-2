@@ -1,0 +1,11 @@
+import {Platform} from 'react-native'
+
+import {colors} from '../resources'
+
+export default StyleSheet => StyleSheet.extend({
+
+  default: {
+    flex: 1
+  },
+
+})
