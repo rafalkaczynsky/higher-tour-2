@@ -34,7 +34,7 @@ export default StyleSheet => StyleSheet.extend({
     fontSize: 16,
     lineHeight: 22,
     color: colors.black,
-    backgroundColor: colors.transparent
+   // backgroundColor: colors.transparent
   },
 
   boldText: {
@@ -42,7 +42,7 @@ export default StyleSheet => StyleSheet.extend({
   },
 
   highlightText: {
-    color: colors.pink
+  //  color: colors.pink
   },
 
   halfMarginTop: {
@@ -88,7 +88,7 @@ export default StyleSheet => StyleSheet.extend({
     height: 61,
     borderStyle: 'solid',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.grey
+ //   borderBottomColor: colors.grey
   },
 
   singlePaddingBottom: {
@@ -112,7 +112,7 @@ export default StyleSheet => StyleSheet.extend({
   },
 
   whiteText: {
-    color: colors.white,
+ //   color: colors.white,
   },
 
   doublePaddingRight: {
