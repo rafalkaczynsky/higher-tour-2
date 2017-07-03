@@ -23,6 +23,4 @@ export default StyleSheet => StyleSheet.extend({
         textAlign: "center",
        // fontFamily: "Arial"  
     }
-
-
 })

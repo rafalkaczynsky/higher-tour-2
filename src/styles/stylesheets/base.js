@@ -6,7 +6,6 @@ const singleMargin = 15
 const doubleMargin = singleMargin * 2
 const halfMargin = 5
 
-
 export default StyleSheet => StyleSheet.extend({
   application: StyleSheet.extend({
     statusBarStyle: 'light-content',
@@ -117,6 +116,62 @@ export default StyleSheet => StyleSheet.extend({
 
   doublePaddingRight: {
     paddingRight: 2 * singlePadding,
-  }
+  },
+
+      colorMode: {
+        brown: {
+            backgroundColor: colors.brown
+        },
+
+        yellow: {
+            backgroundColor: colors.yellow
+        },
+
+        grey: {
+            backgroundColor: colors.grey
+        },
+
+        black: {
+            backgroundColor: colors.black
+        },
+
+        white: {
+            backgroundColor: colors.white
+        },
+        
+        facebook: {
+            backgroundColor: colors.facebook
+        },
+
+        twitter: {
+            backgroundColor: colors.twitter
+        }, 
+        google: {
+            backgroundColor: colors.google
+        },              
+    },
+
+    textColorMode: {
+        brown: {
+            color: colors.brown
+        },
+
+        yellow: {
+            color: colors.yellow
+        },
+
+        grey: {
+            color: colors.grey
+        },
+
+        black: {
+            color: colors.black
+        },
+
+        white: {
+            color: colors.white
+        },
+
+    }
 
 })

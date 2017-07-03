@@ -6,7 +6,7 @@ export default StyleSheet => StyleSheet.extend({
 
   default: {
     flex: 1,
-    backgroundColor: colors.backgroundWindow,
+    backgroundColor: colors.grey,
     flexDirection: "column",
     alignItems: "center",
     paddingTop: 60,

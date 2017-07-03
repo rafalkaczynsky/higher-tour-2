@@ -2,7 +2,15 @@
   "fonts": {
     "default": "Source Sans Pro"
   },
+  
   "colors": {
-    "backgroundWindow": "#e0dfdd",
-  }
+    "grey": "#eeeeee",    // background screens,
+    "yellow": "#ffb900",  //buttons, active tabs,
+    "black": "#1C1704",   //tab bar,  text,
+    "brown": "#373322",   //  title,
+    "white": "#ffffff",
+    "facebook": "#3b5998",
+    "twitter": "#1da1f2",
+    "google": "#4285f4",
+  },
 }
