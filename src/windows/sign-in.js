@@ -3,7 +3,7 @@ import {ScrollView, View, Text} from 'react-native'
 
 import StyleSheet from '../styles'
 
-import {TextBox, Icon, Title, Button} from '../components'
+import {TextBox, Icon, Title, Button, TabMenu} from '../components'
 
 export default class SignIn extends Component {
 
@@ -98,7 +98,8 @@ export default class SignIn extends Component {
           text="Sign in with Google"
           iconName="google"
           buttonStyle={{margin: 10, width: '70%'}}
-        />          
+        />     
+        <TabMenu />     
         </View>
         </ScrollView>
       </View>
