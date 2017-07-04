@@ -5,10 +5,12 @@
   
   "colors": {
     "grey": "#eeeeee",    // background screens,
+    "grey1": "#b2b2b2",
     "yellow": "#ffb900",  //buttons, active tabs,
     "black": "#1C1704",   //tab bar,  text,
     "brown": "#373322",   //  title,
     "white": "#ffffff",
+    "white1": "#f4f4f4",
     "facebook": "#3b5998",
     "twitter": "#1da1f2",
     "google": "#4285f4",

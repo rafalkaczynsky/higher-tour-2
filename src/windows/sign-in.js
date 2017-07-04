@@ -1,15 +1,20 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text} from 'react-native'
+import {ScrollView, View, Text, TextInput} from 'react-native'
 
 import StyleSheet from '../styles'
 
-import {TextBox, Icon, Title, Button, TabMenu} from '../components'
+import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
 
 export default class SignIn extends Component {
 
   render() {
     return (
       <View style={StyleSheet.window.default}>
+        <Header 
+          text='This is header'
+          onBack
+          onNext
+        />
         <ScrollView style={{flex: 1, width: '100%'}}>
         <View style={{alignItems: "center"}}>
           <TextBox />
@@ -100,6 +105,7 @@ export default class SignIn extends Component {
           buttonStyle={{margin: 10, width: '70%'}}
         />     
         <TabMenu />     
+
         </View>
         </ScrollView>
       </View>
