@@ -5,10 +5,10 @@ import {colors} from '../resources'
 export default StyleSheet => StyleSheet.extend({
 
     container: {
-        paddingTop: 20,
+        paddingTop: Platform.OS === 'android' ? 0 : 20,
         alignItems: 'center',
         backgroundColor: colors.white1, 
-        height: 70,
+        height:  Platform.OS === 'android' ? 50 : 70,
         width: '100%', 
         borderBottomColor: colors.grey1, 
         borderBottomWidth: 0.5
@@ -16,7 +16,17 @@ export default StyleSheet => StyleSheet.extend({
 
     text: {
         fontSize: 18,
+        color: colors.brown,
     },
+
+    //simple
+    simpleHeaderContainer : {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        flex: 1, 
+        justifyContent: 'space-between' 
+    },
+
     //onBack
     onBackContainer: {
         flexDirection: 'row',

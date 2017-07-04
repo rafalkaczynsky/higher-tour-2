@@ -21,6 +21,7 @@ export default StyleSheet => StyleSheet.extend({
     text: {
         fontSize: 12,
         textAlign: "center",
+        color: colors.brown,
        // fontFamily: "Arial"  
     }
 })

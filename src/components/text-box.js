@@ -6,14 +6,13 @@ import StyleSheet from '../styles'
 export default class TextBox extends Component {
 
   render() {
+
+    const {header, paragraph, style} = this.props
+
     return (
-      <View style={StyleSheet.textBox.container}>
-        <Text style={StyleSheet.textBox.header}>Welcome To Higher App!</Text>
-        <Text style={StyleSheet.textBox.text}>
-            Before you start, let's create an account.
-            Register using one of the following options to 
-            receive exclusive freebies.
-        </Text>
+      <View style={[StyleSheet.textBox.container, style]}>
+        <Text style={StyleSheet.textBox.header}>{header}</Text>
+        <Text style={StyleSheet.textBox.text}>{paragraph}</Text>
       </View>
     )
   }

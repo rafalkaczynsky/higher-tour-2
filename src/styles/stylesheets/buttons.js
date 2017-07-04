@@ -44,7 +44,7 @@ export default StyleSheet => StyleSheet.extend({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.facebook,
-      height: 50,
+      height: 40,
       width: '100%'
     },
 
@@ -63,8 +63,8 @@ export default StyleSheet => StyleSheet.extend({
 
     iconStyle: {
       resizeMode: "contain", 
-      width: 30, 
-      height: 30
+      width: 20, 
+      height: 20
     },
 
     textContainer: {
@@ -86,7 +86,7 @@ export default StyleSheet => StyleSheet.extend({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.google,
-      height: 50,
+      height: 40,
       width: '100%'
     },
 
@@ -105,8 +105,8 @@ export default StyleSheet => StyleSheet.extend({
 
     iconStyle: {
       resizeMode: "contain", 
-      width: 30, 
-      height: 30
+      width: 20, 
+      height: 20
     },
 
     textContainer: {
@@ -128,7 +128,7 @@ export default StyleSheet => StyleSheet.extend({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.twitter,
-      height: 50,
+      height: 40,
       width: '100%'
     },
 
@@ -147,8 +147,8 @@ export default StyleSheet => StyleSheet.extend({
 
     iconStyle: {
       resizeMode: "contain", 
-      width: 30, 
-      height: 30
+      width: 20, 
+      height: 20
     },
 
     textContainer: {

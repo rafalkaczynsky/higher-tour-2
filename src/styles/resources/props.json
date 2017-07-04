@@ -6,6 +6,7 @@
   "colors": {
     "grey": "#eeeeee",    // background screens,
     "grey1": "#b2b2b2",
+    "grey2": "#e0dfdd",
     "yellow": "#ffb900",  //buttons, active tabs,
     "black": "#1C1704",   //tab bar,  text,
     "brown": "#373322",   //  title,

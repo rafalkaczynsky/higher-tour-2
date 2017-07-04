@@ -18,5 +18,6 @@ export default StyleSheet => StyleSheet.extend({
         lineHeight: 18,
         textAlign: "center",
         fontWeight: "bold",
+        color: colors.brown,
     },
 })

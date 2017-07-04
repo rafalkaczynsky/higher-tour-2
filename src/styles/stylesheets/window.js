@@ -9,6 +9,7 @@ export default StyleSheet => StyleSheet.extend({
     backgroundColor: colors.grey,
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: 'space-between'
   },
 
 })

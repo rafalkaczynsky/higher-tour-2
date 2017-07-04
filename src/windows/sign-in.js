@@ -2,112 +2,87 @@ import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
 
 import StyleSheet from '../styles'
+import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
 
 export default class SignIn extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { 
+      text: 'Useless Placeholder', 
+      namePlaceholder: 'Name',
+      emailPlaceholder: 'Email',
+    }
+  }
 
   render() {
+
     return (
       <View style={StyleSheet.window.default}>
         <Header 
-          text='This is header'
-          onBack
-          onNext
+          text='Sign in'
+          simple
         />
-        <ScrollView style={{flex: 1, width: '100%'}}>
-        <View style={{alignItems: "center"}}>
-          <TextBox />
-          <View style={{flex:1 , alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-          <Icon 
-            name="bible" 
-            style={{width: 50, height: 50, margin: 20}}
-          />
-          <Icon 
-            name="logo" 
-            style={{width: 50, height: 50, margin: 20}}
-          />
-          <Icon 
-            name="events" 
-            style={{width: 50, height: 50, margin: 20}}
-          />
-          <Icon 
-            name="settings" 
-            style={{width: 50, height: 50, margin: 20}}
-          />
-        </View>
-        <View style={{flex:1 , alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-          <Icon 
-            name="bible" 
-            active
-            style={{width: 50, height: 50, margin: 20}}
-          />
-          <Icon 
-            name="logo"
-            active
-            style={{width: 50, height: 50, margin: 20}}
+
+        <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
+
+        <TextBox 
+          header="Welcome To The Higher App!"
+          paragraph="Before you start, let's create an account. Register using one of the following options to receive exclusive freebies."
+          style={{marginTop: 30, marginBottom: 20}}
         />
-          <Icon 
-            name="events"
-            active 
-            style={{width: 50, height: 50, margin: 20}}
+        <View>
+          <Button 
+            type="facebook"
+            text="Sign in with Facebook"
+            iconName="facebook"
+            buttonStyle={{margin: 5, width: '60%'}}
           />
-          <Icon 
-            name="settings"
-            active 
-            style={{width: 50, height: 50, margin: 20}}
+          <Button 
+            type="twitter"
+            text="Sign in with Twitter"
+            iconName="twitter"
+            buttonStyle={{margin: 5, width: '60%'}}
           />
+
+          <Button 
+            type="google"
+            text="Sign in with Google"
+            iconName="google"
+            buttonStyle={{margin: 5, width: '60%'}}
+          /> 
         </View>
 
-        <Title 
-          text="This is title component"  
-          bgColor="brown" 
-          textColor="white"
-          style={{marginBottom: 30}}  
-        />
+        <View style={{width: '60%'}}>
+          <Title 
+            text="Sign in with email"  
+            textStyle={{fontSize: 18}}
+            style={{marginTop: 20}}  
+          />
 
-        <Button 
-          type="default"
-          text="Button without icon"/>
+          <TextInput
+            style={{height: 40, borderColor: colors.grey2, backgroundColor: colors.white, borderWidth: 1, marginBottom: 10, fontSize: 12, paddingLeft: 10}}
+            onChangeText={(text) => this.setState({text})}
+            placeholder={this.state.namePlaceholder}
+          />
 
-        <Button 
-          type="default"
-          text="Button without icon"
-          bgColor="black"  
-          textColor="yellow"/> 
+          <TextInput
+            style={{height: 40, borderColor: colors.grey2, backgroundColor: colors.white, borderWidth: 1, marginBottom: 10, fontSize: 12, paddingLeft: 10}}
+            onChangeText={(text) => this.setState({text})}
+            placeholder={this.state.namePlaceholder}
+          />
 
-        <Button 
-          type="default"
-          text="Button without icon, with custom styles"
-          bgColor="brown"  
-          textColor="white"
-          buttonStyle={{margin: 10, width: '95%'}}
-        /> 
-
-        <Button 
-          type="facebook"
-          text="Sign in with Facebook"
-          iconName="facebook"
-          buttonStyle={{margin: 10, width: '70%'}}
-        />
-
-        <Button 
-          type="twitter"
-          text="Sign in with Twitter"
-          iconName="twitter"
-          buttonStyle={{margin: 10, width: '70%'}}
-        />
-
-         <Button 
-          type="google"
-          text="Sign in with Google"
-          iconName="google"
-          buttonStyle={{margin: 10, width: '70%'}}
-        />     
-        <TabMenu />     
+          <Button 
+            type="default"
+            text="Next"
+            buttonStyle={{height: 30}}
+          />
+        </View>
 
         </View>
-        </ScrollView>
+
+        <TabMenu /> 
       </View>
     )
   }

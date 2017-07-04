@@ -11,7 +11,11 @@ export default class Header extends Component {
 
     return (
         <View style={StyleSheet.header.container}>
-            {simple && <Text style={StyleSheet.header.text}>{text}</Text>}
+            {simple && (
+                <View style={StyleSheet.header.simpleHeaderContainer}>
+                    <Text style={StyleSheet.header.text}>{text}</Text>
+                </View>
+            )}
 
             {!simple && onBack && !onNext && (
                 <View style={StyleSheet.header.onBackContainer}>
