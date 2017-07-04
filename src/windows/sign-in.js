@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
 
+
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
 
@@ -65,12 +66,14 @@ export default class SignIn extends Component {
             style={{height: 40, borderColor: colors.grey2, backgroundColor: colors.white, borderWidth: 1, marginBottom: 10, fontSize: 12, paddingLeft: 10}}
             onChangeText={(text) => this.setState({text})}
             placeholder={this.state.namePlaceholder}
+            underlineColorAndroid='transparent'
           />
 
           <TextInput
             style={{height: 40, borderColor: colors.grey2, backgroundColor: colors.white, borderWidth: 1, marginBottom: 10, fontSize: 12, paddingLeft: 10}}
             onChangeText={(text) => this.setState({text})}
             placeholder={this.state.namePlaceholder}
+            underlineColorAndroid='transparent'
           />
 
           <Button 
