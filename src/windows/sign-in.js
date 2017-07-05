@@ -25,30 +25,30 @@ export default class SignIn extends Component {
           text='Sign in'
           simple
         />
-        <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
+        <View style={StyleSheet.signIn.container}> 
           <TextBox 
             header="Welcome To The Higher App!"
             paragraph="Before you start, let's create an account. Register using one of the following options to receive exclusive freebies."
-            style={{marginTop: 30, marginBottom: 20}}
+            style={StyleSheet.signIn.textBox}
           />
           <View>
             <Button 
               type="facebook"
               text="Sign in with Facebook"
               iconName="facebook"
-              buttonStyle={{margin: 5, width: '60%'}}
+              buttonStyle={StyleSheet.signIn.socialButton}
             />
             <Button 
               type="twitter"
               text="Sign in with Twitter"
               iconName="twitter"
-              buttonStyle={{margin: 5, width: '60%'}}
+              buttonStyle={StyleSheet.signIn.socialButton}
             />
             <Button 
               type="google"
               text="Sign in with Google"
               iconName="google"
-              buttonStyle={{margin: 5, width: '60%'}}
+              buttonStyle={StyleSheet.signIn.socialButton}
             /> 
           </View>
           <View style={{width: '60%'}}>
@@ -58,13 +58,13 @@ export default class SignIn extends Component {
               style={{marginTop: 20}}  
             />
             <TextInput
-              style={{height: 40, borderColor: colors.grey2, backgroundColor: colors.white, borderWidth: 1, marginBottom: 10, fontSize: 12, paddingLeft: 10}}
+              style={StyleSheet.signIn.textInput}
               onChangeText={(text) => this.setState({text})}
               placeholder={this.state.namePlaceholder}
               underlineColorAndroid='transparent'
             />
             <TextInput
-              style={{height: 40, borderColor: colors.grey2, backgroundColor: colors.white, borderWidth: 1, marginBottom: 10, fontSize: 12, paddingLeft: 10}}
+              style={StyleSheet.signIn.textInput}
               onChangeText={(text) => this.setState({text})}
               placeholder={this.state.emailPlaceholder}
               underlineColorAndroid='transparent'
