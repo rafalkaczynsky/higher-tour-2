@@ -42,18 +42,6 @@ export default class SignIn extends Component {
               <ListItem 
                 title="Ivy Sharston Youth Sessions"
                 label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
                 noBorder
               />
               <ListItem

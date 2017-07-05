@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
-
+import { StackNavigator } from 'react-navigation';
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -18,6 +18,8 @@ export default class SignIn extends Component {
   }
 
   render() {
+
+ 
 
     return (
       <View style={StyleSheet.window.default}>
@@ -80,6 +82,7 @@ export default class SignIn extends Component {
             type="default"
             text="Next"
             buttonStyle={{height: 30}}
+            onPress={this.props.onNext}
           />
         </View>
 
