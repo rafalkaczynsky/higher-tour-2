@@ -26,6 +26,29 @@ export default StyleSheet => StyleSheet.extend({
     textTransform: s => s.toUpperCase()
   }),
 
+  settings: StyleSheet.extend({
+// No Icons Modes
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.grey2,
+      height: 60,
+      width: '95%'
+    },
+
+    iconContainer: {
+      borderWidth: 1,
+      borderColor: "red"
+    },
+
+    text: {
+      fontSize: 18,
+      color: colors.brown,
+    },
+
+    textTransform: s => s.toUpperCase()
+  }),
+
   rounded: StyleSheet.extend({
 
     style: {

@@ -13,7 +13,7 @@ export default class TabMenu extends Component {
             active
             text="Home"
             iconName="logo"
-            onPress={()=> alert('Home pressed!')}
+            onPress={this.props.onHome}
            />
           <TabItem
             text="Bible"
@@ -28,7 +28,7 @@ export default class TabMenu extends Component {
           <TabItem
             text="Settings"
             iconName="settings"
-            onPress={()=> alert('Home pressed!')}
+            onPress={this.props.onSettings}
            />
         </View>
     )
