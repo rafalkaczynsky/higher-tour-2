@@ -9,11 +9,6 @@ import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../compon
 export default class Settings extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      text: 'Useless Placeholder', 
-      namePlaceholder: 'Name',
-      emailPlaceholder: 'Email',
-    }
   }
 
   render() {
@@ -33,7 +28,7 @@ export default class Settings extends Component {
                 />
                 <Button 
                     type="settings"
-                    text="Sign Out"
+                    text={this.props.buttonText.signIn}
                     onPress={this.props.onSignOut}
                 /> 
             </View>
@@ -45,7 +40,8 @@ export default class Settings extends Component {
                 />
                 <Button 
                     type="settings"
-                    text="Turn off"
+                    text={this.props.buttonText.notificationsOn}
+                    onPress={this.props.onNotifications}
                 /> 
             </View>           
             <View style={StyleSheet.settings.buttonGroup}>
@@ -56,7 +52,8 @@ export default class Settings extends Component {
                 />
                 <Button 
                     type="settings"
-                    text="Turn off"
+                    text={this.props.buttonText.locationOn}
+                    onPress={this.props.onLocation}
                 /> 
             </View>   
             <Text style={StyleSheet.settings.text}>
