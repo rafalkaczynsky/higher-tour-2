@@ -10,6 +10,7 @@ import _tabMenu from './tab-menu'
 import _textInput from './text-input'
 import _header from './header'
 import _listItem from './list-item'
+import _settings from './settings'
 
 export default {
   window: _window,
@@ -21,5 +22,6 @@ export default {
   textInput: _textInput,
   header: _header,
   listItem: _listItem,
+  settings: _settings,
   //...//
 }

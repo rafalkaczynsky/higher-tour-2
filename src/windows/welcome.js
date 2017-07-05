@@ -52,7 +52,9 @@ export default class SignIn extends Component {
             </ScrollView>
             
         </View>
-        <TabMenu /> 
+        <TabMenu 
+          onSettings={this.props.onSettings}
+        /> 
       </View>
     )
   }
