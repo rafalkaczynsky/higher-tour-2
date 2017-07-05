@@ -25,6 +25,11 @@ export default class _Settings extends Component {
     const { navigate } = this.props.navigation
     navigate('SignIn')
   }
+
+  handleHome(){
+    const { navigate } = this.props.navigation
+    navigate('Welcome')
+  }
   
   render() {
     const buttonTextArray = {
@@ -35,7 +40,7 @@ export default class _Settings extends Component {
     
     return (
         <Settings 
-          onHome={()=> navigate('Welcome')}  
+          onHome={()=> this.props.handleHome}  
           onSignOut={() => this.handleSignOut()}
           onNotifications={() => this.handleNotification()}  
           onLocation={()=> this.handleLocation()}    
