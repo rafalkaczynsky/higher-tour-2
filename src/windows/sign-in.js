@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
 import { StackNavigator } from 'react-navigation';
+import _Firebase from '../actions/firebase';
+
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'

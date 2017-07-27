@@ -13,6 +13,7 @@ export default class _Settings extends Component {
         locationOn: true,
     }
   }
+  
   handleNotification(){
     this.setState({notificationsOn: !this.state.notificationsOn})
   }

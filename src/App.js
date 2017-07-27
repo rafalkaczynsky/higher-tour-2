@@ -1,7 +1,9 @@
 import React from 'react'
+import * as FirebaseInit from './actions/firebase-init';
 import {
   StackNavigator,
 } from 'react-navigation';
+
 
 import {_SignIn, _Welcome, _Settings} from './containers'
 
