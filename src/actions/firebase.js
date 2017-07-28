@@ -18,6 +18,7 @@ class _Firebase {
         }
 
     }
+    
 
     async login(email, pass) {
     

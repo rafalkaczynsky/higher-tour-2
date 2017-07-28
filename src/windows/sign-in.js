@@ -1,25 +1,16 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
-import { StackNavigator } from 'react-navigation';
-import _Firebase from '../actions/firebase';
-
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
-
 import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
 
 export default class SignIn extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { 
-      text: 'Useless Placeholder', 
-      namePlaceholder: 'Name',
-      emailPlaceholder: 'Email',
-    }
-  }
+
 
   render() {
+
+    const {handleEmail, handlePassword, email, password, onNext, onSettings} = this.props
 
     return (
       <View style={StyleSheet.window.default}>
@@ -61,26 +52,26 @@ export default class SignIn extends Component {
             />
             <TextInput
               style={StyleSheet.signIn.textInput}
-              onChangeText={(text) => this.setState({text})}
-              placeholder={this.state.namePlaceholder}
+              onChangeText={(text) => handleEmail(text)}
+              placeholder='Email'
               underlineColorAndroid='transparent'
             />
             <TextInput
               style={StyleSheet.signIn.textInput}
-              onChangeText={(text) => this.setState({text})}
-              placeholder={this.state.emailPlaceholder}
+              onChangeText={(text) => handlePassword(text)}
+              placeholder='Password'
               underlineColorAndroid='transparent'
             />
             <Button 
               type="default"
               text="Next"
               buttonStyle={{height: 30}}
-              onPress={this.props.onNext}
+              onPress={onNext}
             />
           </View>
         </View>
         <TabMenu 
-          onSettings={this.props.onSettings}
+          onSettings={onSettings}
         /> 
       </View>
     )
