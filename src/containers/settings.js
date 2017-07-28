@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import {Button, View} from 'react-native'
 
+import _Firebase from '../actions/firebase';
+
+
 import {Settings} from '../windows'
 
 export default class _Settings extends Component {
@@ -22,9 +25,8 @@ export default class _Settings extends Component {
     this.setState({locationOn: !this.state.locationOn})
   }
 
-  handleSignOut(){
-    const { navigate } = this.props.navigation
-    navigate('SignIn')
+  handleLogOut(navigate, route){
+     _Firebase.logout(navigate, route);
   }
 
   handleHome(){
@@ -38,11 +40,13 @@ export default class _Settings extends Component {
       notificationsOn: this.state.notificationsOn ? 'Turn Off' : 'Turn On', 
       locationOn: this.state.locationOn ? 'Turn Off' : 'Turn On'
     }
+
+     const { navigate } = this.props.navigation
     
     return (
         <Settings 
           onHome={()=> this.props.handleHome}  
-          onSignOut={() => this.handleSignOut()}
+          onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
           onNotifications={() => this.handleNotification()}  
           onLocation={()=> this.handleLocation()}    
           buttonText={buttonTextArray}

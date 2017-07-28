@@ -1,9 +1,12 @@
 
 import * as firebase from "firebase";
+import { NavigationActions } from 'react-navigation'
+
+
 
 class _Firebase {
 
-    async signup(email, pass) {
+    async signup(email, pass, navigate, route) {
 
         try {
             await firebase.auth()
@@ -12,6 +15,7 @@ class _Firebase {
             console.log("Account created");
 
             // Navigate to the Home page, the user is auto logged in
+            navigate(route)
 
         } catch (error) {
             console.log(error.toString())
@@ -36,14 +40,14 @@ class _Firebase {
 
     }
 
-    async logout() {
+    async logout(navigate, route) {
 
         try {
 
             await firebase.auth().signOut();
-
+             console.log("Logged Out!");
             // Navigate to login view
-
+            navigate(route)
         } catch (error) {
             console.log(error);
         }

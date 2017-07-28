@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Button, View} from 'react-native'
-import { StackNavigator } from 'react-navigation';
 
 import _Firebase from '../actions/firebase';
 import {SignIn} from '../windows'
@@ -22,14 +21,12 @@ export default class _SignIn extends Component {
     this.setState({password: password})
   }
 
-  handleOnNext(email, password){
-    _Firebase.signup(email, password);
-    
-
+  handleOnNext(email, password, navigate, route){
+    _Firebase.signup(email, password, navigate, route);
   }
 
-  handleOnSettings(){
-    
+  handleOnSettings(navigate, route){
+    navigate(route)
   }
 
 
@@ -40,12 +37,12 @@ export default class _SignIn extends Component {
     return (
         <SignIn 
           onNext={()=> {
-            this.handleOnNext(this.state.email, this.state.password)
-            navigate('Welcome')}
+            this.handleOnNext(this.state.email, this.state.password, navigate, 'Welcome')}
+            
           }      
           onSettings={()=> {
-            this.handleOnSettings
-            navigate('Settings')}
+            this.handleOnSettings(navigate, 'Settings')
+            }
           }  
           email={this.state.email}
           password={this.state.password}
