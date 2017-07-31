@@ -33,7 +33,6 @@ class _Firebase {
             console.log("Logged In!");
 
             // Navigate to the Home page
-
         } catch (error) {
             console.log(error.toString())
         }
