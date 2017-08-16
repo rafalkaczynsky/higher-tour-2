@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableHighlight} from 'react-native'
+import {View, Text, TouchableHighlight, Linking} from 'react-native'
 
 import StyleSheet from '../styles'
 import {TabItem, Icon} from './'
@@ -23,7 +23,7 @@ export default class TabMenu extends Component {
           <TabItem
             text="Events"
             iconName="events"
-            onPress={()=> alert('Home pressed!')}
+            onPress={() => Linking.openURL('https://message.org.uk')}
            />
           <TabItem
             text="Settings"
