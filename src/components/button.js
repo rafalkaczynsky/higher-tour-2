@@ -8,9 +8,10 @@ export default class Button extends Component {
     render(){
         const {type, text, iconName, bgColor, textColor, buttonStyle, textStyle, onPress} = this.props
 
+
         return(
             <TouchableOpacity 
-                style={[StyleSheet.buttons[type].container, StyleSheet.colorMode[bgColor], buttonStyle]}
+                style={[StyleSheet.buttons[type].container, StyleSheet.colorMode[bgColor], buttonStyle ]}
                 onPress={onPress}    
             >
                 {!iconName &&

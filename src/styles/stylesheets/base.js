@@ -28,6 +28,10 @@ export default StyleSheet => StyleSheet.extend({
     padding: 0,
   },
 
+  image:{
+    width: '100%',
+  },
+
   text: {
     ...fontMaker(),
     fontSize: 16,
@@ -119,6 +123,12 @@ export default StyleSheet => StyleSheet.extend({
   },
 
       colorMode: {
+        transparent: {
+          backgroundColor: 'transparent',
+          borderColor: colors.brown,
+          borderWidth: 1,
+        },
+
         brown: {
             backgroundColor: colors.brown
         },
