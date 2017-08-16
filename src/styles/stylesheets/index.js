@@ -11,6 +11,7 @@ import _textInput from './text-input'
 import _header from './header'
 import _listItem from './list-item'
 import _settings from './settings'
+import _signIn from './sign-in'
 
 export default {
   window: _window,
@@ -23,5 +24,6 @@ export default {
   header: _header,
   listItem: _listItem,
   settings: _settings,
+  signIn: _signIn,
   //...//
 }

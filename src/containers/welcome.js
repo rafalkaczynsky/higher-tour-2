@@ -9,6 +9,8 @@ export default class _Welcome extends Component {
     return (
         <Welcome 
           onSettings={()=> navigate('Settings')}
+          onBible={()=> navigate('FindSession')}
+          
         />
     )
   }

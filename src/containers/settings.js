@@ -1,17 +1,59 @@
 import React, {Component} from 'react'
 import {Button, View} from 'react-native'
 
+import _Firebase from '../actions/firebase';
+
+
 import {Settings} from '../windows'
 
 export default class _Settings extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+        signIn: true,
+        notificationsOn: true,
+        locationOn: true,
+    }
+  }
+  
+  handleNotification(){
+    this.setState({notificationsOn: !this.state.notificationsOn})
+  }
+
+  handleLocation(){
+    this.setState({locationOn: !this.state.locationOn})
+  }
+
+  handleLogOut(navigate, route){
+     _Firebase.logout(navigate, route);
+  }
+
+  handleHome(){
+    const { navigate } = this.props.navigation
+    navigate('Welcome')
+  }
   
   render() {
-    const { navigate } = this.props.navigation;
+    const buttonTextArray = {
+      signIn: this.state.signIn ? 'Sign Out' : 'Sign In', 
+      notificationsOn: this.state.notificationsOn ? 'Turn Off' : 'Turn On', 
+      locationOn: this.state.locationOn ? 'Turn Off' : 'Turn On'
+    }
+
+     const { navigate } = this.props.navigation
+    
     return (
         <Settings 
-          onHome={()=> navigate('Welcome')}  
-          onSignOut={() => navigate('SignIn')}    
+          onHome={()=> this.props.handleHome}  
+          onBible={()=> navigate('FindSession')}
+          onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
+          onNotifications={() => this.handleNotification()}  
+          onLocation={()=> this.handleLocation()}    
+          buttonText={buttonTextArray}
         />
     )
   }
 }
+
+
