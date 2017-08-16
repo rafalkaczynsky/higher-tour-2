@@ -46,6 +46,7 @@ export default class _Settings extends Component {
     return (
         <Settings 
           onHome={()=> this.props.handleHome}  
+          onBible={()=> navigate('FindSession')}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
           onNotifications={() => this.handleNotification()}  
           onLocation={()=> this.handleLocation()}    

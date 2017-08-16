@@ -50,6 +50,7 @@ export default class _SignIn extends Component {
             this.handleOnSettings(navigate, 'Settings')
             }
           }  
+          onBible={() =>  navigate('FindSession')}
           email={this.state.email}
           password={this.state.password}
           handleEmail={(email) => this.handleEmail(email)}

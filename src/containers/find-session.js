@@ -1,20 +1,18 @@
 import React, {Component} from 'react'
-import {Welcome} from '../windows'
+import {FindSession} from '../windows'
 
-export default class _Welcome extends Component {
+export default class _FindSession extends Component {
 
   render() {
     const { navigate } = this.props.navigation
 
     return (
-        <Welcome 
+        <FindSession 
           onSettings={()=> navigate('Settings')}
           onBible={()=> navigate('FindSession')}
-          
         />
     )
   }
 }
-
 
 

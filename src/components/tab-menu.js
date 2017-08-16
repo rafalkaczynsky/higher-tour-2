@@ -18,7 +18,7 @@ export default class TabMenu extends Component {
           <TabItem
             text="Bible"
             iconName="bible"
-            onPress={()=> alert('Home pressed!')}
+            onPress={this.props.onBible}
            />
           <TabItem
             text="Events"

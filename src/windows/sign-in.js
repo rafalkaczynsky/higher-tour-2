@@ -10,7 +10,7 @@ export default class SignIn extends Component {
 
   render() {
 
-    const {handleEmail, handlePassword, email, password, onNext, onSettings} = this.props
+    const {handleEmail, handlePassword, email, password, onNext, onSettings, onBible} = this.props
 
     return (
       <View style={StyleSheet.window.default}>
@@ -72,6 +72,7 @@ export default class SignIn extends Component {
         </View>
         <TabMenu 
           onSettings={onSettings}
+          onBible={onBible}
         /> 
       </View>
     )
