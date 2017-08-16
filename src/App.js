@@ -5,14 +5,15 @@ import {
 } from 'react-navigation';
 
 
-import {_SignIn, _Welcome, _Settings, _FindSession} from './containers'
+import {_SignIn, _Welcome, _Settings, _FindSession, _SessionItem} from './containers'
 
 export default App = StackNavigator(
   {
     Welcome: { screen: _Welcome },
     SignIn: { screen: _SignIn },
     Settings : { screen: _Settings},
-    FindSession: {screen: _FindSession}
+    FindSession: {screen: _FindSession},
+    SessionItem: {screen: _SessionItem}
 //   .........................
   },
   { 

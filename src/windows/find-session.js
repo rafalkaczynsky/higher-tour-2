@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput} from 'react-native'
+import {ScrollView, View, Text, TextInput, TouchableOpacity} from 'react-native'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -38,33 +38,18 @@ export default class FindSession extends React.Component {
                 /> 
             </View>
             <ScrollView style={{width: '100%'}}>
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-                noBorder
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-                noBorder
-              />
-
+              {this.props.sessions.map((item, indx)=> 
+              <TouchableOpacity 
+                 onPress={()=>this.props.onItem(item)}
+                 key={'ListItemKey-'+indx}
+              >
+                <ListItem 
+                  title={item.name}
+                  label={item.howFar}
+                 
+                />
+              </TouchableOpacity>
+              )}
               <ListItem
                 title="See more sessions"
                 bgColor={colors.grey3}

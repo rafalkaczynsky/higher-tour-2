@@ -13,14 +13,15 @@ export default class ListItem extends Component {
 
     const border = noBorder ? null : {borderBottomColor: colors.grey2, borderBottomWidth: 0.5}
     const _borderBold = borderBold ? {borderBottomColor: colors.grey2, borderBottomWidth: 1} : null
+
     return (
-      <View style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
+      <View  style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
         <View style={[StyleSheet.listItem.wrapper, border]}>
           <View>
             <Text style={StyleSheet.listItem.title}>{title}</Text>
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity  >
             <Icon name="next" style={StyleSheet.listItem.iconStyle}/>
           </TouchableOpacity>
         </View>
