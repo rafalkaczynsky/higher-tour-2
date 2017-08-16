@@ -10,6 +10,7 @@ export default class _SignIn extends Component {
     this.state = { 
       email: '',
       password: '',
+      error: '',
     }
   }
 
@@ -17,12 +18,13 @@ export default class _SignIn extends Component {
     this.setState({email: email})
   }
 
+
   handlePassword(password){
     this.setState({password: password})
   }
 
-  handleOnNext(email, password, navigate, route){
-    _Firebase.signup(email, password, navigate, route);
+  handleOnNext(email, password, navigate, route, handleError){
+    _Firebase.signup(email, password, navigate, route, handleError);
   }
 
   handleOnSettings(navigate, route){
@@ -31,15 +33,19 @@ export default class _SignIn extends Component {
 
 
 
+
   render() {
+ 
     console.log(this.state.password)
+    console.log(this.state.error)
+
     const { navigate } = this.props.navigation
     return (
         <SignIn 
           onNext={()=> {
-            this.handleOnNext(this.state.email, this.state.password, navigate, 'Welcome')}
-            
-          }      
+            this.handleOnNext(this.state.email, this.state.password, navigate, 'Welcome')
+
+          }}
           onSettings={()=> {
             this.handleOnSettings(navigate, 'Settings')
             }
@@ -49,6 +55,7 @@ export default class _SignIn extends Component {
           handleEmail={(email) => this.handleEmail(email)}
           handlePassword={(email) => this.handlePassword(email)}
         />
+
     )
   }
 }

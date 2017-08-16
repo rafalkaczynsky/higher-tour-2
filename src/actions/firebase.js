@@ -1,60 +1,69 @@
 
+import React from 'react'
 import * as firebase from "firebase";
 import { NavigationActions } from 'react-navigation'
 
 
 
 class _Firebase {
-
     async signup(email, pass, navigate, route) {
-
         try {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
+                alert("Account created");
+                // Navigate to the Home page, the user is auto logged in
+                navigate(route)
 
-            console.log("Account created");
+        } catch (error) {      
+                console.log(error)
+                switch(error.code) {
 
-            // Navigate to the Home page, the user is auto logged in
-            navigate(route)
-
-        } catch (error) {
-            console.log(error.toString())
+                    case "auth/email-already-in-use":
+                        this.login(email, pass, navigate, route); 
+                        break;
+                    case "auth/invalid-email":
+                        alert(error.code)
+                        break;
+                    case "auth/weak-password":
+                        alert(error.code);
+                        break
+                    
+                    default:
+                    break;
+                }
         }
-
     }
     
 
-    async login(email, pass) {
-    
+    async login(email, pass, navigate, route) {
         try {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
 
-            console.log("Logged In!");
-
+            alert("Logged In!");
             // Navigate to the Home page
+            navigate(route)
         } catch (error) {
-            console.log(error.toString())
+            alert(error.toString())
         }
-
     }
 
     async logout(navigate, route) {
-
         try {
-
             await firebase.auth().signOut();
-             console.log("Logged Out!");
+             alert("Logged Out!");
             // Navigate to login view
             navigate(route)
         } catch (error) {
-            console.log(error);
+            alert(error);
         }
 
     }
 
     /**
-     * Sets a users mobile number  - EXAMPLE OF SETTING DATA IN DATABASE
+     * 
+     * Sets a users mobile number - EXAMPLE OF SETTING DATA IN DATABASE
+     *
      * @param userId
      * @param mobile
      * @returns {firebase.Promise<any>|!firebase.Promise.<void>}
@@ -80,13 +89,10 @@ class _Firebase {
         let userMobilePath = "/user/" + userId + "/details";
 
         firebase.database().ref(userMobilePath).on('value', (snapshot) => {
-
             var mobile = "";
-
             if (snapshot.val()) {
                 mobile = snapshot.val().mobile
             }
-
             callback(mobile)
         });
     }
