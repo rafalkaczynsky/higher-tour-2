@@ -18,6 +18,11 @@ export default class SignIn extends Component {
 
   render() {
 
+    const {churches, onMoreSession, onChurchPressed, allSessions} = this.props
+
+    console.log(churches)
+    console.log('Welcome')
+    console.log(allSessions)
     return (
       <View style={StyleSheet.window.default}>
         <Header 
@@ -31,23 +36,20 @@ export default class SignIn extends Component {
                 style={{marginTop: 30, marginBottom: 20}}
             />
             <ScrollView style={{width: '100%'}}>
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-              />
-              <ListItem 
-                title="Ivy Sharston Youth Sessions"
-                label="0.1 miles"
-                noBorder
-              />
+              {churches.map((item, index)=>
+                <ListItem 
+                  key={'ChurchesList' + index}
+                  title={item.name}
+                  label={item.howFar}
+                  handleIconPressed={()=> onChurchPressed(item)}
+                />)}
+
               <ListItem
                 title="See more sessions"
                 bgColor={colors.grey3}
                 borderBold
+                handleIconPressed={()=> onMoreSession(allSessions)}
+                
               />
             </ScrollView>
             

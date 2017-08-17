@@ -9,10 +9,11 @@ export default class _UserProfile extends Component {
 
     return (
         <UserProfile
+          allSessions={params.allSessions}
           onSettings={()=> navigate('Settings')}
-          onBible={()=> navigate('FindSession')}
+          onBible={()=> alert('on Bible')}
           sessionItem={params.sessionItem} 
-          handleEditSession={(sessionItem)=> navigate('SessionItem', {session: sessionItem, cancelLabel: true})}
+          handleEditSession={(sessionItem, allSessions )=> navigate('SessionItem', {session: sessionItem, cancelLabel: true, allSessions: allSessions})}
         />
     )
   }
