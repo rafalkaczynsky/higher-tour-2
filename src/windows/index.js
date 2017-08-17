@@ -3,5 +3,5 @@ export {default as Welcome} from './welcome'
 export {default as Settings} from './settings'
 export {default as FindSession} from './find-session'
 export {default as SessionItem} from './session-item'
-
+export {default as UserProfile} from './user-profile'
 

@@ -10,30 +10,8 @@ export default class SessionItem extends React.Component {
 
     render(){
 
-        const {onSettings, session} = this.props
-/**
- * 
- *     const SessionsFakeObject = []
-    for (let i = 0; i< 20; i++){
-      let item = {
-        id: i,
-        name: 'Any session Name here',
-        howFar: '13.1 miles',
-        address: {
-          firstLane: 'Harper Road Sharston',
-          city: 'Manchester',
-          postCode: 'M22 4RG'
-        },
-        contact: 'Tom Perks',
-        telephone: '01619462300',
-        email: 'sharston@ivychurch.org',
-        website: 'www.ivychurch.org',
-        host: 'Ivy Sharston',
-        nextSession: ' 21 March'
-      }
-      SessionsFakeObject.push(item)
-    } 
- */
+        const {onSettings, session, onStartSession, cancelLabel, onStopSession} = this.props
+  
         return(
 
       <View style={StyleSheet.window.default}>
@@ -51,7 +29,11 @@ export default class SessionItem extends React.Component {
             <View style={{ width: '95%', margin: 10, backgroundColor: 'white'}}>
                 <Button 
                     type="default"
-                    text="Start sessions"/>
+                    text={cancelLabel ? "Stop Session" : 'Start session'}
+                    bgColor={cancelLabel ? "brown" : null}
+                    textColor={cancelLabel ? "white" : null}
+                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(session)}
+                />
 
                 <View style={{padding: 15}}>
                     <Text style={{fontWeight: 'bold'}}>
@@ -92,7 +74,11 @@ export default class SessionItem extends React.Component {
 
                 <Button 
                     type="default"
-                    text="Start sessions"/>
+                    text={cancelLabel ? "Stop Session" : 'Start session'}
+                    bgColor={cancelLabel ? "brown" : null}
+                    textColor={cancelLabel ? "white" : null}
+                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(session)}
+                />
             </View>
             
         </View>

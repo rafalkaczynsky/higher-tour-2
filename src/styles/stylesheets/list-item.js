@@ -17,7 +17,7 @@ export default StyleSheet => StyleSheet.extend({
 
     title: {
         fontSize: 18, 
-        color: colors.brown
+        color: colors.brown,
     },
 
     label: {
@@ -31,4 +31,16 @@ export default StyleSheet => StyleSheet.extend({
         resizeMode: 'contain', 
         opacity: 0.2
     },
+
+    progressBar: {
+        height: '100%',
+        backgroundColor: colors.yellow,
+    },
+
+    progressBarContainer: {
+        marginTop: 10,
+        width: '150%',
+        height: 2,
+        backgroundColor: colors.grey,
+    }
 })

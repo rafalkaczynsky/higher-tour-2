@@ -5,7 +5,7 @@ import {
 } from 'react-navigation';
 
 
-import {_SignIn, _Welcome, _Settings, _FindSession, _SessionItem} from './containers'
+import {_SignIn, _Welcome, _Settings, _FindSession, _SessionItem, _UserProfile} from './containers'
 
 export default App = StackNavigator(
   {
@@ -13,7 +13,8 @@ export default App = StackNavigator(
     SignIn: { screen: _SignIn },
     Settings : { screen: _Settings},
     FindSession: {screen: _FindSession},
-    SessionItem: {screen: _SessionItem}
+    SessionItem: {screen: _SessionItem},
+    UserProfile: {screen: _UserProfile},
 //   .........................
   },
   { 
