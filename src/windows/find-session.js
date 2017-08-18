@@ -7,7 +7,24 @@ import {colors} from '../styles/resources'
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
 export default class FindSession extends React.Component {
+
+  constructor(props){
+    super(props)
+
+    this.state ={
+ 
+      didMount: false,
+    }
+  }
+
+  componentDidMount(){
+    this.setState({didMount: true })
+  }
+
     render(){
+       console.log('FindSession Window')
+       console.log(this.props)
+       console.log(this.props.sessions)
         return(
       <View style={StyleSheet.window.default}>
         <Header 
@@ -38,9 +55,9 @@ export default class FindSession extends React.Component {
                 /> 
             </View>
             <ScrollView style={{width: '100%'}}>
-              {this.props.sessions.map((item, indx)=> 
+              {this.state.didMount && this.props.sessions.map((item, indx)=> 
               <TouchableOpacity 
-                 onPress={()=>this.props.onItem(item)}
+                 onPress={()=>this.props.onItem(item, this.props.allSessions)}
                  key={'ListItemKey-'+indx}
               >
                 <ListItem 
@@ -54,6 +71,8 @@ export default class FindSession extends React.Component {
                 title="See more sessions"
                 bgColor={colors.grey3}
                 borderBold
+                handleIconPressed={this.props.onMoreSession}
+                
               />
             </ScrollView>
             

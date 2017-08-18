@@ -12,6 +12,9 @@ export default class UserProfile extends React.Component {
         const { onSettings, sessionItem, handleEditSession } = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
+
+        console.log('User profile window')
+        console.log(this.props)
         return(
       <View style={[StyleSheet.window.default,]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
@@ -24,7 +27,7 @@ export default class UserProfile extends React.Component {
                 <ListItem 
                   title={sessionItem.host}
                   iconText='view/edit'
-                  handleIconPressed={()=>handleEditSession(sessionItem)}
+                  handleIconPressed={()=>handleEditSession(sessionItem, this.props.allSessions)}
                 /> 
                 <ListItem 
                   title="Session One: God"

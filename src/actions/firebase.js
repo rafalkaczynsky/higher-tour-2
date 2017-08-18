@@ -22,10 +22,10 @@ class _Firebase {
                         this.login(email, pass, navigate, route); 
                         break;
                     case "auth/invalid-email":
-                        alert(error.code)
+                        alert(error.message.toString())
                         break;
                     case "auth/weak-password":
-                        alert(error.code);
+                        alert(error.message.toString());
                         break
                     
                     default:
@@ -55,7 +55,7 @@ class _Firebase {
             // Navigate to login view
             navigate(route)
         } catch (error) {
-            alert(error);
+            alert(error.message.toString());
         }
 
     }
