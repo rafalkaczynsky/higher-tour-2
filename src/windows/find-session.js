@@ -23,9 +23,8 @@ export default class FindSession extends React.Component {
 
     render(){
        console.log('FindSession Window')
-       console.log(this.props)
-       console.log(this.props.sessions)
-        return(
+
+      return(
       <View style={StyleSheet.window.default}>
         <Header 
           text='Find a session'
@@ -55,14 +54,14 @@ export default class FindSession extends React.Component {
                 /> 
             </View>
             <ScrollView style={{width: '100%'}}>
-              {this.state.didMount && this.props.sessions.map((item, indx)=> 
+              {this.state.didMount && this.props.locations.map((item, indx)=> 
               <TouchableOpacity 
-                 onPress={()=>this.props.onItem(item, this.props.allSessions)}
+                 onPress={()=>this.props.onItem(item, this.props.locations)}
                  key={'ListItemKey-'+indx}
               >
                 <ListItem 
                   title={item.name}
-                  label={item.howFar}
+                  label='12.3 miles' //This bit needs to be compere with user position and then calculated
                  
                 />
               </TouchableOpacity>

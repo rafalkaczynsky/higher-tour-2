@@ -18,11 +18,10 @@ export default class SignIn extends Component {
 
   render() {
 
-    const {churches, onMoreSession, onChurchPressed, allSessions} = this.props
+    const { onMoreSession, onChurchPressed, locations} = this.props
 
-    console.log(churches)
     console.log('Welcome')
-    console.log(allSessions)
+
     return (
       <View style={StyleSheet.window.default}>
         <Header 
@@ -36,19 +35,24 @@ export default class SignIn extends Component {
                 style={{marginTop: 30, marginBottom: 20}}
             />
             <ScrollView style={{width: '100%'}}>
-              {churches.map((item, index)=>
-                <ListItem 
+              {locations.map((item, index)=>{
+                if (index <= 3) {
+                  return (
+                 <ListItem 
                   key={'ChurchesList' + index}
                   title={item.name}
-                  label={item.howFar}
+                  label='12 miles' // needs to be compare with user position
                   handleIconPressed={()=> onChurchPressed(item)}
-                />)}
+                />)
+                }
+              }
+              )}
 
               <ListItem
                 title="See more sessions"
                 bgColor={colors.grey3}
                 borderBold
-                handleIconPressed={()=> onMoreSession(allSessions)}
+                handleIconPressed={()=> onMoreSession()}
                 
               />
             </ScrollView>

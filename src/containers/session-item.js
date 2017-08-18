@@ -11,26 +11,25 @@ export default class _SessionItem extends Component {
     }
   }
 
-  handleOnStartSession(navigate, sessionItem, allSessions){
-       navigate('UserProfile', { sessionItem: sessionItem, allSessions: allSessions })
+  handleOnStartSession(navigate, locationSelected, locations){
+       navigate('UserProfile', { locationSelected: locationSelected, locations: locations })
   }
-
-
 
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
     console.log('We ar in session-Item')
-    console.log(params.allSessions)
+
+    console.log(params)
     return (
         <SessionItem 
           onSettings={()=> navigate('Settings')}
           onBible={()=> alert('onBible')}
-          allSessions = {params.allSessions}
-          session={params.session}
+
+          location={params.locationSelected}
           cancelLabel={params.cancelLabel}
-          onStopSession={()=> navigate('FindSession', {church: params.allSessions, allSessions: params.allSessions})}
-          onStartSession={(sessionItem)=> this.handleOnStartSession(navigate, sessionItem, params.allSessions)}
+          onStopSession={()=> navigate('FindSession', {locations: params.locations})}
+          onStartSession={(location)=> this.handleOnStartSession(navigate, location, params.locations)}
         />
     )
   }
