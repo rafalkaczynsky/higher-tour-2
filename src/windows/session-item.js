@@ -10,13 +10,14 @@ export default class SessionItem extends React.Component {
 
     render(){
 
-        const {onSettings, session, onStartSession, cancelLabel, onStopSession} = this.props
-  
+        const {onSettings, location, onStartSession, cancelLabel, onStopSession} = this.props
+
+
         return(
 
       <View style={StyleSheet.window.default}>
         <Header 
-          text={session.name}
+          text={location.name}
           simple
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
@@ -32,7 +33,7 @@ export default class SessionItem extends React.Component {
                     text={cancelLabel ? "Stop Session" : 'Start session'}
                     bgColor={cancelLabel ? "brown" : null}
                     textColor={cancelLabel ? "white" : null}
-                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(session)}
+                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
                 />
 
                 <View style={{padding: 15}}>
@@ -40,35 +41,35 @@ export default class SessionItem extends React.Component {
                         Location
                     </Text>
                     <Text>
-                        {session.address.firstLane}
+                        {location.address.firstLane}
                     </Text>
                     <Text>
-                        {session.address.city} {session.address.postCode}
+                        {location.address.city} {location.address.postCode}
                     </Text>
                 </View>
 
                 <View style={{padding: 15}}>
                     <Text style={{fontWeight: 'bold'}}>
-                        Contact:  <Text style={{fontWeight: 'normal'}}>{session.contact}</Text>
+                        Contact:  <Text style={{fontWeight: 'normal'}}>{location.contact}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
-                        Telephone:  <Text style={{fontWeight: 'normal'}}>{session.telephone}</Text>
+                        Telephone:  <Text style={{fontWeight: 'normal'}}>{location.telephone}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
-                        Email:  <Text style={{fontWeight: 'normal'}}>{session.email}</Text>
+                        Email:  <Text style={{fontWeight: 'normal'}}>{location.email}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
-                        Website:  <Text style={{fontWeight: 'normal'}}>{session.website}</Text>
+                        Website:  <Text style={{fontWeight: 'normal'}}>{location.website}</Text>
                     </Text>
                 </View>
 
                 <View style={{padding: 15}}>
 
                     <Text style={{fontWeight: 'bold'}}>
-                        Host:  <Text style={{fontWeight: 'normal'}}>{session.host}</Text>
+                        Host:  <Text style={{fontWeight: 'normal'}}>{location.host}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
-                        Next session:  <Text style={{fontWeight: 'normal'}}>{session.nextSession}</Text>
+                        Next session:  <Text style={{fontWeight: 'normal'}}>{location.nextSession}</Text>
                     </Text>
                 </View>
 
@@ -77,7 +78,7 @@ export default class SessionItem extends React.Component {
                     text={cancelLabel ? "Stop Session" : 'Start session'}
                     bgColor={cancelLabel ? "brown" : null}
                     textColor={cancelLabel ? "white" : null}
-                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(session)}
+                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
                 />
             </View>
             

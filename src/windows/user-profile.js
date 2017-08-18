@@ -9,12 +9,12 @@ import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '
 export default class UserProfile extends React.Component {
     render(){
 
-        const { onSettings, sessionItem, handleEditSession } = this.props
+        const { onSettings, locationSelected, locations, handleEditSession } = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
         console.log('User profile window')
-        console.log(this.props)
+
         return(
       <View style={[StyleSheet.window.default,]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
@@ -25,9 +25,9 @@ export default class UserProfile extends React.Component {
             </View>
             <View style={StyleSheet.userProfile.contentBox}>
                 <ListItem 
-                  title={sessionItem.host}
+                  title={locationSelected.host}
                   iconText='view/edit'
-                  handleIconPressed={()=>handleEditSession(sessionItem, this.props.allSessions)}
+                  handleIconPressed={()=>handleEditSession(locationSelected, locations)}
                 /> 
                 <ListItem 
                   title="Session One: God"
