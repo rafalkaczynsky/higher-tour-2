@@ -7,6 +7,7 @@ import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
+
 export default class SessionItem extends React.Component {
 
     render(){
@@ -31,7 +32,9 @@ export default class SessionItem extends React.Component {
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
-            />
+            >
+                    
+            </MapView>
             </View>
 
             <View style={{ width: '95%', margin: 10, backgroundColor: 'white'}}>
