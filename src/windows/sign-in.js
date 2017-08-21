@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
 
+
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
 import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'

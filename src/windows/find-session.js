@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput, TouchableOpacity} from 'react-native'
+import MapView from 'react-native-maps'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -31,10 +32,16 @@ export default class FindSession extends React.Component {
           simple
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
-            <View style={{width: '100%'}}>
-              <Picture 
-                name="mapsPlaceholder"
-                />
+            <View style={{width: '100%', height: '30%'}}>
+            <MapView
+              style={{width: '100%', height: '100%'}}
+              initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+              }}
+            />
             </View>
             <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Button 
