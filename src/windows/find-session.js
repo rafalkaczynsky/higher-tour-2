@@ -13,13 +13,13 @@ export default class FindSession extends React.Component {
     super(props)
 
     this.state ={
- 
+      locations: {},
       didMount: false,
     }
   }
 
   componentDidMount(){
-    this.setState({didMount: true })
+    this.setState({didMount: true, locations: this.props.locations })
   }
 
     render(){
@@ -50,6 +50,7 @@ export default class FindSession extends React.Component {
                   bgColor="brown"  
                   textColor="white"
                   buttonStyle={{margin: 10 , marginRight: 0, width:'40%', height: 30}}
+                  onPress={()=>alert('Closest')}
                 /> 
                 <Button 
                   type="default"
@@ -58,17 +59,18 @@ export default class FindSession extends React.Component {
                   transparent
                   textColor="brown"
                   buttonStyle={{margin: 10, marginLeft: 0, width: '40%', height: 30}}
+                  onPress={()=> alert('Alpha')}
                 /> 
             </View>
             <ScrollView style={{width: '100%'}}>
-              {this.state.didMount && this.props.locations.map((item, indx)=> 
+              {this.state.didMount && this.state.locations.map((item, indx)=> 
               <TouchableOpacity 
-                 onPress={()=>this.props.onItem(item, this.props.locations)}
+                 onPress={()=>this.props.onItem(item, this.state.locations)}
                  key={'ListItemKey-'+indx}
               >
                 <ListItem 
                   title={item.name}
-                  label='12.3 miles' //This bit needs to be compere with user position and then calculated
+                  label={item.howFar + ' miles'} //This bit needs to be compere with user position and then calculated
                  
                 />
               </TouchableOpacity>

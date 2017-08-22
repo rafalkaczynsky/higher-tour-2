@@ -7,14 +7,12 @@ import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
-const { width, height } = Dimensions.get('window');
 
-const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-let id = 0;
+//const LATITUDE = 37.78825;
+//const LONGITUDE = -122.4324;
+//const LATITUDE_DELTA = 0.0922;
+//const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+//let id = 0;
 
 export default class SessionItem extends React.Component {
     constructor(props) {
@@ -22,32 +20,39 @@ export default class SessionItem extends React.Component {
     
         this.state = {
           region: {
-            latitude: LATITUDE,
-            longitude: LONGITUDE,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
+            latitude: this.props.location.geoLoc.latitude,
+            longitude: this.props.location.geoLoc.longitude,
+            latitudeDelta: this.props.location.geoLoc.latitudeDelta,
+            longitudeDelta: this.props.location.geoLoc.longitudeDelta,
           },
           markers: [],
+          willMount: false,
         };
-    
-        this.onMapPress = this.onMapPress.bind(this);
       }
 
-      onMapPress(e) {
+    componentWillMount(){
         this.setState({
-          markers: [
-            ...this.state.markers,
-            {
-              coordinate: e.nativeEvent.coordinate,
-              key: `foo${id++}`,
+            region:{
+                latitude: this.props.location.geoLoc.latitude,
+                longitude: this.props.location.geoLoc.longitude,
+                latitudeDelta: this.props.location.geoLoc.latitudeDelta,
+                longitudeDelta: this.props.location.geoLoc.longitudeDelta,            
             },
-          ],
-        });
-      }
-
+            willMount: true
+        })
+    }
+    
     render(){
 
     const {onSettings, location, onStartSession, cancelLabel, onStopSession} = this.props
+
+    const coordinate = {
+        latitude: this.state.region.latitude,
+        longitude: this.state.region.longitude 
+    }
+
+    console.log('region statess')
+    console.log(this.state.region)
 
     return(
 
@@ -58,21 +63,19 @@ export default class SessionItem extends React.Component {
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={{width: '100%', height: '30%'}}>
+            {this.state.willMount && 
             <MapView
                 provider={this.props.provider}
                 style={{width: '100%', height: '100%'}}
-                initialRegion={this.state.region}
-                onPress={this.onMapPress}
+                region={this.state.region}
+
             >
-                {this.state.markers.map(marker => (
               <MapView.Marker
                 title="New Marker"
                 pinColor='red'
-                key={marker.key}
-                coordinate={marker.coordinate}
+                coordinate={coordinate}
                 />
-                ))}
-            </MapView>
+            </MapView>}
             </View>
             <View style={{ width: '95%', margin: 10, backgroundColor: 'white'}}>
                 <Button 
@@ -82,7 +85,6 @@ export default class SessionItem extends React.Component {
                     textColor={cancelLabel ? "white" : null}
                     onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
                 />
-
                 <View style={{padding: 15}}>
                     <Text style={{fontWeight: 'bold'}}>
                         Location

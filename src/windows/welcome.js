@@ -17,9 +17,15 @@ export default class SignIn extends Component {
   }
 
   render() {
-
+    console.log('WelcomeXXX')
     const { onMoreSession, onChurchPressed, locations} = this.props
 
+    function compareDistance(a, b){
+        return a.howFar - b.howFar;
+    }
+    
+    const x = locations.sort(compareDistance);
+    console.log(locations)
     console.log('Welcome')
 
     return (
@@ -41,7 +47,7 @@ export default class SignIn extends Component {
                  <ListItem 
                   key={'ChurchesList' + index}
                   title={item.name}
-                  label='12 miles' // needs to be compare with user position
+                  label={item.howFar + ' miles'}
                   handleIconPressed={()=> onChurchPressed(item)}
                 />)
                 }

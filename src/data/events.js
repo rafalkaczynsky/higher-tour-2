@@ -1,3 +1,10 @@
+import {Dimensions} from 'react-native'
+
+const { width, height } = Dimensions.get('window');
+
+const ASPECT_RATIO = width / height;
+
+
 var churches = require('./churches') 
 var events = []
 
@@ -23,6 +30,8 @@ for (i = 0; i<=9; i++){
         geoLoc: {
           longitude: churches[i].location.lng,
           latitude: churches[i].location.lat,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0922 * ASPECT_RATIO,
         },
         sessionsStartDates: {
           welcome: {
