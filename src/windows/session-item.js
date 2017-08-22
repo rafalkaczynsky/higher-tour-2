@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput} from 'react-native'
+import {ScrollView, View, Text, TextInput, Dimensions, TouchableOpacity} from 'react-native'
 import MapView from 'react-native-maps'
 
 import StyleSheet from '../styles'
@@ -7,15 +7,49 @@ import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
+const { width, height } = Dimensions.get('window');
+
+const ASPECT_RATIO = width / height;
+const LATITUDE = 37.78825;
+const LONGITUDE = -122.4324;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+let id = 0;
 
 export default class SessionItem extends React.Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          region: {
+            latitude: LATITUDE,
+            longitude: LONGITUDE,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          },
+          markers: [],
+        };
+    
+        this.onMapPress = this.onMapPress.bind(this);
+      }
+
+      onMapPress(e) {
+        this.setState({
+          markers: [
+            ...this.state.markers,
+            {
+              coordinate: e.nativeEvent.coordinate,
+              key: `foo${id++}`,
+            },
+          ],
+        });
+      }
 
     render(){
 
-        const {onSettings, location, onStartSession, cancelLabel, onStopSession} = this.props
+    const {onSettings, location, onStartSession, cancelLabel, onStopSession} = this.props
 
-
-        return(
+    return(
 
       <View style={StyleSheet.window.default}>
         <Header 
@@ -24,19 +58,22 @@ export default class SessionItem extends React.Component {
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={{width: '100%', height: '30%'}}>
-                <MapView
-                    style={{width: '100%', height: '100%'}}
-                    initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
+            <MapView
+                provider={this.props.provider}
+                style={{width: '100%', height: '100%'}}
+                initialRegion={this.state.region}
+                onPress={this.onMapPress}
             >
-                    
+                {this.state.markers.map(marker => (
+              <MapView.Marker
+                title="New Marker"
+                pinColor='red'
+                key={marker.key}
+                coordinate={marker.coordinate}
+                />
+                ))}
             </MapView>
             </View>
-
             <View style={{ width: '95%', margin: 10, backgroundColor: 'white'}}>
                 <Button 
                     type="default"
