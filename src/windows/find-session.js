@@ -27,7 +27,7 @@ export default class FindSession extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const {locations} = this.props
     const coordinatesArray = []
 
@@ -67,6 +67,7 @@ export default class FindSession extends React.Component {
                 title={item.name}
                 pinColor='red'
                 coordinate={item.geoLoc}
+                onCalloutPress={()=>this.props.onItem(item, this.state.locations)}
               />)}
              </MapView>
             </View>
