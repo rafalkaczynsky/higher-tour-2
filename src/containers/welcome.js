@@ -28,10 +28,10 @@ function success(pos) {
     console.log(distance)
     item.howFar = distance
   })
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
+// console.log('Your current position is:');
+// console.log(`Latitude : ${crd.latitude}`);
+// console.log(`Longitude: ${crd.longitude}`);
+// console.log(`More or less ${crd.accuracy} meters.`);
   function compareDistance(a, b){
     return a.howFar - b.howFar;
 }

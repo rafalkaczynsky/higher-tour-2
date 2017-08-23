@@ -4,50 +4,9 @@ import MapView from 'react-native-maps'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
+import {getRegionForCoordinates} from '../actions/tools'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
-
-const { width, height } = Dimensions.get('window');
-
-const ASPECT_RATIO = width / height;
-
-const LATITUDE = 53.4787644;
-const LONGITUDE = -2.25428;
-const LATITUDE_DELTA = 0.922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
-function getRegionForCoordinates(points) {
-  // points should be an array of { latitude: X, longitude: Y }
-  let minX, maxX, minY, maxY;
-
-  // init first point
-  ((point) => {
-    minX = point.latitude;
-    maxX = point.latitude;
-    minY = point.longitude;
-    maxY = point.longitude;
-  })(points[0]);
-
-  // calculate rect
-  points.map((point) => {
-    minX = Math.min(minX, point.latitude);
-    maxX = Math.max(maxX, point.latitude);
-    minY = Math.min(minY, point.longitude);
-    maxY = Math.max(maxY, point.longitude);
-  });
-
-  const midX = (minX + maxX) / 2;
-  const midY = (minY + maxY) / 2;
-  const deltaX = (maxX - minX);
-  const deltaY = (maxY - minY);
-
-  return {
-    latitude: midX,
-    longitude: midY,
-    latitudeDelta: deltaX,
-    longitudeDelta: deltaY
-  };
-}
 
 export default class FindSession extends React.Component {
 
@@ -56,10 +15,10 @@ export default class FindSession extends React.Component {
 
     this.state = {
       region: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE ,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
       },
       markers: [],
       willMount: false,
@@ -80,14 +39,14 @@ export default class FindSession extends React.Component {
       coordinatesArray.push(coordinate) 
     })
 
-    console.log(getRegionForCoordinates(coordinatesArray))
+    const regionCalculated = getRegionForCoordinates(coordinatesArray)
 
-    this.setState({didMount: true, locations: this.props.locations })
+    this.setState({didMount: true, locations: this.props.locations, region: regionCalculated })
   }
 
     render(){
       console.log('FindSession Window')
-      const {locations} = this.props
+      const {locations, onAlphabetical, onClosest, buttonsStyle} = this.props
 
       return(
       <View style={StyleSheet.window.default}>
@@ -109,26 +68,24 @@ export default class FindSession extends React.Component {
                 pinColor='red'
                 coordinate={item.geoLoc}
               />)}
-
              </MapView>
             </View>
             <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Button 
                   type="default"
                   text="Closest"
-                  bgColor="brown"  
-                  textColor="white"
+                  bgColor={buttonsStyle[1].bgColor}  
+                  textColor={buttonsStyle[1].textColor}
                   buttonStyle={{margin: 10 , marginRight: 0, width:'40%', height: 30}}
-                  onPress={()=>alert('Closest')}
+                  onPress={onClosest}
                 /> 
                 <Button 
                   type="default"
                   text="Alphabetical"
-                  bgColor="transparent"
-                  transparent
-                  textColor="brown"
+                  bgColor={buttonsStyle[0].bgColor}  
+                  textColor={buttonsStyle[0].textColor}
                   buttonStyle={{margin: 10, marginLeft: 0, width: '40%', height: 30}}
-                  onPress={()=> alert('Alpha')}
+                  onPress={onAlphabetical}
                 /> 
             </View>
             <ScrollView style={{width: '100%'}}>
@@ -139,7 +96,7 @@ export default class FindSession extends React.Component {
               >
                 <ListItem 
                   title={item.name}
-                  label={item.howFar + ' miles'} //This bit needs to be compere with user position and then calculated
+                  label={item.howFar + ' miles'}
                  
                 />
               </TouchableOpacity>

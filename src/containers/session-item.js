@@ -42,11 +42,8 @@ export default class _SessionItem extends Component {
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-    console.log('We ar in session-Item')
 
-    console.log(myPosition[0])
-    console.log('Session Item container!')
-    console.log(params.locationSelected)
+
     return (
         <SessionItem 
           onSettings={()=> navigate('Settings')}
