@@ -41,18 +41,25 @@ export default class SessionItem extends React.Component {
             willMount: true
         })
     }
+
+    onRegionChange(region) {
+        this.setState({ region: region});
+    }
+      onRegionChangeComplete(region) {
+        this.setState({region: region });
+    }
     
     render(){
 
     const {onSettings, location, onStartSession, cancelLabel, onStopSession} = this.props
 
     const coordinate = {
-        latitude: this.state.region.latitude,
-        longitude: this.state.region.longitude 
+        latitude: location.geoLoc.latitude,
+        longitude: location.geoLoc.longitude 
     }
 
     console.log('region statess')
-    console.log(this.state.region)
+    console.log(location)
 
     return(
 
@@ -68,7 +75,11 @@ export default class SessionItem extends React.Component {
                 provider={this.props.provider}
                 style={{width: '100%', height: '100%'}}
                 region={this.state.region}
-
+                zoomEnabled={true}
+                scrollEnabled={true}
+                showsScale={true}
+                onRegionChange={this.onRegionChange.bind(this)}
+                onRegionChangeComplete={this.onRegionChangeComplete.bind(this)}
             >
               <MapView.Marker
                 title="New Marker"

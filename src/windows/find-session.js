@@ -13,21 +13,6 @@ export default class FindSession extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      region: {
-        latitude: 0,
-        longitude: 0,
-        latitudeDelta: 0,
-        longitudeDelta: 0,
-      },
-      markers: [],
-      willMount: false,
-      didMount: false,
-      locations: {},
-    };
-  }
-
-  componentWillMount(){
     const {locations} = this.props
     const coordinatesArray = []
 
@@ -40,14 +25,34 @@ export default class FindSession extends React.Component {
     })
 
     const regionCalculated = getRegionForCoordinates(coordinatesArray)
+    
+    this.state = {
+      region: regionCalculated,
+      markers: [],
+      willMount: false,
+      didMount: false,
+      locations: {},
+    };
+  }
 
-    this.setState({didMount: true, locations: this.props.locations, region: regionCalculated })
+
+
+  onRegionChange(region) {
+    this.setState({ region: region});
+  }
+  onRegionChangeComplete(region) {
+    this.setState({region: region });
+  }
+  
+  componentDidMount(){
+    this.setState({didMount: true, locations: this.props.locations})
   }
 
     render(){
       console.log('FindSession Window')
       const {locations, onAlphabetical, onClosest, buttonsStyle} = this.props
 
+      console.log(this.state)
       return(
       <View style={StyleSheet.window.default}>
         <Header 
@@ -60,6 +65,11 @@ export default class FindSession extends React.Component {
               provider={this.props.provider}
               style={{width: '100%', height: '100%'}}
               region={this.state.region}
+              zoomEnabled={true}
+              scrollEnabled={true}
+              showsScale={true}
+              onRegionChange={this.onRegionChange.bind(this)}
+              onRegionChangeComplete={this.onRegionChangeComplete.bind(this)}
             >
             {locations.map((item, indx)=> 
               <MapView.Marker
