@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
+import {
+  LoginManager,
+} from 'react-native-fbsdk'
 
 
 import StyleSheet from '../styles'
@@ -8,8 +11,26 @@ import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
 
 export default class SignIn extends Component {
 
+  fbAuth(){
+    // Attempt a login using the Facebook login dialog asking for default permissions.
+LoginManager.logInWithReadPermissions(['public_profile']).then(
+  function(result) {
+    if (result.isCancelled) {
+      alert('Login cancelled');
+    } else {
+      alert('Login success with permissions: '
+        +result.grantedPermissions.toString());
+    }
+  },
+  function(error) {
+    alert('Login fail with error: ' + error);
+  }
+);
+  }
 
   render() {
+
+
 
     const {handleEmail, handlePassword, email, password, onNext, onSettings, onBible} = this.props
 
@@ -30,6 +51,7 @@ export default class SignIn extends Component {
               type="facebook"
               text="Sign in with Facebook"
               iconName="facebook"
+              onPress={this.fbAuth}
               buttonStyle={StyleSheet.signIn.socialButton}
             />
             <Button 
