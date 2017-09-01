@@ -3,12 +3,16 @@ package com.higherapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+
+import ga.piroro.rnt.RNTPackage;
+import com.goldenowl.twittersignin.TwitterSigninPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -24,7 +28,6 @@ public class MainApplication extends Application implements ReactApplication {
   protected static CallbackManager getCallbackManager() {
     return mCallbackManager;
   }
-
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -35,6 +38,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new TwitterSigninPackage(),
+            new RNTPackage(),
+            new TwitterSigninPackage(),
             new MapsPackage(),
             new FBSDKPackage(mCallbackManager)
       );
@@ -53,5 +59,4 @@ public void onCreate() {
   // If you want to use AppEventsLogger to log events.
   AppEventsLogger.activateApp(this);
 }
-
 }

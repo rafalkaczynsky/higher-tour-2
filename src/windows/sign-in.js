@@ -1,12 +1,6 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
-import { LoginManager, AccessToken} from 'react-native-fbsdk';
-import * as firebase from "firebase";
-
-
-const auth = firebase.auth();
-const provider = firebase.auth.FacebookAuthProvider;
-
+import twitter, {auth} from 'react-native-twitter';
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -14,25 +8,7 @@ import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
 
 export default class SignIn extends Component {
 
-  fbAuth(){
-    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
-    .then(loginResult => {
-        if (loginResult.isCancelled) {
-            console.log('user canceled');
-            return;
-        }
-        AccessToken.getCurrentAccessToken()
-        .then(accessTokenData => {
-            const credential = provider.credential(accessTokenData.accessToken);
-            return auth.signInWithCredential(credential);
-        })
-        .then(credData => {
-            console.log(credData);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    });
+
 
     // Attempt a login using the Facebook login dialog asking for default permissions.
 // LoginManager.logInWithReadPermissions(['public_profile']).then(
@@ -48,13 +24,12 @@ export default class SignIn extends Component {
 //     alert('Login fail with error: ' + error);
 //   }
 // );
-  }
+
+
 
   render() {
 
-
-
-    const {handleEmail, handlePassword, email, password, onNext, onSettings, onBible} = this.props
+    const {handleEmail, handlePassword, email, password, onNext, onSettings, onBible, onTwitter, onFacebook} = this.props
 
     return (
       <View style={StyleSheet.window.default}>
@@ -73,19 +48,14 @@ export default class SignIn extends Component {
               type="facebook"
               text="Sign in with Facebook"
               iconName="facebook"
-              onPress={this.fbAuth}
+              onPress={onFacebook}
               buttonStyle={StyleSheet.signIn.socialButton}
             />
             <Button
               type="twitter"
               text="Sign in with Twitter"
               iconName="twitter"
-              buttonStyle={StyleSheet.signIn.socialButton}
-            />
-            <Button
-              type="google"
-              text="Sign in with Google"
-              iconName="google"
+              onPress={onTwitter}
               buttonStyle={StyleSheet.signIn.socialButton}
             />
           </View>

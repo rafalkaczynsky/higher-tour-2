@@ -58,8 +58,11 @@ export default class _Welcome extends Component {
 
     const { navigate } = this.props.navigation
 
-
-
+    const { params } = this.props.navigation.state
+    console.log('Welcome screen recieved userData')
+    if (params.userData){
+      console.log(params.userData)
+    }
     return (
         <Welcome 
           onSettings={()=> navigate('Settings')}

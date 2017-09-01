@@ -2,10 +2,89 @@
 import React from 'react'
 import * as firebase from "firebase";
 import { NavigationActions } from 'react-navigation'
+import {NativeModules} from 'react-native'
+import { LoginManager, AccessToken} from 'react-native-fbsdk';
 
+
+//startWithConsumerKey:@"uOiSkazdnmcQYpeI0r144286A" consumerSecret:@"KpJ2CkeYQcbl7vDAyKWCFxvg6J95RURl7FLsYmM8PqZceTIChC"
+
+
+const auth = firebase.auth();
+const provider = firebase.auth.FacebookAuthProvider;
+
+const providerTwitter =firebase.auth.TwitterAuthProvider;
+
+var Constants = {
+    //Dev Parse keys
+    TWITTER_COMSUMER_KEY: 'uOiSkazdnmcQYpeI0r144286A',
+    TWITTER_CONSUMER_SECRET: 'KpJ2CkeYQcbl7vDAyKWCFxvg6J95RURl7FLsYmM8PqZceTIChC',
+  };
 
 
 class _Firebase {
+
+      // ================ TWITTER STAFF ================
+      _twitterSignIn(navigate, route) {
+        const   RNTwitterSignIn =  NativeModules.RNTwitterSignIn;
+        console.log('twitter')
+        console.log(RNTwitterSignIn)
+        RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
+             RNTwitterSignIn.logIn()
+               .then((loginData)=>{
+                 console.log(loginData);
+                 const { authToken, authTokenSecret } = loginData;
+                 if (authToken && authTokenSecret) {
+                   // we are loged successfull
+                   console.log(authToken)
+                       const credential = providerTwitter.credential(authToken, authTokenSecret);
+                       return auth.signInWithCredential(credential);
+                 }
+               }).then(credData => {
+                // we are loged successfull
+                console.log('twitter data')
+                console.log(credData);
+                navigate(route, {userData: credData})
+            }).catch((error)=>{
+                 console.log(error);
+               });
+         }
+       
+         handleLogout() {
+           console.log('logout');
+           RNTwitterSignIn.logOut();
+           this.setState({
+             isLoggedIn: false,
+           });
+         }
+
+     // =============== FACEBOOK STAFF ==========
+
+
+  fbAuth(navigate, route){
+    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+    .then(loginResult => {
+        if (loginResult.isCancelled) {
+            console.log('user canceled');
+            return;
+        }
+        AccessToken.getCurrentAccessToken()
+        .then(accessTokenData => {
+            const credential = provider.credential(accessTokenData.accessToken);
+            return auth.signInWithCredential(credential);
+        })
+        .then(credData => {
+            // we are logged in successfull
+            console.log('facebook data')
+            console.log(credData);
+            navigate(route, {userData: credData})
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    });
+    }
+
+    //==============  FIREBASE ================
     async signup(email, pass, navigate, route) {
         try {
             await firebase.auth()

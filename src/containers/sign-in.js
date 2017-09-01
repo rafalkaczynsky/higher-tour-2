@@ -31,7 +31,13 @@ export default class _SignIn extends Component {
     navigate(route)
   }
 
+  onFacebook(navigate, route){
+    _Firebase.fbAuth(navigate, route)
+  }
 
+  onTwitter(navigate, route){
+    _Firebase._twitterSignIn(navigate, route)
+  }
 
 
   render() {
@@ -50,6 +56,8 @@ export default class _SignIn extends Component {
             this.handleOnSettings(navigate, 'Settings')
             }
           }  
+          onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
+          onFacebook={()=> this.onFacebook(navigate, 'Welcome')}
           onBible={() =>  navigate('FindSession')}
           email={this.state.email}
           password={this.state.password}

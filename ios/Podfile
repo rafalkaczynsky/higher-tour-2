@@ -3,11 +3,12 @@
 
 target 'HigherApp' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
+  use_frameworks!
 
-  # Pods for HigherApp
-  pod 'Firebase/Core'
-  pod 'GoogleMaps', '2.1.1'
+    # Pods for HigherApp
+    pod 'Firebase/Core'
+    pod 'GoogleMaps', '2.1.1'
+    pod 'TwitterKit'
 
 end
 
