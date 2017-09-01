@@ -27,8 +27,8 @@ export default class _SignIn extends Component {
     _Firebase.signup(email, password, navigate, route, handleError);
   }
 
-  handleOnSettings(navigate, route){
-    navigate(route)
+  handleOnSettings(navigate, route, userData){
+    navigate(route, {userData: userData})
   }
 
   onFacebook(navigate, route){
@@ -53,7 +53,7 @@ export default class _SignIn extends Component {
 
           }}
           onSettings={()=> {
-            this.handleOnSettings(navigate, 'Settings')
+            this.handleOnSettings(navigate, 'Settings', '')
             }
           }  
           onTwitter={()=> this.onTwitter(navigate, 'Welcome')}

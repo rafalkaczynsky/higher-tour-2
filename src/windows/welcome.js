@@ -18,7 +18,7 @@ export default class SignIn extends Component {
 
   render() {
     console.log('WelcomeXXX')
-    const { onMoreSession, onChurchPressed, locations} = this.props
+    const { onMoreSession, onChurchPressed, locations, userData} = this.props
 
     function compareDistance(a, b){
         return a.howFar - b.howFar;
@@ -26,7 +26,8 @@ export default class SignIn extends Component {
     
     const x = locations.sort(compareDistance);
     console.log(locations)
-    console.log('Welcome')
+    console.log('Welcome Window')
+    console.log(userData)
 
     return (
       <View style={StyleSheet.window.default}>

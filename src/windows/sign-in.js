@@ -8,25 +8,6 @@ import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
 
 export default class SignIn extends Component {
 
-
-
-    // Attempt a login using the Facebook login dialog asking for default permissions.
-// LoginManager.logInWithReadPermissions(['public_profile']).then(
-//   function(result) {
-//     if (result.isCancelled) {
-//       alert('Login cancelled');
-//     } else {
-//       alert('Login success with permissions: '
-//         +result.grantedPermissions.toString());
-//     }
-//   },
-//   function(error) {
-//     alert('Login fail with error: ' + error);
-//   }
-// );
-
-
-
   render() {
 
     const {handleEmail, handlePassword, email, password, onNext, onSettings, onBible, onTwitter, onFacebook} = this.props

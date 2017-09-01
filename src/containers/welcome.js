@@ -59,21 +59,18 @@ export default class _Welcome extends Component {
     const { navigate } = this.props.navigation
 
     const { params } = this.props.navigation.state
-    console.log('Welcome screen recieved userData')
-    if (params.userData){
-      console.log(params.userData)
-    }
+
     return (
         <Welcome 
-          onSettings={()=> navigate('Settings')}
+          onSettings={()=> navigate('Settings', {userData: params.userData})}
           onBible={()=> alert('onBible')}
-
+          userData={params.userData}
           locations={locations}
           onMoreSession={()=> {
-            navigate('FindSession', {locations: locations})}
+            navigate('FindSession', {locations: locations, userData: params.userData})}
           }
           onChurchPressed={(locationSelected)=> {
-            navigate('SessionItem', {locationSelected: locationSelected,  locations: locations })
+            navigate('SessionItem', {locationSelected: locationSelected,  locations: locations, userData: params.userData })
             }}
         />
     )

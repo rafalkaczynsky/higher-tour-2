@@ -12,6 +12,15 @@ export default class Settings extends Component {
   }
 
   render() {
+    
+    const {userData} = this.props
+
+    let userText = ''
+    if (this.props.userData !== ''){
+        userText = "You are signed in as " + this.props.userData.displayName
+    } else {
+        userText = "You are not signed in yet"
+    }
 
     return (
       <View style={StyleSheet.window.default}>
@@ -22,9 +31,9 @@ export default class Settings extends Component {
         <View style={StyleSheet.settings.container}>
             <View style={StyleSheet.settings.buttonGroup}>
                 <Title 
-                    text="You are signed in as Rafal Kaczynsky"  
+                    text={userText}
                     textColor="brown"
-                    textStyle={{fontSize: 18}}  
+                    textStyle={{fontSize: 18, textAlign: 'center'}}  
                 />
                 <Button 
                     type="settings"

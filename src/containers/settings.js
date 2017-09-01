@@ -42,12 +42,14 @@ export default class _Settings extends Component {
     }
 
      const { navigate } = this.props.navigation
-    
+     const { params } = this.props.navigation.state
+
     return (
         <Settings 
           onHome={()=> this.props.handleHome}  
-          onBible={()=> navigate('FindSession')}
+          onBible={()=> navigate('FindSession', {userData: params.userData})}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
+          userData={params.userData}
           onNotifications={() => this.handleNotification()}  
           onLocation={()=> this.handleLocation()}    
           buttonText={buttonTextArray}
@@ -55,5 +57,4 @@ export default class _Settings extends Component {
     )
   }
 }
-
 
