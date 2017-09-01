@@ -10,7 +10,8 @@ How to run it locally from command line
 - cd higher-app
 - yarn install
 - yarn add react-native-fbsdk@0.6.0
-- react-native link
+- react-native link  
+(after make sure all this steps are done : https://facebook.github.io/react-native/docs/linking-libraries-ios.html}
 - react-native upgrade
 
 2.1  FOR IOS
