@@ -13,6 +13,7 @@ class FirebaseInit {
             databaseURL: "https://higher-app-a4b52.firebaseio.com",
             storageBucket: "higher-app-a4b52.appspot.com"
         });
+        /*
         // user authorisation	
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -23,6 +24,7 @@ class FirebaseInit {
                 });
             }
         });
+        */
     }
 }
 
