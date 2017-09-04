@@ -63,7 +63,7 @@ export default class _Welcome extends Component {
     return (
         <Welcome 
           onSettings={()=> navigate('Settings', {userData: params.userData})}
-          onBible={()=> alert('onBible')}
+          onBible={() =>  alert('Bible Clicked! Work in progress.')}
           userData={params.userData}
           locations={locations}
           onMoreSession={()=> {

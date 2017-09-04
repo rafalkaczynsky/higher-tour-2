@@ -11,7 +11,7 @@ export default class _Settings extends Component {
     super(props)
 
     this.state = {
-        signIn: true,
+        signIn: false,
         notificationsOn: true,
         locationOn: true,
     }
@@ -26,15 +26,38 @@ export default class _Settings extends Component {
   }
 
   handleLogOut(navigate, route){
-     _Firebase.logout(navigate, route);
+    const { params } = this.props.navigation.state
+
+    if (params.loginStatus === 'loggedOut') {
+      navigate('SignIn')
+    } else {
+      _Firebase.logout(navigate, route);
+    }  
   }
 
   handleHome(){
     const { navigate } = this.props.navigation
-    navigate('Welcome')
+    const { params } = this.props.navigation.state
+
+    if (params.loginStatus === 'loggedOut') {
+      navigate('SignIn')
+    } else {
+      navigate('Welcome', {userData: params.userData})
+    }  
+  }
+
+  componentDidMount(){
+    const { params } = this.props.navigation.state
+
+    if (params.loginStatus === 'loggedOut'){
+      this.setState({ signIn: false})
+    }else{
+      this.setState({ signIn: true})
+    }
   }
   
   render() {
+    
     const buttonTextArray = {
       signIn: this.state.signIn ? 'Sign Out' : 'Sign In', 
       notificationsOn: this.state.notificationsOn ? 'Turn Off' : 'Turn On', 
@@ -46,8 +69,8 @@ export default class _Settings extends Component {
 
     return (
         <Settings 
-          onHome={()=> this.props.handleHome}  
-          onBible={()=> navigate('FindSession', {userData: params.userData})}
+          onHome={()=> this.handleHome()}  
+          onBible={() =>  alert('Bible Clicked! Work in progress.')}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
           userData={params.userData}
           onNotifications={() => this.handleNotification()}  

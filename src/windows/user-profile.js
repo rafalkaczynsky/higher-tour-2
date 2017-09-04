@@ -7,6 +7,15 @@ import {colors} from '../styles/resources'
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
 export default class UserProfile extends React.Component {
+
+  getFirstWord(str) {
+    let spacePosition = str.indexOf(' ');
+    if (spacePosition === -1)
+        return str;
+    else
+        return str.substr(0, spacePosition);
+  }
+
     render(){
 
         const { onSettings, locationSelected, locations, handleEditSession } = this.props
@@ -14,6 +23,8 @@ export default class UserProfile extends React.Component {
         const image = StyleSheet.icons[name]
 
         console.log('User profile window')
+        const userFirstName = this.getFirstWord(this.props.userData.displayName)
+
 
         return(
       <View style={[StyleSheet.window.default,]}>
@@ -21,7 +32,9 @@ export default class UserProfile extends React.Component {
             <View style={[StyleSheet.userProfile.header]} >
                 <Image source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} >
                 </Image>
-                <Text style={{marginTop: '-10%', marginLeft: 10, color: colors.white, fontSize: 25 ,backgroundColor: 'transparent'}}>Welcome Back Andy!</Text>
+                <Text style={{marginTop: '-10%', marginLeft: 10, color: colors.white, fontSize: 25 ,backgroundColor: 'transparent'}}>
+                  Welcome Back {userFirstName}!
+                </Text>
             </View>
             <View style={StyleSheet.userProfile.contentBox}>
                 <ListItem 

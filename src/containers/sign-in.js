@@ -27,8 +27,8 @@ export default class _SignIn extends Component {
     _Firebase.signup(email, password, navigate, route, handleError);
   }
 
-  handleOnSettings(navigate, route, userData){
-    navigate(route, {userData: userData})
+  handleOnSettings(navigate, route, userData, loginStatus){
+    navigate(route, {userData: userData, loginStatus: loginStatus})
   }
 
   onFacebook(navigate, route){
@@ -53,12 +53,12 @@ export default class _SignIn extends Component {
 
           }}
           onSettings={()=> {
-            this.handleOnSettings(navigate, 'Settings', '')
+            this.handleOnSettings(navigate, 'Settings', '', 'loggedOut')
             }
           }  
           onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
           onFacebook={()=> this.onFacebook(navigate, 'Welcome')}
-          onBible={() =>  navigate('FindSession')}
+          onBible={() =>  alert('Bible Clicked! Work in progress.')}
           email={this.state.email}
           password={this.state.password}
           handleEmail={(email) => this.handleEmail(email)}

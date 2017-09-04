@@ -26,12 +26,11 @@ class _Firebase {
       // ================ TWITTER STAFF ================
       _twitterSignIn(navigate, route) {
         const   RNTwitterSignIn =  NativeModules.RNTwitterSignIn;
-        console.log('twitter')
-        console.log(RNTwitterSignIn)
+        //console.log('twitter')
         RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
              RNTwitterSignIn.logIn()
                .then((loginData)=>{
-                 console.log(loginData);
+                 //console.log(loginData);
                  const { authToken, authTokenSecret } = loginData;
                  if (authToken && authTokenSecret) {
                    // we are loged successfull
@@ -41,8 +40,8 @@ class _Firebase {
                  }
                }).then(credData => {
                 // we are loged successfull
-                console.log('twitter data')
-                console.log(credData);
+                //console.log('twitter data')
+                //console.log(credData);
                 navigate(route, {userData: credData})
             }).catch((error)=>{
                  console.log(error);
@@ -50,7 +49,7 @@ class _Firebase {
          }
        
          handleLogout() {
-           console.log('logout');
+           //console.log('logout');
            RNTwitterSignIn.logOut();
            this.setState({
              isLoggedIn: false,
@@ -74,8 +73,8 @@ class _Firebase {
         })
         .then(credData => {
             // we are logged in successfull
-            console.log('facebook data')
-            console.log(credData);
+            //console.log('facebook data')
+            //console.log(credData);
             navigate(route, {userData: credData})
         })
         .catch(err => {
@@ -89,7 +88,6 @@ class _Firebase {
         try {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
-                alert("Account created");
                 // Navigate to the Home page, the user is auto logged in
                 navigate(route)
 
@@ -118,8 +116,6 @@ class _Firebase {
         try {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
-
-            alert("Logged In!");
             // Navigate to the Home page
             navigate(route)
         } catch (error) {
@@ -130,7 +126,6 @@ class _Firebase {
     async logout(navigate, route) {
         try {
             await firebase.auth().signOut();
-             alert("Logged Out!");
             // Navigate to login view
             navigate(route)
         } catch (error) {

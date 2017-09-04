@@ -34,8 +34,12 @@ export default class _SessionItem extends Component {
     }
   }
 
-  handleOnStartSession(navigate, locationSelected, locations){
-       navigate('UserProfile', { locationSelected: locationSelected, locations: locations })
+  handleOnSettings(navigate, route, userData, loginStatus){
+    navigate(route, {userData: userData, loginStatus: loginStatus})
+  }
+
+  handleOnStartSession(navigate, locationSelected, locations, userData){
+       navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData })
   }
 
 
@@ -46,14 +50,13 @@ export default class _SessionItem extends Component {
 
     return (
         <SessionItem 
-          onSettings={()=> navigate('Settings')}
-          onBible={()=> alert('onBible')}
-
+          onSettings={()=> navigate('Settings', {userData: params.userData})}
+          onBible={() =>  alert('Bible Clicked! Work in progress.')}
           myPosition={myPosition[0]}
           location={params.locationSelected}
           cancelLabel={params.cancelLabel}
-          onStopSession={()=> navigate('FindSession', {locations: params.locations})}
-          onStartSession={(location)=> this.handleOnStartSession(navigate, location, params.locations)}
+          onStopSession={()=> navigate('FindSession', {locations: params.locations, userData: params.userData})}
+          onStartSession={(location)=> this.handleOnStartSession(navigate, location, params.locations, params.userData)}
         />
     )
   }
