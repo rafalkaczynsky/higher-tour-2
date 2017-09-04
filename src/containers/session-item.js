@@ -31,32 +31,48 @@ export default class _SessionItem extends Component {
 
     this.state = {
       allSessions: '',
+      locationSelected: {},
     }
   }
 
+  /*
   handleOnSettings(navigate, route, userData, loginStatus){
     navigate(route, {userData: userData, loginStatus: loginStatus})
   }
+  */
 
   handleOnStartSession(navigate, locationSelected, locations, userData){
        navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData })
   }
 
+  handleOnSettings(navigate, locationSelected, locations, userData, from){
+    const { params } = this.props.navigation.state
+
+    if (params.cancelLabel){
+      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', cancelLabel: true })
+    } else {
+      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemYellow' })
+    }
+}
 
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
+  
 
     return (
         <SessionItem 
-          onSettings={()=> navigate('Settings', {userData: params.userData})}
+          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, params.locations, params.userData)}
           onBible={() =>  alert('Bible Clicked! Work in progress.')}
           myPosition={myPosition[0]}
           location={params.locationSelected}
           cancelLabel={params.cancelLabel}
           onStopSession={()=> navigate('FindSession', {locations: params.locations, userData: params.userData})}
-          onStartSession={(location)=> this.handleOnStartSession(navigate, location, params.locations, params.userData)}
+          onStartSession={(location)=> {
+            this.handleOnStartSession(navigate, location, params.locations, params.userData)
+          }
+          }
         />
     )
   }

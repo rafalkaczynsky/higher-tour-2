@@ -20,8 +20,8 @@ export default class _FindSession extends Component {
     }
   }
 
-  handleOnItem(navigate, locationSelected, locations){
-    navigate('SessionItem', { locationSelected: locationSelected,  locations: locations })
+  handleOnItem(navigate, locationSelected, locations, userData){
+    navigate('SessionItem', { locationSelected: locationSelected,  locations: locations, userData: userData })
   }
 
   handleOnAlphabetical(locations){
@@ -81,8 +81,8 @@ export default class _FindSession extends Component {
 
     return (
         <FindSession 
-          onSettings={()=> navigate('Settings')}
-          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  params.locations)}
+          onSettings={()=> navigate('Settings', {userData: params.userData, locations: params.locations, from: 'FindSession'})}
+          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  params.locations, params.userData)}
           buttonsStyle={this.state.buttonsStyle}
           locations={params.locations}
           churchName={params.churchName ? params.churchName : null}

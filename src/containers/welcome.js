@@ -59,7 +59,7 @@ export default class _Welcome extends Component {
     const { navigate } = this.props.navigation
 
     const { params } = this.props.navigation.state
-
+ 
     return (
         <Welcome 
           onSettings={()=> navigate('Settings', {userData: params.userData})}

@@ -10,21 +10,27 @@ export default class UserProfile extends React.Component {
 
   getFirstWord(str) {
     let spacePosition = str.indexOf(' ');
-    if (spacePosition === -1)
+    if (spacePosition === -1){
+      atPosition = str.indexOf('@');
+      if (atPosition === -1){
         return str;
-    else
-        return str.substr(0, spacePosition);
+       } else return str.substr(0, atPosition);
+    } else  return str.substr(0, spacePosition);   
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession } = this.props
+        const { onSettings, locationSelected, locations, handleEditSession, userData } = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
         console.log('User profile window')
-        const userFirstName = this.getFirstWord(this.props.userData.displayName)
-
+        let userFirstName = this.getFirstWord(this.props.userData.displayName)
+        userFirstName = this.capitalizeFirstLetter(userFirstName)
 
         return(
       <View style={[StyleSheet.window.default,]}>
@@ -40,7 +46,7 @@ export default class UserProfile extends React.Component {
                 <ListItem 
                   title={locationSelected.host}
                   iconText='view/edit'
-                  handleIconPressed={()=>handleEditSession(locationSelected, locations)}
+                  handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 /> 
                 <ListItem 
                   title="Session One: God"

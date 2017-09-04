@@ -38,13 +38,34 @@ export default class _Settings extends Component {
   handleHome(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-
+    
+    console.log('handleHome')
     if (params.loginStatus === 'loggedOut') {
+      console.log('From SignIn')
       navigate('SignIn')
-    } else {
-      navigate('Welcome', {userData: params.userData})
+    } else if (params.from === 'SessionItemYellow'){ 
+        console.log('From SessionItem Yellow')
+        console.log(params)
+        navigate('SessionItem',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
+      }else if (params.from === 'SessionItemBrown'){ 
+        console.log('From SessionItem Brown')
+        console.log(params)
+        navigate('SessionItem',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, cancelLabel: true})
+      } else if (params.from === 'UserProfile'){
+        console.log('From UserProfile')
+        console.log(params)
+        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
+      } else if (params.from === 'FindSession'){
+        console.log('From FindSession')
+        console.log(params)
+        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
+      }
+      else { 
+        console.log('From Welcome')
+        navigate('Welcome', {userData: params.userData})
+      }
     }  
-  }
+  
 
   componentDidMount(){
     const { params } = this.props.navigation.state
@@ -57,7 +78,7 @@ export default class _Settings extends Component {
   }
   
   render() {
-    
+    console.log('Settings Container')
     const buttonTextArray = {
       signIn: this.state.signIn ? 'Sign Out' : 'Sign In', 
       notificationsOn: this.state.notificationsOn ? 'Turn Off' : 'Turn On', 

@@ -12,7 +12,7 @@ export default class Settings extends Component {
   }
 
   render() {
-    
+    console.log('Settings Window')
     const {userData} = this.props
 
     let userText = ''
