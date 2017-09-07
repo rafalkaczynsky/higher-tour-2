@@ -40,7 +40,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new TwitterSigninPackage(),
             new RNTPackage(),
-            new TwitterSigninPackage(),
             new MapsPackage(),
             new FBSDKPackage(mCallbackManager)
       );

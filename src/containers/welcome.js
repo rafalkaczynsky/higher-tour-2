@@ -1,12 +1,18 @@
 import React, {Component} from 'react'
 import {Welcome} from '../windows'
 import geolib from 'geolib'
+import * as firebase from 'firebase'
+
 
 // events object
 var events = require('../data/events') 
-var locations = events
 
+var locations = events
+var Events
+//var locations
+//var dataBase
 // ---- getting current position of user -----
+//var locations = Object.keys(Events).map(function (key) { return Events[key]; }); //transform js Object to Array 
 var currentPosition
 
 var options = {
@@ -28,10 +34,10 @@ function success(pos) {
     console.log(distance)
     item.howFar = distance
   })
-// console.log('Your current position is:');
-// console.log(`Latitude : ${crd.latitude}`);
-// console.log(`Longitude: ${crd.longitude}`);
-// console.log(`More or less ${crd.accuracy} meters.`);
+ console.log('Your current position is:');
+ console.log(`Latitude : ${crd.latitude}`);
+ console.log(`Longitude: ${crd.longitude}`);
+ console.log(`More or less ${crd.accuracy} meters.`);
   function compareDistance(a, b){
     return a.howFar - b.howFar;
 }
@@ -53,6 +59,68 @@ export default class _Welcome extends Component {
       myLocation: {}
     }
   }
+/*
+  async getData(logResults){
+    var ref = firebase.database().ref();
+    ref.on('value', function(snapshot) {
+          dataBase = snapshot.val()
+          logResults(dataBase)
+      });
+   }
+
+   logResults(dataBase){
+     Events = dataBase.events
+     console.log(Events)
+   }
+
+   componentWillMount(){
+
+    this.getData(this.logResults)
+
+    console.log(Events)
+    console.log(locations)
+
+    var locations = Object.keys(Events).map(function (key) { return Events[key]; }); //transform js Object to Array 
+    var currentPosition
+  
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+    
+    function success(pos) {
+      var crd = pos.coords;
+      locations.map((item)=> {
+       
+        let distance = geolib.getDistance(
+          crd,
+          item.geoLoc,
+        );
+        distance = geolib.convertUnit('mi', distance, 1)
+    
+        console.log(distance)
+        item.howFar = distance
+      })
+     console.log('Your current position is:');
+     console.log(`Latitude : ${crd.latitude}`);
+     console.log(`Longitude: ${crd.longitude}`);
+     console.log(`More or less ${crd.accuracy} meters.`);
+      function compareDistance(a, b){
+        return a.howFar - b.howFar;
+    }
+    
+    const x = locations.sort(compareDistance);
+    };
+    
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    };
+    
+    navigator.geolocation.getCurrentPosition(success, error, options);
+   }
+
+*/
 
   render() {
 
