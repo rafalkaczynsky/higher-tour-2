@@ -122,8 +122,8 @@ export default class _Welcome extends Component {
 
 */
 
-handleOnBible(navigate, locations, userData, from, activeTabName){
-  navigate('HigherBibleReadings', { locations: locations, userData: userData, from: from, activeTabName: activeTabName })
+handleOnBible(navigate, locations, userData, from, activeTabName,){
+  navigate('HigherBibleReadings', { locations: locations, userData: userData, from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
 }
 
 

@@ -71,6 +71,7 @@ export default class HigherBibleReadings extends React.Component {
         </View>
         <TabMenu 
           onSettings={this.props.onSettings}
+          onHome={this.props.onHome}
           activeTabName={this.props.activeTabName}
         /> 
       </View>

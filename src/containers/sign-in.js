@@ -31,6 +31,10 @@ export default class _SignIn extends Component {
     navigate(route, {userData: userData, loginStatus: loginStatus, activeTabName: activeTabName})
   }
 
+  handleOnBible(navigate, route , userData){
+    navigate(route, {userData: userData, from: 'SignIn', activeTabName: 'Bible', loginStatus: 'loggedOut'})
+  }
+
   onFacebook(navigate, route){
     _Firebase.fbAuth(navigate, route)
   }
@@ -58,9 +62,10 @@ export default class _SignIn extends Component {
             this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
             }
           }  
+          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
+          
           onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
           onFacebook={()=> this.onFacebook(navigate, 'Welcome')}
-          onBible={() =>  alert('Bible Clicked! Work in progress.')}
           email={this.state.email}
           password={this.state.password}
           handleEmail={(email) => this.handleEmail(email)}

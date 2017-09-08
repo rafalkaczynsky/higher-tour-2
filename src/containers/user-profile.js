@@ -9,7 +9,7 @@ export default class _UserProfile extends Component {
  }
 
  handleOnBible(navigate, locationSelected, locations, userData, from, activeTabName){
-  navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: from, activeTabName: activeTabName })
+  navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
 }
 
   render() {

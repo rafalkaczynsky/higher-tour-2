@@ -15,7 +15,7 @@ export default class _Read extends Component {
   }
 
 handleOnBible(navigate, locations, userData, from, activeTabName){
-  navigate('HigherBibleReadings', { locations: locations, userData: userData, from: from, activeTabName: activeTabName })
+  navigate('HigherBibleReadings', { locations: locations, userData: userData, from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
 }
 
 

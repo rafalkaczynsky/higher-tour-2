@@ -72,8 +72,13 @@ export default class _Settings extends Component {
     }  
 
     handleOnBible(navigate, route,locationSelected, locations, userData){
-      navigate(route, { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible'})
-    }
+      const { params } = this.props.navigation.state
+      if (params.loginStatus === 'loggedOut') {
+      navigate(route, { locationSelected: locationSelected, locations: locations, userData: userData,  activeTabName: 'Bible',loginStatus: 'loggedOut'})
+      } else {
+        navigate(route, { locationSelected: locationSelected, locations: locations, userData: userData, activeTabName: 'Bible', loginStatus: 'loggedIn'})
+      }
+  } 
   
 //HigherBibleReadings
   componentDidMount(){

@@ -63,9 +63,9 @@ export default class _SessionItem extends Component {
   handleOnBible(navigate, locationSelected, locations, userData, from){
     const { params } = this.props.navigation.state
     if (params.cancelLabel){
-      navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible'})
+      navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible', loginStatus: 'loggedIn'})
     } else {
-      navigate('HigherBibleReadings', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Bible'})
+      navigate('HigherBibleReadings', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Bible', loginStatus: 'loggedIn'})
     }
   }
 
