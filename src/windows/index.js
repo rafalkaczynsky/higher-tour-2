@@ -4,4 +4,5 @@ export {default as Settings} from './settings'
 export {default as FindSession} from './find-session'
 export {default as SessionItem} from './session-item'
 export {default as UserProfile} from './user-profile'
-
+export {default as HigherBibleReadings} from './higher-bible-readings'
+export {default as Read} from './read'

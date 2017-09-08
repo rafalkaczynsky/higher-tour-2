@@ -60,6 +60,15 @@ export default class _SessionItem extends Component {
     }
   }
 
+  handleOnBible(navigate, locationSelected, locations, userData, from){
+    const { params } = this.props.navigation.state
+    if (params.cancelLabel){
+      navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible'})
+    } else {
+      navigate('HigherBibleReadings', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Bible'})
+    }
+  }
+
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
@@ -68,7 +77,7 @@ export default class _SessionItem extends Component {
         <SessionItem 
           onHome={()=> this.handleOnHome(navigate, params.locationSelected, params.locations, params.userData)}
           onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, params.locations, params.userData)}
-          onBible={() =>  alert('Bible Clicked! Work in progress.')}
+          onBible={()=> this.handleOnBible(navigate, params.locationSelected, params.locations, params.userData)}
           myPosition={myPosition[0]}
           location={params.locationSelected}
           cancelLabel={params.cancelLabel}

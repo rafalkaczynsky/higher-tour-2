@@ -124,6 +124,7 @@ export default class FindSession extends React.Component {
         </View>
         <TabMenu 
           onSettings={this.props.onSettings}
+          oBible={this.props.onBible}
           activeTabName={this.props.activeTabName}
         /> 
       </View>

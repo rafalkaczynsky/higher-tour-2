@@ -122,6 +122,11 @@ export default class _Welcome extends Component {
 
 */
 
+handleOnBible(navigate, locations, userData, from, activeTabName){
+  navigate('HigherBibleReadings', { locations: locations, userData: userData, from: from, activeTabName: activeTabName })
+}
+
+
   render() {
 
     const { navigate } = this.props.navigation
@@ -131,7 +136,7 @@ export default class _Welcome extends Component {
     return (
         <Welcome 
           onSettings={()=> navigate('Settings', {userData: params.userData, activeTabName: 'Settings'})}
-          onBible={() =>  alert('Bible Clicked! Work in progress.')}
+          onBible={() =>  this.handleOnBible(navigate, locations, params.userData, 'Settings', 'Bible')}
           userData={params.userData}
           locations={locations}
           onMoreSession={()=> {

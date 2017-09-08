@@ -5,7 +5,7 @@ import StyleSheet from '../styles'
 
 export default class Picture extends Component {
   render() {
-    const {name, active, style} = this.props
+    const {name, style} = this.props
     const image = StyleSheet.images[name]
 
     return (

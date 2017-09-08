@@ -15,6 +15,11 @@ export default StyleSheet => StyleSheet.extend({
         padding: 18, 
     },
 
+    itemDetails: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+    },
+
     title: {
         fontSize: 18, 
         color: colors.brown,

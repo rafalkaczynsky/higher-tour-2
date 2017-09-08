@@ -35,7 +35,7 @@ export default class _Settings extends Component {
     }  
   }
 
-  handleHome(){
+  handleOnHome(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
     
@@ -60,13 +60,22 @@ export default class _Settings extends Component {
         console.log(params)
         navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
       }
-      else { 
+      else if (params.from === 'HigherBibleReadings'){
+        // =========== TO BE CHECKED ==============
+        console.log('From HigherBibleReadings')
+        console.log(params)
+        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
+      } else { 
         console.log('From Welcome')
         navigate('Welcome', {userData: params.userData, activeTabName: 'Home'})
       }
     }  
-  
 
+    handleOnBible(navigate, route,locationSelected, locations, userData){
+      navigate(route, { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible'})
+    }
+  
+//HigherBibleReadings
   componentDidMount(){
     const { params } = this.props.navigation.state
 
@@ -90,8 +99,8 @@ export default class _Settings extends Component {
 
     return (
         <Settings 
-          onHome={()=> this.handleHome()}  
-          onBible={() =>  alert('Bible Clicked! Work in progress.')}
+          onHome={()=> this.handleOnHome()}  
+          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings', params.locationSelected, params.locations, params.userData,)}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
           userData={params.userData}
           onNotifications={() => this.handleNotification()}  
