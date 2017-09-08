@@ -51,7 +51,7 @@ export default class SessionItem extends React.Component {
     
     render(){
 
-    const {onSettings, location, onStartSession, cancelLabel, onStopSession} = this.props
+    const {onSettings, location, onStartSession, cancelLabel, onStopSession, onHome} = this.props
 
     const coordinate = {
         latitude: location.geoLoc.latitude,
@@ -145,6 +145,7 @@ export default class SessionItem extends React.Component {
         </View>
         <TabMenu 
           onSettings={onSettings}
+          onHome={onHome}
         /> 
       </View>
         )

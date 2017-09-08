@@ -50,7 +50,7 @@ export default class _Settings extends Component {
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
-        navigate('SessionItem',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, cancelLabel: true})
+        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
       } else if (params.from === 'UserProfile'){
         console.log('From UserProfile')
         console.log(params)

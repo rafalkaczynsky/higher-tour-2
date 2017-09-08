@@ -35,11 +35,6 @@ export default class _SessionItem extends Component {
     }
   }
 
-  /*
-  handleOnSettings(navigate, route, userData, loginStatus){
-    navigate(route, {userData: userData, loginStatus: loginStatus})
-  }
-  */
 
   handleOnStartSession(navigate, locationSelected, locations, userData){
        navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData })
@@ -53,16 +48,25 @@ export default class _SessionItem extends Component {
     } else {
       navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemYellow' })
     }
-}
+  }
+
+  handleOnHome(navigate, locationSelected, locations, userData, from){
+    const { params } = this.props.navigation.state
+
+    if (params.cancelLabel){
+      navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown'})
+    } else {
+      navigate('Welcome', {locations: locations, userData: userData, from: 'SessionItemYellow'})
+    }
+  }
 
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-  
-
     return (
         <SessionItem 
+          onHome={()=> this.handleOnHome(navigate, params.locationSelected, params.locations, params.userData)}
           onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, params.locations, params.userData)}
           onBible={() =>  alert('Bible Clicked! Work in progress.')}
           myPosition={myPosition[0]}
@@ -70,8 +74,8 @@ export default class _SessionItem extends Component {
           cancelLabel={params.cancelLabel}
           onStopSession={()=> navigate('FindSession', {locations: params.locations, userData: params.userData})}
           onStartSession={(location)=> {
-            this.handleOnStartSession(navigate, location, params.locations, params.userData)
-          }
+              this.handleOnStartSession(navigate, location, params.locations, params.userData)
+            }
           }
         />
     )

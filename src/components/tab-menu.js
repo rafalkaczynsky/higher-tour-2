@@ -7,18 +7,20 @@ import {TabItem, Icon} from './'
 export default class TabMenu extends Component {
   render() {
 
+    const {onHome, onBible, onSettings} = this.props
+    
     return (
         <View style={StyleSheet.tabMenu.container}>
           <TabItem
             active
             text="Home"
             iconName="logo"
-            onPress={this.props.onHome}
+            onPress={onHome}
            />
           <TabItem
             text="Bible"
             iconName="bible"
-            onPress={this.props.onBible}
+            onPress={onBible}
            />
           <TabItem
             text="Events"
@@ -28,7 +30,7 @@ export default class TabMenu extends Component {
           <TabItem
             text="Settings"
             iconName="settings"
-            onPress={this.props.onSettings}
+            onPress={onSettings}
            />
         </View>
     )
