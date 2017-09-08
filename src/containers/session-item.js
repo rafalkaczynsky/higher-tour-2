@@ -44,9 +44,9 @@ export default class _SessionItem extends Component {
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', cancelLabel: true })
+      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', cancelLabel: true ,activeTabName: 'Settings'})
     } else {
-      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemYellow' })
+      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Settings' })
     }
   }
 
@@ -54,9 +54,9 @@ export default class _SessionItem extends Component {
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown'})
+      navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Home'})
     } else {
-      navigate('Welcome', {locations: locations, userData: userData, from: 'SessionItemYellow'})
+      navigate('Welcome', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Home'})
     }
   }
 
@@ -77,6 +77,7 @@ export default class _SessionItem extends Component {
               this.handleOnStartSession(navigate, location, params.locations, params.userData)
             }
           }
+          activeTabName={''}
         />
     )
   }

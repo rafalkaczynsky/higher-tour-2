@@ -77,6 +77,7 @@ export default class UserProfile extends React.Component {
         </View>
         <TabMenu 
           onSettings={onSettings}
+          activeTabName={this.props.activeTabName}
         /> 
       </View>
         )

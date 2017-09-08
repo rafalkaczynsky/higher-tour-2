@@ -130,7 +130,7 @@ export default class _Welcome extends Component {
  
     return (
         <Welcome 
-          onSettings={()=> navigate('Settings', {userData: params.userData})}
+          onSettings={()=> navigate('Settings', {userData: params.userData, activeTabName: 'Settings'})}
           onBible={() =>  alert('Bible Clicked! Work in progress.')}
           userData={params.userData}
           locations={locations}
@@ -140,6 +140,7 @@ export default class _Welcome extends Component {
           onChurchPressed={(locationSelected)=> {
             navigate('SessionItem', {locationSelected: locationSelected,  locations: locations, userData: params.userData })
             }}
+            activeTabName={'Home'}
         />
     )
   }

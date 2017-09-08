@@ -146,6 +146,7 @@ export default class SessionItem extends React.Component {
         <TabMenu 
           onSettings={onSettings}
           onHome={onHome}
+          activeTabName={this.props.activeTabName}
         /> 
       </View>
         )

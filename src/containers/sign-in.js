@@ -27,8 +27,8 @@ export default class _SignIn extends Component {
     _Firebase.signup(email, password, navigate, route, handleError);
   }
 
-  handleOnSettings(navigate, route, userData, loginStatus){
-    navigate(route, {userData: userData, loginStatus: loginStatus})
+  handleOnSettings(navigate, route, userData, loginStatus, activeTabName){
+    navigate(route, {userData: userData, loginStatus: loginStatus, activeTabName: activeTabName})
   }
 
   onFacebook(navigate, route){
@@ -46,6 +46,8 @@ export default class _SignIn extends Component {
     console.log(this.state.error)
 
     const { navigate } = this.props.navigation
+    const { params } = this.props.navigation.state
+
     return (
         <SignIn 
           onNext={()=> {
@@ -53,7 +55,7 @@ export default class _SignIn extends Component {
 
           }}
           onSettings={()=> {
-            this.handleOnSettings(navigate, 'Settings', '', 'loggedOut')
+            this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
             }
           }  
           onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
@@ -63,8 +65,7 @@ export default class _SignIn extends Component {
           password={this.state.password}
           handleEmail={(email) => this.handleEmail(email)}
           handlePassword={(email) => this.handlePassword(email)}
-        />
-
+          activeTabName={'Home'} />
     )
   }
 }

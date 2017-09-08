@@ -42,27 +42,27 @@ export default class _Settings extends Component {
     console.log('handleHome')
     if (params.loginStatus === 'loggedOut') {
       console.log('From SignIn')
-      navigate('SignIn')
+      navigate('SignIn', {activeTabName: 'Home'})
     } else if (params.from === 'SessionItemYellow'){ 
         console.log('From SessionItem Yellow')
         console.log(params)
-        navigate('SessionItem',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
+        navigate('FindSession',  {userData: params.userData, locations: params.locations, activeTabName: 'Home'})
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
-        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
+        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
       } else if (params.from === 'UserProfile'){
         console.log('From UserProfile')
         console.log(params)
-        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
+        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
       } else if (params.from === 'FindSession'){
         console.log('From FindSession')
         console.log(params)
-        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations})
+        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
       }
       else { 
         console.log('From Welcome')
-        navigate('Welcome', {userData: params.userData})
+        navigate('Welcome', {userData: params.userData, activeTabName: 'Home'})
       }
     }  
   
@@ -97,6 +97,7 @@ export default class _Settings extends Component {
           onNotifications={() => this.handleNotification()}  
           onLocation={()=> this.handleLocation()}    
           buttonText={buttonTextArray}
+          activeTabName={params.activeTabName}
         />
     )
   }

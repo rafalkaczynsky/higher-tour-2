@@ -73,6 +73,7 @@ export default class Settings extends Component {
         <TabMenu 
             onHome={this.props.onHome}
             onBible={this.props.onBible}
+            activeTabName={this.props.activeTabName}
         /> 
       </View>
     )

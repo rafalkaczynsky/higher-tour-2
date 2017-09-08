@@ -81,7 +81,7 @@ export default class _FindSession extends Component {
 
     return (
         <FindSession 
-          onSettings={()=> navigate('Settings', {userData: params.userData, locations: params.locations, from: 'FindSession'})}
+          onSettings={()=> navigate('Settings', {userData: params.userData, locations: params.locations, from: 'FindSession', activeTabName: 'Settings'})}
           onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  params.locations, params.userData)}
           buttonsStyle={this.state.buttonsStyle}
           locations={params.locations}
@@ -89,6 +89,7 @@ export default class _FindSession extends Component {
           onMoreSession={()=> this.handleOnMoreSession()}
           onAlphabetical={()=> this.handleOnAlphabetical(params.locations)}
           onClosest={()=> this.handleOnClosest(params.locations)}
+          activeTabName={'Home'}
         />
     )
   }

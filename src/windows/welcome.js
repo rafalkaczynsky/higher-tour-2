@@ -68,6 +68,7 @@ export default class SignIn extends Component {
         <TabMenu 
           onSettings={this.props.onSettings}
           onBible={this.props.onBible}
+          activeTabName={this.props.activeTabName}
         /> 
       </View>
     )
