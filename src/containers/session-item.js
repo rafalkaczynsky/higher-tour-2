@@ -44,7 +44,7 @@ export default class _SessionItem extends Component {
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', cancelLabel: true ,activeTabName: 'Settings'})
+      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', cancelLabel: true ,activeTabName: 'Settings', loginStatus: 'loggedInPlus'})
     } else {
       navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Settings' })
     }
@@ -54,7 +54,7 @@ export default class _SessionItem extends Component {
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Home'})
+      navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Home', loginStatus: 'loggedInPlus'})
     } else {
       navigate('Welcome', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Home'})
     }
@@ -63,7 +63,7 @@ export default class _SessionItem extends Component {
   handleOnBible(navigate, locationSelected, locations, userData, from){
     const { params } = this.props.navigation.state
     if (params.cancelLabel){
-      navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible', loginStatus: 'loggedIn'})
+      navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible', loginStatus: 'loggedInPlus'})
     } else {
       navigate('HigherBibleReadings', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Bible', loginStatus: 'loggedIn'})
     }
@@ -73,6 +73,8 @@ export default class _SessionItem extends Component {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
+    console.log('SessionItem Container')
+    console.log(params)
     return (
         <SessionItem 
           onHome={()=> this.handleOnHome(navigate, params.locationSelected, params.locations, params.userData)}

@@ -1,0 +1,325 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red202\green202\blue202;\red140\green211\blue254;
+\red202\green202\blue202;\red140\green211\blue254;\red115\green0\blue126;\red25\green25\blue25;\red109\green109\blue109;
+}
+{\*\expandedcolortbl;;\csgenericrgb\c0\c0\c0;\cssrgb\c83137\c83137\c83137;\cssrgb\c61176\c86275\c99608;
+\cssrgb\c83137\c83137\c83137;\cssrgb\c61176\c86275\c99608;\cssrgb\c53333\c7451\c56863;\cssrgb\c12941\c12941\c12941;\cssrgb\c50196\c50196\c50196;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww21860\viewh18260\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb1 Screens :\
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f1 \cf2 \expnd0\expndtw0\kerning0
+    1.SignIn:
+\f0 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f1 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec5     2.\strokec6 Welcome\strokec5   \
+    3.\strokec6 Settings \strokec5 \
+    4.\strokec6 FindSession\strokec5  \
+    5.\strokec6 SessionItem\strokec5 \
+    5.\strokec6 UserProfile\strokec5     \
+    6.\strokec6 HigherBibleReadings\cf5 \cb1 \strokec5 \
+    \cf2 7.Read\
+\
+TABS \
+	HOME\
+	BIBLE\
+	EVENTS\
+	SETTINGS\
+\
+========================\
+SIGN OUT MODE\
+\
+CONTAINERS \
+\
+1. SignIn\
+\
+Initial params - undefind\
+\
+SignIn \{Home\} -> HigherBibleReadings \{Bible\} //  params:  activeTabName: "Bible", loginStatus: "loggedOut"\
+SignIn \{Home\} -> Settings \{Settings\}         //  params : \cf2 \outl0\strokewidth0 activeTabName: "Settings",\cf2 \outl0\strokewidth0 \strokec5  loginStatus: "loggedOut", \cf2 \outl0\strokewidth0 userData: "",\cf2 \outl0\strokewidth0 \strokec5 \
+\
+Settings \{Settings\} -> SignIn \{Home\}         //  params : \cf2 \outl0\strokewidth0 activeTabName: "Home"\cf2 \outl0\strokewidth0 \strokec5 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 HigherBibleReadings \{Bible\}\cf2 \outl0\strokewidth0 \strokec5  -> \cf2 \outl0\strokewidth0 SignIn \{Home\} //  params : activeTabName: "Home"\cf2 \outl0\strokewidth0 \strokec5 \
+\cf2 \outl0\strokewidth0   \
+2.\cf2 HigherBibleReadings\
+\cf2 \outl0\strokewidth0 \strokec5 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 HigherBibleReadings \{Bible\} \cf2 -> Settings \{Settings\} //   params :  activeTabName: "Settings\'94, \cf2 loginStatus: "loggedOut", userData: "",\cf2 \
+\cf2 Settings \{Settings\}  ->  HigherBibleReadings \{Bible\} // params :  activeTabName: "Bible", loginStatus: "loggedOut\'94\cf2 \outl0\strokewidth0 \strokec5 \
+\
+3. Read \
+\
+Initial params - itemDay: \{\'85\}, userData: undefined, from: "HigherBibleReadings", activeTabName: "Bible\'94, loginStatus: "loggedOut" \
+\
+Read \{Bible\} -> Settings \{Settings\} \{\
+ 	userData: "", \
+	activeTabName: "Settings", \
+	loginStatus: "loggedOut"\
+\} \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 Read \{Bible\} -> SignIn\{Home\} \{\
+\
+ 	activeTabName: "Home", \
+	loginStatus: "loggedOut"\
+\} \
+\cf2 \outl0\strokewidth0 \strokec5 \
+==========================\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 SIGN IN MODE\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 \strokec5 \
+CONTAINERS\
+\
+1. Welcome\
+\
+Initial params - \{userData: S\}\
+\
+Var locations imported from firebase\
+\
+\cf2 \outl0\strokewidth0 Welcome \{Home\} -> HigherBibleReadings \{Bible\} //  params: \{\
+	locations: Array(10), \
+	userData: S, \
+	from: "Settings", \
+	activeTabName: "Bible", \
+	loginStatus: "loggedIn"\
+\}\
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 Welcome \{Home\} -> Settings \{Settings\} //  params: \{\
+	userData: S, \
+	activeTabName: "Settings"\
+\}\cf2 \
+\
+\cf2 Settings \{Settings\} -> Welcome \{Home\} // params: \{\
+	userData: S, \
+	activeTabName: "Home"\
+\}\cf2 \outl0\strokewidth0 \strokec5 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \outl0\strokewidth0 Settings \{Settings\} -> HigherBibleReadings \{Bible\} // params: \{\
+	userData: S\
+	activeTabName: "Bible", \
+	loginStatus: "loggedIn"\
+\}\
+\
+ HigherBibleReadings \{Bible\} ->  Settings \{Settings\} // params: \{\
+     userData: S, \
+	from: "HigherBibleReadings", \
+	activeTabName: "Settings\'94,\
+	loginStatus: "loggedIn", \
+\}\
+\
+ HigherBibleReadings \{Bible\} ->  Welcome \{Home\} // params: \{\
+	userData: S, \
+	activeTabName: "Home"\
+\}\
+\
+Welcome \{Home\} -> SessionItem\{onItem\} // params \{\
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	userData: S\
+\}\
+\
+2. SessionItem\
+\
+SessionItem -> Welcome \{Home\}  // params \{\
+	locations: Array(10), \
+	userData: S, \
+	from: "SessionItemYellow", \
+	activeTabName: "Home"\
+\}\
+\
+SessionItem -> HigherBibleReadings \{Bible\} // params \{\
+	locations: Array(10), \
+	userData: S, \
+	from: "SessionItemYellow", \
+	activeTabName: "Bible", \
+	loginStatus: "loggedIn"\
+\}\
+\
+SessionItem -> Settings \{Settings\} // params \{\
+	locationSelected: \{\'85\},  \'97  ?????\
+	locations: Array(10), \
+	userData: S, \
+	from: "SessionItemYellow", \
+	activeTabName: "Settings"\
+\}\
+\
+SessionItem ->UserProfile \{Home\} // params \{\
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	userData: S\
+\}\
+\
+3.Read\
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 Initial params - \{itemDay: \{\'85\}, userData: S, from: "HigherBibleReadings", activeTabName: "Bible", loginStatus:  "loggedIn",\'a0
+\fs22 \cf7 \outl0\strokewidth0 \strokec7 locationSelected\cf8 \strokec8 :\cf9 \strokec9 undefined
+\fs24 \cf2 \outl0\strokewidth0 \}\
+\
+Read \{Bible\} -> Settings \{Settings\} \{\
+ 	userData: S, \
+	locations: undefined, \
+	locationSelected: undefined, \
+	activeTabName: "Settings", \
+	loginStatus: "loggedIn"\
+\} \
+\
+Read \{Bible\} -> SignIn\{Home\} \{\
+ 	userData: S, \
+	activeTabName: "Home"\
+\} \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 ==========================\
+SIGN IN MODE+ \{with session selected\}\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \
+4. UserProfile \
+\
+Initial params: - locationSelected: \{\'85\}, locations: Array(10), userData: S\
+\
+ Settings \{Settings\} -> UserProfile\{Home\}  // params \{\
+	userData: S,\
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	activeTabName: "Home"\
+\}\
+\
+UserProfile\{Home\} -> Settings \{Settings\} // params \{\
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	userData: S, \
+	from: "UserProfile", \
+	activeTabName: "Settings\'94,\
+	loginStatus: "loggedInPlus\'94, \
+\}\
+\
+UserProfile\{Home\} -> HigherBibleReadings \{Bible\} // params \{\
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	userData: S, \
+	from: "UserProfile", \
+	activeTabName: "Bible",\
+\pard\pardeftab720\sl260\partightenfactor0
+
+\fs22 \cf7 \outl0\strokewidth0 \strokec7 	
+\fs24 \cf2 \outl0\strokewidth0 loginStatus: "loggedInPlus\'94, \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \}\
+\
+HigherBibleReadings \{Bible\} -> Settings \{Settings\} // params \{\
+	userData: S, \
+	loginStatus: "loggedIn", \
+	from: "HigherBibleReadings", \
+	activeTabName: "Settings\'94,\
+\pard\pardeftab720\sl260\partightenfactor0
+\cf2      loginStatus: "loggedInPlus\'94, \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \}\
+\
+HigherBibleReadings \{Bible\} -> UserProfile \{Home\} // params \{\
+	userData: S, \
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	activeTabName: "Home\'94,\
+\pard\pardeftab720\sl260\partightenfactor0
+\cf2      loginStatus: "loggedInPlus\'94, \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \}\
+\
+\
+Settings \{Settings\} -> HigherBibleReadings \{Bible\} \{\
+	userData: S, \
+	activeTabName: "Bible", \
+	loginStatus: "loggedInPlus", \
+	locationSelected: \{\'85\}, \
+	locations: Array(10)\
+\}\
+\
+Settings \{Settings\} -> UserProfile \{Home\} \{\
+ 	userData: S, \
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	activeTabName: "Home", \
+	loginStatus: "loggedInPlus"\
+\}\
+\
+\
+UserProfile \{Home\} -> SessionItem\{View/Edit\} \{\
+	locationSelected: \{\'85\}, \
+	cancelLabel: true, \
+	locations: Array(10), \
+	userData: S,\
+	loginStatus: "loggedInPlus"\
+\}\
+\
+5. SessionItem -> UserProfile\{Home\}\{ \
+\
+Initial params - \{locationSelected: \{\'85\}, cancelLabel: true, locations: Array(10), userData: S, loginStatus: "loggedInPlus"\}\
+\
+SessionItem -> UserProfile\{Home\}\{ \
+ 	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	userData: S, \
+	from: "SessionItemBrown", \
+	activeTabName: "Home",\'a0\
+	loginStatus: "loggedInPlus"\
+\}\
+\
+SessionItem -> HigherBibleReadings \{Bible\}\{ \
+	locationSelected: \{\'85\},\
+	locations: Array(10), \
+	userData: S, \
+	from: "SessionItemBrown", \
+	activeTabName: "Bible",\
+	loginStatus: "loggedInPlus"\
+\}\
+\
+SessionItem -> Settings\{Settings\} \{ \
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	userData: S, \
+	from: "SessionItemBrown", \
+	cancelLabel: true,\'a0\
+	loginStatus: "loggedInPlus"\
+\}\
+\
+SessionItem -> UserProfile\{Home\} \{ \
+	userData: S, \
+	locationSelected: \{\'85\}, \
+	locations: Array(10), \
+	activeTabName: "Home", \
+	loginStatus: "loggedInPlus"\
+\}\
+\
+6. Read\
+\
+Read \{Bible\} -> Settings \{Settings\} \{\
+ 	userData: S, \
+	locations: undefined, \
+	locationSelected: \{\'85\}, \
+	activeTabName: "Settings", \
+	loginStatus: "loggedInPlus"\
+\} \
+\
+Read \{Bible\} -> SignIn\{Home\} \{\
+ 	userData: S, \
+	locationSelected: \{\'85\}, \
+	locations: undefined, \
+	activeTabName: "Home", \
+	loginStatus: "loggedInPlus"\
+\} \
+\
+}

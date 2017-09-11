@@ -60,17 +60,24 @@ export default class _HigherBibleReadings extends Component {
       this.setState({currentScreen: 'item', chosenItem: item})
   }
 
-  handleOnDayItem(itemDay, navigate, userData, locations, from, activeTabName){
-      navigate('Read', {itemDay: itemDay, userData: userData, from, activeTabName})
+  handleOnDayItem(itemDay, navigate, userData, locations, from, activeTabName, loginStatus, locationSelected){
+      navigate('Read', {itemDay: itemDay, userData: userData, from: from, activeTabName: activeTabName, loginStatus: loginStatus, locationSelected})
   }
 
-  handleOnSettings(navigate, userData,location, loginStatus, from, activeTabName){
+  handleOnSettings(navigate, userData, loginStatus, from, activeTabName){
     const  {params}  = this.props.navigation.state
 
-    navigate('Settings', {userData: params.userData, locations: params.locations, loginStatus: 'loggedIn', from: 'HigherBibleReadings', activeTabName: 'Settings'})
+    navigate('Settings', {userData: params.userData, loginStatus: 'loggedIn', from: 'HigherBibleReadings', activeTabName: 'Settings'})
+  }
+
+  handleOnSettingsLoggedInPlus(navigate, userData, loginStatus, from, activeTabName, locationSelected, locations){
+    const  {params}  = this.props.navigation.state
+
+    navigate('Settings', {userData: params.userData, loginStatus: 'loggedInPlus', from: 'HigherBibleReadings', activeTabName: 'Settings', locationSelected: locationSelected, locations: locations})
   }
 
   handleOnSettingsLoggedOut(navigate, route, userData, loginStatus, activeTabName){
+    alert('Hahah')
     navigate(route, {userData: userData, loginStatus: loginStatus, activeTabName: activeTabName})
   }
 
@@ -80,9 +87,12 @@ export default class _HigherBibleReadings extends Component {
     const { params } = this.props.navigation.state
     
     console.log('handleHome')
+
     if (params.loginStatus && params.loginStatus === 'loggedOut') {
       console.log('From SignIn')
       navigate('SignIn', {activeTabName: 'Home'})
+    } else if (params.loginStatus && params.loginStatus === 'loggedInPlus') {
+      navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
     } else if (params.from === 'SessionItemYellow'){ 
         console.log('From SessionItem Yellow')
         console.log(params)
@@ -123,21 +133,24 @@ export default class _HigherBibleReadings extends Component {
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
    
-     console.log(params)
+    console.log('HigherBibleReadings Container')
+    console.log(params)
     return (
         <HigherBibleReadings 
           readings={readings}
           onSettings={()=> {
-              if (this.state.loginStatus === 'loggedIn'){
-                this.handleOnSettings(navigate, params.userData, params.locations, 'loggedIn', 'HigherBibleReadings','Settings')
+              if (this.state.loginStatus === 'loggedIn'){        
+                this.handleOnSettings(navigate, params.userData, 'loggedIn', 'HigherBibleReadings', 'Settings')
+                } else if (this.state.loginStatus === 'loggedInPlus') {
+                  this. handleOnSettingsLoggedInPlus(navigate, params.userData, 'loggedInPlus', 'HigherBibleReadings', 'Settings', params.locationSelected, params.locations)
                 } else {
-                    this.handleOnSettingsLoggedOut(navigate, 'Settings', '', 'loggedOut', 'Settings')
+                  this.handleOnSettingsLoggedOut(navigate, 'Settings', '', 'loggedOut', 'Settings')
               }
             }
           }
           onHome={()=> this.handleOnHome()}  
           onItem={(item)=> this.handleOnItem(item)}
-          onDayItem={(item)=> this.handleOnDayItem(item, navigate, params.userData, params.locations, 'HigherBibleReadings', 'Bible')}
+          onDayItem={(item)=> this.handleOnDayItem(item, navigate, params.userData, params.locations, 'HigherBibleReadings', 'Bible', params.loginStatus, params.locationSelected)}
           buttonsStyle={this.state.buttonsStyle}
           locations={params.locations}
           onCompleted={()=> this.handleOnCompleted()}

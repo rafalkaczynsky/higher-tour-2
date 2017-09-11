@@ -5,26 +5,26 @@ export default class _UserProfile extends Component {
 
 
   handleOnSettings(navigate, locationSelected, locations, userData, from, activeTabName){
-    navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: from, activeTabName: activeTabName })
- }
+    navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: from, activeTabName: activeTabName, loginStatus: 'loggedInPlus' })
+  }
 
- handleOnBible(navigate, locationSelected, locations, userData, from, activeTabName){
-  navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
-}
+  handleOnBible(navigate, locationSelected, locations, userData, from, activeTabName){
+    navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: from, activeTabName: activeTabName, loginStatus: 'loggedInPlus' })
+  }
 
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-
+    console.log('UserProfile Container')
+    console.log(params)
     return (
         <UserProfile
           locations={params.locations}
           onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, params.locations, params.userData, "UserProfile", 'Settings')}
           onBible={()=> this.handleOnBible(navigate, params.locationSelected, params.locations, params.userData, "UserProfile", 'Bible')}
           userData={params.userData}
-          onBible={() =>  alert('Bible Clicked! Work in progress.')}
           locationSelected={params.locationSelected} 
-          handleEditSession={(locationSelected, locations, userData )=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, locations: locations, userData: userData, cancelLabel: true})}
+          handleEditSession={(locationSelected, locations, userData )=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, locations: locations, userData: userData, cancelLabel: true,  loginStatus: 'loggedInPlus' })}
           activeTabName={'Home'}
         />
     )

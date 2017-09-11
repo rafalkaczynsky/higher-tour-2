@@ -31,8 +31,8 @@ export default class _SignIn extends Component {
     navigate(route, {userData: userData, loginStatus: loginStatus, activeTabName: activeTabName})
   }
 
-  handleOnBible(navigate, route , userData){
-    navigate(route, {userData: userData, from: 'SignIn', activeTabName: 'Bible', loginStatus: 'loggedOut'})
+  handleOnBible(navigate, route , ){
+    navigate(route, { activeTabName: 'Bible', loginStatus: 'loggedOut'})
   }
 
   onFacebook(navigate, route){
@@ -51,7 +51,8 @@ export default class _SignIn extends Component {
 
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-
+    console.log('SignIn Container')
+    console.log(params)
     return (
         <SignIn 
           onNext={()=> {

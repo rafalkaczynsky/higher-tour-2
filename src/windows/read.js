@@ -53,7 +53,7 @@ export default class Read extends Component {
         </View>
         <TabMenu 
           onSettings={this.props.onSettings}
-          onBible={this.props.onBible}
+          onHome={this.props.onHome}
           activeTabName={this.props.activeTabName}
         /> 
       </View>

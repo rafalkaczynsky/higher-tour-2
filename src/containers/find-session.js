@@ -78,7 +78,8 @@ export default class _FindSession extends Component {
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
   
-
+    console.log('Find Session Container')
+    console.log(params)
     return (
         <FindSession 
           onSettings={()=> navigate('Settings', {userData: params.userData, locations: params.locations, from: 'FindSession', activeTabName: 'Settings'})}

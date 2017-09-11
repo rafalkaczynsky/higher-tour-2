@@ -132,7 +132,9 @@ handleOnBible(navigate, locations, userData, from, activeTabName,){
     const { navigate } = this.props.navigation
 
     const { params } = this.props.navigation.state
- 
+    console.log('Welcome Container')
+    console.log(params)
+
     return (
         <Welcome 
           onSettings={()=> navigate('Settings', {userData: params.userData, activeTabName: 'Settings'})}
