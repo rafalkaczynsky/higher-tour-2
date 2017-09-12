@@ -20,7 +20,7 @@ export default class SignIn extends Component {
 
   render() {
     console.log('WelcomeXXX')
-    const { onMoreSession, onChurchPressed, locations, userData} = this.props
+    const { onMoreSession, onChurchPressed, locations, userData, onFindChurch} = this.props
 
     function compareDistance(a, b){
         return a.howFar - b.howFar;
@@ -59,6 +59,13 @@ export default class SignIn extends Component {
                 bgColor={colors.grey3}
                 borderBold
                 handleIconPressed={()=> onMoreSession()}
+                
+              />
+              <ListItem
+                title="Find a church"
+                bgColor={colors.grey3}
+                borderBold
+                handleIconPressed={()=> onFindChurch()}
                 
               />
             </ScrollView>

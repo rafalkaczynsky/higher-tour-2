@@ -34,8 +34,8 @@ export default class _SignIn extends Component {
     this.setState({password: password})
   }
 
-  handleOnNext(email, password, navigate, route, handleError, events, coords){
-    _Firebase.signup(email, password, navigate, route, handleError, events, coords);
+  handleOnNext(email, password, navigate, route, handleError, events, coords, churches){
+    _Firebase.signup(email, password, navigate, route, handleError, events, coords, churches);
   }
 
   handleOnSettings(navigate, route, userData, loginStatus, activeTabName){
@@ -46,12 +46,12 @@ export default class _SignIn extends Component {
     navigate(route, { activeTabName: 'Bible', loginStatus: 'loggedOut'})
   }
 
-  onFacebook(navigate, route, events, coords){
-    _Firebase.fbAuth(navigate, route, events, coords)
+  onFacebook(navigate, route, events, coords, churches){
+    _Firebase.fbAuth(navigate, route, events, coords, churches)
   }
 
-  onTwitter(navigate, route, events, coords){
-    _Firebase._twitterSignIn(navigate, route, events)
+  onTwitter(navigate, route, events, coords, churches){
+    _Firebase._twitterSignIn(navigate, route, events, churches)
   }
 
   getData(fbDataRef , fbDataRef2 ){

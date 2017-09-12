@@ -14,7 +14,8 @@ export default class _Welcome extends Component {
     super(props);
 
     this.state = {
-      events: null
+      events: null,
+      churches: null
     };
   }
 
@@ -28,9 +29,12 @@ componentDidMount(){
   console.log(params)
 
   var events = params.events
-  var crd = params.coords
-  var geoLoc = {}
+  var churches = params.churches
 
+  var crd = params.coords
+  
+  var geoLoc = {}
+//----------------- map events ----------
   events.map((item)=> {
     console.log('did mount map')
     console.log(item.geoLoc.latitude)
@@ -41,7 +45,30 @@ componentDidMount(){
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0922 * ASPECT_RATIO,
     }
-    console.log(geoLoc)
+
+
+    let distance = geolib.getDistance(
+      crd,
+      geoLoc,
+    );
+  
+    distance = geolib.convertUnit('mi', distance, 1)
+
+    console.log(distance)
+    item.howFar = distance
+  })
+// -------------- map churches ------------- 
+  churches.map((item)=> {
+    console.log('did mount map')
+    console.log(item.geoLoc.latitude)
+    console.log(item.geoLoc.longitude)
+    geoLoc = {
+      latitude:  item.geoLoc.latitude,
+      longitude: item.geoLoc.longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0922 * ASPECT_RATIO,
+    }
+
 
     let distance = geolib.getDistance(
       crd,
@@ -57,10 +84,10 @@ componentDidMount(){
   function compareDistance(a, b){
     return a.howFar - b.howFar;
   }
-
+  const z = churches.sort(compareDistance);
   const x = events.sort(compareDistance);
 
-  this.setState({events: events})
+  this.setState({events: events, churches: churches})
 }
 
 
@@ -69,10 +96,13 @@ componentDidMount(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
     console.log('Welcome Container')
-   // console.log(params)
+    console.log(params)
     console.log(this.state.events)
+    console.log(this.state.churches)
+
     const locations = this.state.events
-    
+    const churches = this.state.churches
+
     return (
         <Welcome 
           onSettings={()=> navigate('Settings', {userData: params.userData, activeTabName: 'Settings'})}
@@ -85,9 +115,12 @@ componentDidMount(){
           onChurchPressed={(locationSelected)=> {
             navigate('SessionItem', {locationSelected: locationSelected,  locations: locations, userData: params.userData })
             }}
-            coords={params.coords}
-            activeTabName={'Home'}
-            locations={params.events}
+          onFindChurch={()=>  navigate('FindChurch', {locations: locations, userData: params.userData, churches: churches })}
+          coords={params.coords}
+          activeTabName={'Home'}
+          locations={params.events}
+
+
         />
     )
   }
