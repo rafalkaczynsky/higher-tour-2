@@ -8,6 +8,10 @@ import {getRegionForCoordinates} from '../actions/tools'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
+const { width, height } = Dimensions.get('window');
+
+const ASPECT_RATIO = width / height;
+
 export default class FindSession extends React.Component {
 
   constructor(props) {
@@ -76,7 +80,14 @@ export default class FindSession extends React.Component {
                 key={'Marker'+ item.name + indx }
                 title={item.name}
                 pinColor='red'
-                coordinate={item.geoLoc}
+                coordinate={
+                    {
+                      latitude: item.geoLoc.latitude,
+                      longitude: item.geoLoc.longitude,
+                      latitudeDelta:0.0922,
+                      longitudeDelta: 0.0922 * ASPECT_RATIO,
+                    }
+                  }
                 onCalloutPress={()=>this.props.onItem(item, this.state.locations)}
               />)}
              </MapView>

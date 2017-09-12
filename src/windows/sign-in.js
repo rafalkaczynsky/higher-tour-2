@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
 import twitter, {auth} from 'react-native-twitter';
-import * as firebase from 'firebase'
+
+
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
 import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
@@ -19,37 +20,7 @@ export default class SignIn extends Component {
     }
   }
 
-/*
-  async getData(logResults){
-    var ref = firebase.database().ref();
-    ref.on('value', function(snapshot) {
-          dataBase = snapshot.val()
-          logResults(dataBase)
-      });
-   }
-
-   logResults(dataBase){
-     Events = dataBase.events
-    // console.log(Events)
-   }
-   
-//=--------
-   
-
-   componentDidMount(){
-    var ref = firebase.database().ref();
-    this.getData(this.logResults)
-    ref.on('value', function(snap) { latestSnapshot = snap; });
-   }
-
-*/
   render() {
-
-
-
-    
-    
-    console.log(latestSnapshot)
 
     const {handleEmail, handlePassword, email, password, onNext, onSettings, onBible, onTwitter, onFacebook} = this.props
     return (

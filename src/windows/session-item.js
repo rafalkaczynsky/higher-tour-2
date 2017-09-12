@@ -7,12 +7,9 @@ import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
+const { width, height } = Dimensions.get('window');
 
-//const LATITUDE = 37.78825;
-//const LONGITUDE = -122.4324;
-//const LATITUDE_DELTA = 0.0922;
-//const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-//let id = 0;
+const ASPECT_RATIO = width / height;
 
 export default class SessionItem extends React.Component {
     constructor(props) {
@@ -22,8 +19,8 @@ export default class SessionItem extends React.Component {
           region: {
             latitude: this.props.location.geoLoc.latitude,
             longitude: this.props.location.geoLoc.longitude,
-            latitudeDelta: this.props.location.geoLoc.latitudeDelta,
-            longitudeDelta: this.props.location.geoLoc.longitudeDelta,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0922 * ASPECT_RATIO,        
           },
           markers: [],
           willMount: false,
@@ -35,8 +32,8 @@ export default class SessionItem extends React.Component {
             region:{
                 latitude: this.props.location.geoLoc.latitude,
                 longitude: this.props.location.geoLoc.longitude,
-                latitudeDelta: this.props.location.geoLoc.latitudeDelta,
-                longitudeDelta: this.props.location.geoLoc.longitudeDelta,            
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0922 * ASPECT_RATIO,        
             },
             willMount: true
         })
@@ -57,9 +54,6 @@ export default class SessionItem extends React.Component {
         latitude: location.geoLoc.latitude,
         longitude: location.geoLoc.longitude 
     }
-
-    console.log('region statess')
-    console.log(location)
 
     return(
 

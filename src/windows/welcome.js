@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput} from 'react-native'
-
+import geolib from 'geolib'
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
-
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../components'
 
 export default class SignIn extends Component {
@@ -13,8 +12,11 @@ export default class SignIn extends Component {
       text: 'Useless Placeholder', 
       namePlaceholder: 'Name',
       emailPlaceholder: 'Email',
+      events: []
     }
   }
+
+
 
   render() {
     console.log('WelcomeXXX')
@@ -23,11 +25,8 @@ export default class SignIn extends Component {
     function compareDistance(a, b){
         return a.howFar - b.howFar;
     }
-    
+
     const x = locations.sort(compareDistance);
-    console.log(locations)
-    console.log('Welcome Window')
-    console.log(userData)
 
     return (
       <View style={StyleSheet.window.default}>

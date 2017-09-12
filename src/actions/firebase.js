@@ -24,7 +24,7 @@ var Constants = {
 class _Firebase {
 
       // ================ TWITTER STAFF ================
-      _twitterSignIn(navigate, route) {
+      _twitterSignIn(navigate, route, events, coords) {
         const   RNTwitterSignIn =  NativeModules.RNTwitterSignIn;
         //console.log('twitter')
         RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
@@ -42,7 +42,7 @@ class _Firebase {
                 // we are loged successfull
                 //console.log('twitter data')
                 //console.log(credData);
-                navigate(route, {userData: credData})
+                navigate(route, {userData: credData, events: events, coords: coords})
             }).catch((error)=>{
                  console.log(error);
                });
@@ -59,7 +59,7 @@ class _Firebase {
      // =============== FACEBOOK STAFF ==========
 
 
-  fbAuth(navigate, route){
+  fbAuth(navigate, route, events, coords){
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then(loginResult => {
         if (loginResult.isCancelled) {
@@ -75,7 +75,7 @@ class _Firebase {
             // we are logged in successfull
             //console.log('facebook data')
             //console.log(credData);
-            navigate(route, {userData: credData})
+            navigate(route, {userData: credData, events: events, coords: coords})
         })
         .catch(err => {
             console.log(err);
@@ -84,12 +84,12 @@ class _Firebase {
     }
 
     //==============  FIREBASE ================
-    async signup(email, pass, navigate, route) {
+    async signup(email, pass, navigate, route, events, coords) {
         try {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
                 // Navigate to the Home page, the user is auto logged in
-                navigate(route)
+                navigate(route, { events: events, coords: coords})
 
         } catch (error) {      
                 console.log(error)
