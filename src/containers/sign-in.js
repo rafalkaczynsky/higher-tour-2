@@ -9,7 +9,8 @@ export default class _SignIn extends Component {
   constructor(props) {
     super(props)
 
-    this.firebaseData = firebase.database().ref('events/');
+    this.firebaseDataEvents = firebase.database().ref('events/');
+    this.firebaseDataChurches = firebase.database().ref('churches/');
 
     this.state = { 
       email: '',
@@ -53,15 +54,21 @@ export default class _SignIn extends Component {
     _Firebase._twitterSignIn(navigate, route, events)
   }
 
-  getEvents(fbDataRef){
+  getData(fbDataRef , fbDataRef2 ){
     fbDataRef.on('value',(snap)=>{
       let events = snap.val()
       this.setState({events: Object.keys(events).map(function (key) { return events[key]; })})
     })
+
+    fbDataRef2.on('value',(snap)=>{
+      let churches = snap.val()
+      this.setState({churches: Object.keys(churches).map(function (key) { return churches[key]; })})
+    })
   }
+
   
   componentDidMount(){
-    this.getEvents(this.firebaseData);
+    this.getData(this.firebaseDataEvents, this.firebaseDataChurches);
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -83,13 +90,16 @@ export default class _SignIn extends Component {
     console.log(params)
     var events = this.state.events
     var coords = this.state.coords    // current positions lng and lat
-
+    var churches = this.state.churches 
     console.log(coords)
     console.log(this.state.coords)
+
+    console.log(this.state.churches)
+
     return (
         <SignIn 
           onNext={()=> {
-            this.handleOnNext(this.state.email, this.state.password, navigate, 'Welcome', events, coords)
+            this.handleOnNext(this.state.email, this.state.password, navigate, 'Welcome', events, coords, churches)
           }}
           onSettings={()=> {
             this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
@@ -97,8 +107,8 @@ export default class _SignIn extends Component {
           }  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
           
-          onTwitter={()=> this.onTwitter(navigate, 'Welcome', events, coords)}
-          onFacebook={()=> this.onFacebook(navigate, 'Welcome', events, coords)}
+          onTwitter={()=> this.onTwitter(navigate, 'Welcome', events, coords, churches)}
+          onFacebook={()=> this.onFacebook(navigate, 'Welcome', events, coords, churches)}
           email={this.state.email}
           password={this.state.password}
           handleEmail={(email) => this.handleEmail(email)}
