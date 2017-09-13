@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text} from 'react-native'
+import {ScrollView, View, Text, Animated} from 'react-native'
 import twitter, {auth} from 'react-native-twitter';
 import {Field, reduxForm} from 'redux-form'
 
@@ -21,6 +21,8 @@ class SignIn extends Component {
     this.state = {
       events:[]
     }
+
+    this.animateOpacity = new Animated.Value(0)
   }
 
   submit = values => {
@@ -34,7 +36,29 @@ class SignIn extends Component {
 
     let errorCode = this.props.signInError && this.props.signInError.code;
     let showError = this.props.showError
+    let showErrorWrapper = this.props.showErrorWrapper
 
+    let shown = this.props.shown
+
+    if (!showError) {
+
+      this.animateOpacity = new Animated.Value(1)
+
+      Animated.timing(this.animateOpacity, {
+        toValue: 0,
+        duration: 1000,
+        delay: 3800
+      }).start();
+
+    } else {
+      this.animateOpacity = new Animated.Value(0)
+            Animated.timing(this.animateOpacity, {
+              toValue: 1,
+              duration: 1000,
+              delay: 20
+            }).start();
+    }
+  
     return (
       <View style={StyleSheet.window.default}>
 
@@ -100,11 +124,16 @@ class SignIn extends Component {
             keyboardType="email-address"
             icon="email"
             />
-            {errorCode === 'auth/wrong-password' && showError &&  (
-              <Text style={StyleSheet.signIn.error}>The password is invalid or you've been signed up with Facebook or Twitter. </Text>
+
+            {errorCode === 'auth/wrong-password' &&  showErrorWrapper &&  (
+              <Animated.View style={{opacity: this.animateOpacity}}>
+                  <Text style={StyleSheet.signIn.error}>The password is invalid or you've been signed up with Facebook or Twitter. </Text>
+              </Animated.View>
             )}
-            {errorCode === 'auth/weak-password' && showError &&  (
-              <Text style={StyleSheet.signIn.error}>Password should be at least 6 characters</Text>
+            {errorCode === 'auth/weak-password' && showErrorWrapper &&  (
+              <Animated.View style={{ opacity: this.animateOpacity}}>
+                <Text style={StyleSheet.signIn.error}>Password should be at least 6 characters</Text>
+              </Animated.View>
             )}
 
           <Field
@@ -129,12 +158,15 @@ class SignIn extends Component {
               buttonStyle={{height: 30}}
               onPress={handleSubmit(this.submit)}
             />
+           {/* <Animated.View style={{opacity: this.animateOpacity}}>
+              <Text>Some text</Text>
+            </Animated.View> */}
           </View>
         </View>
         <TabMenu
           onSettings={onSettings}
           onBible={onBible}
-          activeTabName={this.props.activeTabName}
+          activeTabName={this.props.activeTabName2}
         />
       </View>
     )

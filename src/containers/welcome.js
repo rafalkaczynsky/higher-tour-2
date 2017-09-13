@@ -103,19 +103,27 @@ componentDidMount(){
     const locations = this.state.events
     const churches = this.state.churches
 
+    let userData = {}
+    if (!params.userData) {
+        userData.displayName = params.email
+    } else {
+      userData = params.userData
+    }
+
+
     return (
         <Welcome 
-          onSettings={()=> navigate('Settings', {userData: params.userData, activeTabName: 'Settings'})}
-          onBible={() =>  this.handleOnBible(navigate, locations, params.userData, 'Settings', 'Bible')}
+          onSettings={()=> navigate('Settings', {userData: userData, activeTabName: 'Settings', locations: locations, churches: churches, coords: params.coords})}
+          onBible={() =>  this.handleOnBible(navigate, locations, userData, 'Settings', 'Bible')}
           userData={params.userData}
 
           onMoreSession={()=> {
-            navigate('FindSession', {locations: locations, userData: params.userData})}
+            navigate('FindSession', {locations: locations, userData: userData, churches: churches})}
           }
           onChurchPressed={(locationSelected)=> {
-            navigate('SessionItem', {locationSelected: locationSelected,  locations: locations, userData: params.userData })
+            navigate('SessionItem', {locationSelected: locationSelected,  locations: locations, userData: userData })
             }}
-          onFindChurch={()=>  navigate('FindChurch', {locations: locations, userData: params.userData, churches: churches })}
+          onFindChurch={()=>  navigate('FindChurch', {locations: locations, userData: userData, churches: churches })}
           coords={params.coords}
           activeTabName={'Home'}
           locations={params.events}

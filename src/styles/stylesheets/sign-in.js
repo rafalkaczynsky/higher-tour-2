@@ -1,4 +1,4 @@
-import {Platform} from 'react-native'
+import {Platform, Animated, Easing} from 'react-native'
 
 import {colors} from '../resources'
 
@@ -33,7 +33,7 @@ export default StyleSheet => StyleSheet.extend({
     error: {
         fontSize: 10,
         color: 'red',
-        marginBottom: 5
+        marginBottom: 5,
     }
 })
 

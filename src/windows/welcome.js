@@ -16,8 +16,6 @@ export default class SignIn extends Component {
     }
   }
 
-
-
   render() {
     console.log('WelcomeXXX')
     const { onMoreSession, onChurchPressed, locations, userData, onFindChurch} = this.props

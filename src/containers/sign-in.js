@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, View} from 'react-native'
+import {Button, View, Animated} from 'react-native'
 import * as firebase from 'firebase'
 
 import _Firebase from '../actions/firebase';
@@ -20,6 +20,8 @@ export default class _SignIn extends Component {
       email: '',
       password: '',
       showError: null,
+      showErrorWrapper: null,
+      shown: new Animated.Value(0),
       error: '',
       events: {},
       coords: {
@@ -28,6 +30,7 @@ export default class _SignIn extends Component {
       },
       erroR: null,
     }
+   
   }
 
   handleResetPassword(auth, actionCode, continueUrl) {
@@ -81,13 +84,15 @@ export default class _SignIn extends Component {
         let handleLogin = _Firebase.login(email, password, navigate, route); 
         
         handleLogin.then((error)=> {
-          this.setState({error: error, showError: true});
+          this.setState({error: error, showError: true, showErrorWrapper: true});
           var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
+          var clearErrorsWrapper = setTimeout(() => this.setState({showErrorWrapper: false}), 10000);
         })
 
       } else {
-        this.setState({error: error, showError: true});
+        this.setState({error: error, showError: true, showErrorWrapper: true});
         var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
+        var clearErrorsWrapper = setTimeout(() => this.setState({showErrorWrapper: false}), 10000);
       }
 
   })
@@ -168,7 +173,9 @@ export default class _SignIn extends Component {
           onFacebook={()=> this.onFacebook(navigate, 'Welcome', events, coords, churches)}
           email={this.state.email}
           password={this.state.password}
+          shown={this.state.shown}
           showError={this.state.showError}
+          showErrorWrapper={this.state.showErrorWrapper}
           signInError={this.state.error}
           activeTabName={'Home'} />
     )

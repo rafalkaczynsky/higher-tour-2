@@ -69,7 +69,7 @@ export default class _Settings extends Component {
         navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
       } else { 
         console.log('From Welcome')
-        navigate('Welcome', {userData: params.userData, activeTabName: 'Home'})
+        navigate('Welcome', {userData: params.userData, activeTabName: 'Home', events: params.locations, churches: params.churches, coords: params.coords})
       }
     }  
 

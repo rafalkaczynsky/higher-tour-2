@@ -93,7 +93,7 @@ class _Firebase {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
                 // Navigate to the Home page, the user is auto logged in
-                navigate(route, { events: events, coords: coords, churches: churches})
+                navigate(route, { email: email, events: events, coords: coords, churches: churches})
 
         } catch (error) {      
                 return error
@@ -106,7 +106,7 @@ class _Firebase {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
             // Navigate to the Home page
-            navigate(route)
+            navigate(route, { email: email, events: events, coords: coords, churches: churches})
         } catch (error) {
             return error
         }
