@@ -70,8 +70,19 @@ export default class _SignIn extends Component {
   }
 
   handleOnNext(email, password, navigate, route, handleError, events, coords, churches){
-    _Firebase.signup(email, password, navigate, route, handleError, events, coords, churches);
-  }
+    let error = _Firebase.signup(email, password, navigate, route, handleError, events, coords, churches)
+
+    error.then((error)=> {
+
+      
+      if (error.code === "auth/email-already-in-use") {
+        _Firebase.login(email, pass, navigate, route); 
+      } else {
+        this.setState({error: error});
+      }
+
+  })
+}
 
   handleOnSettings(navigate, route, userData, loginStatus, activeTabName){
     navigate(route, {userData: userData, loginStatus: loginStatus, activeTabName: activeTabName})
@@ -126,10 +137,12 @@ export default class _SignIn extends Component {
     var events = this.state.events
     var coords = this.state.coords    // current positions lng and lat
     var churches = this.state.churches 
-    console.log(coords)
-    console.log(this.state.coords)
 
+    console.log(this.state.coords)
     console.log(this.state.churches)
+
+    console.log('Error Message')
+    console.log(this.state.error)
 
     return (
         <SignIn 
@@ -148,7 +161,7 @@ export default class _SignIn extends Component {
           password={this.state.password}
           handleEmail={(email) => this.handleEmail(email)}
           handlePassword={(email) => this.handlePassword(email)}
-
+          signInError={this.state.error}
           activeTabName={'Home'} />
     )
   }

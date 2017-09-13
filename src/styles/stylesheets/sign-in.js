@@ -29,4 +29,11 @@ export default StyleSheet => StyleSheet.extend({
         fontSize: 12, 
         paddingLeft: 10
     },
+
+    error: {
+        fontSize: 10,
+        color: 'red',
+        marginBottom: 5
+    }
 })
+

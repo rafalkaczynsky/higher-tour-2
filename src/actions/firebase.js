@@ -64,7 +64,7 @@ class _Firebase {
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then(loginResult => {
         if (loginResult.isCancelled) {
-            console.log('user canceled');
+            alert('User canceled');
             return;
         }
         AccessToken.getCurrentAccessToken()
@@ -79,7 +79,7 @@ class _Firebase {
             navigate(route, {userData: credData, events: events, coords: coords, churches: churches})
         })
         .catch(err => {
-            console.log(err);
+            return err
         });
     });
     }
@@ -93,22 +93,7 @@ class _Firebase {
                 navigate(route, { events: events, coords: coords, churches: churches})
 
         } catch (error) {      
-                console.log(error)
-                switch(error.code) {
-
-                    case "auth/email-already-in-use":
-                        this.login(email, pass, navigate, route); 
-                        break;
-                    case "auth/invalid-email":
-                        alert(error.message.toString())
-                        break;
-                    case "auth/weak-password":
-                        alert(error.message.toString());
-                        break
-                    
-                    default:
-                    break;
-                }
+                return error
         }
     }
     
@@ -121,6 +106,8 @@ class _Firebase {
             navigate(route)
         } catch (error) {
             alert(error.toString())
+
+            return error
         }
     }
 
