@@ -45,6 +45,7 @@ class _Firebase {
                 //console.log(credData);
                 navigate(route, {userData: credData, events: events, coords: coords, churches: churches})
             }).catch((error)=>{
+                 console.log('twitter error')
                  console.log(error);
                });
          }
@@ -79,7 +80,9 @@ class _Firebase {
             navigate(route, {userData: credData, events: events, coords: coords, churches: churches})
         })
         .catch(err => {
-            return err
+            console.log('Facebook error')
+            console.log(error);
+
         });
     });
     }
@@ -105,8 +108,6 @@ class _Firebase {
             // Navigate to the Home page
             navigate(route)
         } catch (error) {
-            alert(error.toString())
-
             return error
         }
     }
@@ -117,7 +118,9 @@ class _Firebase {
             // Navigate to login view
             navigate(route)
         } catch (error) {
-            alert(error.message.toString());
+            console.log('logout error')
+            console.log(error);
+            return error
         }
 
     }

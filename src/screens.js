@@ -7,7 +7,7 @@ import {
 
 import {_SignIn, _Welcome, _Settings, _FindSession, _FindChurch, _SessionItem, _UserProfile, _HigherBibleReadings, _Read} from './containers'
 
-export default App = StackNavigator(
+export default Screens = StackNavigator(
   {
     Welcome: { screen: _Welcome },
     SignIn: { screen: _SignIn },

@@ -119,8 +119,6 @@ componentDidMount(){
           coords={params.coords}
           activeTabName={'Home'}
           locations={params.events}
-
-
         />
     )
   }

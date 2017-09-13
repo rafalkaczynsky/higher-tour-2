@@ -1,27 +1,15 @@
 import React from 'react'
-import * as FirebaseInit from './actions/firebase-init';
-import {
-  StackNavigator,
-} from 'react-navigation';
+import {Provider} from 'react-redux'
 
+import Screens from './screens'
+import store from './store'
 
-import {_SignIn, _Welcome, _Settings, _FindSession, _FindChurch, _SessionItem, _UserProfile, _HigherBibleReadings, _Read} from './containers'
-
-export default App = StackNavigator(
-  {
-    Welcome: { screen: _Welcome },
-    SignIn: { screen: _SignIn },
-    Settings : { screen: _Settings},
-    FindSession: {screen: _FindSession},
-    FindChurch: {screen: _FindChurch},
-    SessionItem: {screen: _SessionItem},
-    UserProfile: {screen: _UserProfile},
-    HigherBibleReadings: {screen: _HigherBibleReadings},
-    Read: {screen: _Read}
-//   .........................
-  },
-  { 
-      headerMode: 'none', 
-      initialRouteName: 'SignIn'
-  }
-);
+export default class App extends React.Component {
+    render(){
+        return(
+            <Provider store={store}>
+                <Screens />
+            </Provider>
+        )
+    }
+}

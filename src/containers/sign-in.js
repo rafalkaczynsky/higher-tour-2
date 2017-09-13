@@ -19,6 +19,7 @@ export default class _SignIn extends Component {
     this.state = { 
       email: '',
       password: '',
+      showError: null,
       error: '',
       events: {},
       coords: {
@@ -69,16 +70,24 @@ export default class _SignIn extends Component {
     this.setState({password: password})
   }
 
+
   handleOnNext(email, password, navigate, route, handleError, events, coords, churches){
-    let error = _Firebase.signup(email, password, navigate, route, handleError, events, coords, churches)
+    let handleSignUp = _Firebase.signup(email, password, navigate, route, handleError, events, coords, churches)
 
-    error.then((error)=> {
+    handleSignUp.then((error)=> {
 
-      
+
       if (error.code === "auth/email-already-in-use") {
-        _Firebase.login(email, pass, navigate, route); 
+        let handleLogin = _Firebase.login(email, password, navigate, route); 
+        
+        handleLogin.then((error)=> {
+          this.setState({error: error, showError: true});
+          var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
+        })
+
       } else {
-        this.setState({error: error});
+        this.setState({error: error, showError: true});
+        var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
       }
 
   })
@@ -146,21 +155,20 @@ export default class _SignIn extends Component {
 
     return (
         <SignIn 
-          onNext={()=> {
-            this.handleOnNext(this.state.email, this.state.password, navigate, 'Welcome', events, coords, churches)
+          onNext={(email, password)=> {
+            this.handleOnNext(email, password, navigate, 'Welcome', events, coords, churches)
           }}
           onSettings={()=> {
             this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
             }
           }  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
-          
+
           onTwitter={()=> this.onTwitter(navigate, 'Welcome', events, coords, churches)}
           onFacebook={()=> this.onFacebook(navigate, 'Welcome', events, coords, churches)}
           email={this.state.email}
           password={this.state.password}
-          handleEmail={(email) => this.handleEmail(email)}
-          handlePassword={(email) => this.handlePassword(email)}
+          showError={this.state.showError}
           signInError={this.state.error}
           activeTabName={'Home'} />
     )
