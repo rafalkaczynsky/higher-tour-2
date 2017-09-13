@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput} from 'react-native'
+import {ScrollView, View, Text, TextInput, TouchableOpcity} from 'react-native'
 import twitter, {auth} from 'react-native-twitter';
 
 
@@ -76,6 +76,9 @@ export default class SignIn extends Component {
               buttonStyle={{height: 30}}
               onPress={onNext}
             />
+            <TouchableOpcity>
+              <Text>Reset passord</Text> 
+            </TouchableOpcity>
           </View>
         </View>
         <TabMenu

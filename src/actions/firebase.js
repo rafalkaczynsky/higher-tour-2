@@ -1,6 +1,7 @@
 
 import React from 'react'
 import * as firebase from "firebase";
+
 import { NavigationActions } from 'react-navigation'
 import {NativeModules} from 'react-native'
 import { LoginManager, AccessToken} from 'react-native-fbsdk';
@@ -10,8 +11,8 @@ import { LoginManager, AccessToken} from 'react-native-fbsdk';
 
 
 const auth = firebase.auth();
-const provider = firebase.auth.FacebookAuthProvider;
 
+const provider = firebase.auth.FacebookAuthProvider;
 const providerTwitter =firebase.auth.TwitterAuthProvider;
 
 var Constants = {
@@ -133,6 +134,9 @@ class _Firebase {
         }
 
     }
+
+   
+
 
     /**
      * 
