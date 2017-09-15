@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {UserProfile} from '../windows'
+import { connect } from 'react-redux';
 
-export default class _UserProfile extends Component {
+class _UserProfile extends Component {
 
 
   handleOnSettings(navigate, locationSelected, locations, userData, from, activeTabName){
@@ -17,12 +18,17 @@ export default class _UserProfile extends Component {
     const { params } = this.props.navigation.state
     console.log('UserProfile Container')
     console.log(params)
+    console.log(this.props)
+
+    const locations = this.props.events
+    const userData = this.props.user
+ 
     return (
         <UserProfile
-          locations={params.locations}
-          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, params.locations, params.userData, "UserProfile", 'Settings')}
-          onBible={()=> this.handleOnBible(navigate, params.locationSelected, params.locations, params.userData, "UserProfile", 'Bible')}
-          userData={params.userData}
+          locations={locations}
+          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, locations, userData, "UserProfile", 'Settings')}
+          onBible={()=> this.handleOnBible(navigate, params.locationSelected, locations, userData, "UserProfile", 'Bible')}
+          userData={userData}
           locationSelected={params.locationSelected} 
           handleEditSession={(locationSelected, locations, userData )=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, locations: locations, userData: userData, cancelLabel: true,  loginStatus: 'loggedInPlus' })}
           activeTabName={'Home'}
@@ -30,3 +36,12 @@ export default class _UserProfile extends Component {
     )
   }
 }
+
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+  });
+}
+
+export default connect(mapStateToProps)(_UserProfile);

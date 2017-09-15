@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux';
+
 import {FindSession} from '../windows'
 
-export default class _FindSession extends Component {
+class _FindSession extends Component {
   constructor(props){
     super(props)
 
@@ -70,31 +72,43 @@ export default class _FindSession extends Component {
 
   componentDidMount(){
     const  {params}  = this.props.navigation.state
-    this.setState({locations: params.locations})
+    this.setState({locations: this.props.locations})
   }
 
   render() {
 
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
+
+    const locations = this.props.events   // data from the store
+    const userData = this.props.user      // data from the store
   
     console.log('Find Session Container')
     console.log(params)
     return (
         <FindSession 
-          onSettings={()=> navigate('Settings', {userData: params.userData, locations: params.locations, from: 'FindSession', activeTabName: 'Settings'})}
-          onBible={()=> navigate('HigherBibleReadings', {userData: params.userData, locations: params.locations, from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
-          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  params.locations, params.userData)}
+          onSettings={()=> navigate('Settings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Settings'})}
+          onBible={()=> navigate('HigherBibleReadings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
+          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  locations, userData)}
           buttonsStyle={this.state.buttonsStyle}
-          locations={params.locations}
+          locations={locations}
           churchName={params.churchName ? params.churchName : null}
           onMoreSession={()=> this.handleOnMoreSession()}
-          onAlphabetical={()=> this.handleOnAlphabetical(params.locations)}
-          onClosest={()=> this.handleOnClosest(params.locations)}
+          onAlphabetical={()=> this.handleOnAlphabetical(locations)}
+          onClosest={()=> this.handleOnClosest(locations)}
           activeTabName={'Home'}
         />
     )
   }
 }
 
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+      churches: state.churches,
+      coords: state.coords
+  });
+}
 
+export default connect(mapStateToProps)(_FindSession);

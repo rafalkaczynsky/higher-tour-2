@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux';
+
 import {FindChurch} from '../windows'
 
-export default class _FindChurch extends Component {
+class _FindChurch extends Component {
   constructor(props){
     super(props)
 
@@ -69,8 +71,10 @@ export default class _FindChurch extends Component {
   }
 
   componentDidMount(){
-    const  {params}  = this.props.navigation.state
-    this.setState({locations: params.locations, churches: params.churches})
+    const locations = this.props.events   // data from the store
+    const churches = this.props.churches  // data from the store
+
+    this.setState({locations: locations, churches: churches})
   }
 
   render() {
@@ -78,22 +82,37 @@ export default class _FindChurch extends Component {
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
   
+
+    const locations = this.props.events   // data from the store
+    const userData = this.props.user      // data from the store
+    const churches = this.props.churches  // data from the store
+  
     console.log('Find Church Container')
     console.log(params)
     return (
         <FindChurch 
-          onSettings={()=> navigate('Settings', {userData: params.userData, locations: params.locations, from: 'FindSession', activeTabName: 'Settings'})}
-          onBible={()=> navigate('HigherBibleReadings', {userData: params.userData, locations: params.locations, from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
-          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  params.locations, params.userData)}
+          onSettings={()=> navigate('Settings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Settings'})}
+          onBible={()=> navigate('HigherBibleReadings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
+          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected , locations, userData)}
           buttonsStyle={this.state.buttonsStyle}
-          churches={params.churches}
-          locations={params.locations}
+          churches={churches}
+          locations={locations}
           churchName={params.churchName ? params.churchName : null}
           onMoreSession={()=> this.handleOnMoreSession()}
-          onAlphabetical={()=> this.handleOnAlphabetical(params.churches)}
-          onClosest={()=> this.handleOnClosest(params.churches)}
+          onAlphabetical={()=> this.handleOnAlphabetical(churches)}
+          onClosest={()=> this.handleOnClosest(churches)}
           activeTabName={'Home'}
         />
     )
   }
 }
+
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+      churches: state.churches,
+  });
+}
+
+export default connect(mapStateToProps)(_FindChurch);

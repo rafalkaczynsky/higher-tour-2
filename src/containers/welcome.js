@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import {Welcome} from '../windows'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
-
 import {Dimensions} from 'react-native'
+
+import * as ACTIONS from '../actions/actions/actions';
 
 const { width, height } = Dimensions.get('window');
 
@@ -14,10 +15,10 @@ class _Welcome extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      events: null,
-      churches: null
-    };
+
+
+
+
   }
 
 handleOnBible(navigate, locations, userData, from, activeTabName,){
@@ -26,20 +27,18 @@ handleOnBible(navigate, locations, userData, from, activeTabName,){
 
 componentDidMount(){
   const { params } = this.props.navigation.state
-  console.log('did mount')
-  console.log(params)
+ 
+  if (params.userData) {
+    this.props.dispatch(ACTIONS.SAVE_USER(params.userData));
+  }
 
-  var events = params.events
-  var churches = params.churches
-
-  var crd = params.coords
+  var events = this.props.events  // data from the store 
+  var churches = this.props.churches // data from the store
+  var crd = this.props.coords  // data from the store
   
   var geoLoc = {}
 //----------------- map events ----------
   events.map((item)=> {
-    console.log('did mount map')
-    console.log(item.geoLoc.latitude)
-    console.log(item.geoLoc.longitude)
     geoLoc = {
       latitude:  item.geoLoc.latitude,
       longitude: item.geoLoc.longitude,
@@ -47,22 +46,17 @@ componentDidMount(){
       longitudeDelta: 0.0922 * ASPECT_RATIO,
     }
 
-
     let distance = geolib.getDistance(
       crd,
       geoLoc,
     );
   
     distance = geolib.convertUnit('mi', distance, 1)
-
-    console.log(distance)
     item.howFar = distance
   })
 // -------------- map churches ------------- 
   churches.map((item)=> {
-    console.log('did mount map')
-    console.log(item.geoLoc.latitude)
-    console.log(item.geoLoc.longitude)
+
     geoLoc = {
       latitude:  item.geoLoc.latitude,
       longitude: item.geoLoc.longitude,
@@ -70,15 +64,12 @@ componentDidMount(){
       longitudeDelta: 0.0922 * ASPECT_RATIO,
     }
 
-
     let distance = geolib.getDistance(
       crd,
       geoLoc,
     );
   
     distance = geolib.convertUnit('mi', distance, 1)
-
-    console.log(distance)
     item.howFar = distance
   })
 
@@ -88,9 +79,10 @@ componentDidMount(){
   const z = churches.sort(compareDistance);
   const x = events.sort(compareDistance);
 
-  this.setState({events: events, churches: churches})
-}
+  this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
+  this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
 
+}
 
   render() {
 
@@ -98,26 +90,17 @@ componentDidMount(){
     const { params } = this.props.navigation.state
     console.log('Welcome Container')
     console.log(this.props)
-    console.log(params)
-    console.log(this.state.events)
-    console.log(this.state.churches)
 
-    const locations = this.state.events
-    const churches = this.state.churches
-
-    let userData = {}
-    if (!params.userData) {
-        userData.displayName = params.email
-    } else {
-      userData = params.userData
-    }
-
+    const locations = this.props.events     // data from the store
+    const churches = this.props.churches    // data from the store
+    const coords = this.props.coords        // data from the store 
+    const userData = this.props.user      // data from the store
 
     return (
         <Welcome 
-          onSettings={()=> navigate('Settings', {userData: userData, activeTabName: 'Settings', locations: locations, churches: churches, coords: params.coords})}
+          onSettings={()=> navigate('Settings', {userData: userData, activeTabName: 'Settings', locations: locations, churches: churches, coords: coords})}
           onBible={() =>  this.handleOnBible(navigate, locations, userData, 'Settings', 'Bible')}
-          userData={params.userData}
+          userData={userData}
 
           onMoreSession={()=> {
             navigate('FindSession', {locations: locations, userData: userData, churches: churches})}
@@ -126,27 +109,21 @@ componentDidMount(){
             navigate('SessionItem', {locationSelected: locationSelected,  locations: locations, userData: userData })
             }}
           onFindChurch={()=>  navigate('FindChurch', {locations: locations, userData: userData, churches: churches })}
-          coords={params.coords}
+          coords={coords}
           activeTabName={'Home'}
-          locations={params.events}
+          locations={locations}
         />
     )
   }
 }
-
 
 function mapStateToProps(state){
   return({
       user: state.user,
       events: state.events,
       churches: state.churches,
+      coords: state.coords
   });
 }
-//export default connect()(SignIn)
 
-/*
-// get state from store and pass to props
-
-
-*/
 export default connect(mapStateToProps)(_Welcome);

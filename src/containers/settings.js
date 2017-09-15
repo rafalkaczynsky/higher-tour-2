@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import {Button, View} from 'react-native'
+import { connect } from 'react-redux';
 
 import _Firebase from '../actions/firebase';
-
-
 import {Settings} from '../windows'
 
-export default class _Settings extends Component {
+class _Settings extends Component {
   constructor(props){
     super(props)
 
@@ -38,38 +37,43 @@ export default class _Settings extends Component {
   handleOnHome(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-    
+
+    const locations = this.props.events   // data from the store
+    const userData = this.props.user      // data from the store
+    const coords = this.props.coords      // data from the store
+    const churches = this.props.churches  // data from the store
+
     console.log('handleHome')
     if (params.loginStatus === 'loggedOut') {
       console.log('From SignIn')
       navigate('SignIn', {activeTabName: 'Home'})
     } else if (params.loginStatus && params.loginStatus === 'loggedInPlus') {
-      navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+      navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
     }else if (params.from === 'SessionItemYellow'){ 
         console.log('From SessionItem Yellow')
         console.log(params)
-        navigate('FindSession',  {userData: params.userData, locations: params.locations, activeTabName: 'Home'})
+        navigate('FindSession',  {userData: userData, locations: locations, activeTabName: 'Home'})
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
-        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+        navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
       } else if (params.from === 'UserProfile'){
         console.log('From UserProfile')
         console.log(params)
-        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+        navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
       } else if (params.from === 'FindSession'){
         console.log('From FindSession')
         console.log(params)
-        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
+        navigate('FindSession',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
       }
       else if (params.from === 'HigherBibleReadings'){
         // =========== TO BE CHECKED ==============
         console.log('From HigherBibleReadings')
         console.log(params)
-        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
+        navigate('FindSession',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
       } else { 
         console.log('From Welcome')
-        navigate('Welcome', {userData: params.userData, activeTabName: 'Home', events: params.locations, churches: params.churches, coords: params.coords})
+        navigate('Welcome', {userData: userData, activeTabName: 'Home', events: locations, churches: churches, coords: coords})
       }
     }  
 
@@ -78,7 +82,7 @@ export default class _Settings extends Component {
       if (params.loginStatus === 'loggedOut') {
       navigate(route, { activeTabName: 'Bible',loginStatus: 'loggedOut'})
       } else if (params.loginStatus === 'loggedInPlus') {
-        navigate(route, { userData: userData, activeTabName: 'Bible', loginStatus: 'loggedInPlus', locationSelected: locationSelected, locations: locations, })
+        navigate(route, { userData: userData, activeTabName: 'Bible', loginStatus: 'loggedInPlus', locationSelected: locationSelected, locations: locations })
       }else {
         navigate(route, { userData: userData, activeTabName: 'Bible', loginStatus: 'loggedIn'})
       }
@@ -106,14 +110,18 @@ export default class _Settings extends Component {
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
 
+     const locations = this.props.events    // data from the store
+     const userData = this.props.user       // data from the store
+     const coords = this.props.coords       // data from the store
+
      console.log('Settings Container')
      console.log(params)
     return (
         <Settings 
           onHome={()=> this.handleOnHome()}  
-          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings', params.userData, params.locationSelected, params.locations, )}
+          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings', userData, params.locationSelected, locations)}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
-          userData={params.userData}
+          userData={userData}
           onNotifications={() => this.handleNotification()}  
           onLocation={()=> this.handleLocation()}    
           buttonText={buttonTextArray}
@@ -123,3 +131,14 @@ export default class _Settings extends Component {
   }
 }
 
+
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+      churches: state.churches,
+      coords: state.coords
+  });
+}
+
+export default connect(mapStateToProps)(_Settings);

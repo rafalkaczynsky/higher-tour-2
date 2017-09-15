@@ -29,7 +29,6 @@ class _SignIn extends Component {
       error: '',
       erroR: null,
     }
-   
   }
 
   handleResetPassword(auth, actionCode, continueUrl) {
@@ -67,17 +66,14 @@ class _SignIn extends Component {
     this.setState({email: email})
   }
 
-
   handlePassword(password){
     this.setState({password: password})
   }
-
 
   handleOnNext(email, password, navigate, route,  events, coords, churches){
     let handleSignUp = _Firebase.signup(email, password, navigate, route, events, coords, churches)
 
     handleSignUp.then((error)=> {
-
 
       if (error.code === "auth/email-already-in-use") {
         let handleLogin = _Firebase.login(email, password, navigate, route, events, coords, churches); 
@@ -141,16 +137,16 @@ class _SignIn extends Component {
     );
   }
 
-
   render() {
  
     const { navigate } = this.props.navigation
 
     console.log('SignIn Container')
 
-    var events = this.props.events // from the store 
-    var churches = this.props.churches // from the store
-    var coords = this.props.coords    // from the store - current positions lng and lat 
+    const events = this.props.events      // from the store 
+    const churches = this.props.churches  // from the store
+    const coords = this.props.coords      // from the store - current positions lng and lat 
+
     console.log(this.props)
 
     return (
@@ -163,7 +159,6 @@ class _SignIn extends Component {
             }
           }  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
-
           onTwitter={()=> this.onTwitter(navigate, 'Welcome', events, coords, churches)}
           onFacebook={()=> this.onFacebook(navigate, 'Welcome', events, coords, churches)}
           email={this.state.email}
@@ -177,11 +172,7 @@ class _SignIn extends Component {
   }
 }
 
-
-//export default connect()(_SignIn);
-
-
-
+// get state from store and pass to props
 function mapStateToProps(state){
   return({
       user: state.user,
@@ -190,11 +181,5 @@ function mapStateToProps(state){
       coords: state.coords,
   });
 }
-//export default connect()(SignIn)
 
-/*
-// get state from store and pass to props
-
-
-*/
 export default connect(mapStateToProps)(_SignIn);

@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {HigherBibleReadings} from '../windows'
+import { connect } from 'react-redux';
 
 var readings = require('../data/readings') 
 
-export default class _HigherBibleReadings extends Component {
+class _HigherBibleReadings extends Component {
   constructor(props){
     super(props)
     
@@ -19,7 +20,7 @@ export default class _HigherBibleReadings extends Component {
             bgColor: 'brown',           
           }
         ],
-        currentScreen: 'list', //  'item', 'dayItem',
+        currentScreen: 'list', //  or 'item', 'dayItem',
         chosenItem: null,
         chosenDayItem: false
     }
@@ -85,6 +86,9 @@ export default class _HigherBibleReadings extends Component {
   handleOnHome(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
+
+    const events = this.props.events      // from the store 
+    const userData = this.props.user      // from the store
     
     console.log('handleHome')
 
@@ -92,32 +96,32 @@ export default class _HigherBibleReadings extends Component {
       console.log('From SignIn')
       navigate('SignIn', {activeTabName: 'Home'})
     } else if (params.loginStatus && params.loginStatus === 'loggedInPlus') {
-      navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+      navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
     } else if (params.from === 'SessionItemYellow'){ 
         console.log('From SessionItem Yellow')
         console.log(params)
-        navigate('FindSession',  {userData: params.userData, locations: params.locations, activeTabName: 'Home'})
+        navigate('FindSession',  {userData: userData, locations: locations, activeTabName: 'Home'})
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
-        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
+        navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
       } else if (params.from === 'UserProfile'){
         console.log('From UserProfile')
         console.log(params)
-        navigate('UserProfile',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
+        navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
       } else if (params.from === 'FindSession'){
         console.log('From FindSession')
         console.log(params)
-        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
+        navigate('FindSession',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
       }
       else if (params.from === 'HigherBibleReadings'){
         // =========== TO BE CHECKED ==============
         console.log('From HigherBibleReadings')
         console.log(params)
-        navigate('FindSession',  {userData: params.userData, locationSelected: params.locationSelected, locations: params.locations, activeTabName: 'Home'})
+        navigate('FindSession',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
       } else { 
         console.log('From Welcome')
-        navigate('Welcome', {userData: params.userData, activeTabName: 'Home'})
+        navigate('Welcome', {userData: userData, activeTabName: 'Home'})
       }
     }  
 
@@ -132,6 +136,9 @@ export default class _HigherBibleReadings extends Component {
 
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
+
+    const locations = this.props.events      // from the store 
+    const userData = this.props.user      // from the store
    
     console.log('HigherBibleReadings Container')
     console.log(params)
@@ -140,9 +147,9 @@ export default class _HigherBibleReadings extends Component {
           readings={readings}
           onSettings={()=> {
               if (this.state.loginStatus === 'loggedIn'){        
-                this.handleOnSettings(navigate, params.userData, 'loggedIn', 'HigherBibleReadings', 'Settings')
+                this.handleOnSettings(navigate, userData, 'loggedIn', 'HigherBibleReadings', 'Settings')
                 } else if (this.state.loginStatus === 'loggedInPlus') {
-                  this. handleOnSettingsLoggedInPlus(navigate, params.userData, 'loggedInPlus', 'HigherBibleReadings', 'Settings', params.locationSelected, params.locations)
+                  this. handleOnSettingsLoggedInPlus(navigate, userData, 'loggedInPlus', 'HigherBibleReadings', 'Settings', params.locationSelected, locations)
                 } else {
                   this.handleOnSettingsLoggedOut(navigate, 'Settings', '', 'loggedOut', 'Settings')
               }
@@ -150,9 +157,9 @@ export default class _HigherBibleReadings extends Component {
           }
           onHome={()=> this.handleOnHome()}  
           onItem={(item)=> this.handleOnItem(item)}
-          onDayItem={(item)=> this.handleOnDayItem(item, navigate, params.userData, params.locations, 'HigherBibleReadings', 'Bible', params.loginStatus, params.locationSelected)}
+          onDayItem={(item)=> this.handleOnDayItem(item, navigate, userData, locations, 'HigherBibleReadings', 'Bible', params.loginStatus, params.locationSelected)}
           buttonsStyle={this.state.buttonsStyle}
-          locations={params.locations}
+          locations={locations}
           onCompleted={()=> this.handleOnCompleted()}
           onNew={()=> this.handleOnNew()}
           currentScreen={this.state.currentScreen}
@@ -164,4 +171,11 @@ export default class _HigherBibleReadings extends Component {
   }
 }
 
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+  });
+}
 
+export default connect(mapStateToProps)(_HigherBibleReadings);

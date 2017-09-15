@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux';
+
 import {SessionItem} from '../windows'
 
 var myPosition = []
@@ -24,7 +26,7 @@ function error(err) {
 
 navigator.geolocation.getCurrentPosition(success, error, options);
 
-export default class _SessionItem extends Component {
+class _SessionItem extends Component {
 
   constructor(props){
     super(props)
@@ -73,19 +75,23 @@ export default class _SessionItem extends Component {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
+    const locations = this.props.events   // data from the store
+    const userData = this.props.user      // data from the store
+
+
     console.log('SessionItem Container')
     console.log(params)
     return (
         <SessionItem 
-          onHome={()=> this.handleOnHome(navigate, params.locationSelected, params.locations, params.userData)}
-          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, params.locations, params.userData)}
-          onBible={()=> this.handleOnBible(navigate, params.locationSelected, params.locations, params.userData)}
+          onHome={()=> this.handleOnHome(navigate, params.locationSelected, locations, userData)}
+          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, locations, userData)}
+          onBible={()=> this.handleOnBible(navigate, params.locationSelected, locations, userData)}
           myPosition={myPosition[0]}
           location={params.locationSelected}
           cancelLabel={params.cancelLabel}
-          onStopSession={()=> navigate('FindSession', {locations: params.locations, userData: params.userData})}
+          onStopSession={()=> navigate('FindSession', {locations: locations, userData: userData})}
           onStartSession={(location)=> {
-              this.handleOnStartSession(navigate, location, params.locations, params.userData)
+              this.handleOnStartSession(navigate, location, locations, userData)
             }
           }
           activeTabName={''}
@@ -94,4 +100,12 @@ export default class _SessionItem extends Component {
   }
 }
 
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+  });
+}
+
+export default connect(mapStateToProps)(_SessionItem);
 
