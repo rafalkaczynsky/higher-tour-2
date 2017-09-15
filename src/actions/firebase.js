@@ -101,10 +101,14 @@ class _Firebase {
     }
     
 
-    async login(email, pass, navigate, route) {
+    async login(email, pass, navigate, route,  events, coords, churches) {
         try {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
+                console.log('!!!!!!!!!!!!!!!!!!')
+                
+                console.log(email, pass, navigate, route,  events, coords, churches)
+
             // Navigate to the Home page
             navigate(route, { email: email, events: events, coords: coords, churches: churches})
         } catch (error) {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Welcome} from '../windows'
 import geolib from 'geolib'
+import { connect } from 'react-redux';
 
 import {Dimensions} from 'react-native'
 
@@ -8,7 +9,7 @@ const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 
-export default class _Welcome extends Component {
+class _Welcome extends Component {
 
   constructor(props) {
     super(props);
@@ -96,6 +97,7 @@ componentDidMount(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
     console.log('Welcome Container')
+    console.log(this.props)
     console.log(params)
     console.log(this.state.events)
     console.log(this.state.churches)
@@ -133,4 +135,18 @@ componentDidMount(){
 }
 
 
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+      churches: state.churches,
+  });
+}
+//export default connect()(SignIn)
 
+/*
+// get state from store and pass to props
+
+
+*/
+export default connect(mapStateToProps)(_Welcome);

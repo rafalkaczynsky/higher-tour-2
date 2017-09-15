@@ -1,11 +1,15 @@
 import React, {Component} from 'react'
 import {Button, View, Animated} from 'react-native'
+import { connect } from 'react-redux';
+
 import * as firebase from 'firebase'
 
 import _Firebase from '../actions/firebase';
 import {SignIn} from '../windows'
 
-export default class _SignIn extends Component {
+import * as ACTIONS from '../actions/actions/actions';
+
+class _SignIn extends Component {
   constructor(props) {
     super(props)
 
@@ -23,11 +27,6 @@ export default class _SignIn extends Component {
       showErrorWrapper: null,
       shown: new Animated.Value(0),
       error: '',
-      events: {},
-      coords: {
-        latitude: null,
-        longitude: null,
-      },
       erroR: null,
     }
    
@@ -74,14 +73,14 @@ export default class _SignIn extends Component {
   }
 
 
-  handleOnNext(email, password, navigate, route, handleError, events, coords, churches){
-    let handleSignUp = _Firebase.signup(email, password, navigate, route, handleError, events, coords, churches)
+  handleOnNext(email, password, navigate, route,  events, coords, churches){
+    let handleSignUp = _Firebase.signup(email, password, navigate, route, events, coords, churches)
 
     handleSignUp.then((error)=> {
 
 
       if (error.code === "auth/email-already-in-use") {
-        let handleLogin = _Firebase.login(email, password, navigate, route); 
+        let handleLogin = _Firebase.login(email, password, navigate, route, events, coords, churches); 
         
         handleLogin.then((error)=> {
           this.setState({error: error, showError: true, showErrorWrapper: true});
@@ -117,27 +116,28 @@ export default class _SignIn extends Component {
   getData(fbDataRef , fbDataRef2 ){
     fbDataRef.on('value',(snap)=>{
       let events = snap.val()
-      this.setState({events: Object.keys(events).map(function (key) { return events[key]; })})
+      events = Object.keys(events).map(function (key) { return events[key]; })
+      this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
     })
 
     fbDataRef2.on('value',(snap)=>{
-      let churches = snap.val()
-      this.setState({churches: Object.keys(churches).map(function (key) { return churches[key]; })})
+     let churches= snap.val()
+     churches = Object.keys(churches).map(function (key) { return churches[key]; })
+     this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
     })
+
+
   }
 
   
   componentDidMount(){
     this.getData(this.firebaseDataEvents, this.firebaseDataChurches);
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.setState({
-          coords: position.coords,
-          error: null,
-        });
-      },
-      (error) => this.setState({ erroR: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+      }
+     
     );
   }
 
@@ -145,18 +145,13 @@ export default class _SignIn extends Component {
   render() {
  
     const { navigate } = this.props.navigation
-    const { params } = this.props.navigation.state
+
     console.log('SignIn Container')
-    console.log(params)
-    var events = this.state.events
-    var coords = this.state.coords    // current positions lng and lat
-    var churches = this.state.churches 
 
-    console.log(this.state.coords)
-    console.log(this.state.churches)
-
-    console.log('Error Message')
-    console.log(this.state.error)
+    var events = this.props.events // from the store 
+    var churches = this.props.churches // from the store
+    var coords = this.props.coords    // from the store - current positions lng and lat 
+    console.log(this.props)
 
     return (
         <SignIn 
@@ -181,3 +176,25 @@ export default class _SignIn extends Component {
     )
   }
 }
+
+
+//export default connect()(_SignIn);
+
+
+
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+      churches: state.churches,
+      coords: state.coords,
+  });
+}
+//export default connect()(SignIn)
+
+/*
+// get state from store and pass to props
+
+
+*/
+export default connect(mapStateToProps)(_SignIn);
