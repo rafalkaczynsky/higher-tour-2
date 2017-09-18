@@ -3,7 +3,7 @@ import geolib from 'geolib'
 import { connect } from 'react-redux';
 
 import {Read} from '../windows'
-
+import * as ACTIONS from '../actions/actions/actions';
 
 
 
@@ -17,30 +17,32 @@ class _Read extends Component {
   }
 
 handleOnBible(navigate, from, activeTabName){
-  navigate('HigherBibleReadings', {from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
+  navigate('HigherBibleReadings', {from: from, activeTabName: activeTabName})
 }
 
-handleOnSettings(navigate, route, activeTabName, loginStatus){
+handleOnSettings(navigate, route, activeTabName){
   const { params } = this.props.navigation.state
+  const loginStatus = this.props.app.loginStatus  // data from the store
 
-  if (params.loginStatus === 'loggedOut') {
-     navigate('Settings', {activeTabName: 'Settings', loginStatus: params.loginStatus})
+  if (loginStatus === 'loggedOut') {
+     navigate('Settings', {activeTabName: 'Settings'})
   } else if (params.loginStatus === 'loggedIn ') {
-    navigate('Settings', {activeTabName: 'Settings', loginStatus: params.loginStatus})
+    navigate('Settings', {activeTabName: 'Settings'})
   } else {
-    navigate('Settings', {locationSelected: params.locationSelected, activeTabName: 'Settings', loginStatus: params.loginStatus})
+    navigate('Settings', {locationSelected: params.locationSelected, activeTabName: 'Settings'})
   }
 }
 
-handleHome(navigate, activeTabName, loginStatus, locationSelected){
+handleHome(navigate, activeTabName, locationSelected){
+  const loginStatus = this.props.app.loginStatus  // data from the store
 
-    if (loginStatus === 'loggedOut') {
-      navigate('SignIn', {activeTabName: activeTabName, loginStatus: loginStatus})
-    } else if (loginStatus === 'loggedIn'){
-      navigate('Welcome', {activeTabName: activeTabName, loginStatus: loginStatus})
+  if (loginStatus === 'loggedOut') {
+    navigate('SignIn', {activeTabName: activeTabName})
+  } else if (loginStatus === 'loggedIn'){
+      navigate('Welcome', {activeTabName: activeTabName})
     } else {
-      navigate('UserProfile', {activeTabName: activeTabName, loginStatus: loginStatus, locationSelected: locationSelected})
-    }
+        navigate('UserProfile', {activeTabName: activeTabName, locationSelected: locationSelected})
+      }
 }
 
   render() {
@@ -48,16 +50,17 @@ handleHome(navigate, activeTabName, loginStatus, locationSelected){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events     // data from the store
-    const userData = this.props.user        // data from the store
+    const locations = this.props.events             // data from the store
+    const userData = this.props.user                // data from the store
+    const loginStatus = this.props.app.loginStatus  // data from the store
  
     console.log('Read Container')
     console.log(params)
     console.log(this.props)
     return (
         <Read 
-          onSettings={()=> this.handleOnSettings(navigate, 'Settings', 'Settings', 'loggedOut')}
-          onHome={()=> this.handleHome(navigate, 'Home', params.loginStatus, params.locationSelected)}
+          onSettings={()=> this.handleOnSettings(navigate, 'Settings', 'Settings')}
+          onHome={()=> this.handleHome(navigate, 'Home',params.locationSelected)}
           userData={userData}
           locations={locations}
           itemDay={params.itemDay}
@@ -71,6 +74,8 @@ function mapStateToProps(state){
   return({
       user: state.user,
       events: state.events,
+      app: state.app,
+
   });
 }
 

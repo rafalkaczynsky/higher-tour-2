@@ -32,4 +32,19 @@ export function SAVE_COORDS(coords) {
         coords: coords,
     };
 }
+
+//UPDATE_ACTIVE_TAB_NAME
+export function UPDATE_LOGGIN_STATUS(loginStatus) {
+    return {
+        type: types.UPDATE_LOGGIN_STATUS,
+        loginStatus: loginStatus,
+    };
+}
+
+export function UPDATE_ACTIVE_TAB_NAME(activeTabName) {
+    return {
+        type: types.UPDATE_ACTIVE_TAB_NAME,
+        activeTabName: activeTabName,
+    };
+}
 //...............

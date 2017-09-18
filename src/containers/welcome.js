@@ -16,28 +16,36 @@ class _Welcome extends Component {
     super(props);
   }
 
-handleOnBible(navigate, from, activeTabName,){
-  navigate('HigherBibleReadings', {from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
+handleOnBible(navigate, from){
+  navigate('HigherBibleReadings', {from: from})
 }
 
 handleOnMoreSession(navigate, route){
   navigate(route)
 }
 
-handleOnSettings(navigate, route, activeTabName){
-  navigate(route, {activeTabName: activeTabName})
+handleOnSettings(navigate, route, from){
+  navigate(route, {from: from})
 }
 
 handleOnFindChurch(navigate, route){
   navigate(route)
 }
 
+componentWillMount(){
+
+  const { params } = this.props.navigation.state
+  const loginStatus= this.props.app.loginStatus // data from the store
+  
+  if (loginStatus === 'loggedOut') {
+    if (params.userData) {
+      this.props.dispatch(ACTIONS.SAVE_USER(params.userData));
+    }
+   }
+}
+
 componentDidMount(){
   const { params } = this.props.navigation.state
- 
-  if (params.userData) {
-    this.props.dispatch(ACTIONS.SAVE_USER(params.userData));
-  }
 
   var events = this.props.events  // data from the store 
   var churches = this.props.churches // data from the store
@@ -88,7 +96,9 @@ componentDidMount(){
 
   this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
   this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
-
+  this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn'))
+  this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+ 
 }
 
   render() {
@@ -96,10 +106,11 @@ componentDidMount(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events     // data from the store
-    const churches = this.props.churches    // data from the store
-    const coords = this.props.coords        // data from the store 
-    const userData = this.props.user      // data from the store
+    const locations = this.props.events                 // data from the store
+    const churches = this.props.churches                // data from the store
+    const coords = this.props.coords                    // data from the store 
+    const userData = this.props.user                    // data from the store
+    const activeTabName = this.props.app.activeTabName  // data from the store
 
     console.log('Welcome Container')
     console.log(params)
@@ -114,7 +125,7 @@ componentDidMount(){
           onChurchPressed={(locationSelected)=> { navigate('SessionItem', {locationSelected: locationSelected})}}
           onFindChurch={()=> this.handleOnFindChurch(navigate, 'FindChurch')}
           coords={coords}
-          activeTabName={'Home'}
+          activeTabName={activeTabName}
           locations={locations}
         />
     )
@@ -126,7 +137,9 @@ function mapStateToProps(state){
       user: state.user,
       events: state.events,
       churches: state.churches,
-      coords: state.coords
+      coords: state.coords,
+      app: state.app,
+
   });
 }
 

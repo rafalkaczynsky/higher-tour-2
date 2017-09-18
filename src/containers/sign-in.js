@@ -98,7 +98,7 @@ class _SignIn extends Component {
   }
 
   handleOnBible(navigate, route , ){
-    navigate(route, { activeTabName: 'Bible', loginStatus: 'loggedOut'})
+    navigate(route, { activeTabName: 'Bible'})
   }
 
   onFacebook(navigate, route){
@@ -134,15 +134,20 @@ class _SignIn extends Component {
         this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
       }
     );
+
+    this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
+    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+
   }
 
   render() {
  
     const { navigate } = this.props.navigation
 
-    const events = this.props.events      // from the store 
-    const churches = this.props.churches  // from the store
-    const coords = this.props.coords      // from the store - current positions lng and lat 
+    const events = this.props.events                   // from the store 
+    const churches = this.props.churches               // from the store
+    const coords = this.props.coords                   // from the store - current positions lng and lat 
+    const activeTabName = this.props.app.activeTabName // from the store
 
     console.log('SignIn Container')
     console.log(this.props)
@@ -165,7 +170,7 @@ class _SignIn extends Component {
           showError={this.state.showError}
           showErrorWrapper={this.state.showErrorWrapper}
           signInError={this.state.error}
-          activeTabName={'Home'} />
+          activeTabName={activeTabName} />
     )
   }
 }
@@ -177,6 +182,8 @@ function mapStateToProps(state){
       events: state.events,
       churches: state.churches,
       coords: state.coords,
+      app: state.app,
+
   });
 }
 

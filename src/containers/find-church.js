@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 
+import * as ACTIONS from '../actions/actions/actions';
 import {FindChurch} from '../windows'
 
 class _FindChurch extends Component {
@@ -75,6 +76,7 @@ class _FindChurch extends Component {
     const churches = this.props.churches  // data from the store
 
     this.setState({locations: locations, churches: churches})
+    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
   }
 
   render() {
@@ -86,6 +88,7 @@ class _FindChurch extends Component {
     const locations = this.props.events   // data from the store
     const userData = this.props.user      // data from the store
     const churches = this.props.churches  // data from the store
+    const activeTabName = this.props.app.activeTabName  // data from the store
   
     console.log('Find Church Container')
     console.log(params)
@@ -93,7 +96,7 @@ class _FindChurch extends Component {
     return (
         <FindChurch 
           onSettings={()=> navigate('Settings', {from: 'FindSession', activeTabName: 'Settings'})}
-          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
+          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible'})}
           onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected)}
           buttonsStyle={this.state.buttonsStyle}
           churches={churches}
@@ -102,7 +105,7 @@ class _FindChurch extends Component {
           onMoreSession={()=> this.handleOnMoreSession()}
           onAlphabetical={()=> this.handleOnAlphabetical(churches)}
           onClosest={()=> this.handleOnClosest(churches)}
-          activeTabName={'Home'}
+          activeTabName={activeTabName}
         />
     )
   }
@@ -113,6 +116,8 @@ function mapStateToProps(state){
       user: state.user,
       events: state.events,
       churches: state.churches,
+      app: state.app,
+
   });
 }
 

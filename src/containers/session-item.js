@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 
 import {SessionItem} from '../windows'
+import * as ACTIONS from '../actions/actions/actions';
+
 
 var myPosition = []
 
@@ -38,17 +40,23 @@ class _SessionItem extends Component {
   }
 
 
-  handleOnStartSession(navigate, locationSelected,){
-       navigate('UserProfile', { locationSelected: locationSelected})
+  handleOnStartSession(navigate, route, locationSelected,){
+       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
+       navigate(route, { locationSelected: locationSelected})
+  }
+
+  handleOnStopSession(navigate, route){
+    this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
+    navigate(route)
   }
 
   handleOnSettings(navigate, locationSelected, from){
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemBrown', cancelLabel: true ,activeTabName: 'Settings', loginStatus: 'loggedInPlus'})
+      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemBrown', cancelLabel: true })
     } else {
-      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemYellow', activeTabName: 'Settings' })
+      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemYellow'})
     }
   }
 
@@ -56,19 +64,23 @@ class _SessionItem extends Component {
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('UserProfile', { locationSelected: locationSelected,  from: 'SessionItemBrown', activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+      navigate('UserProfile', { locationSelected: locationSelected,  from: 'SessionItemBrown'})
     } else {
-      navigate('Welcome', {from: 'SessionItemYellow', activeTabName: 'Home'})
+      navigate('Welcome', {from: 'SessionItemYellow'})
     }
   }
 
   handleOnBible(navigate, locationSelected,  from){
     const { params } = this.props.navigation.state
     if (params.cancelLabel){
-      navigate('HigherBibleReadings', {locationSelected: locationSelected, from: 'SessionItemBrown', activeTabName: 'Bible', loginStatus: 'loggedInPlus'})
+      navigate('HigherBibleReadings', {locationSelected: locationSelected, from: 'SessionItemBrown'})
     } else {
-      navigate('HigherBibleReadings', {from: 'SessionItemYellow', activeTabName: 'Bible', loginStatus: 'loggedIn'})
+      navigate('HigherBibleReadings', {from: 'SessionItemYellow'})
     }
+  }
+
+  componentDidMount(){
+    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
   }
 
   render() {
@@ -77,6 +89,8 @@ class _SessionItem extends Component {
 
     const locations = this.props.events   // data from the store
     const userData = this.props.user      // data from the store
+    const activeTabName =this.props.app.activeTabName  // data from the store
+    
 
 
     console.log('SessionItem Container')
@@ -90,10 +104,10 @@ class _SessionItem extends Component {
           myPosition={myPosition[0]}
           location={params.locationSelected}
           cancelLabel={params.cancelLabel}
-          onStopSession={()=> navigate('FindSession')}
-          onStartSession={(location)=> {this.handleOnStartSession(navigate, location)}
+          onStopSession={()=> this.handleOnStopSession(navigate, 'FindSession')}
+          onStartSession={(location)=> {this.handleOnStartSession(navigate, 'UserProfile', location)}
           }
-          activeTabName={''}
+          activeTabName={activeTabName}
         />
     )
   }
@@ -103,6 +117,8 @@ function mapStateToProps(state){
   return({
       user: state.user,
       events: state.events,
+      app: state.app,
+
   });
 }
 

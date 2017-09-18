@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 
+import * as ACTIONS from '../actions/actions/actions';
 import {FindSession} from '../windows'
 
 class _FindSession extends Component {
@@ -66,13 +67,13 @@ class _FindSession extends Component {
           bgColor: 'brown',           
         }
       ]
-    
     })
   }
 
   componentDidMount(){
     const  {params}  = this.props.navigation.state
     this.setState({locations: this.props.locations})
+    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
   }
 
   render() {
@@ -80,8 +81,9 @@ class _FindSession extends Component {
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
 
-    const locations = this.props.events   // data from the store
-    const userData = this.props.user      // data from the store
+    const locations = this.props.events                 // data from the store
+    const userData = this.props.user                    // data from the store
+    const activeTabName = this.props.app.activeTabName  // data from the store
   
     console.log('Find Session Container')
     console.log(params)
@@ -92,16 +94,16 @@ class _FindSession extends Component {
 
     return (
         <FindSession 
-          onSettings={()=> navigate('Settings', {from: 'FindSession', activeTabName: 'Settings'})}
-          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
-          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  locations, userData)}
+          onSettings={()=> navigate('Settings', {from: 'FindSession'})}
+          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession'})}
+          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected)}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           churchName={churchName}
           onMoreSession={()=> this.handleOnMoreSession()}
           onAlphabetical={()=> this.handleOnAlphabetical(locations)}
           onClosest={()=> this.handleOnClosest(locations)}
-          activeTabName={'Home'}
+          activeTabName={activeTabName}
         />
     )
   }
@@ -112,7 +114,9 @@ function mapStateToProps(state){
       user: state.user,
       events: state.events,
       churches: state.churches,
-      coords: state.coords
+      coords: state.coords,
+      app: state.app,
+
   });
 }
 
