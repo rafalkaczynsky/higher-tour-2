@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, View, Animated} from 'react-native'
+import {Button, View, Animated, AsyncStorage} from 'react-native'
 import { connect } from 'react-redux';
 
 import * as firebase from 'firebase'
@@ -15,11 +15,54 @@ class _SignIn extends Component {
 
     this.firebaseDataEvents = firebase.database().ref('events/');
     this.firebaseDataChurches = firebase.database().ref('churches/');
+ 
+    
 
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
     this.actionCode = 'resetPassword' 
-    
+
+    console.log('Constructor')
+    console.log(this.props)
+
+    var props = this.props
+
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (err, stores) => {
+        console.log('insideAsync1')
+        console.log(stores)
+
+       stores.map((result, i, store) => {
+         // get at each store's key/value so you can work with it
+         let key = store[i][0];
+         let value = store[i][1];
+        // console.log(value)
+        // console.log(result)
+        console.log('insideAsync2')
+        console.log(store[0][1])
+
+        });
+      });
+    });
+
+/*
+    this.auth.onAuthStateChanged(function (user) {
+      const { navigate } = props.navigation
+      var firebaseDataAppUsers = firebase.database().ref('appUsers/');
+
+      if(user){
+        props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+        props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn'))
+        props.dispatch(ACTIONS.SAVE_USER('User'))
+        // check if user follows any event            
+        // navigate('FindSession')
+        // if yes UserProfile 
+
+        //if not got FindSession
+      }
+    })
+    */
+
     this.state = { 
       email: '',
       password: '',
@@ -30,6 +73,7 @@ class _SignIn extends Component {
       erroR: null,
     }
   }
+
 
   handleResetPassword(auth, actionCode, continueUrl) {
     var accountEmail;
@@ -127,6 +171,9 @@ class _SignIn extends Component {
 
   
   componentDidMount(){
+
+
+
     this.getData(this.firebaseDataEvents, this.firebaseDataChurches);
 
     navigator.geolocation.getCurrentPosition(

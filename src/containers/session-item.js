@@ -8,7 +8,7 @@ import * as ACTIONS from '../actions/actions/actions';
 var myPosition = []
 
 var options = {
-  enableHighAccuracy: true,
+  enableHighAccuracy: false,
   timeout: 5000,
   maximumAge: 0
 };
