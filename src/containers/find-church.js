@@ -22,8 +22,8 @@ class _FindChurch extends Component {
     }
   }
 
-  handleOnItem(navigate, locationSelected, locations, userData){
-    navigate('SessionItem', { locationSelected: locationSelected,  locations: locations, userData: userData })
+  handleOnItem(navigate, locationSelected){
+    navigate('SessionItem', { locationSelected: locationSelected})
   }
 
   handleOnAlphabetical(locations){
@@ -89,11 +89,12 @@ class _FindChurch extends Component {
   
     console.log('Find Church Container')
     console.log(params)
+    console.log(this.props)
     return (
         <FindChurch 
-          onSettings={()=> navigate('Settings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Settings'})}
-          onBible={()=> navigate('HigherBibleReadings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
-          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected , locations, userData)}
+          onSettings={()=> navigate('Settings', {from: 'FindSession', activeTabName: 'Settings'})}
+          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
+          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected)}
           buttonsStyle={this.state.buttonsStyle}
           churches={churches}
           locations={locations}

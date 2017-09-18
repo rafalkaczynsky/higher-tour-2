@@ -25,7 +25,7 @@ var Constants = {
 class _Firebase {
 
       // ================ TWITTER STAFF ================
-      _twitterSignIn(navigate, route, events, coords, churches) {
+      _twitterSignIn(navigate, route) {
         const   RNTwitterSignIn =  NativeModules.RNTwitterSignIn;
         //console.log('twitter')
         RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
@@ -43,7 +43,7 @@ class _Firebase {
                 // we are loged successfull
                 //console.log('twitter data')
                 //console.log(credData);
-                navigate(route, {userData: credData, events: events, coords: coords, churches: churches})
+                navigate(route, {userData: credData})
             }).catch((error)=>{
                  console.log('twitter error')
                  console.log(error);
@@ -61,7 +61,7 @@ class _Firebase {
      // =============== FACEBOOK STAFF ==========
 
 
-  fbAuth(navigate, route, events, coords, churches){
+  fbAuth(navigate, route){
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then(loginResult => {
         if (loginResult.isCancelled) {
@@ -77,7 +77,7 @@ class _Firebase {
             // we are logged in successfull
             //console.log('facebook data')
             //console.log(credData);
-            navigate(route, {userData: credData, events: events, coords: coords, churches: churches})
+            navigate(route, {userData: credData})
         })
         .catch(err => {
             console.log('Facebook error')
@@ -88,12 +88,12 @@ class _Firebase {
     }
 
     //==============  FIREBASE ================
-    async signup(email, pass, navigate, route, events, coords, churches) {
+    async signup(email, pass, navigate, route) {
         try {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
                 // Navigate to the Home page, the user is auto logged in
-                navigate(route, { email: email, events: events, coords: coords, churches: churches})
+                navigate(route, { email: email})
 
         } catch (error) {      
                 return error
@@ -101,16 +101,16 @@ class _Firebase {
     }
     
 
-    async login(email, pass, navigate, route,  events, coords, churches) {
+    async login(email, pass, navigate, route) {
         try {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
                 console.log('!!!!!!!!!!!!!!!!!!')
                 
-                console.log(email, pass, navigate, route,  events, coords, churches)
+                console.log(email, pass, navigate, route)
 
             // Navigate to the Home page
-            navigate(route, { email: email, events: events, coords: coords, churches: churches})
+            navigate(route, { email: email})
         } catch (error) {
             return error
         }

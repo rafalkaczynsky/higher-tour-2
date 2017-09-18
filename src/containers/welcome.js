@@ -14,15 +14,22 @@ class _Welcome extends Component {
 
   constructor(props) {
     super(props);
-
-
-
-
-
   }
 
-handleOnBible(navigate, locations, userData, from, activeTabName,){
-  navigate('HigherBibleReadings', {locations: locations, userData: userData, from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
+handleOnBible(navigate, from, activeTabName,){
+  navigate('HigherBibleReadings', {from: from, activeTabName: activeTabName, loginStatus: 'loggedIn' })
+}
+
+handleOnMoreSession(navigate, route){
+  navigate(route)
+}
+
+handleOnSettings(navigate, route, activeTabName){
+  navigate(route, {activeTabName: activeTabName})
+}
+
+handleOnFindChurch(navigate, route){
+  navigate(route)
 }
 
 componentDidMount(){
@@ -88,27 +95,24 @@ componentDidMount(){
 
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-    console.log('Welcome Container')
-    console.log(this.props)
 
     const locations = this.props.events     // data from the store
     const churches = this.props.churches    // data from the store
     const coords = this.props.coords        // data from the store 
     const userData = this.props.user      // data from the store
 
+    console.log('Welcome Container')
+    console.log(params)
+    console.log(this.props)
+
     return (
         <Welcome 
-          onSettings={()=> navigate('Settings', {userData: userData, activeTabName: 'Settings', locations: locations, churches: churches, coords: coords})}
-          onBible={() =>  this.handleOnBible(navigate, locations, userData, 'Settings', 'Bible')}
+          onSettings={()=> this.handleOnSettings(navigate, 'Settings', 'Settings')}
+          onBible={() =>  this.handleOnBible(navigate,'Settings', 'Bible')}
           userData={userData}
-
-          onMoreSession={()=> {
-            navigate('FindSession', {locations: locations, userData: userData, churches: churches})}
-          }
-          onChurchPressed={(locationSelected)=> {
-            navigate('SessionItem', {locationSelected: locationSelected,  locations: locations, userData: userData })
-            }}
-          onFindChurch={()=>  navigate('FindChurch', {locations: locations, userData: userData, churches: churches })}
+          onMoreSession={()=> this.handleOnMoreSession(navigate, 'FindSession')}
+          onChurchPressed={(locationSelected)=> { navigate('SessionItem', {locationSelected: locationSelected})}}
+          onFindChurch={()=> this.handleOnFindChurch(navigate, 'FindChurch')}
           coords={coords}
           activeTabName={'Home'}
           locations={locations}

@@ -70,13 +70,13 @@ class _SignIn extends Component {
     this.setState({password: password})
   }
 
-  handleOnNext(email, password, navigate, route,  events, coords, churches){
-    let handleSignUp = _Firebase.signup(email, password, navigate, route, events, coords, churches)
+  handleOnNext(email, password, navigate, route){
+    let handleSignUp = _Firebase.signup(email, password, navigate, route)
 
     handleSignUp.then((error)=> {
 
       if (error.code === "auth/email-already-in-use") {
-        let handleLogin = _Firebase.login(email, password, navigate, route, events, coords, churches); 
+        let handleLogin = _Firebase.login(email, password, navigate, route); 
         
         handleLogin.then((error)=> {
           this.setState({error: error, showError: true, showErrorWrapper: true});
@@ -93,20 +93,20 @@ class _SignIn extends Component {
   })
 }
 
-  handleOnSettings(navigate, route, userData, loginStatus, activeTabName){
-    navigate(route, {userData: userData, loginStatus: loginStatus, activeTabName: activeTabName})
+  handleOnSettings(navigate, route, loginStatus, activeTabName){
+    navigate(route, {loginStatus: loginStatus, activeTabName: activeTabName})
   }
 
   handleOnBible(navigate, route , ){
     navigate(route, { activeTabName: 'Bible', loginStatus: 'loggedOut'})
   }
 
-  onFacebook(navigate, route, events, coords, churches){
-    _Firebase.fbAuth(navigate, route, events, coords, churches)
+  onFacebook(navigate, route){
+    _Firebase.fbAuth(navigate, route)
   }
 
-  onTwitter(navigate, route, events, coords, churches){
-    _Firebase._twitterSignIn(navigate, route, events, churches)
+  onTwitter(navigate, route){
+    _Firebase._twitterSignIn(navigate, route)
   }
 
   getData(fbDataRef , fbDataRef2 ){
@@ -133,7 +133,6 @@ class _SignIn extends Component {
       (position) => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
       }
-     
     );
   }
 
@@ -141,26 +140,25 @@ class _SignIn extends Component {
  
     const { navigate } = this.props.navigation
 
-    console.log('SignIn Container')
-
     const events = this.props.events      // from the store 
     const churches = this.props.churches  // from the store
     const coords = this.props.coords      // from the store - current positions lng and lat 
 
+    console.log('SignIn Container')
     console.log(this.props)
 
     return (
         <SignIn 
           onNext={(email, password)=> {
-            this.handleOnNext(email, password, navigate, 'Welcome', events, coords, churches)
+            this.handleOnNext(email, password, navigate, 'Welcome')
           }}
           onSettings={()=> {
             this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
             }
           }  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
-          onTwitter={()=> this.onTwitter(navigate, 'Welcome', events, coords, churches)}
-          onFacebook={()=> this.onFacebook(navigate, 'Welcome', events, coords, churches)}
+          onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
+          onFacebook={()=> this.onFacebook(navigate, 'Welcome')}
           email={this.state.email}
           password={this.state.password}
           shown={this.state.shown}

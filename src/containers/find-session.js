@@ -22,8 +22,8 @@ class _FindSession extends Component {
     }
   }
 
-  handleOnItem(navigate, locationSelected, locations, userData){
-    navigate('SessionItem', { locationSelected: locationSelected,  locations: locations, userData: userData })
+  handleOnItem(navigate, locationSelected){
+    navigate('SessionItem', { locationSelected: locationSelected})
   }
 
   handleOnAlphabetical(locations){
@@ -85,14 +85,19 @@ class _FindSession extends Component {
   
     console.log('Find Session Container')
     console.log(params)
+    console.log(this.props)
+
+    let churchName = '' // was from params.churchName
+
+
     return (
         <FindSession 
-          onSettings={()=> navigate('Settings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Settings'})}
-          onBible={()=> navigate('HigherBibleReadings', {userData: userData, locations: locations, from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
+          onSettings={()=> navigate('Settings', {from: 'FindSession', activeTabName: 'Settings'})}
+          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible', loginStatus: 'loggedIn'})}
           onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected ,  locations, userData)}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
-          churchName={params.churchName ? params.churchName : null}
+          churchName={churchName}
           onMoreSession={()=> this.handleOnMoreSession()}
           onAlphabetical={()=> this.handleOnAlphabetical(locations)}
           onClosest={()=> this.handleOnClosest(locations)}

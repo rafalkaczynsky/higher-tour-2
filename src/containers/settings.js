@@ -48,43 +48,43 @@ class _Settings extends Component {
       console.log('From SignIn')
       navigate('SignIn', {activeTabName: 'Home'})
     } else if (params.loginStatus && params.loginStatus === 'loggedInPlus') {
-      navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+      navigate('UserProfile',  {locationSelected: params.locationSelected, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
     }else if (params.from === 'SessionItemYellow'){ 
         console.log('From SessionItem Yellow')
         console.log(params)
-        navigate('FindSession',  {userData: userData, locations: locations, activeTabName: 'Home'})
+        navigate('FindSession',  {activeTabName: 'Home'})
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
-        navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+        navigate('UserProfile',  {locationSelected: params.locationSelected, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
       } else if (params.from === 'UserProfile'){
         console.log('From UserProfile')
         console.log(params)
-        navigate('UserProfile',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+        navigate('UserProfile',  {locationSelected: params.locationSelected, activeTabName: 'Home', loginStatus: 'loggedInPlus'})
       } else if (params.from === 'FindSession'){
         console.log('From FindSession')
         console.log(params)
-        navigate('FindSession',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
+        navigate('FindSession',  {locationSelected: params.locationSelected, activeTabName: 'Home'})
       }
       else if (params.from === 'HigherBibleReadings'){
         // =========== TO BE CHECKED ==============
         console.log('From HigherBibleReadings')
         console.log(params)
-        navigate('FindSession',  {userData: userData, locationSelected: params.locationSelected, locations: locations, activeTabName: 'Home'})
+        navigate('FindSession',  {locationSelected: params.locationSelected,activeTabName: 'Home'})
       } else { 
         console.log('From Welcome')
-        navigate('Welcome', {userData: userData, activeTabName: 'Home', events: locations, churches: churches, coords: coords})
+        navigate('Welcome', {activeTabName: 'Home'})
       }
     }  
 
-    handleOnBible(navigate, route, userData, locationSelected, locations){
+    handleOnBible(navigate, route, locationSelected){
       const { params } = this.props.navigation.state
       if (params.loginStatus === 'loggedOut') {
       navigate(route, { activeTabName: 'Bible',loginStatus: 'loggedOut'})
       } else if (params.loginStatus === 'loggedInPlus') {
-        navigate(route, { userData: userData, activeTabName: 'Bible', loginStatus: 'loggedInPlus', locationSelected: locationSelected, locations: locations })
+        navigate(route, { activeTabName: 'Bible', loginStatus: 'loggedInPlus', locationSelected: locationSelected})
       }else {
-        navigate(route, { userData: userData, activeTabName: 'Bible', loginStatus: 'loggedIn'})
+        navigate(route, {activeTabName: 'Bible', loginStatus: 'loggedIn'})
       }
   } 
   
@@ -100,7 +100,6 @@ class _Settings extends Component {
   }
   
   render() {
-    console.log('Settings Container')
     const buttonTextArray = {
       signIn: this.state.signIn ? 'Sign Out' : 'Sign In', 
       notificationsOn: this.state.notificationsOn ? 'Turn Off' : 'Turn On', 
@@ -116,10 +115,11 @@ class _Settings extends Component {
 
      console.log('Settings Container')
      console.log(params)
+     console.log(this.props)
     return (
         <Settings 
           onHome={()=> this.handleOnHome()}  
-          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings', userData, params.locationSelected, locations)}
+          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings', params.locationSelected)}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
           userData={userData}
           onNotifications={() => this.handleNotification()}  

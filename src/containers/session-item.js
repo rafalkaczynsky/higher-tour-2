@@ -38,36 +38,36 @@ class _SessionItem extends Component {
   }
 
 
-  handleOnStartSession(navigate, locationSelected, locations, userData){
-       navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData })
+  handleOnStartSession(navigate, locationSelected,){
+       navigate('UserProfile', { locationSelected: locationSelected})
   }
 
-  handleOnSettings(navigate, locationSelected, locations, userData, from){
+  handleOnSettings(navigate, locationSelected, from){
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', cancelLabel: true ,activeTabName: 'Settings', loginStatus: 'loggedInPlus'})
+      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemBrown', cancelLabel: true ,activeTabName: 'Settings', loginStatus: 'loggedInPlus'})
     } else {
-      navigate('Settings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Settings' })
+      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemYellow', activeTabName: 'Settings' })
     }
   }
 
-  handleOnHome(navigate, locationSelected, locations, userData, from){
+  handleOnHome(navigate, locationSelected, from){
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('UserProfile', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Home', loginStatus: 'loggedInPlus'})
+      navigate('UserProfile', { locationSelected: locationSelected,  from: 'SessionItemBrown', activeTabName: 'Home', loginStatus: 'loggedInPlus'})
     } else {
-      navigate('Welcome', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Home'})
+      navigate('Welcome', {from: 'SessionItemYellow', activeTabName: 'Home'})
     }
   }
 
-  handleOnBible(navigate, locationSelected, locations, userData, from){
+  handleOnBible(navigate, locationSelected,  from){
     const { params } = this.props.navigation.state
     if (params.cancelLabel){
-      navigate('HigherBibleReadings', { locationSelected: locationSelected, locations: locations, userData: userData, from: 'SessionItemBrown', activeTabName: 'Bible', loginStatus: 'loggedInPlus'})
+      navigate('HigherBibleReadings', {locationSelected: locationSelected, from: 'SessionItemBrown', activeTabName: 'Bible', loginStatus: 'loggedInPlus'})
     } else {
-      navigate('HigherBibleReadings', {locations: locations, userData: userData, from: 'SessionItemYellow', activeTabName: 'Bible', loginStatus: 'loggedIn'})
+      navigate('HigherBibleReadings', {from: 'SessionItemYellow', activeTabName: 'Bible', loginStatus: 'loggedIn'})
     }
   }
 
@@ -81,18 +81,17 @@ class _SessionItem extends Component {
 
     console.log('SessionItem Container')
     console.log(params)
+    console.log(this.props)
     return (
         <SessionItem 
-          onHome={()=> this.handleOnHome(navigate, params.locationSelected, locations, userData)}
-          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected, locations, userData)}
-          onBible={()=> this.handleOnBible(navigate, params.locationSelected, locations, userData)}
+          onHome={()=> this.handleOnHome(navigate, params.locationSelected)}
+          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected,)}
+          onBible={()=> this.handleOnBible(navigate, params.locationSelected)}
           myPosition={myPosition[0]}
           location={params.locationSelected}
           cancelLabel={params.cancelLabel}
-          onStopSession={()=> navigate('FindSession', {locations: locations, userData: userData})}
-          onStartSession={(location)=> {
-              this.handleOnStartSession(navigate, location, locations, userData)
-            }
+          onStopSession={()=> navigate('FindSession')}
+          onStartSession={(location)=> {this.handleOnStartSession(navigate, location)}
           }
           activeTabName={''}
         />
