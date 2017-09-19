@@ -7,6 +7,7 @@ import eventsReducer from './eventsReducer';
 import churchesReducer from './churchesReducer';
 import coordsReducer from './coordsReducer';
 import appReducer from './appReducer';
+import selectedEventReducer from './selectedEventReducer';
 
 
 export const reducers = combineReducers({
@@ -16,4 +17,5 @@ export const reducers = combineReducers({
     churches: churchesReducer,
     coords: coordsReducer,
     app: appReducer,
+    eventSelected: selectedEventReducer,
 })

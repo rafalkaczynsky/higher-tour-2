@@ -77,7 +77,7 @@ class _Firebase {
             // we are logged in successfull
             //console.log('facebook data')
             //console.log(credData);
-            navigate(route, {userData: credData})
+            navigate(route, {userData: userData})
         })
         .catch(err => {
             console.log('Facebook error')
@@ -93,7 +93,15 @@ class _Firebase {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
                 // Navigate to the Home page, the user is auto logged in
-                navigate(route, { email: email})
+                let userData = {
+                    displayName: email, 
+                    email: email
+                }
+                console.log(pass)
+
+                console.log('signup')
+                //console.log(userData)
+                navigate(route, {userData: userData})
 
         } catch (error) {      
                 return error
@@ -105,12 +113,15 @@ class _Firebase {
         try {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
-                console.log('!!!!!!!!!!!!!!!!!!')
-                
-                console.log(email, pass, navigate, route)
-
             // Navigate to the Home page
-            navigate(route, { email: email})
+            let userData = {
+                displayName: email, 
+                email: email
+            }
+            console.log('login')
+            //console.log(userData)
+            console.log(pass)
+            navigate(route, {userData: userData})
         } catch (error) {
             return error
         }

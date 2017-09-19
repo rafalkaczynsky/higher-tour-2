@@ -3,6 +3,7 @@ import {Welcome} from '../windows'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
 import {Dimensions} from 'react-native'
+import * as firebase from 'firebase'
 
 import * as ACTIONS from '../actions/actions/actions';
 
@@ -14,6 +15,11 @@ class _Welcome extends Component {
 
   constructor(props) {
     super(props);
+
+
+    const { params } = this.props.navigation.state
+    const loginStatus= this.props.app.loginStatus // data from the store
+    
   }
 
 handleOnBible(navigate, from){
@@ -36,10 +42,25 @@ componentWillMount(){
 
   const { params } = this.props.navigation.state
   const loginStatus= this.props.app.loginStatus // data from the store
-  
+
+  // if login with email needs to be passed currentUser from firebase 
+  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+params.userData.uid+'/');
+
   if (loginStatus === 'loggedOut') {
     if (params.userData) {
+      
+      firebaseDataAppUsers.update({
+        email: params.userData.email,
+        event: {
+          follow: false,
+          id: null
+        },
+        uid: params.userData.uid
+      })
+      // save user to appUsers
       this.props.dispatch(ACTIONS.SAVE_USER(params.userData));
+    } else {
+      consolelog('Something wrong no params.userData')
     }
    }
 }

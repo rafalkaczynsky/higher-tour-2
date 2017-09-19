@@ -74,6 +74,7 @@ class _FindSession extends Component {
     const  {params}  = this.props.navigation.state
     this.setState({locations: this.props.locations})
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+    this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn'))
   }
 
   render() {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
+import * as firebase from 'firebase'
 
 import {SessionItem} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
@@ -41,13 +42,42 @@ class _SessionItem extends Component {
 
 
   handleOnStartSession(navigate, route, locationSelected,){
+    alert('Start')
+        console.log('on start session')
+        console.log(locationSelected)
+        const userData = this.props.user          
+        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
+
+        firebaseDataAppUsers.update({
+          email: userData.email,
+          name: userData.displayName,
+          event: {
+            follow: true,
+            id: locationSelected.host
+          },
+          uid: userData.uid
+        })
+        // update database appUser 
+       this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
        this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
        navigate(route, { locationSelected: locationSelected})
   }
 
   handleOnStopSession(navigate, route){
+        alert('Stop')
+        // appData database appUser
+        const userData = this.props.user          
+        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
+
+        firebaseDataAppUsers.update({
+          event: {
+            follow: false,
+            id: null
+          },
+        })
+    //this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(null))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
-    navigate(route)
+    navigate('FindSession')
   }
 
   handleOnSettings(navigate, locationSelected, from){
@@ -87,10 +117,10 @@ class _SessionItem extends Component {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events   // data from the store
-    const userData = this.props.user      // data from the store
+    const locations = this.props.events                // data from the store
+    const userData = this.props.user                   // data from the store
     const activeTabName =this.props.app.activeTabName  // data from the store
-    
+    const eventSelected  =this.props.eventSelected     // data from the store
 
 
     console.log('SessionItem Container')
@@ -118,6 +148,7 @@ function mapStateToProps(state){
       user: state.user,
       events: state.events,
       app: state.app,
+      eventSelected: state.eventSelected,
 
   });
 }

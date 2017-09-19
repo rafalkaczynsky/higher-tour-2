@@ -15,8 +15,6 @@ class _SignIn extends Component {
 
     this.firebaseDataEvents = firebase.database().ref('events/');
     this.firebaseDataChurches = firebase.database().ref('churches/');
- 
-    
 
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
@@ -25,46 +23,8 @@ class _SignIn extends Component {
     console.log('Constructor')
     console.log(this.props)
 
-/*
-    AsyncStorage.getAllKeys((err, keys) => {
-      AsyncStorage.multiGet(keys, (err, stores) => {
-        console.log('insideAsync1')
-        console.log(stores)
-
-       stores.map((result, i, store) => {
-         // get at each store's key/value so you can work with it
-         let key = store[i][0];
-         let value = store[i][1];
-        // console.log(value)
-        // console.log(result)
-        console.log('insideAsync2')
-        console.log(store[0][1])
-
-        });
-      });
-    });
-
-    */
-
-/*
-    this.auth.onAuthStateChanged(function (user) {
-      const { navigate } = props.navigation
-      var firebaseDataAppUsers = firebase.database().ref('appUsers/');
-
-      if(user){
-        props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
-        props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn'))
-        props.dispatch(ACTIONS.SAVE_USER('User'))
-        // check if user follows any event            
-        // navigate('FindSession')
-        // if yes UserProfile 
-
-        //if not got FindSession
-      }
-    })
-    */
-
     this.state = { 
+      appUsers: [],
       email: '',
       password: '',
       showError: null,
@@ -119,15 +79,23 @@ class _SignIn extends Component {
     let handleSignUp = _Firebase.signup(email, password, navigate, route)
 
     handleSignUp.then((error)=> {
-
-      if (error.code === "auth/email-already-in-use") {
-        let handleLogin = _Firebase.login(email, password, navigate, route); 
-        
-        handleLogin.then((error)=> {
-          this.setState({error: error, showError: true, showErrorWrapper: true});
-          var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
-          var clearErrorsWrapper = setTimeout(() => this.setState({showErrorWrapper: false}), 10000);
-        })
+      
+      if (error){
+        console.log(error)
+        if (error.code){
+          console.log(error.code)
+          if (error.code === "auth/email-already-in-use") {
+            let handleLogin = _Firebase.login(email, password, navigate, route); 
+            
+            handleLogin.then((error)=> {
+              this.setState({error: error, showError: true, showErrorWrapper: true});
+              var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
+              var clearErrorsWrapper = setTimeout(() => this.setState({showErrorWrapper: false}), 10000);
+              console.log('login error')
+              console.log(error)
+            })
+          }
+        }
 
       } else {
         this.setState({error: error, showError: true, showErrorWrapper: true});
@@ -154,7 +122,7 @@ class _SignIn extends Component {
     _Firebase._twitterSignIn(navigate, route)
   }
 
-  getData(fbDataRef , fbDataRef2 ){
+  getData(fbDataRef , fbDataRef2, fbDataRef3 ){
     fbDataRef.on('value',(snap)=>{
       let events = snap.val()
       events = Object.keys(events).map(function (key) { return events[key]; })
@@ -167,15 +135,78 @@ class _SignIn extends Component {
      this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
     })
 
-
   }
 
   
+  handleInitialRedirect(){
+ 
+    const { navigate } = this.props.navigation
+    var props = this.props
+
+/*
+    //every user must have an email
+ref.child("users").orderByChild("ID").equalTo(user.uid).once("value",snapshot => {
+    const userData = snapshot.val();
+    if (userData){
+      console.log("exists!");
+    }
+});
+    //every user must have an email
+    firebase.database().ref(`users/${userId}/email`).once("value", snapshot => {
+      const email = snapshot.val();
+        if (email){
+          console.log("user wit email exists!");
+        }
+    });
+*/
+
+// below we can add later additional check if we have locationSelected in 
+// localStorage then navigate to UserProfile with that and skip below steps
+
+    this.auth.onAuthStateChanged(function (user) {
+      // if user is signed to firebase
+      if(user){
+        // check if user follow  any event ...
+        firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+          const event = snapshot.val();
+            //... if so ..
+            if (event) {
+              if (event.follow === true){
+                //... find event by id 
+                firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                  // .. get object and dispatch to the store 
+                    const locationSelected = snapshot.val()
+                    props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                })
+                console.log('User follow!');
+                navigate('UserProfile')    
+              } else {
+                console.log('User doesnt follow')
+  
+                navigate('FindSession')
+              }
+
+            }
+
+        });
+      } else {
+        // if user doesnt signin to firebase
+        console.log('No user signed with Firebase')
+      }
+    })
+
+  }
+
   componentDidMount(){
 
+    const { navigate } = this.props.navigation
+    
+    if ((!this.props.churches) || (!this.props.churches.length)){
+      this.getData(this.firebaseDataEvents, this.firebaseDataChurches); //get EVENTS and Churches from firebase
+      console.log('New Data from Firebase taken: churches, events ')
+    }
 
-
-    this.getData(this.firebaseDataEvents, this.firebaseDataChurches);
+    this.handleInitialRedirect() 
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -185,6 +216,7 @@ class _SignIn extends Component {
 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+
 
   }
 
@@ -199,6 +231,7 @@ class _SignIn extends Component {
 
     console.log('SignIn Container')
     console.log(this.props)
+    //console.log(Math.round((new Date()).getTime()))
 
     return (
         <SignIn 
@@ -231,7 +264,8 @@ function mapStateToProps(state){
       churches: state.churches,
       coords: state.coords,
       app: state.app,
-
+      eventSelected: state.eventSelected,
+      
   });
 }
 

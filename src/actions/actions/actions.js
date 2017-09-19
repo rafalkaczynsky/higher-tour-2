@@ -26,6 +26,13 @@ export function SAVE_USER(userData) {
     };
 }
 
+export function SAVE_SELECTED_EVENT(selectedEvent) {
+    return {
+        type: types.SAVE_SELECTED_EVENT,
+        selectedEvent: selectedEvent
+    };
+}
+
 export function SAVE_COORDS(coords) {
     return {
         type: types.SAVE_COORDS,
