@@ -49,6 +49,7 @@ const _TextInput = ({
         autoCapitalize={autoCapitalize}
         autoCorrect={autoCorrect}
         textStyle={[textStyle, textStyleOnError]}
+        underlineColorAndroid='transparent'
         autoFocus={autoFocus}
         returnKeyType={returnKeyType}
         selectTextOnFocus={selectTextOnFocus}

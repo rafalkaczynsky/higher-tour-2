@@ -1,12 +1,15 @@
 import React from 'react'
 import {Provider} from 'react-redux'
+import {applyMiddleware, createStore} from 'redux'
+import logger , {createLogger} from "redux-logger"
 import {AppState, AsyncStorage, Text, View} from 'react-native'
 
+import {reducers} from './reducers'
 import Screens from './screens'
-import store from './store'
 
+const middleware = applyMiddleware(logger)
 
-
+let store = createStore(reducers, middleware)
 
 export default class App extends React.Component {
 
@@ -14,25 +17,32 @@ export default class App extends React.Component {
         super(props);
         this.state = {
           isStoreLoading: false,
-          store: store
+          initialStore: {},
+          store: store,
+          cipa: '',
         }
+        console.ignoredYellowBox = [
+          'Setting a timer'
+      ]
       }
 
     componentWillMount() {
+      console.log('App Will Mount')
         var self = this;
         AppState.addEventListener('change', this._handleAppStateChange.bind(this));
         this.setState({isStoreLoading: true});
+
         AsyncStorage.getItem('completeStore').then((value)=>{
-          if(value && value.length){
+          if(value){
             let initialStore = JSON.parse(value)
+           // console.log(initialStore) //  --> we have data from localStorag
             self.setState({store: createStore(reducers, initialStore, middleware)});
-          }else{
+          } else{
             self.setState({store: store});
           }
           self.setState({isStoreLoading: false});
-        }).catch((error)=>{
-          self.setState({store: store});
-          self.setState({isStoreLoading: false});
+        }).then((res)=> {
+          //...
         })
     }
 

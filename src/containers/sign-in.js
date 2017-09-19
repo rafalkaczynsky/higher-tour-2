@@ -25,8 +25,7 @@ class _SignIn extends Component {
     console.log('Constructor')
     console.log(this.props)
 
-    var props = this.props
-
+/*
     AsyncStorage.getAllKeys((err, keys) => {
       AsyncStorage.multiGet(keys, (err, stores) => {
         console.log('insideAsync1')
@@ -44,6 +43,8 @@ class _SignIn extends Component {
         });
       });
     });
+
+    */
 
 /*
     this.auth.onAuthStateChanged(function (user) {
