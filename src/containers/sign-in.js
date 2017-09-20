@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, View, Animated, AsyncStorage} from 'react-native'
+import {Button, View, Animated, AsyncStorage, ActivityIndicator} from 'react-native'
 import { connect } from 'react-redux';
 
 import * as firebase from 'firebase'
@@ -149,31 +149,51 @@ class _SignIn extends Component {
     this.auth.onAuthStateChanged(function (user) {
       // if user is signed to firebase
       if(user){
-      
-        // check if user follow  any event ...
-        firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
-          const event = snapshot.val();
-            //... if so ..
-            if (event) {
-              if (event.follow === true){
-                //... find event by id 
-                firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                  // .. get object and dispatch to the store 
-                    const locationSelected = snapshot.val()
-                    props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                })
-                console.log('User follow!');
-                props.dispatch(ACTIONS.SAVE_USER(user))
-                navigate('UserProfile')    
-              } else {
-                console.log('User doesnt follow')
-                props.dispatch(ACTIONS.SAVE_USER(user))
-                navigate('FindSession')
-              }
+        // check if user exist in the appUsers...
+        firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
+          const appUser = snapshot.val();
+    
+          if (appUser){
+            //.. if so..
+                    // check if user follow  any event ...
+            firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+              const event = snapshot.val();
+                //... if so ..
+                if (event) {
+                  if (event.follow === true){
+                    //... find event by id 
+                    firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                      // .. get object and dispatch to the store 
+                        const locationSelected = snapshot.val()
+                        props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                    })
+                    console.log('User follow!');
+                    props.dispatch(ACTIONS.SAVE_USER(user))
+                    navigate('UserProfile')    
+                  } else {
+                    console.log('User doesnt follow')
+                    props.dispatch(ACTIONS.SAVE_USER(user))
+                    navigate('FindSession')
+                  }
+                }
+            });
 
-            }
+          } else {
+            // ..if doesnt exist save him to appUsers
+            firebaseDataAppUsers.update({
+              email: params.userData.email,
+              event: {
+                follow: false,
+                id: null
+              },
+              uid: params.userData.uid
+            })
+            // save user to redux store
+            props.dispatch(ACTIONS.SAVE_USER(params.userData));
 
-        });
+          }
+        })
+
       } else {
         // if user doesnt signin to firebase
         console.log('No user signed with Firebase')
@@ -226,15 +246,15 @@ class _SignIn extends Component {
 
     const SignInScreen = () => <SignIn 
             onNext={(email, password)=> {
-              this.handleOnNext(email, password, navigate, 'Welcome')
+              this.handleOnNext(email, password, navigate, 'SignIn')
             }}
             onSettings={()=> {
               this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
               }
             }  
             onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
-            onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
-            onFacebook={()=> this.onFacebook(navigate, 'Welcome')}
+            onTwitter={()=> this.onTwitter(navigate, 'SignIn')}
+            onFacebook={()=> this.onFacebook(navigate, 'SignIn')}
             email={this.state.email}
             password={this.state.password}
             shown={this.state.shown}
@@ -245,7 +265,16 @@ class _SignIn extends Component {
 
     const EmptyScreen = () => 
       <View style={StyleSheet.signIn.emptyScreen}>
-        <TabMenu/>
+        <View style={StyleSheet.signIn.indicator}>
+          <ActivityIndicator
+            animating={true}
+            color='grey'
+            size= '100'
+          />  
+        </View>
+        <View style={StyleSheet.signIn.tabMenu}>
+          <TabMenu/>
+        </View>
       </View>
  
     if (this.props.app.showLogginContent){

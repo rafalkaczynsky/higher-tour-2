@@ -38,6 +38,17 @@ export default StyleSheet => StyleSheet.extend({
 
     emptyScreen: {        
         flex: 1,
+    },
+
+    indicator: {
+        flex: 7,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    tabMenu: {
+        flex: 3,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center'
