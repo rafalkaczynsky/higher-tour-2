@@ -151,8 +151,6 @@ class _SignIn extends Component {
       // if user is signed to firebase
       if(user){
 
- 
-
         // check if user exist in the appUsers...
         firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
           const appUser = snapshot.val();

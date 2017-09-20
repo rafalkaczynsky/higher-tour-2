@@ -32,6 +32,9 @@ class _Settings extends Component {
     if (loginStatus === 'loggedOut') {
       navigate('SignIn')
     } else {
+
+      //UPDATE_LOGGIN_STATUS
+      this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
       _Firebase.logout(navigate, route);
     }  
   }
@@ -51,7 +54,7 @@ class _Settings extends Component {
       console.log('From SignIn')
       navigate('SignIn')
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      navigate('UserProfile',  {locationSelected: params.locationSelected})
+      navigate('UserProfile')
     }else if (params.from === 'SessionItemYellow'){ 
         console.log('From SessionItem Yellow')
         console.log(params)
@@ -59,35 +62,35 @@ class _Settings extends Component {
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
-        navigate('UserProfile',  {locationSelected: params.locationSelected})
+        navigate('UserProfile')
       } else if (params.from === 'UserProfile'){
         console.log('From UserProfile')
         console.log(params)
-        navigate('UserProfile',  {locationSelected: params.locationSelected})
+        navigate('UserProfile')
       } else if (params.from === 'FindSession'){
         console.log('From FindSession')
         console.log(params)
-        navigate('FindSession',  {locationSelected: params.locationSelected})
+        navigate('FindSession')
       }
       else if (params.from === 'HigherBibleReadings'){
         // =========== TO BE CHECKED ==============
         console.log('From HigherBibleReadings')
         console.log(params)
-        navigate('FindSession',  {locationSelected: params.locationSelected})
+        navigate('FindSession')
       } else { 
         console.log('From Welcome')
         navigate('Welcome')
       }
     }  
 
-    handleOnBible(navigate, route, locationSelected){
+    handleOnBible(navigate, route){
       const { params } = this.props.navigation.state
       const loginStatus = this.props.app.loginStatus  // data from the store
 
       if (loginStatus === 'loggedOut') {
       navigate(route)
       } else if (loginStatus === 'loggedInPlus') {
-        navigate(route, { locationSelected: locationSelected})
+        navigate(route)
       }else {
         navigate(route)
       }
@@ -120,6 +123,8 @@ class _Settings extends Component {
      const userData = this.props.user                   // data from the store
      const coords = this.props.coords                   // data from the store
      const activeTabName =this.props.app.activeTabName  // data from the store
+     const loginStatus = this.props.app.loginStatus
+
 
      console.log('Settings Container')
      console.log(params)
@@ -127,9 +132,10 @@ class _Settings extends Component {
     return (
         <Settings 
           onHome={()=> this.handleOnHome()}  
-          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings', params.locationSelected)}
+          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
           userData={userData}
+          loginStatus={loginStatus}
           onNotifications={() => this.handleNotification()}  
           onLocation={()=> this.handleLocation()}    
           buttonText={buttonTextArray}

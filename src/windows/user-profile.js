@@ -1,12 +1,20 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput, TouchableOpacity, Image} from 'react-native'
+import { connect } from 'react-redux'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
-export default class UserProfile extends React.Component {
+class UserProfile extends React.Component {
+  constructor(props){
+   super(props)
+
+   this.state ={
+     sessions: []
+   }
+  }
 
   getFirstWord(str) {
     let spacePosition = str.indexOf(' ');
@@ -22,9 +30,14 @@ export default class UserProfile extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  componentWillMount(){
+
+
+  }
+
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession, userData } = this.props
+        const { onSettings, locationSelected, locations, handleEditSession, userData, months} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
@@ -44,19 +57,39 @@ export default class UserProfile extends React.Component {
             </View>
             <View style={StyleSheet.userProfile.contentBox}>
                 <ListItem 
-                  title={locationSelected.host}
+                  title={locationSelected.name}
                   iconText='view/edit'
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 /> 
-                <ListItem 
-                  title="Session One: God"
-                  label="Available 14 October 2016"
-                  titleStyle={{color: colors.grey2}}
-                /> 
-                <ListItem 
-                  title="Welcome Session"
-                  label="7 October 2016"
-                /> 
+
+                {this.props.sessions.map((item, index)=> {
+                   let sessionDate = item.UTCTime
+                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
+                   if (index === 1)
+                    return(
+                      <ListItem 
+                        key={item.aaaSession + '-' + index}
+                        title={item.aaaSession}
+                        label={'Available from: ' + sessionDateFormatted}
+                        titleStyle={{color: colors.grey2}}
+                      /> 
+                    )
+                })}
+
+                {this.props.sessions.map((item, index)=> {
+                   let sessionDate = item.UTCTime
+                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
+                   if (index === 0)
+                    return(
+                      <ListItem 
+                        key={item.aaaSession + '-' + index}
+                        title={item.aaaSession}
+                        label={sessionDateFormatted}
+                      /> 
+                    )
+                })}
+
+
             </View>
             <View style={StyleSheet.userProfile.contentBox}>
                 <ListItem 
@@ -84,3 +117,12 @@ export default class UserProfile extends React.Component {
         )
     }
 }
+
+
+function mapStateToProps(state){
+  return({
+      sessions: state.sessions,
+  });
+}
+
+export default connect(mapStateToProps)(UserProfile);

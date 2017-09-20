@@ -8,7 +8,7 @@ import churchesReducer from './churchesReducer';
 import coordsReducer from './coordsReducer';
 import appReducer from './appReducer';
 import selectedEventReducer from './selectedEventReducer';
-
+import sessionsReducer from './sessionsReducer';
 
 export const reducers = combineReducers({
     form: formReducer,     
@@ -18,4 +18,5 @@ export const reducers = combineReducers({
     coords: coordsReducer,
     app: appReducer,
     eventSelected: selectedEventReducer,
+    sessions: sessionsReducer,
 })

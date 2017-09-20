@@ -63,16 +63,16 @@ class _HigherBibleReadings extends Component {
       this.setState({currentScreen: 'item', chosenItem: item})
   }
 
-  handleOnDayItem(itemDay, navigate, from, locationSelected){
-      navigate('Read', {itemDay: itemDay, from: from, locationSelected})
+  handleOnDayItem(itemDay, navigate, from){
+      navigate('Read', {itemDay: itemDay, from: from})
   }
 
   handleOnSettings(navigate, loginStatus, from,){
     navigate('Settings', {loginStatus: loginStatus, from: from})
   }
 
-  handleOnSettingsLoggedInPlus(navigate, from,locationSelected){
-    navigate('Settings', {from: from, locationSelected: locationSelected})
+  handleOnSettingsLoggedInPlus(navigate, from){
+    navigate('Settings', {from: from})
   }
 
   handleOnSettingsLoggedOut(navigate, route){
@@ -94,7 +94,7 @@ class _HigherBibleReadings extends Component {
       console.log('From SignIn')
       navigate('SignIn')
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      navigate('UserProfile',  {locationSelected: params.locationSelected})
+      navigate('UserProfile')
     } else if (params.from === 'SessionItemYellow'){ 
         console.log('From SessionItem Yellow')
         console.log(params)
@@ -102,21 +102,21 @@ class _HigherBibleReadings extends Component {
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
-        navigate('UserProfile',  {locationSelected: params.locationSelected})
+        navigate('UserProfile')
       } else if (params.from === 'UserProfile'){
         console.log('From UserProfile')
         console.log(params)
-        navigate('UserProfile',  { locationSelected: params.locationSelected})
+        navigate('UserProfile',)
       } else if (params.from === 'FindSession'){
         console.log('From FindSession')
         console.log(params)
-        navigate('FindSession',  {locationSelected: params.locationSelected})
+        navigate('FindSession')
       }
       else if (params.from === 'HigherBibleReadings'){
         // =========== TO BE CHECKED ==============
         console.log('From HigherBibleReadings')
         console.log(params)
-        navigate('FindSession',  { locationSelected: params.locationSelected,})
+        navigate('FindSession')
       } else { 
         console.log('From Welcome')
         navigate('Welcome')
@@ -156,7 +156,7 @@ class _HigherBibleReadings extends Component {
               if (loginStatus === 'loggedIn'){        
                 this.handleOnSettings(navigate, 'HigherBibleReadings', 'Settings')
                 } else if (loginStatus === 'loggedInPlus') {
-                  this. handleOnSettingsLoggedInPlus(navigate,  'HigherBibleReadings', 'Settings', params.locationSelected)
+                  this. handleOnSettingsLoggedInPlus(navigate,  'HigherBibleReadings', 'Settings')
                 } else {
                   this.handleOnSettingsLoggedOut(navigate, 'Settings', '', 'loggedOut', 'Settings')
               }
@@ -164,7 +164,7 @@ class _HigherBibleReadings extends Component {
           }
           onHome={()=> this.handleOnHome()}  
           onItem={(item)=> this.handleOnItem(item)}
-          onDayItem={(item)=> this.handleOnDayItem(item, navigate, 'HigherBibleReadings', 'Bible', params.locationSelected)}
+          onDayItem={(item)=> this.handleOnDayItem(item, navigate, 'HigherBibleReadings', 'Bible')}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           onCompleted={()=> this.handleOnCompleted()}

@@ -16,32 +16,32 @@ class _Read extends Component {
     }
   }
 
-handleOnBible(navigate, from, activeTabName){
-  navigate('HigherBibleReadings', {from: from, activeTabName: activeTabName})
+handleOnBible(navigate, from){
+  navigate('HigherBibleReadings', {from: from})
 }
 
-handleOnSettings(navigate, route, activeTabName){
+handleOnSettings(navigate, route){
   const { params } = this.props.navigation.state
   const loginStatus = this.props.app.loginStatus  // data from the store
 
   if (loginStatus === 'loggedOut') {
-     navigate('Settings', {activeTabName: 'Settings'})
+     navigate('Settings')
   } else if (params.loginStatus === 'loggedIn ') {
-    navigate('Settings', {activeTabName: 'Settings'})
+    navigate('Settings')
   } else {
-    navigate('Settings', {locationSelected: params.locationSelected, activeTabName: 'Settings'})
+    navigate('Settings')
   }
 }
 
-handleHome(navigate, activeTabName, locationSelected){
+handleHome(navigate){
   const loginStatus = this.props.app.loginStatus  // data from the store
 
   if (loginStatus === 'loggedOut') {
-    navigate('SignIn', {activeTabName: activeTabName})
+    navigate('SignIn')
   } else if (loginStatus === 'loggedIn'){
-      navigate('Welcome', {activeTabName: activeTabName})
+      navigate('Welcome')
     } else {
-        navigate('UserProfile', {activeTabName: activeTabName, locationSelected: locationSelected})
+        navigate('UserProfile')
       }
 }
 
@@ -59,8 +59,8 @@ handleHome(navigate, activeTabName, locationSelected){
     console.log(this.props)
     return (
         <Read 
-          onSettings={()=> this.handleOnSettings(navigate, 'Settings', 'Settings')}
-          onHome={()=> this.handleHome(navigate, 'Home',params.locationSelected)}
+          onSettings={()=> this.handleOnSettings(navigate)}
+          onHome={()=> this.handleHome(navigate)}
           userData={userData}
           locations={locations}
           itemDay={params.itemDay}

@@ -23,7 +23,7 @@ class _FindSession extends Component {
     }
   }
 
-  handleOnItem(navigate, locationSelected){
+  handleOnItem(navigate){
     navigate('SessionItem', { locationSelected: locationSelected})
   }
 

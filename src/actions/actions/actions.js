@@ -40,6 +40,14 @@ export function SAVE_COORDS(coords) {
     };
 }
 
+export function SAVE_SESSIONS(sessions) {
+    return {
+        type: types.SAVE_SESSIONS,
+        sessions: sessions,
+
+    };
+}
+
 //APP STAFF
 export function UPDATE_LOGGIN_STATUS(loginStatus) {
     return {

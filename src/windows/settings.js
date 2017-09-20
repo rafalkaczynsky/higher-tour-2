@@ -13,10 +13,10 @@ export default class Settings extends Component {
 
   render() {
     console.log('Settings Window')
-    const {userData} = this.props
+    const {userData, loginStatus} = this.props
 
     let userText = ''
-    if (this.props.userData !== ''){
+    if (loginStatus !== 'loggedOut'){
         const userDisplay = this.props.userData.displayName ? this.props.userData.displayName : this.props.userData.email
         userText = "You are signed in as " + userDisplay
     } else {
