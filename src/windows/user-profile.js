@@ -29,7 +29,7 @@ export default class UserProfile extends React.Component {
         const image = StyleSheet.icons[name]
 
         console.log('User profile window')
-        let userFirstName = this.getFirstWord(this.props.userData.displayName)
+        let userFirstName = this.getFirstWord(this.props.userData.displayName ? this.props.userData.displayName : this.props.userData.email)
         userFirstName = this.capitalizeFirstLetter(userFirstName)
 
         return(

@@ -92,17 +92,7 @@ class _Firebase {
         try {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
-                // Navigate to the Home page, the user is auto logged in
-                let userData = {
-                    displayName: email, 
-                    email: email
-                }
-                console.log(pass)
-
-                console.log('signup')
-                //console.log(userData)
-                navigate(route, {userData: userData})
-
+                navigate(route)
         } catch (error) {      
                 return error
         }
@@ -113,15 +103,7 @@ class _Firebase {
         try {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
-            // Navigate to the Home page
-            let userData = {
-                displayName: email, 
-                email: email
-            }
-            console.log('login')
-            //console.log(userData)
-            console.log(pass)
-            navigate(route, {userData: userData})
+                navigate(route)
         } catch (error) {
             return error
         }

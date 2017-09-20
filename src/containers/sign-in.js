@@ -146,9 +146,13 @@ class _SignIn extends Component {
     const { navigate } = this.props.navigation
     var props = this.props
 
+
     this.auth.onAuthStateChanged(function (user) {
       // if user is signed to firebase
       if(user){
+
+ 
+
         // check if user exist in the appUsers...
         firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
           const appUser = snapshot.val();
@@ -179,17 +183,23 @@ class _SignIn extends Component {
             });
 
           } else {
+            
             // ..if doesnt exist save him to appUsers
+            // if login with email needs to be passed currentUser from firebase 
+
+            const firebaseDataAppUsers = firebase.database().ref('appUsers/'+user.uid+'/');
+
             firebaseDataAppUsers.update({
-              email: params.userData.email,
+              email: user.email,
               event: {
                 follow: false,
                 id: null
               },
-              uid: params.userData.uid
+              uid: user.uid
             })
             // save user to redux store
-            props.dispatch(ACTIONS.SAVE_USER(params.userData));
+            props.dispatch(ACTIONS.SAVE_USER(user));
+            navigate('FindSession')
 
           }
         })
@@ -269,7 +279,6 @@ class _SignIn extends Component {
           <ActivityIndicator
             animating={true}
             color='grey'
-            size= '100'
           />  
         </View>
         <View style={StyleSheet.signIn.tabMenu}>

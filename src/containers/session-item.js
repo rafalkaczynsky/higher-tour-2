@@ -42,7 +42,6 @@ class _SessionItem extends Component {
 
 
   handleOnStartSession(navigate, route, locationSelected,){
-    alert('Start')
         console.log('on start session')
         console.log(locationSelected)
         const userData = this.props.user          
@@ -64,7 +63,6 @@ class _SessionItem extends Component {
   }
 
   handleOnStopSession(navigate, route){
-        alert('Stop')
         // appData database appUser
         const userData = this.props.user          
         const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');

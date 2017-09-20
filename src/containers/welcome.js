@@ -43,6 +43,10 @@ componentWillMount(){
   const { params } = this.props.navigation.state
   const loginStatus= this.props.app.loginStatus // data from the store
 
+
+
+
+
 }
 
 componentDidMount(){
