@@ -40,7 +40,7 @@ export function SAVE_COORDS(coords) {
     };
 }
 
-//UPDATE_ACTIVE_TAB_NAME
+//APP STAFF
 export function UPDATE_LOGGIN_STATUS(loginStatus) {
     return {
         type: types.UPDATE_LOGGIN_STATUS,
@@ -54,4 +54,15 @@ export function UPDATE_ACTIVE_TAB_NAME(activeTabName) {
         activeTabName: activeTabName,
     };
 }
+
+//UPDATE_SHOW_LOGGIN_CONTENT
+
+export function UPDATE_SHOW_LOGGIN_CONTENT(status) {
+    return {
+        type: types.UPDATE_SHOW_LOGGIN_CONTENT,
+        showLogginContent: status,
+    };
+}
+
+
 //...............

@@ -40,25 +40,56 @@ handleOnFindChurch(navigate, route){
 
 componentWillMount(){
 
+  const { navigate } = this.props.navigation
   const { params } = this.props.navigation.state
   const loginStatus= this.props.app.loginStatus // data from the store
 
   // if login with email needs to be passed currentUser from firebase 
   const firebaseDataAppUsers = firebase.database().ref('appUsers/'+params.userData.uid+'/');
 
+
+
+// MOVE BELOW LOGIC  INTO A SINGIN SCREEN !!!!
+
   if (loginStatus === 'loggedOut') {
     if (params.userData) {
       
-      firebaseDataAppUsers.update({
-        email: params.userData.email,
-        event: {
-          follow: false,
-          id: null
-        },
-        uid: params.userData.uid
-      })
-      // save user to appUsers
-      this.props.dispatch(ACTIONS.SAVE_USER(params.userData));
+      firebase.database().ref('appUsers/'+ params.userData.uid+'/').once("value", snapshot => {
+        const appUser = snapshot.val();
+
+        // check if user exist in appUsers
+        if (!appUser){
+          //if not save user
+          firebaseDataAppUsers.update({
+            email: params.userData.email,
+            event: {
+              follow: false,
+              id: null
+            },
+            uid: params.userData.uid
+          })
+          // save user to appUsers
+          this.props.dispatch(ACTIONS.SAVE_USER(params.userData));
+        } else {
+          console.log('User Exist !!!!')
+          //if user exists in appUsers check if follow any events
+          firebase.database().ref('appUsers/'+ params.userData.uid+'/event/').once("value", snapshot => {
+            const event = snapshot.val();
+              //... if so ..
+              if (event) {
+                if (event.follow === true){
+                    //... redirect to UserProfile
+                    navigate('UserProfile')
+                }else {
+                  // ... if doesn't stay here ..
+                  console.log('USER EXIST IN appUsers BUT DOESNT FOLLOW')
+                }
+              }
+            })
+        }
+      }
+    )
+
     } else {
       consolelog('Something wrong no params.userData')
     }

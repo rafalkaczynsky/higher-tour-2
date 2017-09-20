@@ -34,6 +34,13 @@ export default StyleSheet => StyleSheet.extend({
         fontSize: 10,
         color: 'red',
         marginBottom: 5,
-    }
+    },
+
+    emptyScreen: {        
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
 })
 

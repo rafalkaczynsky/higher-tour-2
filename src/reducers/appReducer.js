@@ -2,7 +2,8 @@ import * as types from '../actions/actions/actionTypes';
 
 initialState = {
     loginStatus: '',
-    activeTabName: ''
+    activeTabName: '',
+    showLogginContent: false
 }
 
 export default function appReducer(state = initialState, action){
@@ -17,6 +18,7 @@ export default function appReducer(state = initialState, action){
                 
                 loginStatus: action.loginStatus,
                 activeTabName: state.activeTabName,
+                showLogginContent: action.showLogginContent
             }
 
             return new_state;
@@ -25,10 +27,21 @@ export default function appReducer(state = initialState, action){
             
             new_state = {
                     loginStatus: state.loginStatus,
-                    activeTabName: action.activeTabName
+                    activeTabName: action.activeTabName,
+                    showLogginContent: action.showLogginContent
             }
             
-                        return new_state;
+            return new_state;
+
+        case types.UPDATE_SHOW_LOGGIN_CONTENT:
+            
+            new_state = {
+                    loginStatus: state.loginStatus,
+                    activeTabName: state.activeTabName,
+                    showLogginContent: action.showLogginContent
+            }
+            
+            return new_state;
 
         default:
             return state;

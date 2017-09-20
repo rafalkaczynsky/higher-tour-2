@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import * as firebase from 'firebase'
 
+import StyleSheet from '../styles'
+import {TabMenu} from '../components'
 import _Firebase from '../actions/firebase';
 import {SignIn} from '../windows'
 
@@ -24,6 +26,7 @@ class _SignIn extends Component {
     console.log(this.props)
 
     this.state = { 
+      showContent: false,
       appUsers: [],
       email: '',
       password: '',
@@ -143,6 +146,133 @@ class _SignIn extends Component {
     const { navigate } = this.props.navigation
     var props = this.props
 
+    this.auth.onAuthStateChanged(function (user) {
+      // if user is signed to firebase
+      if(user){
+      
+        // check if user follow  any event ...
+        firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+          const event = snapshot.val();
+            //... if so ..
+            if (event) {
+              if (event.follow === true){
+                //... find event by id 
+                firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                  // .. get object and dispatch to the store 
+                    const locationSelected = snapshot.val()
+                    props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                })
+                console.log('User follow!');
+                props.dispatch(ACTIONS.SAVE_USER(user))
+                navigate('UserProfile')    
+              } else {
+                console.log('User doesnt follow')
+                props.dispatch(ACTIONS.SAVE_USER(user))
+                navigate('FindSession')
+              }
+
+            }
+
+        });
+      } else {
+        // if user doesnt signin to firebase
+        console.log('No user signed with Firebase')
+        props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
+      }
+    })
+  }
+
+  componentWillMount(){
+
+    this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
+    this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
+    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+
+    const { navigate } = this.props.navigation
+    
+    if ((!this.props.churches) || (!this.props.churches.length)){
+      this.getData(this.firebaseDataEvents, this.firebaseDataChurches); //get EVENTS and Churches from firebase
+      console.log('New Data from Firebase taken: churches, events ')
+    }
+
+    this.handleInitialRedirect() 
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+      }
+    );
+
+  }
+
+  componentDidMount(){
+
+  }
+
+  render() {
+ 
+    const { navigate } = this.props.navigation
+
+    const events = this.props.events                   // from the store 
+    const churches = this.props.churches               // from the store
+    const coords = this.props.coords                   // from the store - current positions lng and lat 
+    const activeTabName = this.props.app.activeTabName // from the store
+
+    console.log('SignIn Container')
+    console.log(this.props)
+    //console.log(Math.round((new Date()).getTime()))
+    //const renderFirstScreenStyles = {flex: 1, flexDirection: 'row' , alignItems: 'center', justifyContent: 'flex-end'} 
+    //const styles = this.state.showContent ? null : renderFirstScreenStyles
+
+    const SignInScreen = () => <SignIn 
+            onNext={(email, password)=> {
+              this.handleOnNext(email, password, navigate, 'Welcome')
+            }}
+            onSettings={()=> {
+              this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
+              }
+            }  
+            onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
+            onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
+            onFacebook={()=> this.onFacebook(navigate, 'Welcome')}
+            email={this.state.email}
+            password={this.state.password}
+            shown={this.state.shown}
+            showError={this.state.showError}
+            showErrorWrapper={this.state.showErrorWrapper}
+            signInError={this.state.error}
+            activeTabName={activeTabName} />
+
+    const EmptyScreen = () => 
+      <View style={StyleSheet.signIn.emptyScreen}>
+        <TabMenu/>
+      </View>
+ 
+    if (this.props.app.showLogginContent){
+      return <SignInScreen/>
+    } else return <EmptyScreen/> 
+
+  }
+}
+
+// get state from store and pass to props
+function mapStateToProps(state){
+  return({
+      user: state.user,
+      events: state.events,
+      churches: state.churches,
+      coords: state.coords,
+      app: state.app,
+      eventSelected: state.eventSelected,
+      
+  });
+}
+
+export default connect(mapStateToProps)(_SignIn);
+
+
+
+
 /*
     //every user must have an email
 ref.child("users").orderByChild("ID").equalTo(user.uid).once("value",snapshot => {
@@ -162,111 +292,3 @@ ref.child("users").orderByChild("ID").equalTo(user.uid).once("value",snapshot =>
 
 // below we can add later additional check if we have locationSelected in 
 // localStorage then navigate to UserProfile with that and skip below steps
-
-    this.auth.onAuthStateChanged(function (user) {
-      // if user is signed to firebase
-      if(user){
-        // check if user follow  any event ...
-        firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
-          const event = snapshot.val();
-            //... if so ..
-            if (event) {
-              if (event.follow === true){
-                //... find event by id 
-                firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                  // .. get object and dispatch to the store 
-                    const locationSelected = snapshot.val()
-                    props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                })
-                console.log('User follow!');
-                navigate('UserProfile')    
-              } else {
-                console.log('User doesnt follow')
-  
-                navigate('FindSession')
-              }
-
-            }
-
-        });
-      } else {
-        // if user doesnt signin to firebase
-        console.log('No user signed with Firebase')
-      }
-    })
-
-  }
-
-  componentDidMount(){
-
-    const { navigate } = this.props.navigation
-    
-    if ((!this.props.churches) || (!this.props.churches.length)){
-      this.getData(this.firebaseDataEvents, this.firebaseDataChurches); //get EVENTS and Churches from firebase
-      console.log('New Data from Firebase taken: churches, events ')
-    }
-
-    this.handleInitialRedirect() 
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
-      }
-    );
-
-    this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
-    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
-
-
-  }
-
-  render() {
- 
-    const { navigate } = this.props.navigation
-
-    const events = this.props.events                   // from the store 
-    const churches = this.props.churches               // from the store
-    const coords = this.props.coords                   // from the store - current positions lng and lat 
-    const activeTabName = this.props.app.activeTabName // from the store
-
-    console.log('SignIn Container')
-    console.log(this.props)
-    //console.log(Math.round((new Date()).getTime()))
-
-    return (
-        <SignIn 
-          onNext={(email, password)=> {
-            this.handleOnNext(email, password, navigate, 'Welcome')
-          }}
-          onSettings={()=> {
-            this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
-            }
-          }  
-          onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
-          onTwitter={()=> this.onTwitter(navigate, 'Welcome')}
-          onFacebook={()=> this.onFacebook(navigate, 'Welcome')}
-          email={this.state.email}
-          password={this.state.password}
-          shown={this.state.shown}
-          showError={this.state.showError}
-          showErrorWrapper={this.state.showErrorWrapper}
-          signInError={this.state.error}
-          activeTabName={activeTabName} />
-    )
-  }
-}
-
-// get state from store and pass to props
-function mapStateToProps(state){
-  return({
-      user: state.user,
-      events: state.events,
-      churches: state.churches,
-      coords: state.coords,
-      app: state.app,
-      eventSelected: state.eventSelected,
-      
-  });
-}
-
-export default connect(mapStateToProps)(_SignIn);
