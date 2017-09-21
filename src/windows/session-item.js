@@ -82,15 +82,28 @@ export default class SessionItem extends React.Component {
                 />
             </MapView>}
             </View>
-            <View style={{ width: '95%', margin: 10, backgroundColor: 'white'}}>
+          <ScrollView style={{width: '95%',margin: 10,flex: 1,}}>
+            <View 
+                style={{
+                    flex: 1,
+                    width: '100%',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+     
+                    backgroundColor: 'white'
+        
+                }}>
+
                 <Button 
                     type="default"
                     text={cancelLabel ? "Stop Session" : 'Start session'}
                     bgColor={cancelLabel ? "brown" : null}
                     textColor={cancelLabel ? "white" : null}
                     onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
+                    style={{flex: 1}}
                 />
-                <View style={{padding: 15}}>
+                <View style={{margin: 10}}>
                     <Text style={{fontWeight: 'bold'}}>
                         Location
                     </Text>
@@ -102,7 +115,7 @@ export default class SessionItem extends React.Component {
                     </Text>
                 </View>
 
-                <View style={{padding: 15}}>
+                <View style={{margin: 10}}>
                     <Text style={{fontWeight: 'bold'}}>
                         Contact:  <Text style={{fontWeight: 'normal'}}>{location.contact}</Text>
                     </Text>
@@ -117,7 +130,7 @@ export default class SessionItem extends React.Component {
                     </Text>
                 </View>
 
-                <View style={{padding: 15}}>
+                <View style={{margin: 10}}>
 
                     <Text style={{fontWeight: 'bold'}}>
                         Host:  <Text style={{fontWeight: 'normal'}}>{location.name}</Text>
@@ -133,8 +146,10 @@ export default class SessionItem extends React.Component {
                     bgColor={cancelLabel ? "brown" : null}
                     textColor={cancelLabel ? "white" : null}
                     onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
+                    style={{flex: 1}}
                 />
-            </View>
+                </View>
+                </ScrollView>
             
         </View>
         <TabMenu 

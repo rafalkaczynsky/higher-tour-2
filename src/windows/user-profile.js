@@ -42,8 +42,14 @@ class UserProfile extends React.Component {
         const image = StyleSheet.icons[name]
 
         console.log('User profile window')
-        let userFirstName = this.getFirstWord(this.props.userData.displayName ? this.props.userData.displayName : this.props.userData.email)
-        userFirstName = this.capitalizeFirstLetter(userFirstName)
+        let userFirstName
+
+        if (this.props.userData){
+          userFirstName = this.getFirstWord(this.props.userData.displayName ? this.props.userData.displayName : this.props.userData.email)
+          userFirstName = this.capitalizeFirstLetter(userFirstName)
+        } else {
+          userFirstName = 'Unknown'
+        }
 
         return(
       <View style={[StyleSheet.window.default,]}>
@@ -55,6 +61,7 @@ class UserProfile extends React.Component {
                   Welcome Back {userFirstName}!
                 </Text>
             </View>
+            <ScrollView style={{width: '95%'}}>
             <View style={StyleSheet.userProfile.contentBox}>
                 <ListItem 
                   title={locationSelected.name}
@@ -107,6 +114,7 @@ class UserProfile extends React.Component {
                     borderBold
                 />
             </View>
+            </ScrollView>
         </View>
         <TabMenu 
           onSettings={onSettings}

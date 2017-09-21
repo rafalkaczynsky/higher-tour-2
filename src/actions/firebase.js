@@ -159,8 +159,6 @@ class _Firebase {
         });
     }
 
-
-
 }
 
 export default new _Firebase();

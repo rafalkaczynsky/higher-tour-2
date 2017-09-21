@@ -113,23 +113,16 @@ export default class FindSession extends React.Component {
             <ScrollView style={{width: '100%'}}>
               {this.state.didMount && this.state.locations.map((item, indx)=> 
               <TouchableOpacity 
-                 onPress={()=>this.props.onItem(item, this.state.locations)}
+                 onPress={()=>this.props.onItem(item)}
                  key={'ListItemKey-'+indx}
               >
                 <ListItem 
                   title={item.name}
                   label={item.howFar + ' miles'}
-                 
+                  handleIconPressed={()=>this.props.onItem(item)}
                 />
               </TouchableOpacity>
               )}
-              <ListItem
-                title="See more sessions"
-                bgColor={colors.grey3}
-                borderBold
-                handleIconPressed={this.props.onMoreSession}
-                
-              />
             </ScrollView>
             
         </View>

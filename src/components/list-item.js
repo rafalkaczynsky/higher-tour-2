@@ -16,7 +16,7 @@ export default class ListItem extends Component {
 
     const image = StyleSheet.icons[imageName]
     return (
-      <View  style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
+      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
 
@@ -54,7 +54,7 @@ export default class ListItem extends Component {
           </TouchableOpacity>
           }
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
