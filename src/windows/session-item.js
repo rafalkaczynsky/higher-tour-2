@@ -120,7 +120,7 @@ export default class SessionItem extends React.Component {
                 <View style={{padding: 15}}>
 
                     <Text style={{fontWeight: 'bold'}}>
-                        Host:  <Text style={{fontWeight: 'normal'}}>{location.host}</Text>
+                        Host:  <Text style={{fontWeight: 'normal'}}>{location.name}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
                         Next session:  <Text style={{fontWeight: 'normal'}}>{location.nextSession}</Text>

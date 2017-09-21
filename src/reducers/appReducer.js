@@ -3,7 +3,8 @@ import * as types from '../actions/actions/actionTypes';
 initialState = {
     loginStatus: '',
     activeTabName: '',
-    showLogginContent: false
+    showLogginContent: false,
+    followStatus: false,
 }
 
 export default function appReducer(state = initialState, action){
@@ -18,7 +19,8 @@ export default function appReducer(state = initialState, action){
                 
                 loginStatus: action.loginStatus,
                 activeTabName: state.activeTabName,
-                showLogginContent: action.showLogginContent
+                showLogginContent: state.showLogginContent,
+                followStatus: state.followStatus
             }
 
             return new_state;
@@ -28,7 +30,8 @@ export default function appReducer(state = initialState, action){
             new_state = {
                     loginStatus: state.loginStatus,
                     activeTabName: action.activeTabName,
-                    showLogginContent: action.showLogginContent
+                    showLogginContent: state.showLogginContent,
+                    followStatus: state.followStatus,
             }
             
             return new_state;
@@ -38,11 +41,23 @@ export default function appReducer(state = initialState, action){
             new_state = {
                     loginStatus: state.loginStatus,
                     activeTabName: state.activeTabName,
+                    followStatus: state.followStatus,
                     showLogginContent: action.showLogginContent
             }
             
             return new_state;
 
+        case types.UPDATE_FOLLOW_STATUS:
+            
+            new_state = {
+                    loginStatus: state.loginStatus,
+                    activeTabName: state.activeTabName,
+                    showLogginContent: state.showLogginContent,
+                    followStatus: action.followStatus
+            }
+            
+            return new_state;
+            
         default:
             return state;
 

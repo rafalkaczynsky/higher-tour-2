@@ -63,12 +63,17 @@ export function UPDATE_ACTIVE_TAB_NAME(activeTabName) {
     };
 }
 
-//UPDATE_SHOW_LOGGIN_CONTENT
-
 export function UPDATE_SHOW_LOGGIN_CONTENT(status) {
     return {
         type: types.UPDATE_SHOW_LOGGIN_CONTENT,
         showLogginContent: status,
+    };
+}
+
+export function UPDATE_FOLLOW_STATUS(followStatus) {
+    return {
+        type: types.UPDATE_FOLLOW_STATUS,
+        followStatus: followStatus,
     };
 }
 

@@ -35,7 +35,8 @@ class _Settings extends Component {
 
       //UPDATE_LOGGIN_STATUS
       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
-      _Firebase.logout(navigate, route);
+
+      _Firebase.logout(navigate, route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
     }  
   }
 

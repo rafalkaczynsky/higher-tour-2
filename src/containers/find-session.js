@@ -23,8 +23,10 @@ class _FindSession extends Component {
     }
   }
 
-  handleOnItem(navigate){
-    navigate('SessionItem', { locationSelected: locationSelected})
+  handleOnItem(navigate, locationSelected, cancelLabel){
+    this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+    navigate('SessionItem', {cancelLabel: cancelLabel})
+
   }
 
   handleOnAlphabetical(locations){
@@ -92,12 +94,11 @@ class _FindSession extends Component {
 
     let churchName = '' // was from params.churchName
 
-
     return (
         <FindSession 
           onSettings={()=> navigate('Settings', {from: 'FindSession'})}
           onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession'})}
-          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected)}
+          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected, false)}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           churchName={churchName}

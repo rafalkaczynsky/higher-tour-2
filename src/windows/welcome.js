@@ -20,12 +20,6 @@ export default class SignIn extends Component {
     console.log('WelcomeXXX')
     const { onMoreSession, onChurchPressed, locations, userData, onFindChurch} = this.props
 
-    function compareDistance(a, b){
-        return a.howFar - b.howFar;
-    }
-
-    const x = locations.sort(compareDistance);
-
     return (
       <View style={StyleSheet.window.default}>
         <Header 

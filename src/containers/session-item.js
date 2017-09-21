@@ -41,9 +41,9 @@ class _SessionItem extends Component {
   }
 
 
-  handleOnStartSession(navigate, route, locationSelected,){
+  handleOnStartSession(navigate, route, eventSelected){
         console.log('on start session')
-        console.log(locationSelected)
+        console.log(eventSelected)
         const userData = this.props.user          
         const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
 
@@ -52,14 +52,15 @@ class _SessionItem extends Component {
           name: userData.displayName,
           event: {
             follow: true,
-            id: locationSelected.host
+            id: eventSelected.host
           },
           uid: userData.uid
         })
         // update database appUser 
-       this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+       this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
+       this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
        this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
-       navigate(route, { locationSelected: locationSelected})
+       navigate(route)
   }
 
   handleOnStopSession(navigate, route){
@@ -74,17 +75,18 @@ class _SessionItem extends Component {
           },
         })
     //this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(null))
+    this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
     navigate('FindSession')
   }
 
-  handleOnSettings(navigate, locationSelected, from){
+  handleOnSettings(navigate, from){
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemBrown', cancelLabel: true })
+      navigate('Settings', { from: 'SessionItemBrown', cancelLabel: true })
     } else {
-      navigate('Settings', { locationSelected: locationSelected, from: 'SessionItemYellow'})
+      navigate('Settings', { from: 'SessionItemYellow'})
     }
   }
 
@@ -126,11 +128,11 @@ class _SessionItem extends Component {
     console.log(this.props)
     return (
         <SessionItem 
-          onHome={()=> this.handleOnHome(navigate, params.locationSelected)}
-          onSettings={()=> this.handleOnSettings(navigate, params.locationSelected,)}
-          onBible={()=> this.handleOnBible(navigate, params.locationSelected)}
+          onHome={()=> this.handleOnHome(navigate)}
+          onSettings={()=> this.handleOnSettings(navigate)}
+          onBible={()=> this.handleOnBible(navigate)}
           myPosition={myPosition[0]}
-          location={params.locationSelected}
+          location={eventSelected}
           cancelLabel={params.cancelLabel}
           onStopSession={()=> this.handleOnStopSession(navigate, 'FindSession')}
           onStartSession={(location)=> {this.handleOnStartSession(navigate, 'UserProfile', location)}

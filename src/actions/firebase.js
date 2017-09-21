@@ -109,9 +109,10 @@ class _Firebase {
         }
     }
 
-    async logout(navigate, route) {
+    async logout(navigate, route, clearUserDataFromState) {
         try {
             await firebase.auth().signOut();
+            clearUserDataFromState;
             // Navigate to login view
             navigate(route)
         } catch (error) {
@@ -121,10 +122,6 @@ class _Firebase {
         }
 
     }
-
-   
-
-
     /**
      * 
      * Sets a users mobile number - EXAMPLE OF SETTING DATA IN DATABASE

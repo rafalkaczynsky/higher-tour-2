@@ -121,6 +121,13 @@ componentDidMount(){
     console.log(params)
     console.log(this.props)
 
+    
+    function compareDistance(a, b){
+      return a.howFar - b.howFar;
+    }
+
+    const x = locations.sort(compareDistance);
+
     return (
         <Welcome 
           onSettings={()=> this.handleOnSettings(navigate, 'Settings', 'Settings')}
