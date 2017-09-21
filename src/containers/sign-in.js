@@ -168,6 +168,26 @@ class _SignIn extends Component {
           console.log('USER DOESNT FOLLOW EVENT!!!')
           navigate('FindSession')
         }
+      } else {
+        //.. Token expired!!!!!
+
+        firebase.auth().currentUser.getToken(true)
+        .then(function(idToken) {
+          // ... Token has been refreshed!!!
+          console.log('Token has been refreshed!!! new token is: '+idToken)
+          // ... check if user follow events   
+           if(followStatus){
+             //... if so ...
+             console.log('USER FOLLOWS EVENT!!!')
+             navigate('UserProfile')    
+           } else {
+             //... if doesnt follow ...
+             console.log('USER DOESNT FOLLOW EVENT!!!')
+             navigate('FindSession')
+           }
+        }).catch(function(error) {
+          if (error) throw error
+        });
       }
     } else {
       // ...if doesnt exist in local  ...
