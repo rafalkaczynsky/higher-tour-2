@@ -12,7 +12,8 @@ class UserProfile extends React.Component {
    super(props)
 
    this.state ={
-     sessions: []
+     sessions: [],
+     isMounted : false
    }
   }
 
@@ -33,6 +34,11 @@ class UserProfile extends React.Component {
   componentWillMount(){
 
 
+  }
+
+  componentDidMount(){
+    this.setState({isMounted: true})
+    
   }
 
     render(){
@@ -127,10 +133,4 @@ class UserProfile extends React.Component {
 }
 
 
-function mapStateToProps(state){
-  return({
-      sessions: state.sessions,
-  });
-}
-
-export default connect(mapStateToProps)(UserProfile);
+export default UserProfile

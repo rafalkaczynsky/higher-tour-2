@@ -5,6 +5,7 @@ initialState = {
     activeTabName: '',
     showLogginContent: false,
     followStatus: false,
+    showUserProfileContent: false,
 }
 
 export default function appReducer(state = initialState, action){
@@ -20,7 +21,8 @@ export default function appReducer(state = initialState, action){
                 loginStatus: action.loginStatus,
                 activeTabName: state.activeTabName,
                 showLogginContent: state.showLogginContent,
-                followStatus: state.followStatus
+                followStatus: state.followStatus,
+                showUserProfileContent: state.showUserProfileContent
             }
 
             return new_state;
@@ -32,6 +34,7 @@ export default function appReducer(state = initialState, action){
                     activeTabName: action.activeTabName,
                     showLogginContent: state.showLogginContent,
                     followStatus: state.followStatus,
+                    showUserProfileContent: state.showUserProfileContent
             }
             
             return new_state;
@@ -42,10 +45,24 @@ export default function appReducer(state = initialState, action){
                     loginStatus: state.loginStatus,
                     activeTabName: state.activeTabName,
                     followStatus: state.followStatus,
-                    showLogginContent: action.showLogginContent
+                    showLogginContent: action.showLogginContent,
+                    showUserProfileContent: state.showUserProfileContent
             }
             
-            return new_state;
+            return new_state;  
+
+
+        case types.UPDATE_SHOW_USERPROFILE_CONTENT:
+        
+        new_state = {
+                loginStatus: state.loginStatus,
+                activeTabName: state.activeTabName,
+                followStatus: state.followStatus,
+                showLogginContent: state.showLogginContent,
+                showUserProfileContent: action.showUserProfileContent
+        }
+        
+        return new_state;  
 
         case types.UPDATE_FOLLOW_STATUS:
             
@@ -53,7 +70,8 @@ export default function appReducer(state = initialState, action){
                     loginStatus: state.loginStatus,
                     activeTabName: state.activeTabName,
                     showLogginContent: state.showLogginContent,
-                    followStatus: action.followStatus
+                    followStatus: action.followStatus,
+                    showUserProfileContent: state.showUserProfileContent
             }
             
             return new_state;

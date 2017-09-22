@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
-import {UserProfile} from '../windows'
+import {View, ActivityIndicator} from 'react-native'
 import { connect } from 'react-redux'
 import * as firebase from 'firebase'
 
+import {TabMenu} from '../components'
+import {UserProfile} from '../windows' 
+import StyleSheet from '../styles'
 import * as ACTIONS from '../actions/actions/actions';
 
 class _UserProfile extends Component {
@@ -21,13 +24,19 @@ class _UserProfile extends Component {
   }
 
   componentWillMount(){
+
+    const userData = this.props.user                    // data from the store    
+    this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
 
     const eventSelected = this.props.eventSelected      // data from the store
-    // check if session ex in the session...
 
-    console.log(eventSelected.id)
+
+
+    // check if session ex in the session...
+ 
+    console.log('ComponentWillMount of UserProfile container')
     firebase.database().ref('sessions/'+ eventSelected.host+'/').once("value", snapshot => {
       const session = snapshot.val();
 
@@ -51,10 +60,11 @@ class _UserProfile extends Component {
 
        // console.log(sessionsAvailable)
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(sessionsAvailable));
-
+        this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       }
     })
   }
+
 
 
   render() {
@@ -68,23 +78,43 @@ class _UserProfile extends Component {
     const sessions = this.props.sessions      // data from the store
 
     console.log('UserProfile Container')
-    console.log(params)
     console.log(this.props)
+    console.log(sessions)
+    console.log(eventSelected)
 
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
     
-    return (
-        <UserProfile
-          locations={locations}
-          onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
-          onBible={()=> this.handleOnBible(navigate, eventSelected,  "UserProfile")}
-          userData={userData}
-          months={months}
-          locationSelected={eventSelected} 
-          handleEditSession={(locationSelected)=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, cancelLabel: true})}
-          activeTabName={activeTabName}
-        />
-    )
+
+    const UserProfileScreen= () => 
+      <UserProfile
+        locations={locations}
+        onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
+        onBible={()=> this.handleOnBible(navigate, eventSelected,  "UserProfile")}
+        userData={userData}
+        months={months}
+        sessions={sessions}
+        locationSelected={eventSelected} 
+        handleEditSession={(locationSelected)=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, cancelLabel: true})}
+        activeTabName={activeTabName}
+      />
+ 
+    const EmptyScreen = () => 
+    <View style={StyleSheet.signIn.emptyScreen}>
+      <View style={StyleSheet.signIn.indicator}>
+        <ActivityIndicator
+          animating={true}
+          color='grey'
+        />  
+      </View>
+      <View style={StyleSheet.signIn.tabMenu}>
+        <TabMenu/>
+      </View>
+    </View>
+
+  if (this.props.app.showUserProfileContent){
+    return <UserProfileScreen/>
+  } else return <EmptyScreen/> 
+
   }
 }
 

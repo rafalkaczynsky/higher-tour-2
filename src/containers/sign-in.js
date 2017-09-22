@@ -139,7 +139,17 @@ class _SignIn extends Component {
     })
 
   }
-
+  // debugging function needs to be removed
+  msToTime(s) {
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
+  
+    return hrs + ' hours, ' + mins + ' minutes, ' + secs + ' secunds';
+  }
   
   handleInitialRedirect(){
  
@@ -150,11 +160,18 @@ class _SignIn extends Component {
     const followStatus = this.props.app.followStatus   
     const TheDate = new Date().getTime();
 
+
+    
     //check if user exist in Redux Store State ...
     if ((userDataFromLocal) && (userDataFromLocal.stsTokenManager)){
       // ... if so ...
       console.log('THERE IS USER IN LOCALstorage!!!')
       //... check if token is not expired ...
+
+      // for debugging check when token will be expired 
+      const expierationTime = userDataFromLocal.stsTokenManager.expirationTime - TheDate 
+      console.log('Token expire time is: ' + this.msToTime(expierationTime))
+
       if (userDataFromLocal.stsTokenManager.expirationTime > TheDate ){
        //... if so ...
        console.log('TOKEN IS STILL VALID!!')
@@ -164,9 +181,32 @@ class _SignIn extends Component {
           console.log('USER FOLLOWS EVENT!!!')
           navigate('UserProfile')    
         } else {
-          //... if doesnt follow ...
-          console.log('USER DOESNT FOLLOW EVENT!!!')
-          navigate('FindSession')
+          //... if doesnt follow in localStorage check again ...
+
+                       // ...In case when  app data storage was cleared check in firebase if follow 
+                       firebase.database().ref('appUsers/'+ userDataFromLocal.uid+'/event/').once("value", snapshot => {
+                        const event = snapshot.val();
+                          //... if so ..
+                          if (event) {
+                            if (event.follow === true){
+                              console.log('User follow! Valid TOKEN');
+                              //... find event by id ...
+          
+                              firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                                // .. get object and dispatch to the store 
+                                  const locationSelected = snapshot.val()
+                                  props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                                  props.dispatch(ACTIONS.SAVE_USER(userDataFromLocal))
+                                  navigate('UserProfile')    
+                              })
+          
+                            } else {
+                              //... if doesnt follow ...
+                              console.log('USER DOESNT FOLLOW EVENT!!!')
+                              navigate('FindSession')
+                            }
+                          }
+                        })
         }
       } else {
         //.. Token expired!!!!!
@@ -181,9 +221,32 @@ class _SignIn extends Component {
              console.log('USER FOLLOWS EVENT!!!')
              navigate('UserProfile')    
            } else {
-             //... if doesnt follow ...
-             console.log('USER DOESNT FOLLOW EVENT!!!')
-             navigate('FindSession')
+
+             // In case when  app data storage was cleared check in firebase if follow 
+             firebase.database().ref('appUsers/'+ userDataFromLocal.uid+'/event/').once("value", snapshot => {
+              const event = snapshot.val();
+                //... if so ..
+                if (event) {
+                  if (event.follow === true){
+                    console.log('User follow! refresh token method');
+                    //... find event by id ...
+
+                    firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                      // .. get object and dispatch to the store 
+                        const locationSelected = snapshot.val()
+                        props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                        props.dispatch(ACTIONS.SAVE_USER(userDataFromLocal))
+                        navigate('UserProfile')    
+                    })
+
+                  } else {
+                    //... if doesnt follow ...
+                    console.log('USER DOESNT FOLLOW EVENT!!!')
+                    navigate('FindSession')
+                  }
+                }
+              })
+
            }
         }).catch(function(error) {
           if (error) throw error
@@ -213,14 +276,16 @@ class _SignIn extends Component {
                   if (event) {
                     if (event.follow === true){
                       //... find event by id 
+                      console.log('User follow! onAuthStateChanged');
+
                       firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                         // .. get object and dispatch to the store 
                           const locationSelected = snapshot.val()
                           props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                          props.dispatch(ACTIONS.SAVE_USER(user))
+                          navigate('UserProfile')    
                       })
-                      console.log('User follow!');
-                      props.dispatch(ACTIONS.SAVE_USER(user))
-                      navigate('UserProfile')    
+
                     } else {
                       console.log('User doesnt follow')
                       props.dispatch(ACTIONS.SAVE_USER(user))
@@ -257,10 +322,6 @@ class _SignIn extends Component {
           props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
         }
       })
-
-
-
-
     }
 
 

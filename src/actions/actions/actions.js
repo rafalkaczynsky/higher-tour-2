@@ -70,6 +70,14 @@ export function UPDATE_SHOW_LOGGIN_CONTENT(status) {
     };
 }
 
+
+export function UPDATE_SHOW_USERPROFILE_CONTENT(status) {
+    return {
+        type: types.UPDATE_SHOW_USERPROFILE_CONTENT,
+        showUserProfileContent: status,
+    };
+}
+
 export function UPDATE_FOLLOW_STATUS(followStatus) {
     return {
         type: types.UPDATE_FOLLOW_STATUS,
