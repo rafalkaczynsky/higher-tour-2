@@ -9,14 +9,18 @@ import coordsReducer from './coordsReducer';
 import appReducer from './appReducer';
 import selectedEventReducer from './selectedEventReducer';
 import sessionsReducer from './sessionsReducer';
+import bibleReadingReducer from './bibleReadingReducer';
+import currentBibleReadingReducer from './currentBibleReadingReducer'
 
 export const reducers = combineReducers({
     form: formReducer,     
     user: userReducer,
     events: eventsReducer,
+    bibleReading: bibleReadingReducer,
     churches: churchesReducer,
     coords: coordsReducer,
     app: appReducer,
     eventSelected: selectedEventReducer,
     sessions: sessionsReducer,
+    currentBibleReading: currentBibleReadingReducer
 })

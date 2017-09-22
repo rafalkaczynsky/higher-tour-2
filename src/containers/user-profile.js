@@ -23,6 +23,21 @@ class _UserProfile extends Component {
     navigate('HigherBibleReadings', { locationSelected: locationSelected, from: from})
   }
 
+  handleReadingItemPressed(itemBibleReading){
+    // bibleReading Item Was pressed ...
+    const { navigate } = this.props.navigation
+    console.log(itemBibleReading)
+    itemBibleReading = Object.keys(itemBibleReading).map(function (key) { return itemBibleReading[key]; })
+    console.log(itemBibleReading)
+    //set into Redux Store 
+    //BibleReadingScreen - list or item       
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
+    //currentReading - bibleReading
+    this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
+
+    navigate('HigherBibleReadings')
+  }
+
   componentWillMount(){
 
     const userData = this.props.user                    // data from the store    
@@ -31,8 +46,6 @@ class _UserProfile extends Component {
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
 
     const eventSelected = this.props.eventSelected      // data from the store
-
-
 
     // check if session ex in the session...
  
@@ -65,8 +78,7 @@ class _UserProfile extends Component {
     })
   }
 
-
-
+ 
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
@@ -75,24 +87,22 @@ class _UserProfile extends Component {
     const userData = this.props.user                    // data from the store         
     const activeTabName = this.props.app.activeTabName  // data from the store
     const eventSelected = this.props.eventSelected      // data from the store
-    const sessions = this.props.sessions      // data from the store
+    const sessions = this.props.sessions                // data from the store
+    const bibleReading = this.props.bibleReading        // data from the store
 
     console.log('UserProfile Container')
-    console.log(this.props)
-    console.log(sessions)
-    console.log(eventSelected)
-
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
     
-
     const UserProfileScreen= () => 
       <UserProfile
         locations={locations}
         onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
         onBible={()=> this.handleOnBible(navigate, eventSelected,  "UserProfile")}
+        onHandleReadingItemPressed={(itemBibleReading) => this.handleReadingItemPressed(itemBibleReading)}
         userData={userData}
         months={months}
         sessions={sessions}
+        bibleReading={bibleReading}
         locationSelected={eventSelected} 
         handleEditSession={(locationSelected)=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, cancelLabel: true})}
         activeTabName={activeTabName}
@@ -125,6 +135,7 @@ function mapStateToProps(state){
       app: state.app,
       eventSelected: state.eventSelected,
       sessions: state.sessions,
+      bibleReading: state.bibleReading,
   });
 }
 

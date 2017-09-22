@@ -13,18 +13,28 @@ export default class Read extends Component {
       text: 'Useless Placeholder', 
       namePlaceholder: 'Name',
       emailPlaceholder: 'Email',
+      dayItem: null,
     }
+  }
+
+  componentWillMount(){
+    this.setState({
+      dayItem: this.props.dayItem
+    })
   }
 
   render() {
     console.log('WelcomeXXX')
-    const { locations, userData, itemDay} = this.props
+    const { locations, userData, itemDay, currentReadingDayNumber} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
 
     console.log('Read Window')
+    console.log(itemDay)
 
+    const mainImage = itemDay.Read.Image
+    const versus = itemDay.Read.Versus
     return (
       <View style={StyleSheet.window.default}>
         <Header 
@@ -34,22 +44,23 @@ export default class Read extends Component {
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
             <View style={{backgroundColor: 'white', width: '100%'}}>
+               
                 <View style={{width: '100%'}}>
-                    <Image source={StyleSheet.images[name]} style={{ resizeMode: 'cover', width: '100%'}}/>
+                    <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
                 </View>
                 <View style={{padding: 20}}>
                     <View>
-                        <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.title}</Text>
-                        <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.label}</Text>
+                        <Text style={{ fontSize: 12, lineHeight: 18}}>DAY {currentReadingDayNumber}</Text>
+                        <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Verse}</Text>
                     </View>
                     <View style={{marginTop: 30}}>
                         <Text style={{ fontSize: 12, lineHeight: 18}}>
-                            {itemDay.text}
+                            {itemDay.Read.Content}
                         </Text>
-
                     </View>
                 </View>
             </View>
+
         </View>
         <TabMenu 
           onSettings={this.props.onSettings}

@@ -159,12 +159,7 @@ class _SignIn extends Component {
   }
   
   handleInitialRedirect(){
-
-    // ON APP START NEEDS TO BE CHECKED TOKEN EXPIRATION IF ITS GETTING TO EXPIRED BY MAX 20% THEN REFRESH or ...
-    // if is already expired then signIn with refresh token  ...
-    // set timer to check if  when app is running long , we have to refresh token before is expired ..
-  
-  
+ 
     const { navigate } = this.props.navigation
     const  props = this.props
 
@@ -184,7 +179,7 @@ class _SignIn extends Component {
       const expierationTime = userDataFromLocal.stsTokenManager.expirationTime - TheDate 
       console.log('Token expire time is: ' + this.msToTime(expierationTime))
 
-      if (userDataFromLocal.stsTokenManager.expirationTime - 60000 > TheDate ){
+      if (userDataFromLocal.stsTokenManager.expirationTime > TheDate ){
        //... if so ...
        console.log('TOKEN IS STILL VALID!!')
        // ... check if user follow events   
@@ -221,8 +216,9 @@ class _SignIn extends Component {
                         })
         }
       } else {
+        //.. Token expired!!!!!
 
-        firebase.auth().currentUser.getIDToken(true)
+        firebase.auth().currentUser.getToken(true)
         .then(function(idToken) {
           // ... Token has been refreshed!!!
           console.log('Token has been refreshed!!! new token is: '+idToken)

@@ -9,7 +9,7 @@ import {Icon, Picture} from '../components'
 export default class ListItem extends Component {
 
   render() {
-    const {title, label, noBorder, borderBold, bgColor, listHeader, progressBar, progress, titleStyle, iconText, handleIconPressed, imageName} = this.props
+    const {title, label, noBorder, borderBold, bgColor, listHeader, progressBar, progress, titleStyle, iconText, handleIconPressed, imageName, imageUrl} = this.props
 
     const border = noBorder ? null : {borderBottomColor: colors.grey2, borderBottomWidth: 0.5}
     const _borderBold = borderBold ? {borderBottomColor: colors.grey2, borderBottomWidth: 1} : null
@@ -21,9 +21,10 @@ export default class ListItem extends Component {
 
 
 {/* with imageName option*/}
-       {imageName && (
+       {imageName || imageUrl && (
             <View style={[StyleSheet.listItem.itemDetails]}>
-             <Image source={StyleSheet.images[imageName]} style={{width: 60, height: 60, marginRight: 15}} />
+             {imageName && <Image source={StyleSheet.images[imageName]} style={{width: 60, height: 60, marginRight: 15}} />}
+             {imageUrl && <Image source={{uri: imageUrl}} style={{width: 60, height: 60, marginRight: 15}} />}
               <View>
                 <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
                 {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
@@ -37,7 +38,7 @@ export default class ListItem extends Component {
             
        )}
 
-       {!imageName && (
+       {!imageName && !imageUrl && (
           <View>
             <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}

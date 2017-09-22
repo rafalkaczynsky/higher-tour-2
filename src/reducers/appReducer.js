@@ -6,6 +6,9 @@ initialState = {
     showLogginContent: false,
     followStatus: false,
     showUserProfileContent: false,
+    bibleReadingScreenStatus: 'list',
+    currentDayContent: null,
+    currentReadingDayNumber: null,
 }
 
 export default function appReducer(state = initialState, action){
@@ -22,7 +25,10 @@ export default function appReducer(state = initialState, action){
                 activeTabName: state.activeTabName,
                 showLogginContent: state.showLogginContent,
                 followStatus: state.followStatus,
-                showUserProfileContent: state.showUserProfileContent
+                showUserProfileContent: state.showUserProfileContent,
+                bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+                currentDayContent: state.currentDayContent,
+                currentReadingDayNumber: state.currentReadingDayNumber
             }
 
             return new_state;
@@ -34,7 +40,10 @@ export default function appReducer(state = initialState, action){
                     activeTabName: action.activeTabName,
                     showLogginContent: state.showLogginContent,
                     followStatus: state.followStatus,
-                    showUserProfileContent: state.showUserProfileContent
+                    showUserProfileContent: state.showUserProfileContent,
+                    bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+                    currentDayContent: state.currentDayContent,
+                    currentReadingDayNumber: state.currentReadingDayNumber
             }
             
             return new_state;
@@ -46,7 +55,10 @@ export default function appReducer(state = initialState, action){
                     activeTabName: state.activeTabName,
                     followStatus: state.followStatus,
                     showLogginContent: action.showLogginContent,
-                    showUserProfileContent: state.showUserProfileContent
+                    showUserProfileContent: state.showUserProfileContent,
+                    bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+                    currentDayContent: state.currentDayContent,
+                    currentReadingDayNumber: state.currentReadingDayNumber
             }
             
             return new_state;  
@@ -59,7 +71,10 @@ export default function appReducer(state = initialState, action){
                 activeTabName: state.activeTabName,
                 followStatus: state.followStatus,
                 showLogginContent: state.showLogginContent,
-                showUserProfileContent: action.showUserProfileContent
+                showUserProfileContent: action.showUserProfileContent,
+                bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+                currentDayContent: state.currentDayContent,
+                currentReadingDayNumber: state.currentReadingDayNumber
         }
         
         return new_state;  
@@ -71,11 +86,60 @@ export default function appReducer(state = initialState, action){
                     activeTabName: state.activeTabName,
                     showLogginContent: state.showLogginContent,
                     followStatus: action.followStatus,
-                    showUserProfileContent: state.showUserProfileContent
+                    showUserProfileContent: state.showUserProfileContent,
+                    bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+                    currentDayContent: state.currentDayContent,
+                    currentReadingDayNumber: state.currentReadingDayNumber
             }
             
             return new_state;
+
+            case types.UPDATE_BIBLE_READING_SCREEN:
             
+            new_state = {
+                    loginStatus: state.loginStatus,
+                    activeTabName: state.activeTabName,
+                    showLogginContent: state.showLogginContent,
+                    followStatus: state.followStatus,
+                    showUserProfileContent: state.showUserProfileContent,
+                    bibleReadingScreenStatus: action.bibleReadingScreenStatus,
+                    currentDayContent: state.currentDayContent,
+                    currentReadingDayNumber: state.currentReadingDayNumber
+            }
+            
+            return new_state;
+
+            case types.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT:
+            
+            new_state = {
+                    loginStatus: state.loginStatus,
+                    activeTabName: state.activeTabName,
+                    showLogginContent: state.showLogginContent,
+                    followStatus: state.followStatus,
+                    showUserProfileContent: state.showUserProfileContent,
+                    bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+                    currentDayContent: action.currentDayContent,
+                    currentReadingDayNumber: state.currentReadingDayNumber
+            }
+            
+            return new_state;
+
+            case types.SAVE_CURRENT_READING_DAY_NUMBER:
+            
+            new_state = {
+                    loginStatus: state.loginStatus,
+                    activeTabName: state.activeTabName,
+                    showLogginContent: state.showLogginContent,
+                    followStatus: state.followStatus,
+                    showUserProfileContent: state.showUserProfileContent,
+                    bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+                    currentDayContent: state.currentDayContent,
+                    currentReadingDayNumber: action.currentReadingDayNumber
+            }
+            
+            return new_state;
+            //currentReadingDayNumber
+
         default:
             return state;
 

@@ -12,8 +12,8 @@ export default class HigherBibleReadings extends React.Component {
       console.log('Higher Bible Readings Window')
       const {locations, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
 
-     console.log('readings')  
-
+     console.log(chosenItem)  
+ 
       return(
       <View style={StyleSheet.window.default}>
         <Header 
@@ -53,18 +53,17 @@ export default class HigherBibleReadings extends React.Component {
                   />
                 </TouchableOpacity>
                 )}
-            {currentScreen === 'item' && chosenItem.readingsDays.map((item, indx)=> 
-                <TouchableOpacity 
-                   onPress={()=> onDayItem(item)}
-                   key={'ListItemReadingsKey-'+indx}
-                >
+            {currentScreen === 'item' && chosenItem.map((item, indx)=> 
+
                   <ListItem 
-                    title={item.title}
-                    label={item.label}
-                    imageName={item.image}
+                    key={'ListItemReadingsKey-'+indx}
+                    title={'Day ' + (indx + 1)}
+                    label={item.Read.Verse}
+                    imageUrl={item.Read.Image}
+                    handleIconPressed ={()=> onDayItem(item, (indx + 1))}
                   />
-                </TouchableOpacity>
-                )}
+
+              )}
 
             </ScrollView>
             

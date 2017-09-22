@@ -58,13 +58,17 @@ class _HigherBibleReadings extends Component {
       })
   }
 
-  handleOnItem(item){
-      console.log(item)
-      this.setState({currentScreen: 'item', chosenItem: item})
+  handleOnItem(itemBibleReading,){
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
+    this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
+
   }
 
-  handleOnDayItem(itemDay, navigate, from){
-      navigate('Read', {itemDay: itemDay, from: from})
+  handleOnDayItem(itemDay, navigate, numberOfDay, from){
+      console.log(itemDay)
+      this.props.dispatch(ACTIONS.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(itemDay))
+      this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(numberOfDay))
+      navigate('Read', {from: from})
   }
 
   handleOnSettings(navigate, loginStatus, from,){
@@ -140,18 +144,21 @@ class _HigherBibleReadings extends Component {
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
 
-    const locations = this.props.events                 // data from the store 
-    const userData = this.props.user                    // data from the store
-    const loginStatus = this.props.app.loginStatus      // data from the store
-    const activeTabName = this.props.app.activeTabName  // data from the store
+    const locations = this.props.events                                   // data from the store 
+    const userData = this.props.user                                      // data from the store
+    const loginStatus = this.props.app.loginStatus                        // data from the store
+    const activeTabName = this.props.app.activeTabName                    // data from the store
+    const currentBibleReading = this.props.currentBibleReading            // data from the store  
+    const bibleReading = this.props.bibleReading                          // data from the store   
+    const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store  
 
-   
     console.log('HigherBibleReadings Container')
+    console.log(currentBibleReading)
     console.log(params)
     console.log(this.props)
     return (
         <HigherBibleReadings 
-          readings={readings}
+          readings={bibleReading}
           onSettings={()=> {
               if (loginStatus === 'loggedIn'){        
                 this.handleOnSettings(navigate, 'HigherBibleReadings', 'Settings')
@@ -164,13 +171,13 @@ class _HigherBibleReadings extends Component {
           }
           onHome={()=> this.handleOnHome()}  
           onItem={(item)=> this.handleOnItem(item)}
-          onDayItem={(item)=> this.handleOnDayItem(item, navigate, 'HigherBibleReadings', 'Bible')}
+          onDayItem={(item, numberOfDay)=> this.handleOnDayItem(item, navigate,  numberOfDay, 'HigherBibleReadings')}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           onCompleted={()=> this.handleOnCompleted()}
           onNew={()=> this.handleOnNew()}
-          currentScreen={this.state.currentScreen}
-          chosenItem={this.state.chosenItem}
+          currentScreen={bibleReadingScreenStatus}
+          chosenItem={currentBibleReading}
           chosenDayItem={this.state.chosenDayItem}
           activeTabName={activeTabName}
         />
@@ -183,7 +190,8 @@ function mapStateToProps(state){
       user: state.user,
       events: state.events,
       app: state.app,
-
+      currentBibleReading: state.currentBibleReading,
+      bibleReadingScreenStatus: state.bibleReadingScreenStatus
   });
 }
 

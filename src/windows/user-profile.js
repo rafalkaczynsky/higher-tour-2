@@ -43,11 +43,12 @@ class UserProfile extends React.Component {
 
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession, userData, months} = this.props
+        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, onHandleReadingItemPressed} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
         console.log('User profile window')
+
         let userFirstName
 
         if (this.props.userData){
@@ -109,11 +110,28 @@ class UserProfile extends React.Component {
                   title='Higher Bible Readings'
                   listHeader
                 /> 
-                <ListItem 
-                  title='Journey through Acts'
-                  progressBar
-                  progress="50%"
-                /> 
+
+                {this.props.bibleReading.map((item, index) => {
+
+                  title = Object.keys(item)[0];    
+                  value = item[title]             
+                  console.log(title,value);  
+                  console.log(item)
+
+                  const arrayOfValue = Object.keys(value).map(function (key) { return value[key]; })
+                  console.log(arrayOfValue)
+
+                return (
+                  <ListItem 
+                    key={index + title}
+                    title={title}
+                    progressBar
+                    progress="50%"
+                    handleIconPressed={() => onHandleReadingItemPressed(arrayOfValue)}
+                  />
+                  ) 
+                })}
+
                 <ListItem
                     title="See all reading plans"
                     bgColor={colors.grey3}

@@ -48,6 +48,29 @@ export function SAVE_SESSIONS(sessions) {
     };
 }
 
+export function SAVE_BIBLE_READING(bibleReading) {
+    return {
+        type: types.SAVE_BIBLE_READING,
+        bibleReading: bibleReading,
+
+    };
+}
+
+export function SAVE_CURRENT_READING_ITEM(currentBibleReading) {
+    return {
+        type: types.SAVE_CURRENT_READING_ITEM,
+        currentBibleReading: currentBibleReading,
+
+    };
+}
+
+export function SAVE_CURRENT_READING_DAY_NUMBER(dayNumber) {
+    return {
+        type: types.SAVE_CURRENT_READING_DAY_NUMBER,
+        currentReadingDayNumber: dayNumber,
+    };
+}
+
 //APP STAFF
 export function UPDATE_LOGGIN_STATUS(loginStatus) {
     return {
@@ -85,5 +108,18 @@ export function UPDATE_FOLLOW_STATUS(followStatus) {
     };
 }
 
+export function UPDATE_BIBLE_READING_SCREEN(screenStatus) {
+    return {
+        type: types.UPDATE_BIBLE_READING_SCREEN,
+        bibleReadingScreenStatus: screenStatus,
+    };
+}
 
+//UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT
+export function UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(currentDayContent) {
+    return {
+        type: types.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT,
+        currentDayContent: currentDayContent,
+    };
+}
 //...............

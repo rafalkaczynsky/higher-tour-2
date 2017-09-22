@@ -50,9 +50,11 @@ handleHome(navigate){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events             // data from the store
-    const userData = this.props.user                // data from the store
-    const loginStatus = this.props.app.loginStatus  // data from the store
+    const locations = this.props.events                                     // data from the store
+    const userData = this.props.user                                        // data from the store
+    const loginStatus = this.props.app.loginStatus                          // data from the store
+    const currentDayContent = this.props.app.currentDayContent              // data from the store
+    const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
  
     console.log('Read Container')
     console.log(params)
@@ -63,7 +65,8 @@ handleHome(navigate){
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
           locations={locations}
-          itemDay={params.itemDay}
+          currentReadingDayNumber={currentReadingDayNumber}
+          itemDay={currentDayContent}
           activeTabName={'Bible'}
         />
     )
