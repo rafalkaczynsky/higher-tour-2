@@ -41,9 +41,19 @@ class UserProfile extends React.Component {
     
   }
 
+    getMyData(arrayOfObjectsWithIds) {
+
+      var functionArray = arrayOfObjectsWithIds.map( function (value) { 
+         return {myGetDataFunction: MyService.getMyData(value.id)}; 
+      }) 
+      var promises = functionArray.map( function (getDataFunction) { 
+      var deferred =$q.defer(); getDataFunction.myGetDataFunction.success( function(data) { deferred.resolve(data) }). error( function (error) { deferred.reject(); }); return deferred.promise; }); $q.all(promises).then( function (dataArray) { }) 
+    }; 
+
+
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, onHandleReadingItemPressed} = this.props
+        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, onHandleReadingItemPressed, aaaSession, onWeek} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
@@ -75,7 +85,7 @@ class UserProfile extends React.Component {
                   iconText='view/edit'
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 /> 
-
+                {/* Availability needs to be checked dynamicaly*/}
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
@@ -92,13 +102,15 @@ class UserProfile extends React.Component {
 
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
-                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
+                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)              
+              
                    if (index === 0)
                     return(
                       <ListItem 
                         key={item.aaaSession + '-' + index}
                         title={item.aaaSession}
                         label={sessionDateFormatted}
+                        handleIconPressed={()=>onWeek(aaaSession[index])}
                       /> 
                     )
                 })}
@@ -127,7 +139,7 @@ class UserProfile extends React.Component {
                     title={title}
                     progressBar
                     progress="50%"
-                    handleIconPressed={() => onHandleReadingItemPressed(arrayOfValue)}
+                    handleIconPressed={() => onHandleReadingItemPressed(arrayOfValue, title)}
                   />
                   ) 
                 })}

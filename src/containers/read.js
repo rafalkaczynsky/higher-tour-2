@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
+import * as firebase from 'firebase'
 
 import {Read} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
@@ -45,6 +46,24 @@ handleHome(navigate){
       }
 }
 
+componentDidMount(){
+
+  //wait 5 seconds after that 
+  //update appUser lastReadDayNumber and timesta,[ ]
+  const userData = this.props.user          
+  const currentBibleReading = this.props.currentBibleReading
+  const currentReadingDayNumber = this.props.app.currentReadingDayNumber
+  const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle                    
+  
+  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');
+
+  firebaseDataAppUsers.update({
+    lastReadDayNumber : currentReadingDayNumber,
+    lastReadTimeStamp: new Date().getTime()
+  })
+  
+}
+
   render() {
 
     const { navigate } = this.props.navigation
@@ -57,14 +76,15 @@ handleHome(navigate){
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
  
     console.log('Read Container')
-    console.log(params)
-    console.log(this.props)
+
     return (
         <Read 
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
           locations={locations}
+          onWeekBackPressed={()=> navigate('UserProfile')}
+          week={params.week}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}
@@ -78,6 +98,8 @@ function mapStateToProps(state){
       user: state.user,
       events: state.events,
       app: state.app,
+      currentBibleReading: state.currentBibleReading,
+      currentReadingDayNumber: state.currentReadingDayNumber,
 
   });
 }
