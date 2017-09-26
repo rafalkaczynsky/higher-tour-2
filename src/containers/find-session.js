@@ -24,7 +24,6 @@ class _FindSession extends Component {
   }
 
   handleOnItem(navigate, locationSelected, cancelLabel){
-    alert('PRESSED!!!!')
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
     navigate('SessionItem', {cancelLabel: cancelLabel})
 

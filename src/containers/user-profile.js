@@ -95,11 +95,13 @@ class _UserProfile extends Component {
     const eventSelected = this.props.eventSelected      // data from the store
     const sessions = this.props.sessions                // data from the store
     const bibleReading = this.props.bibleReading        // data from the store
-    const aaaSession = this.props.aaaSession       // data from the store
-
+    const aaaSession = this.props.aaaSession                     // data from the store
+    const lastReadDayNumber = this.props.app.lastReadDayNumber   // data from the store
     console.log('UserProfile Container')
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
     
+
+
     const UserProfileScreen= () => 
       <UserProfile
         locations={locations}
@@ -110,6 +112,7 @@ class _UserProfile extends Component {
         userData={userData}
         months={months}
         aaaSession={aaaSession}
+        lastReadDayNumber={lastReadDayNumber}
         sessions={sessions}
         bibleReading={bibleReading}
         locationSelected={eventSelected} 

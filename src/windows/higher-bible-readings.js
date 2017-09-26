@@ -10,6 +10,14 @@ import {colors} from '../styles/resources'
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem, Picture} from '../components'
 
 class HigherBibleReadings extends React.Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      lastReadDayNumber: undefined, 
+      isMounted: false,
+    }
+  }
 
   componentWillMount(){
     const userData = this.props.user                // data from the store
@@ -26,20 +34,18 @@ class HigherBibleReadings extends React.Component {
 
     })
   }
-
+  componentDidMount(){
+    this.setState({isMounted: true})
+  }
     render(){
       console.log('Higher Bible Readings Window')
       const {locations, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
-
 
       const userData = this.props.user                // data from the store
       const currentDayContent = this.props.app.currentDayContent              // data from the store
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
       const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
-      const lastReadDayNumber = this.props.app.lastReadDayNumber
-
-     console.log(chosenItem)  
- 
+   
       return(
       <View style={StyleSheet.window.default}>
         <Header 
@@ -79,22 +85,22 @@ class HigherBibleReadings extends React.Component {
                   />
                 </TouchableOpacity>
                 )}
-            {currentScreen === 'item' && chosenItem.map((item, indx) => 
+            {this.state.isMounted && currentScreen === 'item' && chosenItem.map((item, indx) => 
                 {
-                   
-                  if (indx !== 0) 
+
+                  const unavailable =(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? 'available' : 'unavailable'
+
                   return (
                     <ListItem 
                     key={'ListItemReadingsKey-'+indx}
-                    title={'Day ' + (indx)}
-                    label={item.Read.Verse}
+                    title={'Day ' + (indx+1)}
+                    label={item.Read.Verse + ' ' + unavailable}
                     imageUrl={item.Read.Image}
-                    handleIconPressed ={()=>onDayItem(item, (indx))  }
-                    opacity={lastReadDayNumber < indx + 1 ? 1 : 0.5}
+                    handleIconPressed ={(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? ()=>onDayItem(item, (indx+1)): null}
+                    
                   />
                   )
                 }
-
 
               )}
 
@@ -114,7 +120,6 @@ class HigherBibleReadings extends React.Component {
 function mapStateToProps(state){
   return({
       user: state.user,
-
       app: state.app,
       currentBibleReading: state.currentBibleReading,
       bibleReadingScreenStatus: state.bibleReadingScreenStatus,
