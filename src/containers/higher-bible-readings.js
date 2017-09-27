@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {HigherBibleReadings} from '../windows'
 import { connect } from 'react-redux';
+import * as firebase from 'firebase'
+
 
 import * as ACTIONS from '../actions/actions/actions';
 
@@ -65,9 +67,18 @@ class _HigherBibleReadings extends Component {
   }
 
   handleOnDayItem(itemDay, navigate, numberOfDay, from){
+      const currentReadingDayNumber = this.props.app.currentReadingDayNumber
+      const userDataFromLocal = this.props.user
+
       console.log(itemDay)
       this.props.dispatch(ACTIONS.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(itemDay))
-      this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(numberOfDay))
+      //check redux store if the last Reading Number is bigger or not than current Clicked
+      if (this.props.app.lastReadDayNumber < numberOfDay){
+        this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(numberOfDay))
+      } else {
+        this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(this.props.app.lastReadDayNumber))
+      }
+     
       navigate('Read', {from: from})
   }
 
@@ -127,13 +138,14 @@ class _HigherBibleReadings extends Component {
       }
     }  
 
-  componentWillMount(){
-    const loginStatus = this.props.app.loginStatus      // data from the store
 
-    if (loginStatus){
-        this.setState({loginStatus: loginStatus})
-    }
+  componentWillMount(){
+
+
+    const loginStatus = this.props.app.loginStatus      // data from the store
+    
   }
+  
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
@@ -153,9 +165,7 @@ class _HigherBibleReadings extends Component {
     const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store  
 
     console.log('HigherBibleReadings Container')
-    console.log(currentBibleReading)
-    console.log(params)
-    console.log(this.props)
+
     return (
         <HigherBibleReadings 
           readings={bibleReading}
@@ -176,6 +186,7 @@ class _HigherBibleReadings extends Component {
           locations={locations}
           onCompleted={()=> this.handleOnCompleted()}
           onNew={()=> this.handleOnNew()}
+          lastReadDayNumber={this.props.app.lastReadDayNumber}
           currentScreen={bibleReadingScreenStatus}
           chosenItem={currentBibleReading}
           chosenDayItem={this.state.chosenDayItem}

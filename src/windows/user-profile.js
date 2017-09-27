@@ -53,7 +53,7 @@ class UserProfile extends React.Component {
 
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, onHandleReadingItemPressed, aaaSession, onWeek} = this.props
+        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
@@ -126,19 +126,16 @@ class UserProfile extends React.Component {
                 {this.props.bibleReading.map((item, index) => {
 
                   title = Object.keys(item)[0];    
-                  value = item[title]             
-                  console.log(title,value);  
-                  console.log(item)
-
+                  value = item[title]            
                   const arrayOfValue = Object.keys(value).map(function (key) { return value[key]; })
-                  console.log(arrayOfValue)
-
+                  const progress = parseInt(lastReadDayNumber / arrayOfValue.length * 100) + '%'
+         
                 return (
                   <ListItem 
                     key={index + title}
                     title={title}
                     progressBar
-                    progress="50%"
+                    progress={progress}
                     handleIconPressed={() => onHandleReadingItemPressed(arrayOfValue, title)}
                   />
                   ) 

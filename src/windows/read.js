@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput, Image} from 'react-native'
+import {ScrollView, View, Text, TextInput, Image, TouchableOpacity, Linking} from 'react-native'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -32,7 +32,7 @@ export default class Read extends Component {
 
   render() {
     console.log('WelcomeXXX')
-    const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week} = this.props
+    const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
@@ -86,7 +86,10 @@ export default class Read extends Component {
     text='Read'
     onBack
     onNext
+    onBackCallback={onItemBackPressed}
+    onNextCallback={onItemNextPressed}
   />
+  
   <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
       <View style={{backgroundColor: 'white', width: '100%'}}>
          
@@ -96,7 +99,9 @@ export default class Read extends Component {
           <View style={{padding: 20}}>
               <View>
                   <Text style={{ fontSize: 12, lineHeight: 18}}>DAY {currentReadingDayNumber}</Text>
-                  <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Versus}</Text>
+                  <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
+                    <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Verse}</Text>
+                  </TouchableOpacity>
               </View>
               <View style={{marginTop: 30}}>
                   <Text style={{ fontSize: 12, lineHeight: 18}}>

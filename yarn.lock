@@ -3359,6 +3359,10 @@ react-native-firebase-auth@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-firebase-auth/-/react-native-firebase-auth-1.0.0.tgz#eaf00676eb415ca53f3ac58e6b1f3b089f0134d7"
 
+react-native-keyboard-spacer@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-spacer/-/react-native-keyboard-spacer-0.4.0.tgz#e8c4dae45e2e15b589c0a82690c46db82a2d1431"
+
 react-native-maps@>=0.12.4:
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.16.2.tgz#5716cefd0fb4c3f326bc2281f02e873ebaa1f987"

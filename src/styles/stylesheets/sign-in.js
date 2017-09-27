@@ -5,8 +5,6 @@ import {colors} from '../resources'
 export default StyleSheet => StyleSheet.extend({
 
     container: {
-        flex: 1, 
-        alignItems: 'center', 
         width: '100%'
     },
 

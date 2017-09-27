@@ -10,7 +10,7 @@ initialState = {
     currentDayContent: null,
     currentReadingDayNumber: null,
     currentBibleReadingTitle: null,
-    lastReadDayNumber: null,
+    lastReadDayNumber: 0,
 }
 
 export default function appReducer(state = initialState, action){
