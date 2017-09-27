@@ -3345,15 +3345,13 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-fbsdk@0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-0.6.1.tgz#268bdbda5a16f5341ca43e3fa1beb88801e35a92"
+react-native-fbsdk@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-0.6.0.tgz#08fdc00e9ca777f724a70029a5b1c3794b49b882"
 
-react-native-fcm@^9.3.0, react-native-fcm@^9.4.0:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-9.4.0.tgz#a9736413d7e8a15896d30299cd14eeb5f3903b83"
-  dependencies:
-    react-native-fcm "^9.3.0"
+react-native-fcm@^9.6.1:
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-9.6.1.tgz#71151ebafb662c6d8f14b2d2ebff609530a35066"
 
 react-native-firebase-auth@^1.0.0:
   version "1.0.0"
