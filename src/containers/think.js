@@ -73,7 +73,8 @@ componentDidMount(){
         <Think
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
-          onItemBackPressed={()=> navigate('UserProfile')}
+          onItemBackPressed={()=> navigate('Read')}
+          onItemNextPressed={()=> navigate('Respond')}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}

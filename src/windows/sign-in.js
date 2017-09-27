@@ -29,6 +29,11 @@ class SignIn extends Component {
         this.props.onNext(values.email, values.password)
   }
 
+  componentWillMount(){
+    const {reset} = this.props
+    reset // reset form validation redux state
+  }
+
 
   render() {
 
@@ -58,7 +63,8 @@ class SignIn extends Component {
               delay: 20
             }).start();
     }
-  
+
+
     return (
       <View style={StyleSheet.window.default}>
 

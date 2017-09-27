@@ -5,7 +5,7 @@ import {
 } from 'react-navigation';
 
 
-import {_SignIn, _Welcome, _Settings, _FindSession, _FindChurch, _SessionItem, _UserProfile, _HigherBibleReadings, _Read, _Think} from './containers'
+import {_SignIn, _Welcome, _Settings, _FindSession, _FindChurch, _SessionItem, _UserProfile, _HigherBibleReadings, _Read, _Think, _Respond} from './containers'
 
 export default Screens = StackNavigator(
   {
@@ -18,7 +18,8 @@ export default Screens = StackNavigator(
     UserProfile: {screen: _UserProfile},
     HigherBibleReadings: {screen: _HigherBibleReadings},
     Read: {screen: _Read},
-    Think: {screen: _Think}
+    Think: {screen: _Think},
+    Respond: {screen: _Respond}
 //   .........................
   },
   { 

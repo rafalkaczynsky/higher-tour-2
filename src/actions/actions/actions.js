@@ -97,6 +97,14 @@ export function SAVE_CURRENT_LAST_READ_DAY_NUMBER(dayNumber) {
 }
 
 //APP STAFF
+
+export function CLEAR_APP() {
+    return {
+        type: types.CLEAR_APP,
+        app: {},
+    };
+}
+
 export function UPDATE_LOGGIN_STATUS(loginStatus) {
     return {
         type: types.UPDATE_LOGGIN_STATUS,
@@ -140,7 +148,6 @@ export function UPDATE_BIBLE_READING_SCREEN(screenStatus) {
     };
 }
 
-//UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT
 export function UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(currentDayContent) {
     return {
         type: types.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT,

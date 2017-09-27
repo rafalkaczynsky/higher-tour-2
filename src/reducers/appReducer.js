@@ -19,6 +19,14 @@ export default function appReducer(state = initialState, action){
 
     switch (action.type){
 
+
+        //CLEAR_APP
+        case types.CLEAR_APP:
+        
+                    new_state = {}
+        
+                    return new_state;
+
         case types.UPDATE_LOGGIN_STATUS:
 
             new_state = {
