@@ -48,6 +48,15 @@ export function SAVE_SESSIONS(sessions) {
     };
 }
 
+export function SAVE_AAA_SESSION(aaaSession) {
+    return {
+        type: types.SAVE_AAA_SESSION,
+        aaaSession: aaaSession,
+
+    };
+}
+
+
 export function SAVE_BIBLE_READING(bibleReading) {
     return {
         type: types.SAVE_BIBLE_READING,
@@ -64,10 +73,26 @@ export function SAVE_CURRENT_READING_ITEM(currentBibleReading) {
     };
 }
 
+//SAVE_CURRENT_READING_ITEM_TITLE
+export function SAVE_CURRENT_READING_ITEM_TITLE(currentBibleReadingTitle) {
+    return {
+        type: types.SAVE_CURRENT_READING_ITEM_TITLE,
+        currentBibleReadingTitle: currentBibleReadingTitle,
+
+    };
+} 
+
 export function SAVE_CURRENT_READING_DAY_NUMBER(dayNumber) {
     return {
         type: types.SAVE_CURRENT_READING_DAY_NUMBER,
         currentReadingDayNumber: dayNumber,
+    };
+}
+
+export function SAVE_CURRENT_LAST_READ_DAY_NUMBER(dayNumber) {
+    return {
+        type: types.SAVE_CURRENT_LAST_READ_DAY_NUMBER,
+        lastReadDayNumber: dayNumber,
     };
 }
 

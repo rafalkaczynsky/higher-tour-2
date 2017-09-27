@@ -18,6 +18,7 @@ class _SignIn extends Component {
     this.firebaseDataEvents = firebase.database().ref('events/');
     this.firebaseDataChurches = firebase.database().ref('churches/');
     this.firebaseBibleReading = firebase.database().ref('bibleReading/');
+    this.firebaseAaaSession = firebase.database().ref('aaaSession/');
 
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
@@ -126,7 +127,7 @@ class _SignIn extends Component {
     _Firebase._twitterSignIn(navigate, route)
   }
 
-  getData(fbDataRef , fbDataRef2, fbDataRef3 ){
+  getData(fbDataRef , fbDataRef2, fbDataRef3, fbDataRef4 ){
     fbDataRef.on('value',(snap)=>{
       let events = snap.val()
       events = Object.keys(events).map(function (key) { return events[key]; })
@@ -141,10 +142,18 @@ class _SignIn extends Component {
 
     fbDataRef3.on('value',(snap)=>{
       let bibleReading = snap.val()
-      console.log(bibleReading)
       bibleReading = Object.keys(bibleReading).map(function () { return bibleReading })
       this.props.dispatch(ACTIONS.SAVE_BIBLE_READING(bibleReading));
      })
+    
+     fbDataRef4.on('value',(snap)=>{
+      let aaaSession = snap.val()
+   
+      aaaSession= Object.keys(aaaSession).map(function (key) { return aaaSession[key] })
+      console.log(aaaSession)
+      this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSession));
+     })
+
   }
   // debugging function needs to be removed
   msToTime(s) {
@@ -164,7 +173,6 @@ class _SignIn extends Component {
     // if is already expired then signIn with refresh token  ...
     // set timer to check if  when app is running long , we have to refresh token before is expired ..
   
-  
     const { navigate } = this.props.navigation
     const  props = this.props
 
@@ -172,7 +180,14 @@ class _SignIn extends Component {
     const followStatus = this.props.app.followStatus   
     const TheDate = new Date().getTime();
 
+    this.auth.onAuthStateChanged(function (user) {
+      // if user is signed to firebase
+      if(user){
+        console.log('!!!!!!!!!!!!!!!!!We are Signed')
+        console.log(user)
+      }else ('We are not signed in')
 
+    })
     
     //check if user exist in Redux Store State ...
     if ((userDataFromLocal) && (userDataFromLocal.stsTokenManager)){
@@ -184,13 +199,14 @@ class _SignIn extends Component {
       const expierationTime = userDataFromLocal.stsTokenManager.expirationTime - TheDate 
       console.log('Token expire time is: ' + this.msToTime(expierationTime))
 
-      if (userDataFromLocal.stsTokenManager.expirationTime - 60000 > TheDate ){
+      if (userDataFromLocal.stsTokenManager.expirationTime > TheDate ){
        //... if so ...
        console.log('TOKEN IS STILL VALID!!')
        // ... check if user follow events   
         if(followStatus){
           //... if so ...
           console.log('USER FOLLOWS EVENT!!!')
+
           navigate('UserProfile')    
         } else {
           //... if doesnt follow in localStorage check again ...
@@ -222,10 +238,7 @@ class _SignIn extends Component {
         }
       } else {
 
-        firebase.auth().currentUser.getIDToken(true)
-        .then(function(idToken) {
-          // ... Token has been refreshed!!!
-          console.log('Token has been refreshed!!! new token is: '+idToken)
+
           // ... check if user follow events   
            if(followStatus){
              //... if so ...
@@ -259,9 +272,7 @@ class _SignIn extends Component {
               })
 
            }
-        }).catch(function(error) {
-          if (error) throw error
-        });
+
       }
     } else {
       // ...if doesnt exist in local  ...
@@ -335,7 +346,6 @@ class _SignIn extends Component {
       })
     }
 
-
   }
 
   componentWillMount(){
@@ -346,8 +356,8 @@ class _SignIn extends Component {
 
     const { navigate } = this.props.navigation
     
-    if ((!this.props.churches) || (!this.props.churches.length)|| (!this.props.events.length) || (!this.props.bibleReading.length)){                             // if churches, events , bibleReading are not in the redux-store then...
-      this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading); //... get EVENTS and Churches from firebase 
+    if ((!this.props.churches) || (!this.props.churches.length)|| (!this.props.events.length) || (!this.props.bibleReading.length) || (!this.firebaseAaaSession.length)){                             // if churches, events , bibleReading are not in the redux-store then...
+      this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase 
       console.log('New Data from Firebase taken: churches, events, bibleReading ')
     }
 
@@ -358,10 +368,6 @@ class _SignIn extends Component {
         this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
       }
     );
-
-  }
-
-  componentDidMount(){
 
   }
 
@@ -376,9 +382,6 @@ class _SignIn extends Component {
 
     console.log('SignIn Container')
     console.log(this.props)
-    //console.log(Math.round((new Date()).getTime()))
-    //const renderFirstScreenStyles = {flex: 1, flexDirection: 'row' , alignItems: 'center', justifyContent: 'flex-end'} 
-    //const styles = this.state.showContent ? null : renderFirstScreenStyles
 
     const SignInScreen = () => <SignIn 
             onNext={(email, password)=> {
@@ -429,6 +432,7 @@ function mapStateToProps(state){
       coords: state.coords,
       app: state.app,
       eventSelected: state.eventSelected,
+      aaaSession: state.aaaSession
       
   });
 }

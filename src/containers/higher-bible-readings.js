@@ -58,7 +58,7 @@ class _HigherBibleReadings extends Component {
       })
   }
 
-  handleOnItem(itemBibleReading,){
+  handleOnItem(itemBibleReading){
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
 
@@ -144,12 +144,12 @@ class _HigherBibleReadings extends Component {
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
 
-    const locations = this.props.events                                   // data from the store 
-    const userData = this.props.user                                      // data from the store
-    const loginStatus = this.props.app.loginStatus                        // data from the store
-    const activeTabName = this.props.app.activeTabName                    // data from the store
-    const currentBibleReading = this.props.currentBibleReading            // data from the store  
-    const bibleReading = this.props.bibleReading                          // data from the store   
+    const locations = this.props.events                                       // data from the store 
+    const userData = this.props.user                                          // data from the store
+    const loginStatus = this.props.app.loginStatus                            // data from the store
+    const activeTabName = this.props.app.activeTabName                        // data from the store
+    const currentBibleReading = this.props.currentBibleReading                // data from the store  
+    const bibleReading = this.props.bibleReading                              // data from the store   
     const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store  
 
     console.log('HigherBibleReadings Container')

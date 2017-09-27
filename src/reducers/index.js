@@ -11,6 +11,7 @@ import selectedEventReducer from './selectedEventReducer';
 import sessionsReducer from './sessionsReducer';
 import bibleReadingReducer from './bibleReadingReducer';
 import currentBibleReadingReducer from './currentBibleReadingReducer'
+import aaaSessionReducer from './aaaSessionReducer'
 
 export const reducers = combineReducers({
     form: formReducer,     
@@ -22,5 +23,6 @@ export const reducers = combineReducers({
     app: appReducer,
     eventSelected: selectedEventReducer,
     sessions: sessionsReducer,
-    currentBibleReading: currentBibleReadingReducer
+    currentBibleReading: currentBibleReadingReducer,
+    aaaSession: aaaSessionReducer,
 })

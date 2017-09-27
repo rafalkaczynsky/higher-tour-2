@@ -19,11 +19,15 @@ class _UserProfile extends Component {
     navigate('Settings', { locationSelected: locationSelected, from: from})
   }
 
+  handleOnWeek(navigate, week){
+    navigate('Read', {week: week})
+  }
+
   handleOnBible(navigate, locationSelected, from){
     navigate('HigherBibleReadings', { locationSelected: locationSelected, from: from})
   }
 
-  handleReadingItemPressed(itemBibleReading){
+  handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle){
     // bibleReading Item Was pressed ...
     const { navigate } = this.props.navigation
     console.log(itemBibleReading)
@@ -34,7 +38,9 @@ class _UserProfile extends Component {
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
     //currentReading - bibleReading
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
-
+    //itemBibleReadingTitle
+    this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(itemBibleReadingTitle))
+    console.log('lalalalala'+ itemBibleReadingTitle)
     navigate('HigherBibleReadings')
   }
 
@@ -89,6 +95,7 @@ class _UserProfile extends Component {
     const eventSelected = this.props.eventSelected      // data from the store
     const sessions = this.props.sessions                // data from the store
     const bibleReading = this.props.bibleReading        // data from the store
+    const aaaSession = this.props.aaaSession       // data from the store
 
     console.log('UserProfile Container')
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
@@ -98,9 +105,11 @@ class _UserProfile extends Component {
         locations={locations}
         onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
         onBible={()=> this.handleOnBible(navigate, eventSelected,  "UserProfile")}
-        onHandleReadingItemPressed={(itemBibleReading) => this.handleReadingItemPressed(itemBibleReading)}
+        onHandleReadingItemPressed={(itemBibleReading, itemBibleReadingTitle) => this.handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle)}
+        onWeek={(week)=> this.handleOnWeek(navigate, week)}
         userData={userData}
         months={months}
+        aaaSession={aaaSession}
         sessions={sessions}
         bibleReading={bibleReading}
         locationSelected={eventSelected} 
@@ -136,6 +145,7 @@ function mapStateToProps(state){
       eventSelected: state.eventSelected,
       sessions: state.sessions,
       bibleReading: state.bibleReading,
+      aaaSession: state.aaaSession
   });
 }
 

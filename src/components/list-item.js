@@ -9,14 +9,14 @@ import {Icon, Picture} from '../components'
 export default class ListItem extends Component {
 
   render() {
-    const {title, label, noBorder, borderBold, bgColor, listHeader, progressBar, progress, titleStyle, iconText, handleIconPressed, imageName, imageUrl} = this.props
+    const {title, label, noBorder, borderBold, bgColor, listHeader, progressBar, progress, titleStyle, iconText, handleIconPressed, imageName, imageUrl, opacity} = this.props
 
     const border = noBorder ? null : {borderBottomColor: colors.grey2, borderBottomWidth: 0.5}
     const _borderBold = borderBold ? {borderBottomColor: colors.grey2, borderBottomWidth: 1} : null
 
     const image = StyleSheet.icons[imageName]
     return (
-      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
+      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, {opacity: opacity}]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
 
