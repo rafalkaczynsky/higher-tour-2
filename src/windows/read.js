@@ -89,6 +89,7 @@ export default class Read extends Component {
     onBackCallback={onItemBackPressed}
     onNextCallback={onItemNextPressed}
   />
+  
   <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
       <View style={{backgroundColor: 'white', width: '100%'}}>
          

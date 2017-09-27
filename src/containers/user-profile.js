@@ -30,9 +30,9 @@ class _UserProfile extends Component {
   handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle){
     // bibleReading Item Was pressed ...
     const { navigate } = this.props.navigation
-    console.log(itemBibleReading)
+
     itemBibleReading = Object.keys(itemBibleReading).map(function (key) { return itemBibleReading[key]; })
-    console.log(itemBibleReading)
+ 
     //set into Redux Store 
     //BibleReadingScreen - list or item       
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
@@ -40,7 +40,6 @@ class _UserProfile extends Component {
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
     //itemBibleReadingTitle
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(itemBibleReadingTitle))
-    console.log('lalalalala'+ itemBibleReadingTitle)
     navigate('HigherBibleReadings')
   }
 

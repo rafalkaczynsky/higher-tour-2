@@ -7,7 +7,7 @@ import {colors} from '../styles/resources'
 
 export default class Header extends Component {
   render() {
-    const {text, simple, style, onBack, onBackCallback, onNext} = this.props
+    const {text, simple, style, onBack, onBackCallback, onNextCallback, onNext} = this.props
 
     return (
         <View style={StyleSheet.header.container}>
@@ -30,7 +30,7 @@ export default class Header extends Component {
             {!simple && onBack && onNext && (
                 <View style={StyleSheet.header.fullHeaderContainer}>
 
-                    <TouchableOpacity  style={StyleSheet.header.fullHeaderIconBtton}>
+                    <TouchableOpacity  onPress={onBackCallback}   style={StyleSheet.header.fullHeaderIconBtton}>
                         <Icon name='back' style={{width: 20, height: 20, resizeMode: 'contain'}}/>
                     </TouchableOpacity>
 
@@ -38,7 +38,7 @@ export default class Header extends Component {
                         <Text style={StyleSheet.header.text}>{text}</Text>
                     </View>
 
-                    <TouchableOpacity style={{flex: 0.1, alignItems: 'center'}}>
+                    <TouchableOpacity onPress={onNextCallback} style={{flex: 0.1, alignItems: 'center'}}>
                         <Icon name='next' style={{width: 20, height: 20, resizeMode: 'contain'}}/>
                     </TouchableOpacity>       
 
