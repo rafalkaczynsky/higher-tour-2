@@ -108,12 +108,12 @@ class _Firebase {
             return error
         }
     }
-//   this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT (null)),this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(null)),this.props.dispatch(ACTIONS.CLEAR_APP()),);
+//  );
 
     async logout(navigate, route, clearUserDataFromState, clearSelectedEvent, saveCurrentReading, clearApp ) {
         try {
             await firebase.auth().signOut();
-            
+
             clearUserDataFromState;
             clearSelectedEvent;
             saveCurrentReading;

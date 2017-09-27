@@ -17,8 +17,11 @@ export default class Settings extends Component {
 
     let userText = ''
     if (loginStatus !== 'loggedOut'){
-        const userDisplay = this.props.userData.displayName ? this.props.userData.displayName : this.props.userData.email
-        userText = "You are signed in as " + userDisplay
+        if (this.props.userData) {
+            const userDisplay = this.props.userData.displayName ? this.props.userData.displayName : this.props.userData.email
+            userText = "You are signed in as " + userDisplay
+        }
+
     } else {
         userText = "You are not signed in yet"
     }

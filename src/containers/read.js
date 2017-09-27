@@ -25,7 +25,7 @@ handleOnSettings(navigate, route){
 
   if (loginStatus === 'loggedOut') {
      navigate('Settings')
-  } else if (params.loginStatus === 'loggedIn ') {
+  } else if (loginStatus === 'loggedIn ') {
     navigate('Settings')
   } else {
     navigate('Settings')
