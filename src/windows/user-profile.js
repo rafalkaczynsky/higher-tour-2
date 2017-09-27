@@ -68,6 +68,15 @@ class UserProfile extends React.Component {
           userFirstName = 'Unknown'
         }
 
+        let locationSelectedName = ''
+
+        if (locationSelected) {
+         locationSelectedName = locationSelected.name
+        } else {
+         locationSelectedName = ''
+        }
+       
+
         return(
       <View style={[StyleSheet.window.default,]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
@@ -81,7 +90,7 @@ class UserProfile extends React.Component {
             <ScrollView style={{width: '95%'}}>
             <View style={StyleSheet.userProfile.contentBox}>
                 <ListItem 
-                  title={locationSelected.name}
+                  title={locationSelectedName}
                   iconText='view/edit'
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 /> 

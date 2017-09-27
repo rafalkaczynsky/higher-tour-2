@@ -23,7 +23,7 @@ export default function appReducer(state = initialState, action){
         //CLEAR_APP
         case types.CLEAR_APP:
         
-                    new_state = {}
+                    new_state = action.empty
         
                     return new_state;
 

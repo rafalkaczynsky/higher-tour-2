@@ -45,6 +45,36 @@ class HigherBibleReadings extends React.Component {
       const currentDayContent = this.props.app.currentDayContent              // data from the store
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
       const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
+
+      const renderListItem = () => chosenItem.map((item, indx) => 
+      {
+        const unavailable =(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? 'available' : 'unavailable'
+
+        return (
+          <ListItem 
+          key={'ListItemReadingsKey-'+indx}
+          title={'Day ' + (indx+1)}
+          label={item.Read.Verse + ' ' + unavailable}
+          imageUrl={item.Read.Image}
+          handleIconPressed ={(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? ()=>onDayItem(item, (indx+1)): null}
+          
+        />
+        )
+      })
+
+      const renderListReadings = () => readings.map((item, indx)=> 
+      
+      <TouchableOpacity 
+         onPress={()=> {onItem(item)}}
+         key={'ListItemReadingsKey-'+indx}
+      >
+        <ListItem 
+          title={item.title}
+          label={item.days + ' days'}
+         
+        />
+      </TouchableOpacity>
+      )
    
       return(
       <View style={StyleSheet.window.default}>
@@ -73,37 +103,8 @@ class HigherBibleReadings extends React.Component {
             </View>
 
             <ScrollView style={{width: '100%'}}>
-            { currentScreen === 'list' && readings.map((item, indx)=> 
-                <TouchableOpacity 
-                   onPress={()=> {onItem(item)}}
-                   key={'ListItemReadingsKey-'+indx}
-                >
-                  <ListItem 
-                    title={item.title}
-                    label={item.days + ' days'}
-                   
-                  />
-                </TouchableOpacity>
-                )}
-            {this.state.isMounted && currentScreen === 'item' && chosenItem.map((item, indx) => 
-                {
-
-                  const unavailable =(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? 'available' : 'unavailable'
-
-                  return (
-                    <ListItem 
-                    key={'ListItemReadingsKey-'+indx}
-                    title={'Day ' + (indx+1)}
-                    label={item.Read.Verse + ' ' + unavailable}
-                    imageUrl={item.Read.Image}
-                    handleIconPressed ={(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? ()=>onDayItem(item, (indx+1)): null}
-                    
-                  />
-                  )
-                }
-
-              )}
-
+              {currentScreen === 'list' && readings && <renderListReadings/>}
+              {this.state.isMounted && currentScreen === 'item' &&  chosenItem && <renderListItem/>}
             </ScrollView>
             
         </View>

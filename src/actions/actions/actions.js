@@ -98,10 +98,10 @@ export function SAVE_CURRENT_LAST_READ_DAY_NUMBER(dayNumber) {
 
 //APP STAFF
 
-export function CLEAR_APP() {
+export function CLEAR_APP(empty) {
     return {
         type: types.CLEAR_APP,
-        app: {},
+        empty: empty,
     };
 }
 
