@@ -7,8 +7,8 @@ target 'HigherApp' do
 
     # Pods for HigherApp
     pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
     pod 'GoogleMaps', '2.1.1'
     pod 'TwitterKit'
 
 end
-
