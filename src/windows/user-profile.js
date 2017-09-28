@@ -50,7 +50,6 @@ class UserProfile extends React.Component {
       var deferred =$q.defer(); getDataFunction.myGetDataFunction.success( function(data) { deferred.resolve(data) }). error( function (error) { deferred.reject(); }); return deferred.promise; }); $q.all(promises).then( function (dataArray) { }) 
     }; 
 
-
     render(){
 
         const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
@@ -76,7 +75,6 @@ class UserProfile extends React.Component {
          locationSelectedName = ''
         }
        
-
         return(
       <View style={[StyleSheet.window.default,]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
@@ -111,19 +109,21 @@ class UserProfile extends React.Component {
 
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
-                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)              
-              
+                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)                                 
+                   const aaaSessionItem = item.aaaSession.toLowerCase().replace(/\s/g, '');
+                    var numb = item.aaaSession.match(/\d/g);
+                    numb = numb.join("");
+                  
                    if (index === 0)
                     return(
                       <ListItem 
                         key={item.aaaSession + '-' + index}
                         title={item.aaaSession}
                         label={sessionDateFormatted}
-                        handleIconPressed={()=>onWeek(aaaSession[index])}
+                        handleIconPressed={()=>onWeek(aaaSession[numb-1])}
                       /> 
                     )
                 })}
-
 
             </View>
             <View style={StyleSheet.userProfile.contentBox}>

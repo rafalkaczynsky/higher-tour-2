@@ -183,7 +183,7 @@ class _SignIn extends Component {
         // User signed to firebase
         console.log('User Signed to firebase')
         // if user is in local storage 
-        if (userDataFromLocal){
+        if ((userDataFromLocal) && (userDataFromLocal.uid)){
           //user is in local storage
           console.log('User is in local storage')
           if(followStatus){
@@ -208,15 +208,16 @@ class _SignIn extends Component {
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                     // .. get object and dispatch to the store 
-                      const locationSelected = snapshot.val()
-                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                      props.dispatch(ACTIONS.SAVE_USER(user))
+                      const locationSelected = snapshot.val() 
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
+                      props.dispatch(ACTIONS.SAVE_USER(user)) 
                       navigate('UserProfile')    
                   })
 
                 } else {
                   //... if doesnt follow ...
                   console.log('USER DOESNT FOLLOW EVENT!!!')
+                  props.dispatch(ACTIONS.SAVE_USER(user)) 
                   navigate('Welcome')
                 }
               }

@@ -31,7 +31,7 @@ export default class Read extends Component {
   }
 
   render() {
-    console.log('WelcomeXXX')
+ 
     const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
 
     const name = 'profileImage'

@@ -110,15 +110,10 @@ class _Firebase {
     }
 //  );
 
-    async logout(navigate, route, clearUserDataFromState, clearSelectedEvent, saveCurrentReading) {
+    async logout(navigate, route, clearUserDataFromState, ) {
         try {
             await firebase.auth().signOut();
-
             clearUserDataFromState;
-            clearSelectedEvent;
-            saveCurrentReading;
-  
-
             // Navigate to login view
             navigate(route)
         } catch (error) {

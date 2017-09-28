@@ -72,10 +72,12 @@ componentDidMount(){
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
+  //  const weekList = this.props.app.weekContainer
     
     const weekParam = this.params ? this.params.week : null
+    
     console.log('Read Container')
-
+    console.log(params.week)
     return (
         <Read 
           onSettings={()=> this.handleOnSettings(navigate)}
@@ -85,7 +87,7 @@ componentDidMount(){
           onWeekBackPressed={()=> navigate('UserProfile')}
           onItemBackPressed={()=> navigate('UserProfile')}
           onItemNextPressed={()=> navigate('Think')}
-          week={weekParam}
+          week={this.params.week}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}

@@ -21,6 +21,13 @@ class _Welcome extends Component {
     
   }
 
+  handleOnItem(navigate, locationSelected, cancelLabel){
+    this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+    navigate('SessionItem', {cancelLabel: cancelLabel})
+
+  }
+
+
 handleOnBible(navigate, from){
   navigate('HigherBibleReadings', {from: from})
 }
@@ -134,7 +141,7 @@ componentDidMount(){
           onBible={() =>  this.handleOnBible(navigate,'Settings', 'Bible')}
           userData={userData}
           onMoreSession={()=> this.handleOnMoreSession(navigate, 'FindSession')}
-          onChurchPressed={(locationSelected)=> { navigate('SessionItem', {locationSelected: locationSelected})}}
+          onChurchPressed={(locationSelected)=> this.handleOnItem(navigate, locationSelected, false)}
           onFindChurch={()=> this.handleOnFindChurch(navigate, 'FindChurch')}
           coords={coords}
           activeTabName={activeTabName}

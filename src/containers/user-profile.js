@@ -20,7 +20,7 @@ class _UserProfile extends Component {
   }
 
   handleOnWeek(navigate, week){
-    navigate('Read', {week: week})
+    navigate('WeekList', {week: week})
   }
 
   handleOnBible(navigate, locationSelected, from){
@@ -135,7 +135,6 @@ class _UserProfile extends Component {
   if (this.props.app.showUserProfileContent){
     return <UserProfileScreen/>
   } else return <EmptyScreen/> 
-
   }
 }
 

@@ -32,11 +32,9 @@ class _Settings extends Component {
     if (loginStatus === 'loggedOut') {
       navigate('SignIn')
     } else {
-
       //UPDATE_LOGGIN_STATUS
       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
-
-      _Firebase.logout(navigate, route, this.props.dispatch(ACTIONS.SAVE_USER(null)), this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(null)), this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(null)));
+      _Firebase.logout(navigate, route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
     }  
   }
 
