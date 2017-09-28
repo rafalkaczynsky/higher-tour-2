@@ -167,9 +167,58 @@ class _SignIn extends Component {
     const followStatus = this.props.app.followStatus   
     const TheDate = new Date().getTime();
 
-
     
-    //check if user exist in Redux Store State ...
+    this.auth.onAuthStateChanged(function (user) {
+      // if user is signed to firebase
+      if(user){
+        //if user is in local storage 
+        if (userDataFromLocal) {
+          console.log('USER IS IN LOCAL STORAGE')
+          if(followStatus){
+            //... if so ...
+            console.log('USER FOLLOWS EVENT!!!')
+            navigate('UserProfile')    
+          } else {
+               //... if doesnt follow ...
+              console.log('USER DOESNT FOLLOW EVENT!!!')
+              navigate('FindSession')
+          }
+        } else {
+          // if is not in local storage
+          console.log('USER IS NOT IN LOCAL STORAGE')
+          // check if follow in firabase
+          firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+            const event = snapshot.val();
+              //... if so ..
+              if (event) {
+                if (event.follow === true){
+                  console.log('USER FOLLOWS EVENT!');
+                  //... find event by id ...
+                  firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                    // .. get object and dispatch to the store 
+                      const locationSelected = snapshot.val()
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                      props.dispatch(ACTIONS.SAVE_USER(user))
+                      navigate('UserProfile')    
+                  })
+                }else {
+                  //... if doesnt follow ...
+                  console.log('USER DOESNT FOLLOW EVENT!!!')
+                  navigate('Welcome')
+                }
+              }
+            })
+        }
+      } else {
+          // if user doesnt signin to firebase
+          console.log('No user signed with Firebase')
+          props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
+      }
+    }
+    /*
+
+    // check if user exist in Redux Store State ...
+
     if ((userDataFromLocal) && (userDataFromLocal.stsTokenManager)){
       // ... if so ...
       console.log('THERE IS USER IN LOCALstorage!!!')
@@ -331,7 +380,7 @@ class _SignIn extends Component {
       })
     }
 
-
+*/
   }
 
   componentWillMount(){

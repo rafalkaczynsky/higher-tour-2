@@ -168,10 +168,6 @@ class _SignIn extends Component {
   }
   
   handleInitialRedirect(){
-
-    // ON APP START NEEDS TO BE CHECKED TOKEN EXPIRATION IF ITS GETTING TO EXPIRED BY MAX 20% THEN REFRESH or ...
-    // if is already expired then signIn with refresh token  ...
-    // set timer to check if  when app is running long , we have to refresh token before is expired ..
   
     const { navigate } = this.props.navigation
     const  props = this.props
@@ -180,15 +176,62 @@ class _SignIn extends Component {
     const followStatus = this.props.app.followStatus   
     const TheDate = new Date().getTime();
 
+
     this.auth.onAuthStateChanged(function (user) {
       // if user is signed to firebase
       if(user){
-        console.log('!!!!!!!!!!!!!!!!!We are Signed')
-        console.log(user)
-      }else ('We are not signed in')
+        // User signed to firebase
+        console.log('User Signed to firebase')
+        // if user is in local storage 
+        if (userDataFromLocal){
+          //user is in local storage
+          console.log('User is in local storage')
+          if(followStatus){
+            //... if so ...
+            console.log('USER FOLLOWS EVENT!!!')
+            navigate('Welcome')    
+          } else {
+            //...or user doesnt follow
+            console.log('USER DOESNT FOLLOW EVENT!!!')
+            navigate('Welcome')    
+          }
+        } else {
+          //user is not in local storage
+          console.log('User is not  in local storage')  
+          // check if follow in firabase
+          firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+            const event = snapshot.val();
+              //... if so ..
+              if (event) {
+                if (event.follow === true){
+                  console.log('User follow!');
+                  //... find event by id ...
+                  firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                    // .. get object and dispatch to the store 
+                      const locationSelected = snapshot.val()
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                      props.dispatch(ACTIONS.SAVE_USER(user))
+                      navigate('UserProfile')    
+                  })
 
-    })
+                } else {
+                  //... if doesnt follow ...
+                  console.log('USER DOESNT FOLLOW EVENT!!!')
+                  navigate('Welcome')
+                }
+              }
+            })
+        }
+
+    } else {
+      // if user doesnt signin to firebase
+      console.log('No user signed with Firebase')
+      props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
+    }
+  })
     
+
+    /*
     //check if user exist in Redux Store State ...
     if ((userDataFromLocal) && (userDataFromLocal.stsTokenManager)){
       // ... if so ...
@@ -345,7 +388,7 @@ class _SignIn extends Component {
         }
       })
     }
-
+*/
   }
 
   componentWillMount(){

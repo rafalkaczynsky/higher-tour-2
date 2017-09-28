@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.airbnb.android.react.maps.MapsPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 
 import ga.piroro.rnt.RNTPackage;
@@ -42,7 +41,6 @@ public class MainApplication extends Application implements ReactApplication {
             new FIRMessagingPackage(),
             new TwitterSigninPackage(),
             new RNTPackage(),
-            new MapsPackage(),
             new FBSDKPackage(mCallbackManager)
       );
     }
