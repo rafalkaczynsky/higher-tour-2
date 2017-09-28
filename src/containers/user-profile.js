@@ -23,8 +23,8 @@ class _UserProfile extends Component {
     navigate('WeekList', {week: week})
   }
 
-  handleOnBible(navigate, locationSelected, from){
-    navigate('HigherBibleReadings', { locationSelected: locationSelected, from: from})
+  handleOnBible(navigate){
+    navigate('BibleReadingList')
   }
 
   handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle){
@@ -40,7 +40,7 @@ class _UserProfile extends Component {
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
     //itemBibleReadingTitle
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(itemBibleReadingTitle))
-    navigate('HigherBibleReadings')
+    navigate('BibleReadingList')//change to read
   }
 
   componentWillMount(){
@@ -94,8 +94,10 @@ class _UserProfile extends Component {
     const eventSelected = this.props.eventSelected      // data from the store
     const sessions = this.props.sessions                // data from the store
     const bibleReading = this.props.bibleReading        // data from the store
+    const bibleReadingNames = this.props.bibleReadingNames        // data from the store
     const aaaSession = this.props.aaaSession                     // data from the store
     const lastReadDayNumber = this.props.app.lastReadDayNumber   // data from the store
+    
     console.log('UserProfile Container')
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
     
@@ -105,7 +107,7 @@ class _UserProfile extends Component {
       <UserProfile
         locations={locations}
         onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
-        onBible={()=> this.handleOnBible(navigate, eventSelected,  "UserProfile")}
+        onBible={()=> this.handleOnBible(navigate)}
         onHandleReadingItemPressed={(itemBibleReading, itemBibleReadingTitle) => this.handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle)}
         onWeek={(week)=> this.handleOnWeek(navigate, week)}
         userData={userData}
@@ -114,6 +116,7 @@ class _UserProfile extends Component {
         lastReadDayNumber={lastReadDayNumber}
         sessions={sessions}
         bibleReading={bibleReading}
+        bibleReadingNames={bibleReadingNames}
         locationSelected={eventSelected} 
         handleEditSession={(locationSelected)=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, cancelLabel: true})}
         activeTabName={activeTabName}
@@ -146,6 +149,7 @@ function mapStateToProps(state){
       eventSelected: state.eventSelected,
       sessions: state.sessions,
       bibleReading: state.bibleReading,
+      bibleReadingNames: state.bibleReadingNames,
       aaaSession: state.aaaSession
   });
 }

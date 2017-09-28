@@ -5,7 +5,22 @@ import {
 } from 'react-navigation';
 
 
-import {_SignIn, _Welcome, _Settings, _FindSession, _FindChurch, _SessionItem, _UserProfile, _HigherBibleReadings, _Read, _Think, _Respond, _WeekList} from './containers'
+import {
+  _SignIn, 
+  _Welcome, 
+  _Settings, 
+  _FindSession, 
+  _FindChurch, 
+  _SessionItem, 
+  _UserProfile, 
+  _HigherBibleReadings, 
+  _Read, 
+  _Think, 
+  _Respond, 
+  _WeekList, 
+  _BibleReadingList, 
+  _ReadingContentList
+} from './containers'
 
 export default Screens = StackNavigator(
   {
@@ -17,6 +32,8 @@ export default Screens = StackNavigator(
     SessionItem: {screen: _SessionItem},
     UserProfile: {screen: _UserProfile},
     HigherBibleReadings: {screen: _HigherBibleReadings},
+    BibleReadingList: { screen: _BibleReadingList},
+    ReadingContentList: {screen: _ReadingContentList},
     WeekList: {screen: _WeekList},
     Read: {screen: _Read},
     Think: {screen: _Think},

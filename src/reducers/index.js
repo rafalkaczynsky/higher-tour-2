@@ -12,6 +12,7 @@ import sessionsReducer from './sessionsReducer';
 import bibleReadingReducer from './bibleReadingReducer';
 import currentBibleReadingReducer from './currentBibleReadingReducer'
 import aaaSessionReducer from './aaaSessionReducer'
+import bibleReadingNamesReducer from './bibleReadingNamesReducer'
 
 export const reducers = combineReducers({
     form: formReducer,     
@@ -25,4 +26,5 @@ export const reducers = combineReducers({
     sessions: sessionsReducer,
     currentBibleReading: currentBibleReadingReducer,
     aaaSession: aaaSessionReducer,
+    bibleReadingNames: bibleReadingNamesReducer,
 })

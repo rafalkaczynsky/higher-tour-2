@@ -142,17 +142,25 @@ class _SignIn extends Component {
 
     fbDataRef3.on('value',(snap)=>{
       let bibleReading = snap.val()
-      bibleReading = Object.keys(bibleReading).map(function () { return bibleReading })
+      let bibleReadingNames = snap.val()
+      bibleReading = Object.keys(bibleReading).map(function (key, indx, name) { 
+        return bibleReading[key]; 
+      })
+      bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) { 
+        let arrayOfNames = []
+        arrayOfNames.push(name[indx])
+        return  arrayOfNames; 
+      })
       this.props.dispatch(ACTIONS.SAVE_BIBLE_READING(bibleReading));
+      this.props.dispatch(ACTIONS.SAVE_BIBLE_READING_NAMES(bibleReadingNames));
      })
     
      fbDataRef4.on('value',(snap)=>{
       let aaaSession = snap.val()
-   
-      aaaSession= Object.keys(aaaSession).map(function (key) { return aaaSession[key] })
-      console.log(aaaSession)
       this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSession));
      })
+
+
 
   }
   // debugging function needs to be removed
@@ -399,11 +407,10 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
 
     const { navigate } = this.props.navigation
-    
-    if ((!this.props.churches) || (!this.props.churches.length)|| (!this.props.events.length) || (!this.props.bibleReading.length) || (!this.firebaseAaaSession.length)){                             // if churches, events , bibleReading are not in the redux-store then...
+                         // if churches, events , bibleReading are not in the redux-store then...
       this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase 
       console.log('New Data from Firebase taken: churches, events, bibleReading ')
-    }
+  
 
     this.handleInitialRedirect() 
 

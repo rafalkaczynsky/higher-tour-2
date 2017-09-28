@@ -65,6 +65,13 @@ export function SAVE_BIBLE_READING(bibleReading) {
     };
 }
 
+export function SAVE_BIBLE_READING_NAMES(bibleReadingNames) {
+    return {
+        type: types.SAVE_BIBLE_READING_NAMES,
+        bibleReadingNames: bibleReadingNames,
+    };
+}
+
 export function SAVE_CURRENT_READING_ITEM(currentBibleReading) {
     return {
         type: types.SAVE_CURRENT_READING_ITEM,

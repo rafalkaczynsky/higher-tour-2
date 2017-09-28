@@ -19,17 +19,8 @@ handleOnBible(navigate, from){
   navigate('HigherBibleReadings', {from: from})
 }
 
-handleOnSettings(navigate, route){
-  const { params } = this.props.navigation.state
-  const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-     navigate('Settings')
-  } else if (loginStatus === 'loggedIn ') {
-    navigate('Settings')
-  } else {
-    navigate('Settings')
-  }
+handleOnSettings(navigate){
+  navigate('Settings')
 }
 
 handleHome(navigate){
@@ -67,7 +58,6 @@ componentDidMount(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events                                     // data from the store
     const userData = this.props.user                                        // data from the store
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
@@ -83,11 +73,8 @@ componentDidMount(){
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
-          locations={locations}
-          onWeekBackPressed={()=> navigate('UserProfile')}
           onItemBackPressed={()=> navigate('UserProfile')}
           onItemNextPressed={()=> navigate('Think')}
-          week={this.params.week}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}
@@ -99,7 +86,6 @@ componentDidMount(){
 function mapStateToProps(state){
   return({
       user: state.user,
-      events: state.events,
       app: state.app,
       currentBibleReading: state.currentBibleReading,
       currentReadingDayNumber: state.currentReadingDayNumber,

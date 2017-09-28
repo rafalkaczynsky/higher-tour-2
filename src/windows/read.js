@@ -32,7 +32,7 @@ export default class Read extends Component {
 
   render() {
  
-    const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
+    const {userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
@@ -41,46 +41,9 @@ export default class Read extends Component {
     let content
 
     console.log('Read Window')
-    console.log(itemDay)
-    console.log(week)
 
-  const RenderOnWeek = () =>         
-    
-  <View style={StyleSheet.window.default}>
-    <Header 
-      text='SESSION'
-      onBack
-      onBackCallback={onWeekBackPressed}
-    />
-    <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
-        <View style={{backgroundColor: 'white', width: '100%'}}>
+  return (
            
-            <View style={{width: '100%'}}>
-                <Image source={{uri: week.image}} style={{  resizeMode: 'cover', height: 200}} />
-            </View>
-            <View style={{padding: 20}}>
-                <View>
-                    <Text style={{ fontSize: 12, lineHeight: 18}}>DAY {currentReadingDayNumber}</Text>
-                    <Text style={{ fontSize: 12, lineHeight: 18}}>{week.Title}</Text>
-                </View>
-                <View style={{marginTop: 30}}>
-                    <Text style={{ fontSize: 12, lineHeight: 18}}>
-                        {week.content}
-                    </Text>
-                </View>
-            </View>
-        </View>
-
-    </View>
-    <TabMenu 
-      onSettings={this.props.onSettings}
-      onHome={this.props.onHome}
-      activeTabName={this.props.activeTabName}
-    /> 
-  </View>
-
-  const RenderOnItemDay = () => 
-         
   <View style={StyleSheet.window.default}>
   <Header 
     text='Read'
@@ -118,8 +81,6 @@ export default class Read extends Component {
     activeTabName={this.props.activeTabName}
   />
   </View>
-
-    if (week) return <RenderOnWeek/>
-    if (itemDay) return <RenderOnItemDay/>
-  }
+  )
+}
 }

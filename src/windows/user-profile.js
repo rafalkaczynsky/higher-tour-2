@@ -52,7 +52,7 @@ class UserProfile extends React.Component {
 
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
+        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading,  bibleReadingNames, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
@@ -110,10 +110,8 @@ class UserProfile extends React.Component {
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)                                 
-                   const aaaSessionItem = item.aaaSession.toLowerCase().replace(/\s/g, '');
-                    var numb = item.aaaSession.match(/\d/g);
-                    numb = numb.join("");
-                  
+                   const aaaSessionItem = item.aaaSession
+
                    if (index === 0)
                     return(
                       <ListItem 
@@ -134,10 +132,9 @@ class UserProfile extends React.Component {
 
                 {this.props.bibleReading.map((item, index) => {
 
-                  title = Object.keys(item)[0];    
-                  value = item[title]            
-                  const arrayOfValue = Object.keys(value).map(function (key) { return value[key]; })
-                  const progress = parseInt(lastReadDayNumber / arrayOfValue.length * 100) + '%'
+                const title = bibleReadingNames[index]
+          
+                const progress = parseInt(lastReadDayNumber / bibleReading.length * 100) + '%'
          
                 return (
                   <ListItem 
@@ -145,7 +142,7 @@ class UserProfile extends React.Component {
                     title={title}
                     progressBar
                     progress={progress}
-                    handleIconPressed={() => onHandleReadingItemPressed(arrayOfValue, title)}
+                    handleIconPressed={() => onHandleReadingItemPressed(item, title)}
                   />
                   ) 
                 })}
@@ -170,3 +167,20 @@ class UserProfile extends React.Component {
 
 
 export default UserProfile
+
+/**
+ * 
+ * 
+ *              const aaaSessionItem = item.aaaSession
+                   
+                   const aaaSessionArray = Object.keys(aaaSession).map(function (key) { return aaaSession[key]; })
+                   
+                   let sessionChosen  = undefined
+
+                   aaaSessionArray.map((item2)=> {
+                     
+                     if (item2.sessionTitle == item.aaaSession) {
+                         sessionChosen= item2
+                     }
+                   })
+ */
