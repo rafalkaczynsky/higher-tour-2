@@ -198,14 +198,41 @@ class _SignIn extends Component {
         if ((userDataFromLocal) && (userDataFromLocal.uid)){
           //user is in local storage
           console.log('User is in local storage')
+
           if(followStatus){
             //... if so ...
-            console.log('USER FOLLOWS EVENT!!!')
-            props.dispatch(ACTIONS.SAVE_USER(user)) 
-            navigate('UserProfile')    
+
+                      // check if follow in firabase
+          firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+            const event = snapshot.val();
+              //... if so ..
+              if (event) {
+                if (event.follow === true){
+                  console.log('User follow!');
+                  //... find event by id ...
+                  firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                    // .. get object and dispatch to the store 
+                      const locationSelected = snapshot.val() 
+                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
+                      props.dispatch(ACTIONS.SAVE_USER(user)) 
+                      navigate('UserProfile')    
+                  })
+                } else {
+                  //... if doesnt follow ...
+                  console.log('USER DOESNT FOLLOW EVENT!!!')
+                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+                  props.dispatch(ACTIONS.SAVE_USER(user)) 
+                  props.dispatch({type: 'Welcome' })
+                  navigate('Welcome')
+                }
+              }
+            })
+ 
           } else {
             //...or user doesnt follow
             console.log('USER DOESNT FOLLOW EVENT!!!')
+       
             navigate('Welcome')    
           }
         } else {
@@ -226,11 +253,11 @@ class _SignIn extends Component {
                       props.dispatch(ACTIONS.SAVE_USER(user)) 
                       navigate('UserProfile')    
                   })
-
                 } else {
                   //... if doesnt follow ...
                   console.log('USER DOESNT FOLLOW EVENT!!!')
                   props.dispatch(ACTIONS.SAVE_USER(user)) 
+                  props.dispatch({type: 'Welcome' })
                   navigate('Welcome')
                 }
               }

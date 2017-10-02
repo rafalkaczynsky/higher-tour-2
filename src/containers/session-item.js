@@ -74,7 +74,7 @@ class _SessionItem extends Component {
             id: null
           },
         })
-    //this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(null))
+
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
     navigate('FindSession')
