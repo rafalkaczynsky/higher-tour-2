@@ -22,6 +22,7 @@ import {
   _ReadingContentList
 } from './containers'
 
+
 export default Screens = StackNavigator(
   {
     Welcome: {screen: _Welcome },
@@ -42,6 +43,7 @@ export default Screens = StackNavigator(
   },
   { 
       headerMode: 'none', 
-      initialRouteName: 'SignIn'
+      initialRouteName: 'SignIn',
+      lazy: true
   }
 );

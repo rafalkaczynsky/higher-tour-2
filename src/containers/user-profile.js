@@ -33,21 +33,25 @@ class _UserProfile extends Component {
     navigate('HigherBibleReadings')
   }
 
-  handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle){
-    // bibleReading Item Was pressed ...
+  handleReadingItemPressed(bibleReadingTitle){
+    console.log('On Item clicked')
     const { navigate } = this.props.navigation
+    const bibleReading = this.props.bibleReading
+    const bibleReadingNames = this.props.bibleReadingNames
 
-    itemBibleReading = Object.keys(itemBibleReading).map(function (key) { return itemBibleReading[key]; })
- 
-    //set into Redux Store 
-    //BibleReadingScreen - list or item       
-    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
-    //currentReading - bibleReading
-    this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
-    //itemBibleReadingTitle
-    this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(itemBibleReadingTitle))
-    navigate('BibleReadingList')//change to read
+    bibleReadingNames.map((item, index)=>{
+      console.log(item[0])
+      console.log(bibleReadingTitle)
+      if (item[0] === bibleReadingTitle[0]) {
+        this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item')) 
+        this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
+        this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(bibleReading[index]))
+        navigate('HigherBibleReadings')
+      }
+    })
+
   }
+
 
   componentWillMount(){
 
@@ -87,6 +91,32 @@ class _UserProfile extends Component {
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       }
     })
+
+    //----------------- CHeck app user bibleReadings
+
+    this.firebaseAaaSession = firebase.database().ref('appUsers/');
+    firebase.database().ref('appUsers/'+ this.props.user.uid+'/').once("value", snapshot => {
+      const appUser = snapshot.val();
+      let bibleReadings = appUser.bibleReadings
+      console.log(bibleReadings)
+      let bibleReadingNames = appUser.bibleReadings
+
+      bibleReadings = Object.keys(bibleReadings).map(function (key, indx, name) { 
+        return bibleReadings[key]; 
+      })
+
+      bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) { 
+        let arrayOfNames = []
+        arrayOfNames.push(name[indx])
+        return  arrayOfNames; 
+      })
+
+      //save it to the redux store in to arrays, content and names
+      this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS(bibleReadings));
+      this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES(bibleReadingNames));
+    })
+
+
   }
 
  
@@ -103,6 +133,9 @@ class _UserProfile extends Component {
     const bibleReadingNames = this.props.bibleReadingNames        // data from the store
     const aaaSession = this.props.aaaSession                     // data from the store
     const lastReadDayNumber = this.props.app.lastReadDayNumber   // data from the store
+
+    const appUserBibleReading = this.props.appUserBibleReading   // data from the store
+    const appUserBibleReadingNames =  this.props.appUserBibleReadingNames // data from the store
     
     console.log('UserProfile Container')
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
@@ -114,11 +147,13 @@ class _UserProfile extends Component {
         locations={locations}
         onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
         onBible={()=> this.handleOnBible(navigate)}
-        onHandleReadingItemPressed={(itemBibleReading, itemBibleReadingTitle) => this.handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle)}
+        onHandleReadingItemPressed={(itemBibleReadingTitle) => this.handleReadingItemPressed(itemBibleReadingTitle)}
         onWeek={(week)=> this.handleOnWeek(navigate, week)}
         userData={userData}
         months={months}
         aaaSession={aaaSession}
+        appUserBibleReading = {appUserBibleReading}
+        appUserBibleReadingNames = {appUserBibleReadingNames}
         lastReadDayNumber={lastReadDayNumber}
         onSeeAllReadings={()=> navigate('HigherBibleReadings')}
         sessions={sessions}
@@ -157,7 +192,9 @@ function mapStateToProps(state){
       sessions: state.sessions,
       bibleReading: state.bibleReading,
       bibleReadingNames: state.bibleReadingNames,
-      aaaSession: state.aaaSession
+      aaaSession: state.aaaSession,
+      appUserBibleReading: state.appUserBibleReading,
+      appUserBibleReadingNames: state.appUserBibleReadingNames,
   });
 }
 

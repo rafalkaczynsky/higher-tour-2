@@ -19,6 +19,7 @@ class _SignIn extends Component {
     this.firebaseDataChurches = firebase.database().ref('churches/');
     this.firebaseBibleReading = firebase.database().ref('bibleReading/');
     this.firebaseAaaSession = firebase.database().ref('aaaSession/');
+  
 
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
@@ -200,7 +201,7 @@ class _SignIn extends Component {
           if(followStatus){
             //... if so ...
             console.log('USER FOLLOWS EVENT!!!')
-            navigate('Welcome')    
+            navigate('UserProfile')    
           } else {
             //...or user doesnt follow
             console.log('USER DOESNT FOLLOW EVENT!!!')
@@ -249,6 +250,7 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
 
     const { navigate } = this.props.navigation
                          // if churches, events , bibleReading are not in the redux-store then...

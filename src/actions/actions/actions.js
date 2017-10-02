@@ -65,6 +65,22 @@ export function SAVE_BIBLE_READING(bibleReading) {
     };
 }
 
+//SAVE_APP_USER_BIBLE_READINGS
+export function SAVE_APP_USER_BIBLE_READINGS(appUserBibleReading) {
+    return {
+        type: types.SAVE_APP_USER_BIBLE_READINGS,
+        appUserBibleReading: appUserBibleReading,
+    };
+}
+
+export function SAVE_APP_USER_BIBLE_READINGS_NAMES(appUserBibleReadingNames) {
+    return {
+        type: types.SAVE_APP_USER_BIBLE_READINGS_NAMES,
+        appUserBibleReadingNames: appUserBibleReadingNames,
+    };
+}
+
+
 export function SAVE_BIBLE_READING_NAMES(bibleReadingNames) {
     return {
         type: types.SAVE_BIBLE_READING_NAMES,

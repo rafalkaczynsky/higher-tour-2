@@ -57,7 +57,7 @@ export default class WeekList extends Component {
             </View>
             <View style={{padding: 20}}>
                 <View>
-                    <Text style={{ fontSize: 12, lineHeight: 18}}>{week.Title}</Text>
+                    <Text style={{ fontSize: 12, lineHeight: 18}}>{week.sessionTitle}</Text>
                 </View>
                 <View style={{marginTop: 30}}>
                     <Text style={{ fontSize: 12, lineHeight: 18}}>

@@ -25,21 +25,13 @@ class HigherBibleReadings extends React.Component {
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
     const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
   
-/*
-    console.log('appUsers/' + userData.uid + '/bibleReadings/' + currentBibleReadingTitle + '/')
-    firebase.database().ref('appUsers/' + userData.uid + '/bibleReadings/' + currentBibleReadingTitle + '/').once("value", snapshot => {
-      const item = snapshot.val();
-      console.log(item)
-      this.props.dispatch(ACTIONS.SAVE_CURRENT_LAST_READ_DAY_NUMBER(item.lastReadDayNumber))
-
-    })*/
   }
   componentDidMount(){
     this.setState({isMounted: true})
   }
     render(){
       console.log('Higher Bible Readings Window')
-      const {locations, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
+      const {locations, onItemBackPressed, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
       console.log(readings)
       const userData = this.props.user                // data from the store
       const currentDayContent = this.props.app.currentDayContent              // data from the store
@@ -50,8 +42,10 @@ class HigherBibleReadings extends React.Component {
       return(
       <View style={StyleSheet.window.default}>
         <Header 
+          onBack={currentScreen === 'item'}
+          onBackCallback={onItemBackPressed}
           text='Higher Bible Readings'
-          simple
+          
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
@@ -79,7 +73,7 @@ class HigherBibleReadings extends React.Component {
         <ListItem 
           title={this.props.bibleReadingNames[indx]}
           label={item.length + ' days'}
-          handleIconPressed={()=> {onItem(item)}}
+          handleIconPressed={()=> {onItem(item, this.props.bibleReadingNames[indx][0])}}
           key={'ListItemReadingsKey-'+indx}
         />
       )}
@@ -90,11 +84,12 @@ class HigherBibleReadings extends React.Component {
 
         return (
           <ListItem 
+
           key={'ListItemReadingsKey-'+indx}
-          title={'Day ' + (indx+1)}
+          title={'Day ' + (indx)}         
           label={item.Read.Verse + ' available'}
           imageUrl={item.Read.Image}
-          handleIconPressed ={()=>onDayItem(item, (indx+1))}
+          handleIconPressed ={()=>onDayItem(item, (indx))}
         />
         )
       })}

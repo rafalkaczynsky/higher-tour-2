@@ -120,7 +120,7 @@ export default class FindChurch extends React.Component {
               >
                 <ListItem 
                   title={item.name}
-                  label={item.howFar + ' miles' + ' - ' + item.meetingDayAndTime}
+                  label={item.howFar + ' miles' + ' - ' + item.meetingDay + ' ' + item.meetingTime}
                  
                 />
               </TouchableOpacity>
@@ -136,6 +136,7 @@ export default class FindChurch extends React.Component {
             
         </View>
         <TabMenu 
+          onHome={this.props.onHome}
           onSettings={this.props.onSettings}
           oBible={this.props.onBible}
           activeTabName={this.props.activeTabName}

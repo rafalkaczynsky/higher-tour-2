@@ -13,6 +13,8 @@ import bibleReadingReducer from './bibleReadingReducer';
 import currentBibleReadingReducer from './currentBibleReadingReducer'
 import aaaSessionReducer from './aaaSessionReducer'
 import bibleReadingNamesReducer from './bibleReadingNamesReducer'
+import appUserBibleReadingReducer from './appUserBibleReadingReducer'
+import appUserBibleReadingNamesReducer from './appUserBibleReadingNamesReducer'
 
 export const reducers = combineReducers({
     form: formReducer,     
@@ -27,4 +29,6 @@ export const reducers = combineReducers({
     currentBibleReading: currentBibleReadingReducer,
     aaaSession: aaaSessionReducer,
     bibleReadingNames: bibleReadingNamesReducer,
+    appUserBibleReading: appUserBibleReadingReducer,
+    appUserBibleReadingNames: appUserBibleReadingNamesReducer,
 })

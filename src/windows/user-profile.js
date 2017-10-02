@@ -31,15 +31,8 @@ class UserProfile extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  componentWillMount(){
 
 
-  }
-
-  componentDidMount(){
-    this.setState({isMounted: true})
-    
-  }
 
     getMyData(arrayOfObjectsWithIds) {
 
@@ -132,11 +125,10 @@ class UserProfile extends React.Component {
                   listHeader
                 /> 
 
-                {this.props.bibleReading.map((item, index) => {
+                {this.props.appUserBibleReading.map((item, index) => {
 
-                const title = bibleReadingNames[index]
-          
-                const progress = parseInt(lastReadDayNumber / bibleReading.length * 100) + '%'
+                const title = this.props.appUserBibleReadingNames[index]
+                const progress = item.progress + '%'
          
                 return (
                   <ListItem 
@@ -144,7 +136,7 @@ class UserProfile extends React.Component {
                     title={title}
                     progressBar
                     progress={progress}
-                    handleIconPressed={() => onHandleReadingItemPressed(item, title)}
+                    handleIconPressed={() => onHandleReadingItemPressed(title)}
                   />
                   ) 
                 })}

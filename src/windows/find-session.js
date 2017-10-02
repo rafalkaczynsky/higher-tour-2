@@ -112,6 +112,7 @@ export default class FindSession extends React.Component {
             </View>
             <ScrollView style={{width: '100%'}}>
               {this.state.didMount && this.state.locations.map((item, indx)=> 
+              
               <TouchableOpacity 
                  onPress={()=>this.props.onItem(item)}
                  key={'ListItemKey-'+indx}
@@ -128,7 +129,7 @@ export default class FindSession extends React.Component {
         </View>
         <TabMenu 
           onSettings={this.props.onSettings}
-          oBible={this.props.onBible}
+          onBible={this.props.onBible}
           activeTabName={this.props.activeTabName}
         /> 
       </View>

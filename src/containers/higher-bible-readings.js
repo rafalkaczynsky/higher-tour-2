@@ -60,9 +60,12 @@ class _HigherBibleReadings extends Component {
       })
   }
 
-  handleOnItem(itemBibleReading){
+  handleOnItem(itemBibleReading, bibleReadingTitle){
     console.log('On Item clicked')
-    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
+    console.log(bibleReadingTitle)
+
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))//SAVE_CURRENT_READING_ITEM_TITLE
+    this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
 
   }
@@ -70,7 +73,7 @@ class _HigherBibleReadings extends Component {
   handleOnDayItem(itemDay, navigate, numberOfDay, from){
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber
       const userDataFromLocal = this.props.user
-
+      console.log('Day  clicked!!!!!!!!!!!!')
       console.log(itemDay)
       this.props.dispatch(ACTIONS.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(itemDay))
       //check redux store if the last Reading Number is bigger or not than current Clicked
@@ -94,6 +97,9 @@ class _HigherBibleReadings extends Component {
   handleOnSettingsLoggedOut(navigate, route){
     navigate(route)
   }
+  handleonItemBackPressed(){
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  }
 
 
   handleOnHome(){
@@ -104,45 +110,16 @@ class _HigherBibleReadings extends Component {
     const userData = this.props.user                // data from the store
     const loginStatus = this.props.app.loginStatus  // data from the store
 
-    console.log('handleHome')
-
     if (loginStatus && loginStatus === 'loggedOut') {
-      console.log('From SignIn')
       navigate('SignIn')
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
       navigate('UserProfile')
-    } else if (params.from === 'SessionItemYellow'){ 
-        console.log('From SessionItem Yellow')
-        console.log(params)
-        navigate('FindSession')
-      }else if (params.from === 'SessionItemBrown'){ 
-        console.log('From SessionItem Brown')
-        console.log(params)
-        navigate('UserProfile')
-      } else if (params.from === 'UserProfile'){
-        console.log('From UserProfile')
-        console.log(params)
-        navigate('UserProfile',)
-      } else if (params.from === 'FindSession'){
-        console.log('From FindSession')
-        console.log(params)
-        navigate('FindSession')
-      }
-      else if (params.from === 'HigherBibleReadings'){
-        // =========== TO BE CHECKED ==============
-        console.log('From HigherBibleReadings')
-        console.log(params)
-        navigate('FindSession')
-      } else { 
-        console.log('From Welcome')
-        navigate('Welcome')
-      }
-    }  
+    } else { navigate('FindSession')}
+  }
 
 
   componentWillMount(){
     const loginStatus = this.props.app.loginStatus      // data from the store
-  
   }
   
 
@@ -179,12 +156,13 @@ class _HigherBibleReadings extends Component {
             }
           }
           onHome={()=> this.handleOnHome()}  
-          onItem={(item)=> this.handleOnItem(item)}
+          onItem={(item, bibleReadingTitle)=> this.handleOnItem(item, bibleReadingTitle)}
           onDayItem={(item, numberOfDay)=> this.handleOnDayItem(item, navigate,  numberOfDay, 'HigherBibleReadings')}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           onCompleted={()=> this.handleOnCompleted()}
           onNew={()=> this.handleOnNew()}
+          onItemBackPressed={()=> this.handleonItemBackPressed()}
           lastReadDayNumber={this.props.app.lastReadDayNumber}
           currentScreen={bibleReadingScreenStatus}
           chosenItem={currentBibleReading}

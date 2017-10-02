@@ -97,7 +97,7 @@ class _FindSession extends Component {
     return (
         <FindSession 
           onSettings={()=> navigate('Settings', {from: 'FindSession'})}
-          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession'})}
+          onBible={()=> navigate('HigherBibleReadings')}
           onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected, false)}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}

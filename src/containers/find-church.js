@@ -101,8 +101,8 @@ class _FindChurch extends Component {
           buttonsStyle={this.state.buttonsStyle}
           churches={churches}
           locations={locations}
-          churchName={params.churchName ? params.churchName : null}
-          onMoreSession={()=> this.handleOnMoreSession()}
+          onHome={()=> navigate('FindSession')}
+          onMoreSession={()=> navigate('FindSession')}
           onAlphabetical={()=> this.handleOnAlphabetical(churches)}
           onClosest={()=> this.handleOnClosest(churches)}
           activeTabName={activeTabName}

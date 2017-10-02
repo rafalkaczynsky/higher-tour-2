@@ -44,13 +44,25 @@ componentDidMount(){
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
   const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle                    
   
+  
   const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');
 
-  firebaseDataAppUsers.update({
-    lastReadDayNumber : currentReadingDayNumber,
-    lastReadTimeStamp: new Date().getTime()
+  firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
+    const bibleReading = snapshot.val();
+    const progress = currentBibleReading.length / 
+    console.log(bibleReading.lastReadDayNumber + '<' + currentReadingDayNumber )
+    
+    if (bibleReading.lastReadDayNumber < currentReadingDayNumber ) {
+      firebaseDataAppUsers.update({
+        lastReadTimeStamp: new Date().getTime(),
+        lastReadDayNumber : currentReadingDayNumber,
+        progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+      })
+    }
+
+    
   })
-  
+
 }
 
   render() {
@@ -73,7 +85,7 @@ componentDidMount(){
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
-          onItemBackPressed={()=> navigate('UserProfile')}
+          onItemBackPressed={()=> navigate('HigherBibleReadings')}
           onItemNextPressed={()=> navigate('Think')}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}

@@ -73,7 +73,7 @@ componentDidMount(){
         <Think
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
-          onItemBackPressed={()=> navigate('Read')}
+          onItemBackPressed={()=> navigate('Read', {week: currentDayContent })}
           onItemNextPressed={()=> navigate('Respond')}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
