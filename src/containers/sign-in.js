@@ -201,6 +201,7 @@ class _SignIn extends Component {
           if(followStatus){
             //... if so ...
             console.log('USER FOLLOWS EVENT!!!')
+            props.dispatch(ACTIONS.SAVE_USER(user)) 
             navigate('UserProfile')    
           } else {
             //...or user doesnt follow
