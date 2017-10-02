@@ -156,8 +156,11 @@ class _SignIn extends Component {
      })
     
      fbDataRef4.on('value',(snap)=>{
-      let aaaSession = snap.val()
-      this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSession));
+      let aaaSessions = snap.val()
+      aaaSessions = Object.keys(aaaSessions ).map(function (key) { 
+        return aaaSessions[key]; 
+      })
+      this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSessions));
      })
 
 
@@ -239,165 +242,6 @@ class _SignIn extends Component {
     }
   })
     
-
-    /*
-    //check if user exist in Redux Store State ...
-    if ((userDataFromLocal) && (userDataFromLocal.stsTokenManager)){
-      // ... if so ...
-      console.log('THERE IS USER IN LOCALstorage!!!')
-      //... check if token is not expired ...
-
-      // for debugging check when token will be expired 
-      const expierationTime = userDataFromLocal.stsTokenManager.expirationTime - TheDate 
-      console.log('Token expire time is: ' + this.msToTime(expierationTime))
-
-      if (userDataFromLocal.stsTokenManager.expirationTime > TheDate ){
-       //... if so ...
-       console.log('TOKEN IS STILL VALID!!')
-       // ... check if user follow events   
-        if(followStatus){
-          //... if so ...
-          console.log('USER FOLLOWS EVENT!!!')
-
-          navigate('UserProfile')    
-        } else {
-          //... if doesnt follow in localStorage check again ...
-
-                       // ...In case when  app data storage was cleared check in firebase if follow 
-                       firebase.database().ref('appUsers/'+ userDataFromLocal.uid+'/event/').once("value", snapshot => {
-                        const event = snapshot.val();
-                          //... if so ..
-                          if (event) {
-                            if (event.follow === true){
-                              console.log('User follow! Valid TOKEN');
-                              //... find event by id ...
-          
-                              firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                                // .. get object and dispatch to the store 
-                                  const locationSelected = snapshot.val()
-                                  props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                                  props.dispatch(ACTIONS.SAVE_USER(userDataFromLocal))
-                                  navigate('UserProfile')    
-                              })
-          
-                            } else {
-                              //... if doesnt follow ...
-                              console.log('USER DOESNT FOLLOW EVENT!!!')
-                              navigate('FindSession')
-                            }
-                          }
-                        })
-        }
-      } else {
-
-
-          // ... check if user follow events   
-           if(followStatus){
-             //... if so ...
-             console.log('USER FOLLOWS EVENT!!!')
-             navigate('UserProfile')    
-           } else {
-
-             // In case when  app data storage was cleared check in firebase if follow 
-             firebase.database().ref('appUsers/'+ userDataFromLocal.uid+'/event/').once("value", snapshot => {
-              const event = snapshot.val();
-                //... if so ..
-                if (event) {
-                  if (event.follow === true){
-                    console.log('User follow! refresh token method');
-                    //... find event by id ...
-
-                    firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                      // .. get object and dispatch to the store 
-                        const locationSelected = snapshot.val()
-                        props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                        props.dispatch(ACTIONS.SAVE_USER(userDataFromLocal))
-                        navigate('UserProfile')    
-                    })
-
-                  } else {
-                    //... if doesnt follow ...
-                    console.log('USER DOESNT FOLLOW EVENT!!!')
-                    navigate('FindSession')
-                  }
-                }
-              })
-
-           }
-
-      }
-    } else {
-      // ...if doesnt exist in local  ...
-      console.log('USER DOESNT EXIST IN LOCALstorage!!!')
-      // ===========================================================================
-      // ========================== double check with firebase =====================
-      // ===========================================================================
-
-      this.auth.onAuthStateChanged(function (user) {
-        // if user is signed to firebase
-        if(user){
-  
-          // check if user exist in the appUsers...
-          firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
-            const appUser = snapshot.val();
-      
-            if (appUser){
-              //.. if so..
-                      // check if user follow  any event ...
-              firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
-                const event = snapshot.val();
-                  //... if so ..
-                  if (event) {
-                    if (event.follow === true){
-                      //... find event by id 
-                      console.log('User follow! onAuthStateChanged');
-
-                      firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                        // .. get object and dispatch to the store 
-                          const locationSelected = snapshot.val()
-                          props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                          props.dispatch(ACTIONS.SAVE_USER(user))
-                          navigate('UserProfile')    
-                      })
-
-                    } else {
-                      console.log('User doesnt follow')
-                      props.dispatch(ACTIONS.SAVE_USER(user))
-                      navigate('FindSession')
-                    }
-                  }
-              });
-  
-            } else {
-              
-              // ..if doesnt exist save him to appUsers
-              // if login with email needs to be passed currentUser from firebase 
-  
-              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+user.uid+'/');
-  
-              firebaseDataAppUsers.update({
-                email: user.email,
-                event: {
-                  follow: false,
-                  id: null
-                },
-                uid: user.uid
-              })
-              // save user to redux store
-              props.dispatch(ACTIONS.SAVE_USER(user));
-              navigate('FindSession')
-  
-            }
-          })
-  
-        } else {
-          // if user doesnt signin to firebase
-          console.log('No user signed with Firebase')
-          props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
-        }
-      })
-    }
-*/
   }
 
   componentWillMount(){
@@ -490,25 +334,3 @@ function mapStateToProps(state){
 
 export default connect(mapStateToProps)(_SignIn);
 
-
-
-
-/*
-    //every user must have an email
-ref.child("users").orderByChild("ID").equalTo(user.uid).once("value",snapshot => {
-    const userData = snapshot.val();
-    if (userData){
-      console.log("exists!");
-    }
-});
-    //every user must have an email
-    firebase.database().ref(`users/${userId}/email`).once("value", snapshot => {
-      const email = snapshot.val();
-        if (email){
-          console.log("user wit email exists!");
-        }
-    });
-*/
-
-// below we can add later additional check if we have locationSelected in 
-// localStorage then navigate to UserProfile with that and skip below steps

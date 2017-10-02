@@ -72,7 +72,7 @@ class _BibleReadingList extends Component {
       })
   }
 
-  handleOnItem(itemBibleReading){
+  handleOnItem(navigate, itemBibleReading){
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
     navigate('ReadingContentList')
   }
@@ -152,6 +152,8 @@ class _BibleReadingList extends Component {
 
     console.log('BibleReadingList Container')
     console.log(bibleReading)
+    console.log(this.props)
+
     return (
         <BibleReadingList 
           readings={bibleReading}
@@ -167,7 +169,7 @@ class _BibleReadingList extends Component {
             }
           }
           onHome={()=> this.handleOnHome()}  
-          onItem={(item)=> this.handleOnItem(item)}
+          onItem={(item)=> this.handleOnItem(navigate, item)}
           buttonsStyle={this.state.buttonsStyle}
           onCompleted={()=> this.handleOnCompleted()}
           onNew={()=> this.handleOnNew()}

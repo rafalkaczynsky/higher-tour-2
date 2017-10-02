@@ -52,7 +52,7 @@ class UserProfile extends React.Component {
 
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading,  bibleReadingNames, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
+        const { onSeeAllReadings, onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading,  bibleReadingNames, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
@@ -111,6 +111,8 @@ class UserProfile extends React.Component {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)                                 
                    const aaaSessionItem = item.aaaSession
+                 //find object where  sessionTitle = item.session and pass it to onWeek
+  
 
                    if (index === 0)
                     return(
@@ -118,7 +120,7 @@ class UserProfile extends React.Component {
                         key={item.aaaSession + '-' + index}
                         title={item.aaaSession}
                         label={sessionDateFormatted}
-                        handleIconPressed={()=>onWeek(aaaSession[numb-1])}
+                        handleIconPressed={()=>onWeek(item.aaaSession)}
                       /> 
                     )
                 })}
@@ -151,6 +153,8 @@ class UserProfile extends React.Component {
                     title="See all reading plans"
                     bgColor={colors.grey3}
                     borderBold
+                    handleIconPressed={this.props.onSeeAllReadings}
+
                 />
             </View>
             </ScrollView>

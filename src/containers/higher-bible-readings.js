@@ -61,6 +61,7 @@ class _HigherBibleReadings extends Component {
   }
 
   handleOnItem(itemBibleReading){
+    console.log('On Item clicked')
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
 
@@ -140,15 +141,13 @@ class _HigherBibleReadings extends Component {
 
 
   componentWillMount(){
-
-
     const loginStatus = this.props.app.loginStatus      // data from the store
-    
+  
   }
   
 
   componentDidMount(){
-    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+    this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Bible'))
   }
 
   render() {
@@ -165,7 +164,7 @@ class _HigherBibleReadings extends Component {
     const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store  
 
     console.log('HigherBibleReadings Container')
-
+    console.log(this.props.bibleReading)
     return (
         <HigherBibleReadings 
           readings={bibleReading}
@@ -202,7 +201,8 @@ function mapStateToProps(state){
       events: state.events,
       app: state.app,
       currentBibleReading: state.currentBibleReading,
-      bibleReadingScreenStatus: state.bibleReadingScreenStatus
+      bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+      bibleReading: state.bibleReading
   });
 }
 

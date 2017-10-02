@@ -24,15 +24,15 @@ class HigherBibleReadings extends React.Component {
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
     const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
-    const lastReadDayNumber = this.props.app.lastReadDayNumber // data from the store
-
+  
+/*
     console.log('appUsers/' + userData.uid + '/bibleReadings/' + currentBibleReadingTitle + '/')
     firebase.database().ref('appUsers/' + userData.uid + '/bibleReadings/' + currentBibleReadingTitle + '/').once("value", snapshot => {
       const item = snapshot.val();
       console.log(item)
       this.props.dispatch(ACTIONS.SAVE_CURRENT_LAST_READ_DAY_NUMBER(item.lastReadDayNumber))
 
-    })
+    })*/
   }
   componentDidMount(){
     this.setState({isMounted: true})
@@ -40,42 +40,13 @@ class HigherBibleReadings extends React.Component {
     render(){
       console.log('Higher Bible Readings Window')
       const {locations, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
-
+      console.log(readings)
       const userData = this.props.user                // data from the store
       const currentDayContent = this.props.app.currentDayContent              // data from the store
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
       const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
+      const lastReadDayNumber = this.props.app.lastReadDayNumber // data from the store
 
-      const renderListItem = () => chosenItem.map((item, indx) => 
-      {
-        const unavailable =(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? 'available' : 'unavailable'
-
-        return (
-          <ListItem 
-          key={'ListItemReadingsKey-'+indx}
-          title={'Day ' + (indx+1)}
-          label={item.Read.Verse + ' ' + unavailable}
-          imageUrl={item.Read.Image}
-          handleIconPressed ={(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? ()=>onDayItem(item, (indx+1)): null}
-          
-        />
-        )
-      })
-
-      const renderListReadings = () => readings.map((item, indx)=> 
-      
-      <TouchableOpacity 
-         onPress={()=> {onItem(item)}}
-         key={'ListItemReadingsKey-'+indx}
-      >
-        <ListItem 
-          title={item.title}
-          label={item.days + ' days'}
-         
-        />
-      </TouchableOpacity>
-      )
-   
       return(
       <View style={StyleSheet.window.default}>
         <Header 
@@ -103,8 +74,30 @@ class HigherBibleReadings extends React.Component {
             </View>
 
             <ScrollView style={{width: '100%'}}>
-              {currentScreen === 'list' && readings && <renderListReadings/>}
-              {this.state.isMounted && currentScreen === 'item' &&  chosenItem && <renderListItem/>}
+       {currentScreen === 'list' && readings && readings.map((item, indx)=> 
+      
+        <ListItem 
+          title={this.props.bibleReadingNames[indx]}
+          label={item.length + ' days'}
+          handleIconPressed={()=> {onItem(item)}}
+          key={'ListItemReadingsKey-'+indx}
+        />
+      )}
+
+      {this.state.isMounted && currentScreen === 'item' &&  chosenItem && chosenItem.map((item, indx) => 
+      {
+
+
+        return (
+          <ListItem 
+          key={'ListItemReadingsKey-'+indx}
+          title={'Day ' + (indx+1)}
+          label={item.Read.Verse + ' available'}
+          imageUrl={item.Read.Image}
+          handleIconPressed ={()=>onDayItem(item, (indx+1))}
+        />
+        )
+      })}
             </ScrollView>
             
         </View>
@@ -124,6 +117,7 @@ function mapStateToProps(state){
       app: state.app,
       currentBibleReading: state.currentBibleReading,
       bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+      bibleReadingNames: state.bibleReadingNames
       
   });
 }

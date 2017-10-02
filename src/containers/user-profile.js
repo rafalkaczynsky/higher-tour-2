@@ -19,12 +19,18 @@ class _UserProfile extends Component {
     navigate('Settings', { locationSelected: locationSelected, from: from})
   }
 
-  handleOnWeek(navigate, week){
-    navigate('WeekList', {week: week})
+  handleOnWeek(navigate, sessionTitle){
+    const aaaSession = this.props.aaaSession
+    sessionTitle = sessionTitle.toString()
+    aaaSession.map((item)=> {
+      if (item.sessionTitle == sessionTitle) {
+        navigate('WeekList', {week: item})
+      }
+    })
   }
 
   handleOnBible(navigate){
-    navigate('BibleReadingList')
+    navigate('HigherBibleReadings')
   }
 
   handleReadingItemPressed(itemBibleReading, itemBibleReadingTitle){
@@ -114,6 +120,7 @@ class _UserProfile extends Component {
         months={months}
         aaaSession={aaaSession}
         lastReadDayNumber={lastReadDayNumber}
+        onSeeAllReadings={()=> navigate('HigherBibleReadings')}
         sessions={sessions}
         bibleReading={bibleReading}
         bibleReadingNames={bibleReadingNames}

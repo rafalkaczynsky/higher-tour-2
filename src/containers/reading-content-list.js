@@ -61,23 +61,14 @@ class _ReadingContentList extends Component {
   }
 
   handleOnDayItem(itemDay, navigate, numberOfDay, from){
-      const currentReadingDayNumber = this.props.app.currentReadingDayNumber
-      const userDataFromLocal = this.props.user
-
       console.log(itemDay)
       this.props.dispatch(ACTIONS.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(itemDay))
-      //check redux store if the last Reading Number is bigger or not than current Clicked
-      if (this.props.app.lastReadDayNumber < numberOfDay){
-        this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(numberOfDay))
-      } else {
-        this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(this.props.app.lastReadDayNumber))
-      }
-     
+      this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(numberOfDay))
       navigate('Read', {from: from})
   }
 
-  handleOnSettings(navigate, from,){
-    navigate('Settings', {from: from})
+  handleOnSettings(navigate, loginStatus, from,){
+    navigate('Settings', {loginStatus: loginStatus, from: from})
   }
 
   handleOnSettingsLoggedInPlus(navigate, from){
@@ -135,6 +126,7 @@ class _ReadingContentList extends Component {
 
   componentWillMount(){
 
+
     const loginStatus = this.props.app.loginStatus      // data from the store
     
   }
@@ -149,19 +141,17 @@ class _ReadingContentList extends Component {
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
 
-
+    const locations = this.props.events                                       // data from the store 
     const userData = this.props.user                                          // data from the store
     const loginStatus = this.props.app.loginStatus                            // data from the store
     const activeTabName = this.props.app.activeTabName                        // data from the store
     const currentBibleReading = this.props.currentBibleReading                // data from the store  
-    const bibleReading = this.props.bibleReading                              // data from the store   
 
 
-    console.log('ReadingsContentList Container')
+    console.log('ReadingContentList Container')
 
     return (
-        <_ReadingContentList
-          readings={bibleReading}
+        <ReadingContentList 
           onSettings={()=> {
               if (loginStatus === 'loggedIn'){        
                 this.handleOnSettings(navigate, 'HigherBibleReadings', 'Settings')
@@ -173,7 +163,8 @@ class _ReadingContentList extends Component {
             }
           }
           onHome={()=> this.handleOnHome()}  
-          onDayItem={(item, numberOfDay)=> this.handleOnDayItem(item, navigate,  numberOfDay, 'ReadingContentList')}
+          onItem={(item)=> this.handleOnItem(item)}
+          onDayItem={(item, numberOfDay)=> this.handleOnDayItem(item, navigate,  numberOfDay, 'HigherBibleReadings')}
           buttonsStyle={this.state.buttonsStyle}
           onCompleted={()=> this.handleOnCompleted()}
           onNew={()=> this.handleOnNew()}
@@ -192,7 +183,6 @@ function mapStateToProps(state){
       events: state.events,
       app: state.app,
       currentBibleReading: state.currentBibleReading,
-      bibleReadingScreenStatus: state.bibleReadingScreenStatus
   });
 }
 

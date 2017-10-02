@@ -58,15 +58,13 @@ class BibleReadingList extends React.Component {
             {readings.map((item, indx)=> {
                 let title= readingsNames[indx][0]
                 return(
-                    <TouchableOpacity 
-                        onPress={()=> {onItem(item)}}
-                        key={'ListItemReadingsKey-'+indx}
-                    >
                         <ListItem 
+                            handleIconPressed={()=> onItem(item)}
+                            key={'ListItemReadingsKey-'+indx}
                             title={title}
                             label={item.length + ' days'}
                         />
-                    </TouchableOpacity>)
+                 )
                 }
             )}
             </ScrollView>

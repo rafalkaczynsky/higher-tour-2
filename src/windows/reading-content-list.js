@@ -26,19 +26,12 @@ class ReadingContentList extends React.Component {
     const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
     const lastReadDayNumber = this.props.app.lastReadDayNumber // data from the store
 
-    console.log('appUsers/' + userData.uid + '/bibleReadings/' + currentBibleReadingTitle + '/')
-    firebase.database().ref('appUsers/' + userData.uid + '/bibleReadings/' + currentBibleReadingTitle + '/').once("value", snapshot => {
-      const item = snapshot.val();
-      console.log(item)
-      this.props.dispatch(ACTIONS.SAVE_CURRENT_LAST_READ_DAY_NUMBER(item.lastReadDayNumber))
-
-    })
   }
   componentDidMount(){
     this.setState({isMounted: true})
   }
     render(){
-      console.log('Higher Bible Readings Window')
+      console.log('ReadingContentList Window')
       const {locations, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
 
       const userData = this.props.user                // data from the store
@@ -46,7 +39,6 @@ class ReadingContentList extends React.Component {
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
       const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
 
-   
       return(
       <View style={StyleSheet.window.default}>
         <Header 
@@ -57,7 +49,7 @@ class ReadingContentList extends React.Component {
             <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Button 
                   type="default"
-                  text={'Ascending'}
+                  text={chosenItem ? 'Ascending' : 'New'}
                   bgColor={buttonsStyle[1].bgColor}  
                   textColor={buttonsStyle[1].textColor}
                   buttonStyle={{margin: 10 , marginRight: 0, width:'40%', height: 30}}
@@ -65,7 +57,7 @@ class ReadingContentList extends React.Component {
                 /> 
                 <Button 
                   type="default"
-                  text={'Descending'}
+                  text={chosenItem ? 'Descending' : 'Completed'}
                   bgColor={buttonsStyle[0].bgColor}  
                   textColor={buttonsStyle[0].textColor}
                   buttonStyle={{margin: 10, marginLeft: 0, width: '40%', height: 30}}
@@ -74,20 +66,19 @@ class ReadingContentList extends React.Component {
             </View>
 
             <ScrollView style={{width: '100%'}}>
-                {chosenItem.map((item, indx) => 
-                {
-                    const unavailable =(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? 'available' : 'unavailable'
-
-                    return (
-                        <ListItem 
-                            key={'ListItemReadingsKey-'+indx}
-                            title={'Day ' + (indx+1)}
-                            label={item.Read.Verse + ' ' + unavailable}
-                            imageUrl={item.Read.Image}
-                            handleIconPressed ={(this.props.app.lastReadDayNumber) > (indx) || this.props.app.lastReadDayNumber == (indx) ? ()=>onDayItem(item, (indx+1)): null}
-                        />
-        )
-      })}
+            {chosenItem.map((item, indx) => 
+            {
+              return (
+                <ListItem 
+                key={'ListItemReadingsKey-'+indx}
+                title={'Day ' + (indx+1)}
+                label={item.Read.Verse}
+                imageUrl={item.Read.Image}
+                handleIconPressed ={onDayItem(item, (indx+1))}
+  
+              />
+              )
+            })}
             </ScrollView>
             
         </View>
