@@ -29,7 +29,10 @@ class _Welcome extends Component {
 
 
 handleOnBible(navigate, from){
-  navigate('HigherBibleReadings', {from: from})
+  this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  //this.props.dispatch( {type: 'SettingsInAnimation'})
+  this.props.dispatch({ type: 'BibleAnimation' }) 
+  //navigate('HigherBibleReadings', {from: from})
 }
 
 handleOnMoreSession(navigate, route){

@@ -73,7 +73,6 @@ class _HigherBibleReadings extends Component {
   handleOnDayItem(itemDay, navigate, numberOfDay, from){
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber
       const userDataFromLocal = this.props.user
-      console.log('Day  clicked!!!!!!!!!!!!')
       console.log(itemDay)
       this.props.dispatch(ACTIONS.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(itemDay))
       //check redux store if the last Reading Number is bigger or not than current Clicked
@@ -83,19 +82,21 @@ class _HigherBibleReadings extends Component {
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(this.props.app.lastReadDayNumber))
       }
      
-      navigate('Read', {from: from})
+      //navigate('Read', {from: from})
+      this.props.dispatch({type: 'GoToReadLeftToRightAnimation'})
   }
 
   handleOnSettings(navigate, loginStatus, from,){
-    navigate('Settings', {loginStatus: loginStatus, from: from})
+    this.props.dispatch( {type: 'SettingsInAnimation'})
+    //navigate('Settings', {loginStatus: loginStatus, from: from})
   }
 
   handleOnSettingsLoggedInPlus(navigate, from){
-    navigate('Settings', {from: from})
+    this.props.dispatch( {type: 'SettingsInAnimation'})
   }
 
   handleOnSettingsLoggedOut(navigate, route){
-    navigate(route)
+    this.props.dispatch( {type: 'SettingsInAnimation'})
   }
   handleonItemBackPressed(){
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
@@ -111,13 +112,14 @@ class _HigherBibleReadings extends Component {
     const loginStatus = this.props.app.loginStatus  // data from the store
 
     if (loginStatus && loginStatus === 'loggedOut') {
-      navigate('SignIn')
+      this.props.dispatch({ type: 'SignInAfterSettingsAnimation' })
+      //navigate('SignIn')
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      navigate('UserProfile')
+      this.props.dispatch({ type: 'UserProfileAfterSettingsAnimation' }) 
     } else { navigate('FindSession')}
   }
 
-
+  
   componentWillMount(){
     const loginStatus = this.props.app.loginStatus      // data from the store
   }

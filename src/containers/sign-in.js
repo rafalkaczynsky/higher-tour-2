@@ -12,6 +12,7 @@ import {SignIn} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 
 class _SignIn extends Component {
+
   constructor(props) {
     super(props)
 
@@ -113,11 +114,14 @@ class _SignIn extends Component {
 }
 
   handleOnSettings(navigate, route, loginStatus, activeTabName){
-    navigate(route, {loginStatus: loginStatus, activeTabName: activeTabName})
+    this.props.dispatch( {type: 'SettingsInAnimation'})
+   // navigate(route, {loginStatus: loginStatus, activeTabName: activeTabName})
   }
 
   handleOnBible(navigate, route , ){
-    navigate(route, { activeTabName: 'Bible'})
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+    this.props.dispatch({ type: 'BibleAnimation' }) 
+    //navigate(route, { activeTabName: 'Bible'})
   }
 
   onFacebook(navigate, route){
@@ -216,15 +220,17 @@ class _SignIn extends Component {
                       props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
                       props.dispatch(ACTIONS.SAVE_USER(user)) 
-                      navigate('UserProfile')    
+            
+                      props.dispatch({ type: 'UserProfileAnimation' }) 
+                      //navigate('UserProfile')    
                   })
                 } else {
                   //... if doesnt follow ...
                   console.log('USER DOESNT FOLLOW EVENT!!!')
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
                   props.dispatch(ACTIONS.SAVE_USER(user)) 
-                  props.dispatch({type: 'Welcome' })
-                  navigate('Welcome')
+                  props.dispatch({type: 'WelcomeAnimation' })
+                 // navigate('Welcome')
                 }
               }
             })
@@ -232,8 +238,10 @@ class _SignIn extends Component {
           } else {
             //...or user doesnt follow
             console.log('USER DOESNT FOLLOW EVENT!!!')
-       
-            navigate('Welcome')    
+            props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+            props.dispatch(ACTIONS.SAVE_USER(user)) 
+            props.dispatch({type: 'WelcomeAnimation' })
+          //  navigate('Welcome')    
           }
         } else {
           //user is not in local storage
@@ -251,14 +259,15 @@ class _SignIn extends Component {
                       const locationSelected = snapshot.val() 
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
                       props.dispatch(ACTIONS.SAVE_USER(user)) 
-                      navigate('UserProfile')    
+                      props.dispatch({ type: 'UserProfileAnimation' }) 
+                     // navigate('UserProfile')    
                   })
                 } else {
                   //... if doesnt follow ...
                   console.log('USER DOESNT FOLLOW EVENT!!!')
                   props.dispatch(ACTIONS.SAVE_USER(user)) 
-                  props.dispatch({type: 'Welcome' })
-                  navigate('Welcome')
+                  props.dispatch({type: 'WelcomeAnimation' })
+                  //navigate('Welcome')
                 }
               }
             })
@@ -278,7 +287,7 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
-    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  
 
     const { navigate } = this.props.navigation
                          // if churches, events , bibleReading are not in the redux-store then...

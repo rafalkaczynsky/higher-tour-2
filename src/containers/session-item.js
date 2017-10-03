@@ -60,7 +60,7 @@ class _SessionItem extends Component {
        this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
        this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
        this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
-       navigate(route)
+       this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
   }
 
   handleOnStopSession(navigate, route){
@@ -77,14 +77,14 @@ class _SessionItem extends Component {
 
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
-    navigate('FindSession')
+    this.props.dispatch({type:'FindSessionAnimation'})
   }
 
   handleOnSettings(navigate, from){
     const { params } = this.props.navigation.state
 
     if (params.cancelLabel){
-      navigate('Settings', { from: 'SessionItemBrown', cancelLabel: true })
+      navigate('Settings', { from: 'SessionItemBrown'})
     } else {
       navigate('Settings', { from: 'SessionItemYellow'})
     }
@@ -102,6 +102,7 @@ class _SessionItem extends Component {
 
   handleOnBible(navigate, locationSelected,  from){
     const { params } = this.props.navigation.state
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
     if (params.cancelLabel){
       navigate('HigherBibleReadings', {locationSelected: locationSelected, from: 'SessionItemBrown'})
     } else {
@@ -121,7 +122,7 @@ class _SessionItem extends Component {
     const userData = this.props.user                   // data from the store
     const activeTabName =this.props.app.activeTabName  // data from the store
     const eventSelected  =this.props.eventSelected     // data from the store
-
+    const loginStatus  = this.props.app.loginStatus   //
 
     console.log('SessionItem Container')
     console.log(params)
@@ -133,7 +134,7 @@ class _SessionItem extends Component {
           onBible={()=> this.handleOnBible(navigate)}
           myPosition={myPosition[0]}
           location={eventSelected}
-          cancelLabel={params.cancelLabel}
+          cancelLabel= {loginStatus === 'loggedInPlus' ? true :false}
           onStopSession={()=> this.handleOnStopSession(navigate, 'FindSession')}
           onStartSession={(location)=> {this.handleOnStartSession(navigate, 'UserProfile', location)}
           }

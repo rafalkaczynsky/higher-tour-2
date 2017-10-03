@@ -16,11 +16,14 @@ class _WeekList extends Component {
 }
 
 handleOnBible(navigate, from){
-  navigate('HigherBibleReadings', {from: from})
+  this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  this.props.dispatch({ type: 'BibleAnimation' }) 
+  //navigate('HigherBibleReadings', {from: from})
 }
 
 handleOnSettings(navigate){
-    navigate('Settings')
+  this.props.dispatch( {type: 'SettingsInAnimation'})  
+  //navigate('Settings')
 }
 
 handleHome(navigate){
@@ -45,14 +48,13 @@ componentDidMount(){
     const { params } = this.props.navigation.state
     
     console.log('Week Container')
-    console.log(params.week)
 
     return (
         <WeekList 
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
-          onWeekBackPressed={()=> navigate('UserProfile')}
-          week={params.week}
+          onWeekBackPressed={()=> this.props.dispatch({ type: 'UserProfileAfterSettingsAnimation' })}
+          week={this.props.app.week}
           activeTabName={''}
         />
     )

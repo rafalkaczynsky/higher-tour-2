@@ -25,13 +25,7 @@ handleOnSettings(navigate, route){
   const { params } = this.props.navigation.state
   const loginStatus = this.props.app.loginStatus  // data from the store
 
-  if (loginStatus === 'loggedOut') {
-     navigate('Settings')
-  } else if (loginStatus === 'loggedIn ') {
-    navigate('Settings')
-  } else {
-    navigate('Settings')
-  }
+  this.props.dispatch( {type: 'SettingsInAnimation'})
 }
 
 handleHome(navigate){
@@ -73,7 +67,7 @@ componentDidMount(){
         <Respond
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
-          onItemBackPressed={()=> navigate('Think')}
+          onItemBackPressed={()=> this.props.dispatch({type: 'GoToThinkRightToLeftAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}

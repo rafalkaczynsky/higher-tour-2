@@ -114,8 +114,8 @@ class _Firebase {
         try {
             await firebase.auth().signOut();
             clearUserDataFromState;
-            // Navigate to login view
-            navigate(route)
+            // Navigate to SignIn
+            navigate
         } catch (error) {
             console.log('logout error')
             console.log(error);

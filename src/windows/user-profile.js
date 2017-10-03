@@ -132,7 +132,7 @@ class UserProfile extends React.Component {
          
                 return (
                   <ListItem 
-                    key={index + title}
+                    key={index + title }
                     title={title}
                     progressBar
                     progress={progress}

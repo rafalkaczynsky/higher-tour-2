@@ -119,6 +119,7 @@ export function SAVE_CURRENT_LAST_READ_DAY_NUMBER(dayNumber) {
     };
 }
 
+
 //APP STAFF
 
 export function CLEAR_APP(empty) {
@@ -177,4 +178,12 @@ export function UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(currentDayContent) {
         currentDayContent: currentDayContent,
     };
 }
+
+export function SAVE_WEEK(week) {
+    return {
+        type: types.SAVE_WEEK,
+        week: week,
+    };
+}
+
 //...............

@@ -95,8 +95,13 @@ class _FindChurch extends Component {
     console.log(this.props)
     return (
         <FindChurch 
-          onSettings={()=> navigate('Settings', {from: 'FindSession', activeTabName: 'Settings'})}
-          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible'})}
+          onSettings={()=>     this.props.dispatch( {type: 'SettingsInAnimation'}) /*navigate('Settings', {from: 'FindSession', activeTabName: 'Settings'})*/}
+          onBible={()=> {
+            this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+            this.props.dispatch({ type: 'BibleAnimation' }) 
+            //navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible'})
+            }
+          }
           onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected)}
           buttonsStyle={this.state.buttonsStyle}
           churches={churches}

@@ -20,7 +20,8 @@ handleOnBible(navigate, from){
 }
 
 handleOnSettings(navigate){
-  navigate('Settings')
+  this.props.dispatch( {type: 'SettingsInAnimation'})
+  //navigate('Settings')
 }
 
 handleHome(navigate){
@@ -43,25 +44,26 @@ componentDidMount(){
   const currentBibleReading = this.props.currentBibleReading
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
   const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle                    
+  const loginStatus = this.props.app.loginStatus
   
-  
-  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');
+  if (loginStatus!=='loggedOut') {
 
-  firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
-    const bibleReading = snapshot.val();
-    const progress = currentBibleReading.length / 
-    console.log(bibleReading.lastReadDayNumber + '<' + currentReadingDayNumber )
+    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');
     
-    if (bibleReading.lastReadDayNumber < currentReadingDayNumber ) {
-      firebaseDataAppUsers.update({
-        lastReadTimeStamp: new Date().getTime(),
-        lastReadDayNumber : currentReadingDayNumber,
-        progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+      firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
+        const bibleReading = snapshot.val();
+        const progress = currentBibleReading.length / 
+        console.log(bibleReading.lastReadDayNumber + '<' + currentReadingDayNumber )
+        
+        if (bibleReading.lastReadDayNumber < currentReadingDayNumber ) {
+          firebaseDataAppUsers.update({
+            lastReadTimeStamp: new Date().getTime(),
+            lastReadDayNumber : currentReadingDayNumber,
+            progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+          })
+        }   
       })
-    }
-
-    
-  })
+  }
 
 }
 
@@ -74,19 +76,21 @@ componentDidMount(){
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
+
+
   //  const weekList = this.props.app.weekContainer
     
-    const weekParam = this.params ? this.params.week : null
+  
     
     console.log('Read Container')
-    console.log(params.week)
+
     return (
         <Read 
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
-          onItemBackPressed={()=> navigate('HigherBibleReadings')}
-          onItemNextPressed={()=> navigate('Think')}
+          onItemBackPressed={()=>this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})}
+          onItemNextPressed={()=>this.props.dispatch({type: 'GoToThinkLeftToRightAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}

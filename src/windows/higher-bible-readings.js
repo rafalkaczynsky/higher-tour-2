@@ -69,7 +69,7 @@ class HigherBibleReadings extends React.Component {
 
             <ScrollView style={{width: '100%'}}>
        {currentScreen === 'list' && readings && readings.map((item, indx)=> 
-      
+       
         <ListItem 
           title={this.props.bibleReadingNames[indx]}
           label={item.length + ' days'}
@@ -80,11 +80,9 @@ class HigherBibleReadings extends React.Component {
 
       {this.state.isMounted && currentScreen === 'item' &&  chosenItem && chosenItem.map((item, indx) => 
       {
-
-
+        if (indx > 0)
         return (
           <ListItem 
-
           key={'ListItemReadingsKey-'+indx}
           title={'Day ' + (indx)}         
           label={item.Read.Verse + ' available'}

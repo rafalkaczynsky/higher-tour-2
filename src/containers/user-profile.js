@@ -16,7 +16,8 @@ class _UserProfile extends Component {
   }
 
   handleOnSettings(navigate, locationSelected, from){
-    navigate('Settings', { locationSelected: locationSelected, from: from})
+    this.props.dispatch( {type: 'SettingsInAnimation'})
+    //navigate('Settings', { locationSelected: locationSelected, from: from})
   }
 
   handleOnWeek(navigate, sessionTitle){
@@ -24,13 +25,18 @@ class _UserProfile extends Component {
     sessionTitle = sessionTitle.toString()
     aaaSession.map((item)=> {
       if (item.sessionTitle == sessionTitle) {
-        navigate('WeekList', {week: item})
+        // navigate('WeekList', {week: item})
+        this.props.dispatch(ACTIONS.SAVE_WEEK(item))
+        this.props.dispatch({type: 'GoToWeekListRightToLeftAnimation'})
+
       }
     })
   }
 
   handleOnBible(navigate){
-    navigate('HigherBibleReadings')
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+    //navigate('HigherBibleReadings')
+    this.props.dispatch({ type: 'BibleAnimation' }) 
   }
 
   handleReadingItemPressed(bibleReadingTitle){
@@ -43,10 +49,12 @@ class _UserProfile extends Component {
       console.log(item[0])
       console.log(bibleReadingTitle)
       if (item[0] === bibleReadingTitle[0]) {
+
         this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item')) 
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(bibleReading[index]))
-        navigate('HigherBibleReadings')
+        this.props.dispatch({type:'AppUserBibleReadingAnimation'})
+        //navigate('HigherBibleReadings')
       }
     })
 
@@ -155,12 +163,12 @@ class _UserProfile extends Component {
         appUserBibleReading = {appUserBibleReading}
         appUserBibleReadingNames = {appUserBibleReadingNames}
         lastReadDayNumber={lastReadDayNumber}
-        onSeeAllReadings={()=> navigate('HigherBibleReadings')}
+        onSeeAllReadings={()=> this.props.dispatch({ type: 'BibleAnimation' }) }
         sessions={sessions}
         bibleReading={bibleReading}
         bibleReadingNames={bibleReadingNames}
         locationSelected={eventSelected} 
-        handleEditSession={(locationSelected)=> navigate('SessionItem', {locationSelected: locationSelected, cancelLabel: true, cancelLabel: true})}
+        handleEditSession={(locationSelected)=> this.props.dispatch({type: 'SessionItemAnimation'})}
         activeTabName={activeTabName}
       />
  

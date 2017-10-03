@@ -30,11 +30,12 @@ class _Settings extends Component {
     const loginStatus = this.props.app.loginStatus  // data from the store
 
     if (loginStatus === 'loggedOut') {
-      navigate('SignIn')
+     // navigate('SignIn')//LogoutAnimation
+      this.props.dispatch({ type: 'LogoutAnimation' }) 
     } else {
       //UPDATE_LOGGIN_STATUS
       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
-      _Firebase.logout(navigate, route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
+      _Firebase.logout(this.props.dispatch({ type: 'LogoutAnimation' }) , route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
     }  
   }
 
@@ -48,23 +49,23 @@ class _Settings extends Component {
     const churches = this.props.churches            // data from the store
     const loginStatus = this.props.app.loginStatus  // data from the store
 
-    console.log('handleHome')
+ 
     if (loginStatus === 'loggedOut') {
       console.log('From SignIn')
-      navigate('SignIn')
+      //navigate('SignIn')//SignInAfterSettingsAnimation
+      this.props.dispatch({ type: 'SignInAfterSettingsAnimation' }) 
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      navigate('UserProfile')
+      this.props.dispatch({ type: 'UserProfileAfterSettingsAnimation' }) 
+      //navigate('UserProfile')
     }else if (params.from === 'SessionItemYellow'){ 
-        console.log('From SessionItem Yellow')
-        console.log(params)
-        navigate('FindSession',  {activeTabName: 'Home'})
+        navigate('FindSession')
       }else if (params.from === 'SessionItemBrown'){ 
         console.log('From SessionItem Brown')
         console.log(params)
+
         navigate('UserProfile')
       } else if (params.from === 'UserProfile'){
-        console.log('From UserProfile')
-        console.log(params)
+
         navigate('UserProfile')
       } else if (params.from === 'FindSession'){
         console.log('From FindSession')
@@ -86,13 +87,7 @@ class _Settings extends Component {
       const { params } = this.props.navigation.state
       const loginStatus = this.props.app.loginStatus  // data from the store
 
-      if (loginStatus === 'loggedOut') {
-      navigate(route)
-      } else if (loginStatus === 'loggedInPlus') {
-        navigate(route)
-      }else {
-        navigate(route)
-      }
+      this.props.dispatch({ type: 'BibleAnimation' }) 
   } 
   
 //HigherBibleReadings
