@@ -21,6 +21,39 @@ import {
   _ReadingContentList
 } from './containers'
 
+let MyTransition = (index, position) => {
+  const inputRange = [index - 1, index, index + 1];
+  const opacity = position.interpolate({
+      inputRange,
+      outputRange: [.2, 1, 1],
+  });
+
+  const scaleY = position.interpolate({
+      inputRange,
+      outputRange: ([0.8, 1, 1]),
+  });
+
+  return {
+      opacity,
+      transform: [
+          {scaleY}
+      ]
+  };
+};
+
+let TransitionConfiguration = () => {
+  return {
+      // Define scene interpolation, eq. custom transition
+      screenInterpolator: (sceneProps) => {
+
+          const {position, scene} = sceneProps;
+          const {index} = scene;
+
+          return MyTransition(index, position);
+      }
+  }
+};
+
 export const AppNavigator = StackNavigator({
   Welcome: {screen: _Welcome },
   SignIn: {screen: _SignIn },
@@ -39,7 +72,8 @@ export const AppNavigator = StackNavigator({
 },{ 
   headerMode: 'none', 
   initialRouteName: 'SignIn',
-  lazy: true
+  transitionConfig: TransitionConfiguration
+
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

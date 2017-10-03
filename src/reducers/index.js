@@ -23,7 +23,7 @@ import { AppNavigator } from '../screens';
 // Start with two routes: The Main screen, with the Login screen on top.
 const firstAction = AppNavigator.router.getActionForPathAndParams('SignIn');
 const tempNavState = AppNavigator.router.getStateForAction(firstAction);
-const initialNavState = AppNavigator.router.getStateForAction(firstAction);
+const initialNavState = AppNavigator.router.getStateForAction({firstAction});
 
 function nav(state = initialNavState, action) {
   let nextState;
