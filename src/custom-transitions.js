@@ -44,19 +44,21 @@ export const MyTransition = (index, position) => {
           outputRange: ([0, 1, 1, 0]),
       });
     
-      const translateX = position.interpolate({
+      const translateX = 0
+
+      const translateY= position.interpolate({
         inputRange,
         outputRange: ([100, 0, 0, 0]),
     });
-      const translateY = 0
     
       return {
-      
+          opacity,
           transform: [
                 {translateY},
                 {translateX}
+          
           ],
-      };;
+      };
   };
 
   export const LogoutAnimation = (index, position) => {
@@ -91,14 +93,15 @@ export const MyTransition = (index, position) => {
           outputRange: ([0, 1, 1, 0]),
       });
     
-      const translateX = position.interpolate({
+      const translateX = 0
+
+      const translateY= position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
-      const translateY = 0
     
       return {
-      
+          opacity,
           transform: [
                 {translateY},
                 {translateX}
@@ -115,20 +118,21 @@ export const MyTransition = (index, position) => {
           outputRange: ([0, 1, 1, 0]),
       });
     
-      const translateX = position.interpolate({
+      const translateX = 0
+
+      const translateY= position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
-      const translateY = 0
     
       return {
-      
+          opacity,
           transform: [
                 {translateY},
                 {translateX}
           
           ],
-      };;
+      };
   };
 
   export const BibleAnimation = (index, position) => {
@@ -310,7 +314,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([100, 0, 0, 0]),
+        outputRange: ([-100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -321,7 +325,7 @@ export const MyTransition = (index, position) => {
                 {translateX}
           
           ],
-      };;
+      };
   };
 
   export const AppUserBibleReadingAnimation = (index, position) => {
@@ -332,9 +336,19 @@ export const MyTransition = (index, position) => {
           outputRange: ([0, 1, 1, 0]),
       });
     
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([-100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
       return {
-          opacity,
-
+      
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
       };
   };
 
@@ -349,7 +363,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([100, 0, 0, 0]),
+        outputRange: ([-100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -360,7 +374,7 @@ export const MyTransition = (index, position) => {
                 {translateX}
           
           ],
-      };;
+      };
   };
 
   export const SessionItemAnimation = (index, position) => {
@@ -371,9 +385,19 @@ export const MyTransition = (index, position) => {
           outputRange: ([0, 1, 1, 0]),
       });
     
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([-100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
       return {
           opacity,
-
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
       };
   };
 
@@ -385,9 +409,19 @@ export const MyTransition = (index, position) => {
           outputRange: ([0, 1, 1, 0]),
       });
     
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([-100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
       return {
           opacity,
-
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
       };
   };
 
@@ -399,52 +433,19 @@ export const MyTransition = (index, position) => {
           outputRange: ([0, 1, 1, 0]),
       });
     
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([-100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
       return {
           opacity,
-
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
       };
   };
 
-
-
-  // examples below
-  export const MyCustomTransition = (index, position) => {
-    const inputRange = [index - 1, index, index + 0.99, index + 1];
-  
-    const opacity = position.interpolate({
-        inputRange,
-        outputRange: ([0, 1, 1, 0]),
-    });
-  
-
-  
-    return {
-        opacity,
-        transform: [
-            { translateX },
-            { translateY }
-        ],
-    };
-  };
-  
-  export const MyCustomTransition2 = (index, position) => {
-    const inputRange = [index - 1, index, index + 0.99, index + 1];
-  
-    const opacity = position.interpolate({
-        inputRange,
-        outputRange: ([0, 1, 1, 0]),
-    });
-  
-    const translateX = 0;
-    const translateY = position.interpolate({
-        inputRange,
-        outputRange: ([50, 0, 0, 0]),
-    });
-  
-    return {
-        opacity,
-        transform: [
-            { translateY},
-        ],
-    };
-  };

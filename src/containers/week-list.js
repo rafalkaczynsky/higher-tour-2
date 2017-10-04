@@ -53,7 +53,7 @@ componentDidMount(){
         <WeekList 
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
-          onWeekBackPressed={()=> this.props.dispatch({ type: 'UserProfileAfterSettingsAnimation' })}
+          onWeekBackPressed={()=> this.props.dispatch({ type: 'GoToUserProfileLeftToRightAnimation' })}
           week={this.props.app.week}
           activeTabName={''}
         />
