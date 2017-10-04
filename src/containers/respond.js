@@ -40,6 +40,18 @@ handleHome(navigate){
       }
 }
 
+handleOnGoBack(navigate){
+  const loginStatus = this.props.app.loginStatus  // data from the store
+  
+    if (loginStatus === 'loggedOut') {
+      navigate('SignIn')
+    } else if (loginStatus === 'loggedIn'){
+        navigate('Welcome')
+      } else {
+          navigate('UserProfile')
+        }
+}
+
 componentDidMount(){
 
   //wait 5 seconds after that 
@@ -47,7 +59,8 @@ componentDidMount(){
   const userData = this.props.user          
   const currentBibleReading = this.props.currentBibleReading
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
-  const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle                    
+  const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle     
+  const loginStatus = this.props.app.loginStatus               
 
 }
 
@@ -67,6 +80,8 @@ componentDidMount(){
         <Respond
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
+          onGoBack={()=> this.handleOnGoBack(navigate)}
+          loginStatus={loginStatus}
           onItemBackPressed={()=> this.props.dispatch({type: 'GoToThinkRightToLeftAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}

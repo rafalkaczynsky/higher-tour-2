@@ -164,19 +164,3 @@ class UserProfile extends React.Component {
 
 export default UserProfile
 
-/**
- * 
- * 
- *              const aaaSessionItem = item.aaaSession
-                   
-                   const aaaSessionArray = Object.keys(aaaSession).map(function (key) { return aaaSession[key]; })
-                   
-                   let sessionChosen  = undefined
-
-                   aaaSessionArray.map((item2)=> {
-                     
-                     if (item2.sessionTitle == item.aaaSession) {
-                         sessionChosen= item2
-                     }
-                   })
- */

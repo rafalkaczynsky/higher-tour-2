@@ -61,6 +61,32 @@ export const MyTransition = (index, position) => {
       };
   };
 
+  export const GotoWelcomeAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = 0
+
+      const translateY= position.interpolate({
+        inputRange,
+        outputRange: ([100, 0, 0, 0]),
+    });
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };
+  };
+
+
   export const LogoutAnimation = (index, position) => {
     const inputRange = [index - 1, index, index + 0.99, index + 1];
     

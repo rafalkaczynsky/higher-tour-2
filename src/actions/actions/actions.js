@@ -33,6 +33,13 @@ export function SAVE_SELECTED_EVENT(selectedEvent) {
     };
 }
 
+export function SAVE_SELECTED_CHURCH(selectedChurch) {
+    return {
+        type: types.SAVE_SELECTED_CHURCH,
+        selectedChurch: selectedChurch
+    };
+}
+
 export function SAVE_COORDS(coords) {
     return {
         type: types.SAVE_COORDS,
@@ -96,7 +103,7 @@ export function SAVE_CURRENT_READING_ITEM(currentBibleReading) {
     };
 }
 
-//SAVE_CURRENT_READING_ITEM_TITLE
+
 export function SAVE_CURRENT_READING_ITEM_TITLE(currentBibleReadingTitle) {
     return {
         type: types.SAVE_CURRENT_READING_ITEM_TITLE,

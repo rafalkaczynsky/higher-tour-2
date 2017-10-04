@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ActivityIndicator} from 'react-native'
+import {View, ActivityIndicator, Dimensions} from 'react-native'
 import { connect } from 'react-redux'
 import * as firebase from 'firebase'
 
@@ -7,6 +7,10 @@ import {TabMenu} from '../components'
 import {UserProfile} from '../windows' 
 import StyleSheet from '../styles'
 import * as ACTIONS from '../actions/actions/actions';
+
+const { width, height } = Dimensions.get('window');
+
+const ASPECT_RATIO = width / height;
 
 class _UserProfile extends Component {
 
@@ -62,13 +66,64 @@ class _UserProfile extends Component {
 
 
   componentWillMount(){
+    var events = this.props.events  // data from the store 
+    var churches = this.props.churches // data from the store
+    var crd = this.props.coords  // data from the store
+    
+    var geoLoc = {}
+  //----------------- map events ----------
+    events.map((item)=> {
+      geoLoc = {
+        latitude:  item.geoLoc.latitude,
+        longitude: item.geoLoc.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0922 * ASPECT_RATIO,
+      }
+  
+      let distance = geolib.getDistance(
+        crd,
+        geoLoc,
+      );
+    
+      distance = geolib.convertUnit('mi', distance, 1)
+      item.howFar = distance
+    })
+  // -------------- map churches ------------- 
+    churches.map((item)=> {
+  
+      geoLoc = {
+        latitude:  item.geoLoc.latitude,
+        longitude: item.geoLoc.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0922 * ASPECT_RATIO,
+      }
+  
+      let distance = geolib.getDistance(
+        crd,
+        geoLoc,
+      );
+    
+      distance = geolib.convertUnit('mi', distance, 1)
+      item.howFar = distance
+    })
+  
+    function compareDistance(a, b){
+      return a.howFar - b.howFar;
+    }
+    const z = churches.sort(compareDistance);
+    const x = events.sort(compareDistance);
+  
+    this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
+    this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
 
-    const userData = this.props.user                    // data from the store    
+   
+              
     this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
 
-    const eventSelected = this.props.eventSelected      // data from the store
+    const userData = this.props.user  
+    const eventSelected = this.props.eventSelected   
 
     // check if session ex in the session...
  
@@ -127,7 +182,10 @@ class _UserProfile extends Component {
 
   }
 
- 
+  componentDidMount(){
+    this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
+  }
+  
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
@@ -195,6 +253,8 @@ function mapStateToProps(state){
   return({
       user: state.user,
       events: state.events,
+      churches: state.churches,
+      coords: state.coords,
       app: state.app,
       eventSelected: state.eventSelected,
       sessions: state.sessions,

@@ -80,14 +80,8 @@ class _SessionItem extends Component {
     this.props.dispatch({type:'FindSessionAnimation'})
   }
 
-  handleOnSettings(navigate, from){
-    const { params } = this.props.navigation.state
-
-    if (params.cancelLabel){
-      navigate('Settings', { from: 'SessionItemBrown'})
-    } else {
-      navigate('Settings', { from: 'SessionItemYellow'})
-    }
+  handleOnSettings(){
+    this.props.dispatch({type: 'SettingsInAnimation'})
   }
 
   handleOnHome(navigate, locationSelected, from){
@@ -110,8 +104,21 @@ class _SessionItem extends Component {
     }
   }
 
+  handleOnHostPressed(navigate){
+    navigate('ChurchItem')
+  }
+
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
+  }
+
+  componentWillMount(){
+    const eventSelected  =this.props.eventSelected 
+    
+    firebase.database().ref('churches/'+eventSelected.host+'/').once("value", snapshot => {
+      const church = snapshot.val();
+      this.props.dispatch(ACTIONS.SAVE_SELECTED_CHURCH(church))
+    })
   }
 
   render() {
@@ -123,17 +130,19 @@ class _SessionItem extends Component {
     const activeTabName =this.props.app.activeTabName  // data from the store
     const eventSelected  =this.props.eventSelected     // data from the store
     const loginStatus  = this.props.app.loginStatus   //
+    const churchSelected = this.props.selectedChurch
 
     console.log('SessionItem Container')
-    console.log(params)
-    console.log(this.props)
+
     return (
         <SessionItem 
           onHome={()=> this.handleOnHome(navigate)}
-          onSettings={()=> this.handleOnSettings(navigate)}
+          onSettings={()=> this.handleOnSettings()}
           onBible={()=> this.handleOnBible(navigate)}
           myPosition={myPosition[0]}
           location={eventSelected}
+          churchSelected={churchSelected}
+          onHostPressed={()=> this.handleOnHostPressed(navigate)}
           cancelLabel= {loginStatus === 'loggedInPlus' ? true :false}
           onStopSession={()=> this.handleOnStopSession(navigate, 'FindSession')}
           onStartSession={(location)=> {this.handleOnStartSession(navigate, 'UserProfile', location)}
@@ -150,6 +159,7 @@ function mapStateToProps(state){
       events: state.events,
       app: state.app,
       eventSelected: state.eventSelected,
+      selectedChurch: state.selectedChurch,
 
   });
 }

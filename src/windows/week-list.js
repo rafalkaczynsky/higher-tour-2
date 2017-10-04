@@ -32,7 +32,7 @@ export default class WeekList extends Component {
 
   render() {
  
-    const {onWeekBackPressed, week} = this.props
+    const {onWeekBackPressed, week, onGoBack} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
@@ -65,8 +65,13 @@ export default class WeekList extends Component {
                     </Text>
                 </View>
             </View>
+            <Button 
+              type="default"
+              text={'GO HOME'}
+              onPress={onGoBack}
+              style={{flex: 1}}
+            />
         </View>
-
     </View>
 
     <TabMenu 

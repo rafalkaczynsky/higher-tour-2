@@ -29,7 +29,7 @@ export default class Respond extends Component {
 
   render() {
     console.log('Think Windeow')
-    const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
+    const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed, onGoBack} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
@@ -53,30 +53,36 @@ return (
 
       <View style={{padding: 20}}>
           <View>
-              <Text style={{ fontSize: 12, lineHeight: 18}}>Live it</Text>
+              <Text style={{ fontSize: 12, lineHeight: 18, fontWeight: 'bold'}}>Live it</Text>
           </View>
-          <View style={{marginTop: 30}}>
+          <View style={{marginTop: 15, marginBottom: 25}}>
               <Text style={{ fontSize: 12, lineHeight: 18}}>
                   {itemDay.Respond[ 'Live It' ]}
               </Text>
           </View>
           <View>
-              <Text style={{ fontSize: 12, lineHeight: 18}}>Pray</Text>
+              <Text style={{ fontSize: 12, lineHeight: 18, fontWeight: 'bold'}}>Pray</Text>
           </View>
-          <View style={{marginTop: 30}}>
+          <View style={{marginTop: 15, marginBottom: 25}}>
               <Text style={{ fontSize: 12, lineHeight: 18}}>
                   {itemDay.Respond.Pray}
               </Text>
           </View>
           <View>
-              <Text style={{ fontSize: 12, lineHeight: 18}}>Repeat</Text>
+              <Text style={{ fontSize: 12, lineHeight: 18,fontWeight: 'bold'}}>Repeat</Text>
           </View>
-          <View style={{marginTop: 30}}>
+          <View style={{marginTop: 15, marginBottom: 25}}>
               <Text style={{ fontSize: 12, lineHeight: 18}}>
                   {itemDay.Respond.Repeat}
               </Text>
           </View>
       </View>
+      <Button 
+        type="default"
+        text={'GO HOME'}
+        onPress={onGoBack}
+        style={{flex: 1}}
+      />
   </View>
 
 </View>

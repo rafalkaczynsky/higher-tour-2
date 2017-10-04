@@ -169,7 +169,7 @@ export default class App extends React.Component {
         }
     render(){
         if(this.state.isStoreLoading){
-          return <Text>Loading Store ...</Text>
+          return <Text> </Text>
         }else{
           return (
             <Provider store={this.state.store}>

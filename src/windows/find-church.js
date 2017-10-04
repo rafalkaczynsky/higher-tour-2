@@ -17,10 +17,10 @@ export default class FindChurch extends React.Component {
   constructor(props) {
     super(props);
 
-    const {locations} = this.props
+    const {churches} = this.props
     const coordinatesArray = []
 
-    locations.map((item)=> {
+    churches.map((item)=> {
       const coordinate = {
         latitude: item.geoLoc.latitude,
         longitude: item.geoLoc.longitude 
@@ -50,15 +50,12 @@ export default class FindChurch extends React.Component {
   }
   
   componentDidMount(){
-    this.setState({didMount: true, locations: this.props.locations, churches: this.props.churches})
+    this.setState({didMount: true, churches: this.props.churches})
   }
 
     render(){
       console.log('FindChurch Window')
-      const {locations, onAlphabetical, onClosest, buttonsStyle, churches} = this.props
-
-      console.log(this.state)
-      console.log(this.props.churches)
+      const {onAlphabetical, onClosest, buttonsStyle, churches} = this.props
       return(
       <View style={StyleSheet.window.default}>
         <Header 
@@ -90,7 +87,7 @@ export default class FindChurch extends React.Component {
                       longitudeDelta: 0.0922 * ASPECT_RATIO,
                     }
                   }
-                onCalloutPress={()=>this.props.onItem(item, this.state.locations)}
+                onCalloutPress={()=> this.onItem(item, this.state.churches)}
               />)}
              </MapView>
             </View>
@@ -115,13 +112,13 @@ export default class FindChurch extends React.Component {
             <ScrollView style={{width: '100%'}}>
             {this.state.didMount && this.state.churches.map((item, indx)=> 
               <TouchableOpacity 
-                 onPress={()=>this.props.onItem(item, this.state.locations)}
+                 onPress={()=>this.props.onItem(item)}
                  key={'ListItemKey-'+indx}
               >
                 <ListItem 
                   title={item.name}
                   label={item.howFar + ' miles' + ' - ' + item.meetingDay + ' ' + item.meetingTime}
-                 
+                  handleIconPressed={()=>this.props.onItem(item)}
                 />
               </TouchableOpacity>
               )}

@@ -54,7 +54,7 @@ export default class FindSession extends React.Component {
 
     render(){
       console.log('FindSession Window')
-      const {locations, onAlphabetical, onClosest, buttonsStyle} = this.props
+      const {locations, onAlphabetical, onClosest, buttonsStyle, onMoreChurches} = this.props
 
       console.log(this.state)
       return(
@@ -124,6 +124,13 @@ export default class FindSession extends React.Component {
                 />
               </TouchableOpacity>
               )}
+              <ListItem
+                title="See more churches"
+                bgColor={colors.grey3}
+                borderBold
+                handleIconPressed={this.props.onMoreChurches}
+                
+              />
             </ScrollView>
             
         </View>

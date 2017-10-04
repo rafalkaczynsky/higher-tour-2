@@ -60,8 +60,7 @@ componentWillMount(){
 }
 
 componentDidMount(){
-  const { params } = this.props.navigation.state
-
+  
   var events = this.props.events  // data from the store 
   var churches = this.props.churches // data from the store
   var crd = this.props.coords  // data from the store

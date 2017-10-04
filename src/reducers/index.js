@@ -2,23 +2,24 @@ import {combineReducers} from 'redux'
 import {reducer as formReducer} from 'redux-form'
 
 // Reducers
-import userReducer from './userReducer';
-import eventsReducer from './eventsReducer';
-import churchesReducer from './churchesReducer';
-import coordsReducer from './coordsReducer';
-import appReducer from './appReducer';
-import selectedEventReducer from './selectedEventReducer';
-import sessionsReducer from './sessionsReducer';
-import bibleReadingReducer from './bibleReadingReducer';
+import userReducer from './userReducer'
+import eventsReducer from './eventsReducer'
+import churchesReducer from './churchesReducer'
+import coordsReducer from './coordsReducer'
+import appReducer from './appReducer'
+import selectedEventReducer from './selectedEventReducer'
+import selectedChurchReducer from './selectedChurchReducer'
+import sessionsReducer from './sessionsReducer'
+import bibleReadingReducer from './bibleReadingReducer'
 import currentBibleReadingReducer from './currentBibleReadingReducer'
 import aaaSessionReducer from './aaaSessionReducer'
 import bibleReadingNamesReducer from './bibleReadingNamesReducer'
 import appUserBibleReadingReducer from './appUserBibleReadingReducer'
 import appUserBibleReadingNamesReducer from './appUserBibleReadingNamesReducer'
 
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation'
 
-import { AppNavigator } from '../screens';
+import { AppNavigator } from '../screens'
 
 // Start with two routes: The Main screen, with the Login screen on top.
 const firstAction = AppNavigator.router.getActionForPathAndParams('SignIn');
@@ -256,6 +257,18 @@ function nav(state = initialNavState, action) {
       );
       break;
 
+      case 'GotoWelcomeAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'Welcome',
+          params: {
+            transition: 'GotoWelcomeAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
     default:
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;
@@ -297,4 +310,5 @@ export const reducers = combineReducers({
     bibleReadingNames: bibleReadingNamesReducer,
     appUserBibleReading: appUserBibleReadingReducer,
     appUserBibleReadingNames: appUserBibleReadingNamesReducer,
+    selectedChurch: selectedChurchReducer,
 })

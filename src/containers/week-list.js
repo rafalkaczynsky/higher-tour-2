@@ -38,8 +38,8 @@ handleHome(navigate){
     }
 }
 
-componentDidMount(){
-
+handleOnGoBack(navigate){
+  navigate('UserProfile')
 }
 
   render() {
@@ -55,6 +55,7 @@ componentDidMount(){
           onHome={()=> this.handleHome(navigate)}
           onWeekBackPressed={()=> this.props.dispatch({ type: 'GoToUserProfileLeftToRightAnimation' })}
           week={this.props.app.week}
+          onGoBack={()=> this.handleOnGoBack(navigate)}
           activeTabName={''}
         />
     )

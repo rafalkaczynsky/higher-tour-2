@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput, Dimensions, TouchableOpacity} from 'react-native'
+import {ScrollView, View, Text, TextInput, Dimensions, TouchableOpacity, Linking} from 'react-native'
 import MapView from 'react-native-maps'
 
 import StyleSheet from '../styles'
@@ -11,14 +11,14 @@ const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 
-export default class SessionItem extends React.Component {
+export default class ChurchItem extends React.Component {
     constructor(props) {
         super(props);
     
         this.state = {
           region: {
-            latitude: this.props.location.geoLoc.latitude,
-            longitude: this.props.location.geoLoc.longitude,
+            latitude: this.props.church.geoLoc.latitude,
+            longitude: this.props.church.geoLoc.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0922 * ASPECT_RATIO,        
           },
@@ -30,8 +30,8 @@ export default class SessionItem extends React.Component {
     componentWillMount(){
         this.setState({
             region:{
-                latitude: this.props.location.geoLoc.latitude,
-                longitude: this.props.location.geoLoc.longitude,
+                latitude: this.props.church.geoLoc.latitude,
+                longitude: this.props.church.geoLoc.longitude,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0922 * ASPECT_RATIO,        
             },
@@ -48,18 +48,18 @@ export default class SessionItem extends React.Component {
     
     render(){
 
-    const {onSettings, location, onStartSession, cancelLabel, onStopSession, onHome, onBible, churchSelected, onHostPressed} = this.props
+    const {onSettings,  onHome, onBible, onGoToWebsite, onGoBack, church, loginStatus} = this.props
 
     const coordinate = {
-        latitude: location.geoLoc.latitude,
-        longitude: location.geoLoc.longitude 
+        latitude: church.geoLoc.latitude,
+        longitude: church.geoLoc.longitude 
     }
 
     return(
 
       <View style={StyleSheet.window.default}>
         <Header 
-          text={location.name}
+          text={church.name}
           simple
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
@@ -97,10 +97,17 @@ export default class SessionItem extends React.Component {
 
                 <Button 
                     type="default"
-                    text={cancelLabel ? "Stop Session" : 'Start session'}
-                    bgColor={cancelLabel ? "brown" : null}
-                    textColor={cancelLabel ? "white" : null}
-                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
+                    text={'GO TO WEBSITE'}
+                    onPress={()=> {
+	                    const url = church.website;
+	                    Linking.canOpenURL(url)
+		                .then((supported) => {
+			                if (supported) {
+				                return Linking.openURL(url)
+					            .catch(() => null);
+		                    }
+		                });
+                    }}
                     style={{flex: 1}}
                 />
                 <View style={{margin: 10}}>
@@ -108,46 +115,41 @@ export default class SessionItem extends React.Component {
                         Location
                     </Text>
                     <Text>
-                        {location.address.firstLane}
+                        {church.address.firstLane}
                     </Text>
                     <Text>
-                        {location.address.city} {location.address.postCode}
+                        {church.address.city} {church.address.postCode}
                     </Text>
                 </View>
 
                 <View style={{margin: 10}}>
                     <Text style={{fontWeight: 'bold'}}>
-                        Contact:  <Text style={{fontWeight: 'normal'}}>{location.contact}</Text>
+                        Contact:  <Text style={{fontWeight: 'normal'}}>{church.contact}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
-                        Telephone:  <Text style={{fontWeight: 'normal'}}>{location.telephone}</Text>
+                        Telephone:  <Text style={{fontWeight: 'normal'}}>{church.telephone}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
-                        Email:  <Text style={{fontWeight: 'normal'}}>{location.email}</Text>
+                        Email:  <Text style={{fontWeight: 'normal'}}>{church.email}</Text>
                     </Text>
                     <Text style={{fontWeight: 'bold'}}>
-                        Website:  <Text style={{fontWeight: 'normal'}}>{location.website}</Text>
+                        Website:  <Text style={{fontWeight: 'normal'}}>{church.website}</Text>
                     </Text>
                 </View>
 
                 <View style={{margin: 10}}>
-                    <TouchableOpacity onPress={onHostPressed}>
-                        <Text style={{fontWeight: 'bold'}}>
-                            Host:  <Text style={{fontWeight: 'normal'}}>{location.name}</Text>
-                        </Text>
-                    </TouchableOpacity>
                     <Text style={{fontWeight: 'bold'}}>
-                        Next session:  <Text style={{fontWeight: 'normal'}}>{location.nextSession}</Text>
+                        Host:  <Text style={{fontWeight: 'normal'}}>{church.name}</Text>
                     </Text>
-                
+                    <Text style={{fontWeight: 'bold'}}>
+                        Next session:  <Text style={{fontWeight: 'normal'}}>{church.nextSession}</Text>
+                    </Text>
                 </View>
 
                 <Button 
                     type="default"
-                    text={cancelLabel ? "Stop Session" : 'Start session'}
-                    bgColor={cancelLabel ? "brown" : null}
-                    textColor={cancelLabel ? "white" : null}
-                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
+                    text={loginStatus === 'loggedInPlus' ? 'GO BACK' : 'SEE MORE CHURCHES'}
+                    onPress={onGoBack}
                     style={{flex: 1}}
                 />
                 </View>

@@ -60,8 +60,6 @@ class _Settings extends Component {
     }else if (params.from === 'SessionItemYellow'){ 
         navigate('FindSession')
       }else if (params.from === 'SessionItemBrown'){ 
-        console.log('From SessionItem Brown')
-        console.log(params)
 
         navigate('UserProfile')
       } else if (params.from === 'UserProfile'){
@@ -79,7 +77,7 @@ class _Settings extends Component {
         navigate('FindSession')
       } else { 
         console.log('From Welcome')
-        navigate('Welcome')
+        navigate('Welcome') 
       }
     }  
 
