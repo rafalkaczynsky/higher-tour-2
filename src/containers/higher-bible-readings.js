@@ -26,7 +26,8 @@ class _HigherBibleReadings extends Component {
         ],
         currentScreen: 'list', //  or 'item', 'dayItem',
         chosenItem: null,
-        chosenDayItem: false
+        chosenDayItem: false,
+        showAll: true,
     }
   }
 
@@ -57,6 +58,52 @@ class _HigherBibleReadings extends Component {
             bgColor: 'transparent',
           }
         ]
+      })
+  }
+
+  handleOnNew(){
+    this.setState({
+        showAll: false,
+        buttonsStyle: [
+          {
+            textColor: 'white',
+            bgColor: 'brown',           
+          },
+          {
+            textColor: 'brown',
+            bgColor: 'transparent',
+          }]
+        })
+  }
+
+  handleOnAll(){
+    this.setState({
+        showAll: true,
+        buttonsStyle: [
+          {
+            textColor: 'brown',
+            bgColor: 'transparent',
+          },
+          {
+            textColor: 'white',
+            bgColor: 'brown',           
+          }]
+      })
+  }
+
+
+  handleOnAvailable(){
+    this.setState({
+      showAll: false,
+      buttonsStyle: [
+        {
+          textColor: 'white',
+          bgColor: 'brown',           
+        },
+        {
+          textColor: 'brown',
+          bgColor: 'transparent',
+        }]
       })
   }
 
@@ -117,7 +164,20 @@ class _HigherBibleReadings extends Component {
 
   
   componentWillMount(){
-    const loginStatus = this.props.app.loginStatus      // data from the store
+    const loginStatus = this.props.app.loginStatus                            // data from the store
+    const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle  // data from the store
+    const userData = this.props.user                                          // data from the store
+    const screenStatus = this.props.app.bibleReadingScreenStatus              // data from the store
+
+
+  if (screenStatus === 'item'){
+    firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
+      const bibleReading = snapshot.val();
+      const lastReadDayNumber = bibleReading.lastReadDayNumber
+      this.props.dispatch(ACTIONS.SAVE_CURRENT_LAST_READ_DAY_NUMBER(lastReadDayNumber))
+    })
+  }
+
   }
   
 
@@ -160,6 +220,9 @@ class _HigherBibleReadings extends Component {
           locations={locations}
           onCompleted={()=> this.handleOnCompleted()}
           onNew={()=> this.handleOnNew()}
+          onAll={()=> this.handleOnAll()}
+          onAvailable={()=> this.handleOnAvailable()}
+          showAll={this.state.showAll}
           onItemBackPressed={()=> this.handleonItemBackPressed()}
           lastReadDayNumber={this.props.app.lastReadDayNumber}
           currentScreen={bibleReadingScreenStatus}

@@ -49,20 +49,28 @@ componentDidMount(){
   
   if (loginStatus!=='loggedOut') {
 
-    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');
-    
+    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');    
       firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
         const bibleReading = snapshot.val();
-        const progress = currentBibleReading.length / 
-        console.log(bibleReading.lastReadDayNumber + '<' + currentReadingDayNumber )
-        
-        if (bibleReading.lastReadDayNumber < currentReadingDayNumber ) {
+
+        if (bibleReading !== null){
+          console.log(bibleReading.lastReadDayNumber + '<' + currentReadingDayNumber )
+          
+          if (bibleReading.lastReadDayNumber < currentReadingDayNumber ) {
+            firebaseDataAppUsers.update({
+              lastReadTimeStamp: new Date().getTime(),
+              lastReadDayNumber : currentReadingDayNumber,
+              progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+            })
+          }  
+        } else {
           firebaseDataAppUsers.update({
             lastReadTimeStamp: new Date().getTime(),
             lastReadDayNumber : currentReadingDayNumber,
             progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
           })
-        }   
+        }
+ 
       })
   }
 

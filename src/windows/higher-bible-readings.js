@@ -14,7 +14,6 @@ class HigherBibleReadings extends React.Component {
     super(props)
 
     this.state = {
-      lastReadDayNumber: undefined, 
       isMounted: false,
     }
   }
@@ -31,7 +30,22 @@ class HigherBibleReadings extends React.Component {
   }
     render(){
       console.log('Higher Bible Readings Window')
-      const {locations, onItemBackPressed, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
+      const {
+        locations, 
+        onItemBackPressed, 
+        onCompleted, 
+        onNew, 
+        onItem, 
+        buttonsStyle, 
+        readings, 
+        currentScreen, 
+        chosenItem, 
+        onDayItem,
+        showAll,
+        onAll,
+        onAvailable,
+      } = this.props
+
       console.log(readings)
       const userData = this.props.user                // data from the store
       const currentDayContent = this.props.app.currentDayContent              // data from the store
@@ -51,19 +65,19 @@ class HigherBibleReadings extends React.Component {
             <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Button 
                   type="default"
-                  text={chosenItem ? 'Ascending' : 'New'}
+                  text={chosenItem ? 'All' : 'New'}
                   bgColor={buttonsStyle[1].bgColor}  
                   textColor={buttonsStyle[1].textColor}
                   buttonStyle={{margin: 10 , marginRight: 0, width:'40%', height: 30}}
-                  onPress={onNew}
+                  onPress={onAll}
                 /> 
                 <Button 
                   type="default"
-                  text={chosenItem ? 'Descending' : 'Completed'}
+                  text={chosenItem ? 'Available' : 'Completed'}
                   bgColor={buttonsStyle[0].bgColor}  
                   textColor={buttonsStyle[0].textColor}
                   buttonStyle={{margin: 10, marginLeft: 0, width: '40%', height: 30}}
-                  onPress={onCompleted}
+                  onPress={onAvailable}
                 /> 
             </View>
 
@@ -78,19 +92,36 @@ class HigherBibleReadings extends React.Component {
         />
       )}
 
-      {this.state.isMounted && currentScreen === 'item' &&  chosenItem && chosenItem.map((item, indx) => 
-      {
-        if (indx > 0)
-        return (
-          <ListItem 
-          key={'ListItemReadingsKey-'+indx}
-          title={'Day ' + (indx)}         
-          label={item.Read.Verse + ' available'}
-          imageUrl={item.Read.Image}
-          handleIconPressed ={()=>onDayItem(item, (indx))}
-        />
-        )
-      })}
+     {this.state.isMounted && currentScreen === 'item' && showAll && chosenItem && chosenItem.map((item, indx) => 
+     { 
+       if (indx > 0) 
+         return (
+           <ListItem 
+             key={'ListItemReadingsKey-'+indx}
+             title={'Day ' + (indx)}               
+             label={indx -1 <= lastReadDayNumber ? item.Read.Verse + ' available' : 'unavailable'}
+             imageUrl={item.Read.Image}
+             handleIconPressed ={indx -1 <= lastReadDayNumber ? ()=> onDayItem(item, (indx)) : null}
+           />
+         )
+     })    
+   }
+
+   {this.state.isMounted && currentScreen === 'item' && !showAll && chosenItem && chosenItem.map((item, indx) => 
+     { 
+       if ((indx > 0) && (indx -1 <= lastReadDayNumber))  
+         return (
+           <ListItem 
+             key={'ListItemReadingsKey-'+indx}
+             title={'Day ' + (indx)}               
+             label={item.Read.Verse + ' available'}
+             imageUrl={item.Read.Image}
+             handleIconPressed ={indx -1 <= lastReadDayNumber ? ()=> onDayItem(item, (indx)) : null}
+           />
+          )
+       }
+     )    
+   }
             </ScrollView>
             
         </View>

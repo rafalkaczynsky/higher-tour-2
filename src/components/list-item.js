@@ -20,8 +20,6 @@ export default class ListItem extends Component {
       <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, {opacity: opacity}]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
-
-{/* with imageName option*/}
        {imageName || imageUrl && (
             <View style={[StyleSheet.listItem.itemDetails]}>
              {imageName && <Image source={StyleSheet.images[imageName]} style={{width: 60, height: 60, marginRight: 15}} />}
@@ -34,8 +32,7 @@ export default class ListItem extends Component {
               <View style={StyleSheet.listItem.progressBarContainer}>
                 <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
               </View>}
-            </View>
-            
+            </View> 
        )}
 
        {!imageName && !imageUrl && (

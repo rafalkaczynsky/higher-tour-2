@@ -105,7 +105,7 @@ class _FindSession extends Component {
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           churchName={churchName}
-          onMoreChurches={()=> this.props.dispatch({type: 'FindSessionAnimation'})}
+          onMoreChurches={()=> this.props.dispatch({type: 'FindChurchesAnimation'})}
           onAlphabetical={()=> this.handleOnAlphabetical(locations)}
           onClosest={()=> this.handleOnClosest(locations)}
           activeTabName={activeTabName}

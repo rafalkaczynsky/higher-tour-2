@@ -36,14 +36,12 @@ class _UserProfile extends Component {
     })
   }
 
-  handleOnBible(navigate){
+  handleOnBible(){
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
     this.props.dispatch({ type: 'BibleAnimation' }) 
   }
 
   handleReadingItemPressed(bibleReadingTitle){
-    console.log('On Item clicked')
-    const { navigate } = this.props.navigation
     const bibleReading = this.props.bibleReading
     const bibleReadingNames = this.props.bibleReadingNames
 
@@ -133,7 +131,7 @@ class _UserProfile extends Component {
         const sessionArray = Object.keys(session).map(function (key) { return session[key]; })
  
         var TheDate = new Date().getTime();
-        var TheDateFormatted = 'dd'//TheDate.substring(5,7)+'/'+TheDate.substring(8,10)+'/'+TheDate.substring(0,4);
+        var TheDateFormatted = 'dd'
 
         console.log(TheDate)
       
@@ -141,8 +139,7 @@ class _UserProfile extends Component {
         sessionArray.map((item, index)=>{
             let sessionDate = item.UTCTime
             if (( Date.parse(sessionDate) > TheDate ) && (sessionsAvailable.length <= 2)) {
-              //const sessionDateFormatted = sessionDate.substring(5,7)+'/'+sessionDate.substring(8,10)+'/'+sessionDate.substring(0,4)
-              //console.log(sessionDateFormatted)
+
               sessionsAvailable.push(item)
             }
         })
@@ -219,7 +216,7 @@ class _UserProfile extends Component {
         appUserBibleReading = {appUserBibleReading}
         appUserBibleReadingNames = {appUserBibleReadingNames}
         lastReadDayNumber={lastReadDayNumber}
-        onSeeAllReadings={()=> this.props.dispatch({ type: 'BibleAnimation' }) }
+        onSeeAllReadings={()=> this.handleOnBible()}
         sessions={sessions}
         bibleReading={bibleReading}
         bibleReadingNames={bibleReadingNames}
