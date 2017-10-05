@@ -47,28 +47,24 @@ export default class Settings extends Component {
             </View>
             <View style={StyleSheet.settings.buttonGroup}>
                 <Title 
-                    text="Notifications"  
+                    text="Informations"  
                     textColor="brown"
                     textStyle={{fontSize: 18}}  
                 />
+
                 <Button 
                     type="settings"
-                    text={this.props.buttonText.notificationsOn}
-                    onPress={this.props.onNotifications}
+                    text={'Terms and Conditions'}
+                    onPress={()=> alert('About clicked!')}
+                /> 
+            </View>
+            <View style={StyleSheet.settings.buttonGroup}>
+                <Button 
+                    type="settings"
+                    text={'About'}
+                    onPress={()=> alert('About clicked!')}
                 /> 
             </View>           
-            <View style={StyleSheet.settings.buttonGroup}>
-                <Title 
-                    text="Location services"  
-                    textColor="brown"
-                    textStyle={{fontSize: 18}}  
-                />
-                <Button 
-                    type="settings"
-                    text={this.props.buttonText.locationOn}
-                    onPress={this.props.onLocation}
-                /> 
-            </View>   
             <Text style={StyleSheet.settings.text}>
                 Higher App version 2.0
             </Text>  

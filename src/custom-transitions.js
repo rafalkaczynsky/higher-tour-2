@@ -29,10 +29,7 @@ export const WelcomeAnimation = (index, position) => {
 
 // deafault
 export const MyTransition = (index, position) => {
-
-  
     return {
- 
     };
   };
   
@@ -195,7 +192,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -219,7 +216,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -243,7 +240,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -267,7 +264,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([100, 0, 0, 0]),
+        outputRange: ([-100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -291,7 +288,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([100, 0, 0, 0]),
+        outputRange: ([-100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -315,7 +312,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([100, 0, 0, 0]),
+        outputRange: ([-100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -341,7 +338,7 @@ export const MyTransition = (index, position) => {
 
       const translateX= position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
     
       return {
@@ -364,7 +361,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -388,7 +385,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -413,7 +410,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -437,7 +434,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -461,7 +458,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -485,7 +482,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -509,7 +506,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
