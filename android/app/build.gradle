@@ -134,7 +134,6 @@ android {
 }
 
 dependencies {
-
     compile project(':react-native-fcm')
     compile project(':react-native-twitter')
     compile project(':react-native-twitter-signin')

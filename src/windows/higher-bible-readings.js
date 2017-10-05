@@ -100,6 +100,7 @@ class HigherBibleReadings extends React.Component {
              key={'ListItemReadingsKey-'+indx}
              title={'Day ' + (indx)}               
              label={indx -1 <= lastReadDayNumber ? item.Read.Verse + ' available' : 'unavailable'}
+             opacity={ indx -1 <= lastReadDayNumber ? 1 : 0.6}
              imageUrl={item.Read.Image}
              handleIconPressed ={indx -1 <= lastReadDayNumber ? ()=> onDayItem(item, (indx)) : null}
            />

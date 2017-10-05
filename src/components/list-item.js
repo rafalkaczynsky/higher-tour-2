@@ -17,11 +17,11 @@ export default class ListItem extends Component {
 
     const image = StyleSheet.icons[imageName]
     return (
-      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, {opacity: opacity}]}>
+      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
        {imageName || imageUrl && (
-            <View style={[StyleSheet.listItem.itemDetails]}>
+            <View style={[StyleSheet.listItem.itemDetails,{opacity: opacity}]}>
              {imageName && <Image source={StyleSheet.images[imageName]} style={{width: 60, height: 60, marginRight: 15}} />}
              {imageUrl && <Image source={{uri: imageUrl}} style={{width: 60, height: 60, marginRight: 15}} />}
               <View>

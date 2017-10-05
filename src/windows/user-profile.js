@@ -104,8 +104,6 @@ class UserProfile extends React.Component {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)                                 
                    const aaaSessionItem = item.aaaSession
-                 //find object where  sessionTitle = item.session and pass it to onWeek
-  
 
                    if (index === 0)
                     return(
