@@ -18,7 +18,8 @@ class _Think extends Component {
   }
 
 handleOnBible(navigate, from){
-  navigate('HigherBibleReadings', {from: from})
+  this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  this.props.dispatch({ type: 'BibleAnimation' }) 
 }
 
 handleOnSettings(navigate, route){
@@ -30,13 +31,13 @@ handleOnSettings(navigate, route){
 
 handleHome(navigate){
   const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-    navigate('SignIn')
-  } else if (loginStatus === 'loggedIn'){
-      navigate('Welcome')
-    } else {
-        navigate('UserProfile')
+  
+      if (loginStatus && loginStatus === 'loggedOut') {
+        this.props.dispatch({type: 'SignInOnHomeAnimation'})
+      } else if (loginStatus && loginStatus === 'loggedInPlus') {
+        this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+      } else { 
+        this.props.dispatch({type: 'GotoWelcomeAnimation'})
       }
 }
 

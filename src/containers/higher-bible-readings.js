@@ -104,19 +104,15 @@ class _HigherBibleReadings extends Component {
 
 
   handleOnHome(){
-    const { navigate } = this.props.navigation
-    const { params } = this.props.navigation.state
-
-    const events = this.props.events                // data from the store 
-    const userData = this.props.user                // data from the store
     const loginStatus = this.props.app.loginStatus  // data from the store
 
     if (loginStatus && loginStatus === 'loggedOut') {
-      this.props.dispatch({ type: 'SignInAfterSettingsAnimation' })
-      //navigate('SignIn')
+      this.props.dispatch({type: 'SignInOnHomeAnimation'})
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      this.props.dispatch({ type: 'UserProfileAfterSettingsAnimation' }) 
-    } else { navigate('FindSession')}
+      this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+    } else { 
+      this.props.dispatch({type: 'GotoWelcomeAnimation'})
+    }
   }
 
   

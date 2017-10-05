@@ -30,65 +30,33 @@ class _Settings extends Component {
     const loginStatus = this.props.app.loginStatus  // data from the store
 
     if (loginStatus === 'loggedOut') {
-     // navigate('SignIn')//LogoutAnimation
       this.props.dispatch({ type: 'LogoutAnimation' }) 
     } else {
-      //UPDATE_LOGGIN_STATUS
       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
       _Firebase.logout(this.props.dispatch({ type: 'LogoutAnimation' }) , route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
     }  
   }
 
   handleOnHome(){
-    const { navigate } = this.props.navigation
-    const { params } = this.props.navigation.state
 
-    const locations = this.props.events             // data from the store
-    const userData = this.props.user                // data from the store
-    const coords = this.props.coords                // data from the store
-    const churches = this.props.churches            // data from the store
     const loginStatus = this.props.app.loginStatus  // data from the store
+    
+        if (loginStatus && loginStatus === 'loggedOut') {
+          this.props.dispatch({type: 'SignInOnHomeAnimation'})
+        } else if (loginStatus && loginStatus === 'loggedInPlus') {
+          this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+        } else { 
+          this.props.dispatch({type: 'GotoWelcomeAnimation'})
+        }
 
- 
-    if (loginStatus === 'loggedOut') {
-      console.log('From SignIn')
-      //navigate('SignIn')//SignInAfterSettingsAnimation
-      this.props.dispatch({ type: 'SignInAfterSettingsAnimation' }) 
-    } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      this.props.dispatch({ type: 'UserProfileAfterSettingsAnimation' }) 
-      //navigate('UserProfile')
-    }else if (params.from === 'SessionItemYellow'){ 
-        navigate('FindSession')
-      }else if (params.from === 'SessionItemBrown'){ 
-
-        navigate('UserProfile')
-      } else if (params.from === 'UserProfile'){
-
-        navigate('UserProfile')
-      } else if (params.from === 'FindSession'){
-        console.log('From FindSession')
-        console.log(params)
-        navigate('FindSession')
-      }
-      else if (params.from === 'HigherBibleReadings'){
-        // =========== TO BE CHECKED ==============
-        console.log('From HigherBibleReadings')
-        console.log(params)
-        navigate('FindSession')
-      } else { 
-        console.log('From Welcome')
-        navigate('Welcome') 
-      }
     }  
 
     handleOnBible(navigate, route){
-      const { params } = this.props.navigation.state
-      const loginStatus = this.props.app.loginStatus  // data from the store
-
+      this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
       this.props.dispatch({ type: 'BibleAnimation' }) 
   } 
   
-//HigherBibleReadings
+
   componentDidMount(){
     const { params } = this.props.navigation.state
     const loginStatus = this.props.app.loginStatus  // data from the store

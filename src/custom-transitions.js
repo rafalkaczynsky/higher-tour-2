@@ -86,7 +86,6 @@ export const MyTransition = (index, position) => {
       };
   };
 
-
   export const LogoutAnimation = (index, position) => {
     const inputRange = [index - 1, index, index + 0.99, index + 1];
     
@@ -330,6 +329,31 @@ export const MyTransition = (index, position) => {
       };;
   };
 
+  export const GotoChurchItemAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateY = 0
+
+      const translateX= position.interpolate({
+        inputRange,
+        outputRange: ([-100, 0, 0, 0]),
+    });
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };
+  };
+
   export const GoToUserProfileLeftToRightAnimation = (index, position) => {
     const inputRange = [index - 1, index, index + 0.99, index + 1];
     
@@ -451,6 +475,30 @@ export const MyTransition = (index, position) => {
       };
   };
 
+  export const FindChurchesAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([-100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };
+  };
+
   export const UserProfileOnStartSessionAnimation = (index, position) => {
     const inputRange = [index - 1, index, index + 0.99, index + 1];
     
@@ -475,3 +523,52 @@ export const MyTransition = (index, position) => {
       };
   };
 
+  export const UserProfileOnHomeAnimation   = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = 0
+
+      const translateY= position.interpolate({
+        inputRange,
+        outputRange: ([100, 0, 0, 0]),
+    });
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };
+  };
+
+  export const SignInOnHomeAnimation   = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = 0
+
+      const translateY= position.interpolate({
+        inputRange,
+        outputRange: ([100, 0, 0, 0]),
+    });
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };
+  };

@@ -18,28 +18,27 @@ class _WeekList extends Component {
 handleOnBible(navigate, from){
   this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
   this.props.dispatch({ type: 'BibleAnimation' }) 
-  //navigate('HigherBibleReadings', {from: from})
+
 }
 
 handleOnSettings(navigate){
   this.props.dispatch( {type: 'SettingsInAnimation'})  
-  //navigate('Settings')
 }
 
 handleHome(navigate){
   const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-    navigate('SignIn')
-  } else if (loginStatus === 'loggedIn'){
-      navigate('Welcome')
-    } else {
-        navigate('UserProfile')
-    }
+  
+  if (loginStatus && loginStatus === 'loggedOut') {
+    this.props.dispatch({type: 'SignInOnHomeAnimation'})
+  } else if (loginStatus && loginStatus === 'loggedInPlus') {
+    this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+  } else { 
+    this.props.dispatch({type: 'GotoWelcomeAnimation'})
+  }
 }
 
-handleOnGoBack(navigate){
-  navigate('UserProfile')
+handleOnGoBack(){
+  this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})
 }
 
   render() {
@@ -51,11 +50,11 @@ handleOnGoBack(navigate){
 
     return (
         <WeekList 
-          onSettings={()=> this.handleOnSettings(navigate)}
-          onHome={()=> this.handleHome(navigate)}
-          onWeekBackPressed={()=> this.props.dispatch({ type: 'GoToUserProfileLeftToRightAnimation' })}
+          onSettings={()=> this.handleOnSettings()}
+          onHome={()=> this.handleHome()}
+          onWeekBackPressed={()=> this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})}
           week={this.props.app.week}
-          onGoBack={()=> this.handleOnGoBack(navigate)}
+          onGoBack={()=> this.handleOnGoBack()}
           activeTabName={''}
         />
     )

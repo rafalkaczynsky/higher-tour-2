@@ -21,30 +21,28 @@ class _Welcome extends Component {
     
   }
 
-  handleOnItem(navigate, locationSelected, cancelLabel){
+  handleOnItem(locationSelected){
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-    navigate('SessionItem', {cancelLabel: cancelLabel})
-
+    this.props.dispatch({type: 'SessionItemAnimation'})
   }
 
 
-handleOnBible(navigate, from){
+handleOnBible(){
   this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-  //this.props.dispatch( {type: 'SettingsInAnimation'})
   this.props.dispatch({ type: 'BibleAnimation' }) 
-  //navigate('HigherBibleReadings', {from: from})
+
 }
 
-handleOnMoreSession(navigate, route){
-  navigate(route)
+handleOnMoreSession(){
+  this.props.dispatch({type: 'FindSessionAnimation'})
 }
 
-handleOnSettings(navigate, route, from){
-  navigate(route, {from: from})
+handleOnSettings(){
+  this.props.dispatch( {type: 'SettingsInAnimation'})
 }
 
-handleOnFindChurch(navigate, route){
-  navigate(route)
+handleOnFindChurch(){
+  this.props.dispatch({type: 'FindChurchesAnimation'})
 }
 
 componentWillMount(){
@@ -139,12 +137,12 @@ componentDidMount(){
 
     return (
         <Welcome 
-          onSettings={()=> this.handleOnSettings(navigate, 'Settings', 'Settings')}
-          onBible={() =>  this.handleOnBible(navigate,'Settings', 'Bible')}
+          onSettings={()=> this.handleOnSettings()}
+          onBible={() =>  this.handleOnBible()}
           userData={userData}
-          onMoreSession={()=> this.handleOnMoreSession(navigate, 'FindSession')}
-          onChurchPressed={(locationSelected)=> this.handleOnItem(navigate, locationSelected, false)}
-          onFindChurch={()=> this.handleOnFindChurch(navigate, 'FindChurch')}
+          onMoreSession={()=> this.handleOnMoreSession()}
+          onChurchPressed={(locationSelected)=> this.handleOnItem(locationSelected)}
+          onFindChurch={()=> this.handleOnFindChurch()}
           coords={coords}
           activeTabName={activeTabName}
           locations={locations}

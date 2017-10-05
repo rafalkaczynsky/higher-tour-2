@@ -84,28 +84,24 @@ class _SessionItem extends Component {
     this.props.dispatch({type: 'SettingsInAnimation'})
   }
 
-  handleOnHome(navigate, locationSelected, from){
-    const { params } = this.props.navigation.state
+  handleOnHome(navigate){
+    const loginStatus = this.props.app.loginStatus
 
-    if (params.cancelLabel){
-      navigate('UserProfile', { locationSelected: locationSelected,  from: 'SessionItemBrown'})
-    } else {
-      navigate('Welcome', {from: 'SessionItemYellow'})
-    }
+    if (loginStatus && loginStatus === 'loggedInPlus') {
+      this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+    } else { 
+        this.props.dispatch({type: 'GotoWelcomeAnimation'})
+      }
+
   }
 
   handleOnBible(navigate, locationSelected,  from){
-    const { params } = this.props.navigation.state
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-    if (params.cancelLabel){
-      navigate('HigherBibleReadings', {locationSelected: locationSelected, from: 'SessionItemBrown'})
-    } else {
-      navigate('HigherBibleReadings', {from: 'SessionItemYellow'})
-    }
+    this.props.dispatch({ type: 'BibleAnimation' }) 
   }
 
   handleOnHostPressed(navigate){
-    navigate('ChurchItem')
+    this.props.dispatch({type: 'GotoChurchItemAnimation'})
   }
 
   componentDidMount(){
@@ -145,7 +141,8 @@ class _SessionItem extends Component {
           onHostPressed={()=> this.handleOnHostPressed(navigate)}
           cancelLabel= {loginStatus === 'loggedInPlus' ? true :false}
           onStopSession={()=> this.handleOnStopSession(navigate, 'FindSession')}
-          onStartSession={(location)=> {this.handleOnStartSession(navigate, 'UserProfile', location)}
+          onStartSession={(location)=> {
+            this.handleOnStartSession(navigate, 'UserProfile', location)}
           }
           activeTabName={activeTabName}
         />

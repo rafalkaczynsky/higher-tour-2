@@ -42,18 +42,8 @@ class _ChurchItem extends Component {
   }
 
   handleOnGoBack(){
-
-    const loginStatus =this.props.app.loginStatus
-    if (loginStatus === 'loggedInPlus') {
-        this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})
-    } else {
-        const { navigate } = this.props.navigation
-        navigate('FindChurch')
-    }
+    this.props.dispatch({type: 'SessionItemAnimation'})
   }
-
-
-
 
   handleOnSettings(navigate, from){
     this.props.dispatch({type: 'SettingsInAnimation'})
@@ -63,7 +53,7 @@ class _ChurchItem extends Component {
     const cancelLabel = this.props.app.cancelLabel
 
     if (cancelLabel){
-        this.props.dispatch({type: 'UserProfileAfterSettingsAnimation'})
+        this.props.dispatch({type: 'UserProfileOnHomeAnimation'})
     } else {
         this.props.dispatch({type: 'GotoWelcomeAnimation'})
     }
@@ -73,6 +63,7 @@ class _ChurchItem extends Component {
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
     this.props.dispatch({ type: 'BibleAnimation' }) 
   }
+ 
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))

@@ -21,7 +21,6 @@ class _UserProfile extends Component {
 
   handleOnSettings(navigate, locationSelected, from){
     this.props.dispatch( {type: 'SettingsInAnimation'})
-    //navigate('Settings', { locationSelected: locationSelected, from: from})
   }
 
   handleOnWeek(navigate, sessionTitle){
@@ -39,7 +38,6 @@ class _UserProfile extends Component {
 
   handleOnBible(navigate){
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-    //navigate('HigherBibleReadings')
     this.props.dispatch({ type: 'BibleAnimation' }) 
   }
 
@@ -185,7 +183,7 @@ class _UserProfile extends Component {
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
   }
-  
+
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state

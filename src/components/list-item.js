@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, Image} from 'react-native'
 
+
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
 
@@ -31,8 +32,7 @@ export default class ListItem extends Component {
               </View>
               {progressBar && 
               <View style={StyleSheet.listItem.progressBarContainer}>
-                <View style={[StyleSheet.listItem.progressBar, {width: progress}]} >
-                </View>
+                <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
               </View>}
             </View>
             
@@ -44,8 +44,7 @@ export default class ListItem extends Component {
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
             {progressBar && 
             <View style={StyleSheet.listItem.progressBarContainer}>
-              <View style={[StyleSheet.listItem.progressBar, {width: progress}]} >
-              </View>
+              <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
             </View>}
           </View>
        )}

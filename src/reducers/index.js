@@ -233,6 +233,18 @@ function nav(state = initialNavState, action) {
       );
       break;
 
+      case 'FindChurchesAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'FindChurch',
+          params: {
+            transition: 'FindChurchesAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
       case 'SessionItemAnimation':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ 
@@ -269,9 +281,45 @@ function nav(state = initialNavState, action) {
       );
       break;
 
+      case 'GotoChurchItemAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'ChurchItem',
+          params: {
+            transition: 'GotoChurchItemAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
+      case 'UserProfileOnHomeAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'UserProfile',
+          params: {
+            transition: 'UserProfileOnHomeAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
+      case 'SignInOnHomeAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'SignIn',
+          params: {
+            transition: 'SignInOnHomeAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
     default:
       nextState = AppNavigator.router.getStateForAction(action, state);
-      break;
+      break;  
   }
 
   // Simply return the original `state` if `nextState` is null or undefined.

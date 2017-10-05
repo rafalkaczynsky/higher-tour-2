@@ -39,7 +39,7 @@ let TransitionConfiguration = () => {
           const {position, scene} = sceneProps;
           const {index, route} = scene;
           const params = route.params || {};
-          const transition = params.transition || 'default';  
+          const transition = params.transition || 'default'; 
 
           return {
                   WelcomeAnimation: customTransitions.WelcomeAnimation(index, position),
@@ -60,8 +60,12 @@ let TransitionConfiguration = () => {
                   GoToWeekListRightToLeftAnimation: customTransitions.GoToWeekListRightToLeftAnimation(index, position),
                   SessionItemAnimation: customTransitions.SessionItemAnimation(index, position),
                   FindSessionAnimation: customTransitions.FindSessionAnimation(index, position),
+                  FindChurchesAnimation: customTransitions.FindChurchesAnimation(index, position),
                   UserProfileOnStartSessionAnimation: customTransitions.UserProfileOnStartSessionAnimation(index, position),
                   GotoWelcomeAnimation: customTransitions.GotoWelcomeAnimation(index, position),
+                  GotoChurchItemAnimation: customTransitions.GotoChurchItemAnimation(index, position),
+                  UserProfileOnHomeAnimation: customTransitions.UserProfileOnHomeAnimation(index, position),
+                  SignInOnHomeAnimation: customTransitions.SignInOnHomeAnimation(index, position),
 
                   default: customTransitions.MyTransition(index, position),
           }[transition];

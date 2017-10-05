@@ -26,7 +26,7 @@ class _FindChurch extends Component {
 // do actions for SAVE_SELECTED_CHURCH 
   handleOnItem(navigate, churchSelected){
     this.props.dispatch(ACTIONS.SAVE_SELECTED_CHURCH(churchSelected))
-    navigate('ChurchItem') // needs to be changed to proper transition
+    this.props.dispatch({type: 'GotoChurchItemAnimation'})
   }
 
   handleOnAlphabetical(churches){
@@ -96,16 +96,15 @@ class _FindChurch extends Component {
         <FindChurch 
           onSettings={()=> {this.props.dispatch({type: 'SettingsInAnimation'})
             this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-            this.props.dispatch({ type: 'BibleAnimation' }) 
-            //navigate('HigherBibleReadings', {from: 'FindSession', activeTabName: 'Bible'})
+            this.props.dispatch( {type: 'SettingsInAnimation'})   
             }
           }
 
           onItem={(churchSelected)=> this.handleOnItem(navigate, churchSelected)}
           buttonsStyle={this.state.buttonsStyle}
           churches={churches}
-          onHome={()=> navigate('FindSession')}
-          onMoreSession={()=> navigate('FindSession')}
+          onHome={()=> this.props.dispatch({type: 'FindSessionAnimation'})}
+          onMoreSession={()=> this.props.dispatch({type: 'FindChurchesAnimation'})}
           onAlphabetical={()=> this.handleOnAlphabetical(churches)}
           onClosest={()=> this.handleOnClosest(churches)}
           activeTabName={activeTabName}
