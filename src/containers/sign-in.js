@@ -193,8 +193,10 @@ class _SignIn extends Component {
     const followStatus = this.props.app.followStatus   
     const TheDate = new Date().getTime();
 
-
+    this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase 
+    
     this.auth.onAuthStateChanged(function (user) {
+      console.log('New Data from Firebase taken: churches, events, bibleReading ')
       // if user is signed to firebase
       if(user){
         // User signed to firebase
@@ -359,8 +361,6 @@ class _SignIn extends Component {
 
     const { navigate } = this.props.navigation
                          // if churches, events , bibleReading are not in the redux-store then...
-      this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase 
-      console.log('New Data from Firebase taken: churches, events, bibleReading ')
   
 
     this.handleInitialRedirect() 

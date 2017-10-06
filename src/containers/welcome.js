@@ -52,13 +52,10 @@ componentWillMount(){
   const loginStatus= this.props.app.loginStatus // data from the store
 
 
-
-
-
 }
 
 componentDidMount(){
-  
+
   var events = this.props.events  // data from the store 
   var churches = this.props.churches // data from the store
   var crd = this.props.coords  // data from the store
