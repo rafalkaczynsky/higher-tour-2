@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {ScrollView, View, Text, Animated} from 'react-native'
 import twitter, {auth} from 'react-native-twitter';
 import {Field, reduxForm} from 'redux-form'
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -65,13 +66,15 @@ class SignIn extends Component {
 
     console.log(valid)
     return (
-      <View style={StyleSheet.window.default}>
+      <View style={[StyleSheet.window.default, {alignItems: 'center'}]}>
 
         <Header
           text='Sign in'
           simple
         />
-        <View style={StyleSheet.signIn.container}>
+        
+       <ScrollView style={{width: '100%'}}>
+          <View style={{alignItems: 'center'}}>
           <TextBox
             header="Welcome To The Higher App!!!"
             paragraph="Before you start, let's create an account. Register using one of the following options to receive exclusive freebies."
@@ -93,7 +96,7 @@ class SignIn extends Component {
               buttonStyle={StyleSheet.signIn.socialButton}
             />
           </View>
-          <View style={{width: '60%'}}>
+          <View style={{width: '60%', }}>
             <Title
               text="Sign in with email"
               textStyle={{fontSize: 18}}
@@ -167,8 +170,12 @@ class SignIn extends Component {
            {/* <Animated.View style={{opacity: this.animateOpacity}}>
               <Text>Some text</Text>
             </Animated.View> */}
-          </View>
+
+            </View>
+            
+          <KeyboardSpacer/>
         </View>
+      </ScrollView>
         <TabMenu
           onSettings={onSettings}
           onBible={onBible}
