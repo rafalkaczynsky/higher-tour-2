@@ -18,31 +18,26 @@ class _Think extends Component {
   }
 
 handleOnBible(navigate, from){
-  navigate('HigherBibleReadings', {from: from})
+  this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  this.props.dispatch({ type: 'BibleAnimation' }) 
 }
 
 handleOnSettings(navigate, route){
   const { params } = this.props.navigation.state
   const loginStatus = this.props.app.loginStatus  // data from the store
 
-  if (loginStatus === 'loggedOut') {
-     navigate('Settings')
-  } else if (loginStatus === 'loggedIn ') {
-    navigate('Settings')
-  } else {
-    navigate('Settings')
-  }
+  this.props.dispatch( {type: 'SettingsInAnimation'})
 }
 
 handleHome(navigate){
   const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-    navigate('SignIn')
-  } else if (loginStatus === 'loggedIn'){
-      navigate('Welcome')
-    } else {
-        navigate('UserProfile')
+  
+      if (loginStatus && loginStatus === 'loggedOut') {
+        this.props.dispatch({type: 'SignInOnHomeAnimation'})
+      } else if (loginStatus && loginStatus === 'loggedInPlus') {
+        this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+      } else { 
+        this.props.dispatch({type: 'GotoWelcomeAnimation'})
       }
 }
 
@@ -73,8 +68,8 @@ componentDidMount(){
         <Think
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
-          onItemBackPressed={()=> navigate('Read')}
-          onItemNextPressed={()=> navigate('Respond')}
+          onItemBackPressed={()=> this.props.dispatch({type: 'GoToReadRightToLeftAnimation'})}
+          onItemNextPressed={()=> this.props.dispatch({type: 'GoToRespondLeftToRightAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}

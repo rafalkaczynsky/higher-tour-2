@@ -16,10 +16,10 @@ var options = {
 
 function success(pos) {
   var crd = pos.coords;
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
+//  console.log('Your current position is:');
+//  console.log(`Latitude : ${crd.latitude}`);
+//  console.log(`Longitude: ${crd.longitude}`);
+//  console.log(`More or less ${crd.accuracy} meters.`);
   myPosition.push(crd)
 };
 
@@ -60,7 +60,7 @@ class _SessionItem extends Component {
        this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
        this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
        this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
-       navigate(route)
+       this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
   }
 
   handleOnStopSession(navigate, route){
@@ -74,43 +74,47 @@ class _SessionItem extends Component {
             id: null
           },
         })
-    //this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(null))
+
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
-    navigate('FindSession')
+    this.props.dispatch({type:'FindSessionAnimation'})
   }
 
-  handleOnSettings(navigate, from){
-    const { params } = this.props.navigation.state
-
-    if (params.cancelLabel){
-      navigate('Settings', { from: 'SessionItemBrown', cancelLabel: true })
-    } else {
-      navigate('Settings', { from: 'SessionItemYellow'})
-    }
+  handleOnSettings(){
+    this.props.dispatch({type: 'SettingsInAnimation'})
   }
 
-  handleOnHome(navigate, locationSelected, from){
-    const { params } = this.props.navigation.state
+  handleOnHome(navigate){
+    const loginStatus = this.props.app.loginStatus
 
-    if (params.cancelLabel){
-      navigate('UserProfile', { locationSelected: locationSelected,  from: 'SessionItemBrown'})
-    } else {
-      navigate('Welcome', {from: 'SessionItemYellow'})
-    }
+    if (loginStatus && loginStatus === 'loggedInPlus') {
+      this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+    } else { 
+        this.props.dispatch({type: 'GotoWelcomeAnimation'})
+      }
+
   }
 
   handleOnBible(navigate, locationSelected,  from){
-    const { params } = this.props.navigation.state
-    if (params.cancelLabel){
-      navigate('HigherBibleReadings', {locationSelected: locationSelected, from: 'SessionItemBrown'})
-    } else {
-      navigate('HigherBibleReadings', {from: 'SessionItemYellow'})
-    }
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+    this.props.dispatch({ type: 'BibleAnimation' }) 
+  }
+
+  handleOnHostPressed(navigate){
+    this.props.dispatch({type: 'GotoChurchItemAnimation'})
   }
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
+  }
+
+  componentWillMount(){
+    const eventSelected  =this.props.eventSelected 
+    
+    firebase.database().ref('churches/'+eventSelected.host+'/').once("value", snapshot => {
+      const church = snapshot.val();
+      this.props.dispatch(ACTIONS.SAVE_SELECTED_CHURCH(church))
+    })
   }
 
   render() {
@@ -121,21 +125,24 @@ class _SessionItem extends Component {
     const userData = this.props.user                   // data from the store
     const activeTabName =this.props.app.activeTabName  // data from the store
     const eventSelected  =this.props.eventSelected     // data from the store
-
+    const loginStatus  = this.props.app.loginStatus   //
+    const churchSelected = this.props.selectedChurch
 
     console.log('SessionItem Container')
-    console.log(params)
-    console.log(this.props)
+
     return (
         <SessionItem 
           onHome={()=> this.handleOnHome(navigate)}
-          onSettings={()=> this.handleOnSettings(navigate)}
+          onSettings={()=> this.handleOnSettings()}
           onBible={()=> this.handleOnBible(navigate)}
           myPosition={myPosition[0]}
           location={eventSelected}
-          cancelLabel={params.cancelLabel}
+          churchSelected={churchSelected}
+          onHostPressed={()=> this.handleOnHostPressed(navigate)}
+          cancelLabel= {loginStatus === 'loggedInPlus' ? true :false}
           onStopSession={()=> this.handleOnStopSession(navigate, 'FindSession')}
-          onStartSession={(location)=> {this.handleOnStartSession(navigate, 'UserProfile', location)}
+          onStartSession={(location)=> {
+            this.handleOnStartSession(navigate, 'UserProfile', location)}
           }
           activeTabName={activeTabName}
         />
@@ -149,6 +156,7 @@ function mapStateToProps(state){
       events: state.events,
       app: state.app,
       eventSelected: state.eventSelected,
+      selectedChurch: state.selectedChurch,
 
   });
 }

@@ -23,10 +23,9 @@ class _FindSession extends Component {
     }
   }
 
-  handleOnItem(navigate, locationSelected, cancelLabel){
+  handleOnItem(locationSelected){
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-    navigate('SessionItem', {cancelLabel: cancelLabel})
-
+    this.props.dispatch({type:'SessionItemAnimation'})
   }
 
   handleOnAlphabetical(locations){
@@ -96,12 +95,17 @@ class _FindSession extends Component {
 
     return (
         <FindSession 
-          onSettings={()=> navigate('Settings', {from: 'FindSession'})}
-          onBible={()=> navigate('HigherBibleReadings', {from: 'FindSession'})}
-          onItem={(locationSelected)=> this.handleOnItem(navigate, locationSelected, false)}
+          onSettings={()=> this.props.dispatch({type: 'SettingsInAnimation'})/*navigate('Settings', {from: 'FindSession'})*/}
+          onBible={()=> {
+            this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+            this.props.dispatch({ type: 'BibleAnimation' }) 
+            }
+          }
+          onItem={(locationSelected)=> this.handleOnItem(locationSelected)}
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           churchName={churchName}
+          onMoreChurches={()=> this.props.dispatch({type: 'FindChurchesAnimation'})}
           onAlphabetical={()=> this.handleOnAlphabetical(locations)}
           onClosest={()=> this.handleOnClosest(locations)}
           activeTabName={activeTabName}

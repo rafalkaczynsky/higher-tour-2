@@ -18,32 +18,36 @@ class _Respond extends Component {
   }
 
 handleOnBible(navigate, from){
-  navigate('HigherBibleReadings', {from: from})
+  this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  this.props.dispatch({ type: 'BibleAnimation' }) 
 }
 
 handleOnSettings(navigate, route){
-  const { params } = this.props.navigation.state
-  const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-     navigate('Settings')
-  } else if (loginStatus === 'loggedIn ') {
-    navigate('Settings')
-  } else {
-    navigate('Settings')
-  }
+  this.props.dispatch( {type: 'SettingsInAnimation'})
 }
 
-handleHome(navigate){
+handleHome(){
   const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-    navigate('SignIn')
-  } else if (loginStatus === 'loggedIn'){
-      navigate('Welcome')
-    } else {
-        navigate('UserProfile')
+  
+      if (loginStatus && loginStatus === 'loggedOut') {
+        this.props.dispatch({type: 'SignInOnHomeAnimation'})
+      } else if (loginStatus && loginStatus === 'loggedInPlus') {
+        this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+      } else { 
+        this.props.dispatch({type: 'GotoWelcomeAnimation'})
       }
+}
+
+handleOnGoBack(navigate){
+  const loginStatus = this.props.app.loginStatus  // data from the store
+  
+    if (loginStatus === 'loggedOut') {
+      this.props.dispatch({type: 'SignInAfterSettingsAnimation'})
+    } else if (loginStatus === 'loggedIn'){
+      this.props.dispatch({type: 'GotoWelcomeAnimation'})
+      } else {
+          this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})
+        }
 }
 
 componentDidMount(){
@@ -53,7 +57,8 @@ componentDidMount(){
   const userData = this.props.user          
   const currentBibleReading = this.props.currentBibleReading
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
-  const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle                    
+  const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle     
+  const loginStatus = this.props.app.loginStatus               
 
 }
 
@@ -71,9 +76,11 @@ componentDidMount(){
 
     return (
         <Respond
-          onSettings={()=> this.handleOnSettings(navigate)}
-          onHome={()=> this.handleHome(navigate)}
-          onItemBackPressed={()=> navigate('Think')}
+          onSettings={()=> this.handleOnSettings()}
+          onHome={()=> this.handleHome()}
+          onGoBack={()=> this.handleOnGoBack()}
+          loginStatus={loginStatus}
+          onItemBackPressed={()=> this.props.dispatch({type: 'GoToThinkRightToLeftAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}

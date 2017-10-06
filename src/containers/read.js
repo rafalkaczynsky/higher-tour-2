@@ -16,31 +16,24 @@ class _Read extends Component {
 }
 
 handleOnBible(navigate, from){
-  navigate('HigherBibleReadings', {from: from})
+  this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+  this.props.dispatch({ type: 'BibleAnimation' }) 
 }
 
-handleOnSettings(navigate, route){
-  const { params } = this.props.navigation.state
-  const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-     navigate('Settings')
-  } else if (loginStatus === 'loggedIn ') {
-    navigate('Settings')
-  } else {
-    navigate('Settings')
-  }
+handleOnSettings(navigate){
+  this.props.dispatch( {type: 'SettingsInAnimation'})
+  //navigate('Settings')
 }
 
 handleHome(navigate){
   const loginStatus = this.props.app.loginStatus  // data from the store
-
-  if (loginStatus === 'loggedOut') {
-    navigate('SignIn')
-  } else if (loginStatus === 'loggedIn'){
-      navigate('Welcome')
-    } else {
-        navigate('UserProfile')
+  
+      if (loginStatus && loginStatus === 'loggedOut') {
+        this.props.dispatch({type: 'SignInOnHomeAnimation'})
+      } else if (loginStatus && loginStatus === 'loggedInPlus') {
+        this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+      } else { 
+        this.props.dispatch({type: 'GotoWelcomeAnimation'})
       }
 }
 
@@ -52,14 +45,35 @@ componentDidMount(){
   const currentBibleReading = this.props.currentBibleReading
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
   const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle                    
+  const loginStatus = this.props.app.loginStatus
   
-  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');
+  if (loginStatus!=='loggedOut') {
 
-  firebaseDataAppUsers.update({
-    lastReadDayNumber : currentReadingDayNumber,
-    lastReadTimeStamp: new Date().getTime()
-  })
-  
+    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/');    
+      firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
+        const bibleReading = snapshot.val();
+
+        if (bibleReading !== null){
+          console.log(bibleReading.lastReadDayNumber + '<' + currentReadingDayNumber )
+          
+          if (bibleReading.lastReadDayNumber < currentReadingDayNumber ) {
+            firebaseDataAppUsers.update({
+              lastReadTimeStamp: new Date().getTime(),
+              lastReadDayNumber : currentReadingDayNumber,
+              progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+            })
+          }  
+        } else {
+          firebaseDataAppUsers.update({
+            lastReadTimeStamp: new Date().getTime(),
+            lastReadDayNumber : currentReadingDayNumber,
+            progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+          })
+        }
+ 
+      })
+  }
+
 }
 
   render() {
@@ -67,13 +81,16 @@ componentDidMount(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events                                     // data from the store
     const userData = this.props.user                                        // data from the store
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
+
+
+  //  const weekList = this.props.app.weekContainer
     
-    const weekParam = this.params ? this.params.week : null
+  
+    
     console.log('Read Container')
 
     return (
@@ -81,11 +98,8 @@ componentDidMount(){
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
-          locations={locations}
-          onWeekBackPressed={()=> navigate('UserProfile')}
-          onItemBackPressed={()=> navigate('UserProfile')}
-          onItemNextPressed={()=> navigate('Think')}
-          week={weekParam}
+          onItemBackPressed={()=>this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})}
+          onItemNextPressed={()=>this.props.dispatch({type: 'GoToThinkLeftToRightAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}
@@ -97,7 +111,6 @@ componentDidMount(){
 function mapStateToProps(state){
   return({
       user: state.user,
-      events: state.events,
       app: state.app,
       currentBibleReading: state.currentBibleReading,
       currentReadingDayNumber: state.currentReadingDayNumber,

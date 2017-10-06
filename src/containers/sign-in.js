@@ -12,6 +12,7 @@ import {SignIn} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 
 class _SignIn extends Component {
+
   constructor(props) {
     super(props)
 
@@ -19,6 +20,7 @@ class _SignIn extends Component {
     this.firebaseDataChurches = firebase.database().ref('churches/');
     this.firebaseBibleReading = firebase.database().ref('bibleReading/');
     this.firebaseAaaSession = firebase.database().ref('aaaSession/');
+  
 
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
@@ -112,11 +114,14 @@ class _SignIn extends Component {
 }
 
   handleOnSettings(navigate, route, loginStatus, activeTabName){
-    navigate(route, {loginStatus: loginStatus, activeTabName: activeTabName})
+    this.props.dispatch( {type: 'SettingsInAnimation'})
+   // navigate(route, {loginStatus: loginStatus, activeTabName: activeTabName})
   }
 
   handleOnBible(navigate, route , ){
-    navigate(route, { activeTabName: 'Bible'})
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+    this.props.dispatch({ type: 'BibleAnimation' }) 
+    //navigate(route, { activeTabName: 'Bible'})
   }
 
   onFacebook(navigate, route){
@@ -142,17 +147,28 @@ class _SignIn extends Component {
 
     fbDataRef3.on('value',(snap)=>{
       let bibleReading = snap.val()
-      bibleReading = Object.keys(bibleReading).map(function () { return bibleReading })
+      let bibleReadingNames = snap.val()
+      bibleReading = Object.keys(bibleReading).map(function (key, indx, name) { 
+        return bibleReading[key]; 
+      })
+      bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) { 
+        let arrayOfNames = []
+        arrayOfNames.push(name[indx])
+        return  arrayOfNames; 
+      })
       this.props.dispatch(ACTIONS.SAVE_BIBLE_READING(bibleReading));
+      this.props.dispatch(ACTIONS.SAVE_BIBLE_READING_NAMES(bibleReadingNames));
      })
     
      fbDataRef4.on('value',(snap)=>{
-      let aaaSession = snap.val()
-   
-      aaaSession= Object.keys(aaaSession).map(function (key) { return aaaSession[key] })
-      console.log(aaaSession)
-      this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSession));
+      let aaaSessions = snap.val()
+      aaaSessions = Object.keys(aaaSessions ).map(function (key) { 
+        return aaaSessions[key]; 
+      })
+      this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSessions));
      })
+
+
 
   }
   // debugging function needs to be removed
@@ -168,10 +184,6 @@ class _SignIn extends Component {
   }
   
   handleInitialRedirect(){
-
-    // ON APP START NEEDS TO BE CHECKED TOKEN EXPIRATION IF ITS GETTING TO EXPIRED BY MAX 20% THEN REFRESH or ...
-    // if is already expired then signIn with refresh token  ...
-    // set timer to check if  when app is running long , we have to refresh token before is expired ..
   
     const { navigate } = this.props.navigation
     const  props = this.props
@@ -180,172 +192,94 @@ class _SignIn extends Component {
     const followStatus = this.props.app.followStatus   
     const TheDate = new Date().getTime();
 
+
     this.auth.onAuthStateChanged(function (user) {
       // if user is signed to firebase
       if(user){
-        console.log('!!!!!!!!!!!!!!!!!We are Signed')
-        console.log(user)
-      }else ('We are not signed in')
+        // User signed to firebase
+        console.log('User Signed to firebase')
+        // if user is in local storage 
+        if ((userDataFromLocal) && (userDataFromLocal.uid)){
+          //user is in local storage
+          console.log('User is in local storage')
 
-    })
-    
-    //check if user exist in Redux Store State ...
-    if ((userDataFromLocal) && (userDataFromLocal.stsTokenManager)){
-      // ... if so ...
-      console.log('THERE IS USER IN LOCALstorage!!!')
-      //... check if token is not expired ...
+          if(followStatus){
+            //... if so ...
 
-      // for debugging check when token will be expired 
-      const expierationTime = userDataFromLocal.stsTokenManager.expirationTime - TheDate 
-      console.log('Token expire time is: ' + this.msToTime(expierationTime))
-
-      if (userDataFromLocal.stsTokenManager.expirationTime > TheDate ){
-       //... if so ...
-       console.log('TOKEN IS STILL VALID!!')
-       // ... check if user follow events   
-        if(followStatus){
-          //... if so ...
-          console.log('USER FOLLOWS EVENT!!!')
-
-          navigate('UserProfile')    
-        } else {
-          //... if doesnt follow in localStorage check again ...
-
-                       // ...In case when  app data storage was cleared check in firebase if follow 
-                       firebase.database().ref('appUsers/'+ userDataFromLocal.uid+'/event/').once("value", snapshot => {
-                        const event = snapshot.val();
-                          //... if so ..
-                          if (event) {
-                            if (event.follow === true){
-                              console.log('User follow! Valid TOKEN');
-                              //... find event by id ...
-          
-                              firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                                // .. get object and dispatch to the store 
-                                  const locationSelected = snapshot.val()
-                                  props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                                  props.dispatch(ACTIONS.SAVE_USER(userDataFromLocal))
-                                  navigate('UserProfile')    
-                              })
-          
-                            } else {
-                              //... if doesnt follow ...
-                              console.log('USER DOESNT FOLLOW EVENT!!!')
-                              navigate('FindSession')
-                            }
-                          }
-                        })
-        }
-      } else {
-
-
-          // ... check if user follow events   
-           if(followStatus){
-             //... if so ...
-             console.log('USER FOLLOWS EVENT!!!')
-             navigate('UserProfile')    
-           } else {
-
-             // In case when  app data storage was cleared check in firebase if follow 
-             firebase.database().ref('appUsers/'+ userDataFromLocal.uid+'/event/').once("value", snapshot => {
-              const event = snapshot.val();
-                //... if so ..
-                if (event) {
-                  if (event.follow === true){
-                    console.log('User follow! refresh token method');
-                    //... find event by id ...
-
-                    firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                      // .. get object and dispatch to the store 
-                        const locationSelected = snapshot.val()
-                        props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                        props.dispatch(ACTIONS.SAVE_USER(userDataFromLocal))
-                        navigate('UserProfile')    
-                    })
-
-                  } else {
-                    //... if doesnt follow ...
-                    console.log('USER DOESNT FOLLOW EVENT!!!')
-                    navigate('FindSession')
-                  }
+                      // check if follow in firabase
+          firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+            const event = snapshot.val();
+              //... if so ..
+              if (event) {
+                if (event.follow === true){
+                  console.log('User follow!');
+                  //... find event by id ...
+                  firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                    // .. get object and dispatch to the store 
+                      const locationSelected = snapshot.val() 
+                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
+                      props.dispatch(ACTIONS.SAVE_USER(user)) 
+            
+                      props.dispatch({ type: 'UserProfileAnimation' }) 
+                      //navigate('UserProfile')    
+                  })
+                } else {
+                  //... if doesnt follow ...
+                  console.log('USER DOESNT FOLLOW EVENT!!!')
+                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+                  props.dispatch(ACTIONS.SAVE_USER(user)) 
+                  props.dispatch({type: 'WelcomeAnimation' })
+                 // navigate('Welcome')
                 }
-              })
-
-           }
-
-      }
-    } else {
-      // ...if doesnt exist in local  ...
-      console.log('USER DOESNT EXIST IN LOCALstorage!!!')
-      // ===========================================================================
-      // ========================== double check with firebase =====================
-      // ===========================================================================
-
-      this.auth.onAuthStateChanged(function (user) {
-        // if user is signed to firebase
-        if(user){
-  
-          // check if user exist in the appUsers...
-          firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
-            const appUser = snapshot.val();
-      
-            if (appUser){
-              //.. if so..
-                      // check if user follow  any event ...
-              firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
-                const event = snapshot.val();
-                  //... if so ..
-                  if (event) {
-                    if (event.follow === true){
-                      //... find event by id 
-                      console.log('User follow! onAuthStateChanged');
-
-                      firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                        // .. get object and dispatch to the store 
-                          const locationSelected = snapshot.val()
-                          props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                          props.dispatch(ACTIONS.SAVE_USER(user))
-                          navigate('UserProfile')    
-                      })
-
-                    } else {
-                      console.log('User doesnt follow')
-                      props.dispatch(ACTIONS.SAVE_USER(user))
-                      navigate('FindSession')
-                    }
-                  }
-              });
-  
-            } else {
-              
-              // ..if doesnt exist save him to appUsers
-              // if login with email needs to be passed currentUser from firebase 
-  
-              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+user.uid+'/');
-  
-              firebaseDataAppUsers.update({
-                email: user.email,
-                event: {
-                  follow: false,
-                  id: null
-                },
-                uid: user.uid
-              })
-              // save user to redux store
-              props.dispatch(ACTIONS.SAVE_USER(user));
-              navigate('FindSession')
-  
-            }
-          })
-  
+              }
+            })
+ 
+          } else {
+            //...or user doesnt follow
+            console.log('USER DOESNT FOLLOW EVENT!!!')
+            props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+            props.dispatch(ACTIONS.SAVE_USER(user)) 
+            props.dispatch({type: 'WelcomeAnimation' })
+          //  navigate('Welcome')    
+          }
         } else {
-          // if user doesnt signin to firebase
-          console.log('No user signed with Firebase')
-          props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
+          //user is not in local storage
+          console.log('User is not  in local storage')  
+          // check if follow in firabase
+          firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
+            const event = snapshot.val();
+              //... if so ..
+              if (event) {
+                if (event.follow === true){
+                  console.log('User follow!');
+                  //... find event by id ...
+                  firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                    // .. get object and dispatch to the store 
+                      const locationSelected = snapshot.val() 
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
+                      props.dispatch(ACTIONS.SAVE_USER(user)) 
+                      props.dispatch({ type: 'UserProfileAnimation' }) 
+                     // navigate('UserProfile')    
+                  })
+                } else {
+                  //... if doesnt follow ...
+                  console.log('USER DOESNT FOLLOW EVENT!!!')
+                  props.dispatch(ACTIONS.SAVE_USER(user)) 
+                  props.dispatch({type: 'WelcomeAnimation' })
+                  //navigate('Welcome')
+                }
+              }
+            })
         }
-      })
-    }
 
+    } else {
+      // if user doesnt signin to firebase
+      console.log('No user signed with Firebase')
+      props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
+    }
+  })
+    
   }
 
   componentWillMount(){
@@ -353,13 +287,13 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
+  
 
     const { navigate } = this.props.navigation
-    
-    if ((!this.props.churches) || (!this.props.churches.length)|| (!this.props.events.length) || (!this.props.bibleReading.length) || (!this.firebaseAaaSession.length)){                             // if churches, events , bibleReading are not in the redux-store then...
+                         // if churches, events , bibleReading are not in the redux-store then...
       this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase 
       console.log('New Data from Firebase taken: churches, events, bibleReading ')
-    }
+  
 
     this.handleInitialRedirect() 
 
@@ -439,25 +373,3 @@ function mapStateToProps(state){
 
 export default connect(mapStateToProps)(_SignIn);
 
-
-
-
-/*
-    //every user must have an email
-ref.child("users").orderByChild("ID").equalTo(user.uid).once("value",snapshot => {
-    const userData = snapshot.val();
-    if (userData){
-      console.log("exists!");
-    }
-});
-    //every user must have an email
-    firebase.database().ref(`users/${userId}/email`).once("value", snapshot => {
-      const email = snapshot.val();
-        if (email){
-          console.log("user wit email exists!");
-        }
-    });
-*/
-
-// below we can add later additional check if we have locationSelected in 
-// localStorage then navigate to UserProfile with that and skip below steps

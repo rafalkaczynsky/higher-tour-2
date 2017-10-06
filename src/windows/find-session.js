@@ -54,7 +54,7 @@ export default class FindSession extends React.Component {
 
     render(){
       console.log('FindSession Window')
-      const {locations, onAlphabetical, onClosest, buttonsStyle} = this.props
+      const {locations, onAlphabetical, onClosest, buttonsStyle, onMoreChurches} = this.props
 
       console.log(this.state)
       return(
@@ -112,6 +112,7 @@ export default class FindSession extends React.Component {
             </View>
             <ScrollView style={{width: '100%'}}>
               {this.state.didMount && this.state.locations.map((item, indx)=> 
+              
               <TouchableOpacity 
                  onPress={()=>this.props.onItem(item)}
                  key={'ListItemKey-'+indx}
@@ -123,12 +124,19 @@ export default class FindSession extends React.Component {
                 />
               </TouchableOpacity>
               )}
+              <ListItem
+                title="See more churches"
+                bgColor={colors.grey3}
+                borderBold
+                handleIconPressed={this.props.onMoreChurches}
+                
+              />
             </ScrollView>
             
         </View>
         <TabMenu 
           onSettings={this.props.onSettings}
-          oBible={this.props.onBible}
+          onBible={this.props.onBible}
           activeTabName={this.props.activeTabName}
         /> 
       </View>

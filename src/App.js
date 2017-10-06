@@ -7,7 +7,7 @@ import {Platform,AppState, AsyncStorage, Text, View} from 'react-native'
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 import {reducers} from './reducers'
-import Screens from './screens'
+import AppWithNavigationState from './screens';
 
 const middleware = applyMiddleware(logger)
 
@@ -169,11 +169,11 @@ export default class App extends React.Component {
         }
     render(){
         if(this.state.isStoreLoading){
-          return <Text>Loading Store ...</Text>
+          return <Text> </Text>
         }else{
           return (
             <Provider store={this.state.store}>
-              <Screens />
+              <AppWithNavigationState />
             </Provider>
           )
         }

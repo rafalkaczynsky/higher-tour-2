@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, Image} from 'react-native'
 
+
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
 
@@ -16,13 +17,11 @@ export default class ListItem extends Component {
 
     const image = StyleSheet.icons[imageName]
     return (
-      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, {opacity: opacity}]}>
+      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
-
-{/* with imageName option*/}
        {imageName || imageUrl && (
-            <View style={[StyleSheet.listItem.itemDetails]}>
+            <View style={[StyleSheet.listItem.itemDetails,{opacity: opacity}]}>
              {imageName && <Image source={StyleSheet.images[imageName]} style={{width: 60, height: 60, marginRight: 15}} />}
              {imageUrl && <Image source={{uri: imageUrl}} style={{width: 60, height: 60, marginRight: 15}} />}
               <View>
@@ -31,11 +30,9 @@ export default class ListItem extends Component {
               </View>
               {progressBar && 
               <View style={StyleSheet.listItem.progressBarContainer}>
-                <View style={[StyleSheet.listItem.progressBar, {width: progress}]} >
-                </View>
+                <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
               </View>}
-            </View>
-            
+            </View> 
        )}
 
        {!imageName && !imageUrl && (
@@ -44,8 +41,7 @@ export default class ListItem extends Component {
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
             {progressBar && 
             <View style={StyleSheet.listItem.progressBarContainer}>
-              <View style={[StyleSheet.listItem.progressBar, {width: progress}]} >
-              </View>
+              <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
             </View>}
           </View>
        )}

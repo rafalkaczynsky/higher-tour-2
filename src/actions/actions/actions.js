@@ -33,6 +33,13 @@ export function SAVE_SELECTED_EVENT(selectedEvent) {
     };
 }
 
+export function SAVE_SELECTED_CHURCH(selectedChurch) {
+    return {
+        type: types.SAVE_SELECTED_CHURCH,
+        selectedChurch: selectedChurch
+    };
+}
+
 export function SAVE_COORDS(coords) {
     return {
         type: types.SAVE_COORDS,
@@ -65,6 +72,29 @@ export function SAVE_BIBLE_READING(bibleReading) {
     };
 }
 
+//SAVE_APP_USER_BIBLE_READINGS
+export function SAVE_APP_USER_BIBLE_READINGS(appUserBibleReading) {
+    return {
+        type: types.SAVE_APP_USER_BIBLE_READINGS,
+        appUserBibleReading: appUserBibleReading,
+    };
+}
+
+export function SAVE_APP_USER_BIBLE_READINGS_NAMES(appUserBibleReadingNames) {
+    return {
+        type: types.SAVE_APP_USER_BIBLE_READINGS_NAMES,
+        appUserBibleReadingNames: appUserBibleReadingNames,
+    };
+}
+
+
+export function SAVE_BIBLE_READING_NAMES(bibleReadingNames) {
+    return {
+        type: types.SAVE_BIBLE_READING_NAMES,
+        bibleReadingNames: bibleReadingNames,
+    };
+}
+
 export function SAVE_CURRENT_READING_ITEM(currentBibleReading) {
     return {
         type: types.SAVE_CURRENT_READING_ITEM,
@@ -73,7 +103,7 @@ export function SAVE_CURRENT_READING_ITEM(currentBibleReading) {
     };
 }
 
-//SAVE_CURRENT_READING_ITEM_TITLE
+
 export function SAVE_CURRENT_READING_ITEM_TITLE(currentBibleReadingTitle) {
     return {
         type: types.SAVE_CURRENT_READING_ITEM_TITLE,
@@ -95,6 +125,7 @@ export function SAVE_CURRENT_LAST_READ_DAY_NUMBER(dayNumber) {
         lastReadDayNumber: dayNumber,
     };
 }
+
 
 //APP STAFF
 
@@ -154,4 +185,12 @@ export function UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(currentDayContent) {
         currentDayContent: currentDayContent,
     };
 }
+
+export function SAVE_WEEK(week) {
+    return {
+        type: types.SAVE_WEEK,
+        week: week,
+    };
+}
+
 //...............

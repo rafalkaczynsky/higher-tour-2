@@ -31,15 +31,8 @@ class UserProfile extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  componentWillMount(){
 
 
-  }
-
-  componentDidMount(){
-    this.setState({isMounted: true})
-    
-  }
 
     getMyData(arrayOfObjectsWithIds) {
 
@@ -50,10 +43,9 @@ class UserProfile extends React.Component {
       var deferred =$q.defer(); getDataFunction.myGetDataFunction.success( function(data) { deferred.resolve(data) }). error( function (error) { deferred.reject(); }); return deferred.promise; }); $q.all(promises).then( function (dataArray) { }) 
     }; 
 
-
     render(){
 
-        const { onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
+        const { onSeeAllReadings, onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading,  bibleReadingNames, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
 
@@ -76,7 +68,6 @@ class UserProfile extends React.Component {
          locationSelectedName = ''
         }
        
-
         return(
       <View style={[StyleSheet.window.default,]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
@@ -111,19 +102,19 @@ class UserProfile extends React.Component {
 
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
-                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)              
-              
+                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)                                 
+                   const aaaSessionItem = item.aaaSession
+
                    if (index === 0)
                     return(
                       <ListItem 
                         key={item.aaaSession + '-' + index}
                         title={item.aaaSession}
                         label={sessionDateFormatted}
-                        handleIconPressed={()=>onWeek(aaaSession[index])}
+                        handleIconPressed={()=>onWeek(item.aaaSession)}
                       /> 
                     )
                 })}
-
 
             </View>
             <View style={StyleSheet.userProfile.contentBox}>
@@ -132,20 +123,18 @@ class UserProfile extends React.Component {
                   listHeader
                 /> 
 
-                {this.props.bibleReading.map((item, index) => {
+                {this.props.appUserBibleReading.map((item, index) => {
 
-                  title = Object.keys(item)[0];    
-                  value = item[title]            
-                  const arrayOfValue = Object.keys(value).map(function (key) { return value[key]; })
-                  const progress = parseInt(lastReadDayNumber / arrayOfValue.length * 100) + '%'
+                const title = this.props.appUserBibleReadingNames[index]
+                const progress = item.progress + '%'
          
                 return (
                   <ListItem 
-                    key={index + title}
+                    key={index + title }
                     title={title}
                     progressBar
                     progress={progress}
-                    handleIconPressed={() => onHandleReadingItemPressed(arrayOfValue, title)}
+                    handleIconPressed={() => onHandleReadingItemPressed(title)}
                   />
                   ) 
                 })}
@@ -154,6 +143,8 @@ class UserProfile extends React.Component {
                     title="See all reading plans"
                     bgColor={colors.grey3}
                     borderBold
+                    handleIconPressed={this.props.onSeeAllReadings}
+
                 />
             </View>
             </ScrollView>
@@ -170,3 +161,4 @@ class UserProfile extends React.Component {
 
 
 export default UserProfile
+
