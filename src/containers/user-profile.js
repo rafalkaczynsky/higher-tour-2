@@ -159,19 +159,21 @@ class _UserProfile extends Component {
       console.log(bibleReadings)
       let bibleReadingNames = appUser.bibleReadings
 
-      bibleReadings = Object.keys(bibleReadings).map(function (key, indx, name) { 
-        return bibleReadings[key]; 
-      })
+      if (bibleReadings){
+        bibleReadings = Object.keys(bibleReadings).map(function (key, indx, name) { 
+          return bibleReadings[key]; 
+        })
+        this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS(bibleReadings));
+      }
 
-      bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) { 
-        let arrayOfNames = []
-        arrayOfNames.push(name[indx])
-        return  arrayOfNames; 
-      })
-
-      //save it to the redux store in to arrays, content and names
-      this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS(bibleReadings));
-      this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES(bibleReadingNames));
+      if (bibleReadingNames){
+        bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) { 
+          let arrayOfNames = []
+          arrayOfNames.push(name[indx])
+          return  arrayOfNames; 
+        })
+        this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES(bibleReadingNames));
+      }
     })
 
 

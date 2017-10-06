@@ -37,10 +37,6 @@ export default class Think extends Component {
     let mainImage
     let versus
     let content
-
-    console.log(itemDay)
-    console.log(week)
-
 return (      
   <View style={StyleSheet.window.default}>
 

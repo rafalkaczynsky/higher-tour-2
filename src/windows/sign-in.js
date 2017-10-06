@@ -29,9 +29,8 @@ class SignIn extends Component {
         this.props.onNext(values.email, values.password)
   }
 
-  componentWillMount(){
-    const {reset} = this.props
-    reset // reset form validation redux state
+  componentWillMount() {
+    this.props.reset();
   }
 
 
@@ -64,7 +63,7 @@ class SignIn extends Component {
             }).start();
     }
 
-
+    console.log(valid)
     return (
       <View style={StyleSheet.window.default}>
 
@@ -158,6 +157,7 @@ class SignIn extends Component {
             icon="password"
             multiline={false}
           />
+      
             <Button
               type={valid ? "default" : "disable"}
               text="Next"
@@ -181,4 +181,5 @@ class SignIn extends Component {
 
 export default reduxForm({
   form: 'SignUpValidation',
+  destroyOnUnmount: false,
 })(SignIn)

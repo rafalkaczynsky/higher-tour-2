@@ -100,6 +100,14 @@ export default class App extends React.Component {
       }
       _handleAppStateChange(currentAppState) {
         let storingValue = JSON.stringify(this.state.store.getState())
+
+        if (storingValue){
+           if (storingValue.form){
+              storingValue.form.SignUpValidation = {}
+           }
+        }
+
+ 
         AsyncStorage.setItem('completeStore', storingValue);
     }
 

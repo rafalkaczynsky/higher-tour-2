@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Button, View, Animated, AsyncStorage, ActivityIndicator} from 'react-native'
+
 import { connect } from 'react-redux';
 
 import * as firebase from 'firebase'
@@ -202,11 +203,14 @@ class _SignIn extends Component {
         if ((userDataFromLocal) && (userDataFromLocal.uid)){
           //user is in local storage
           console.log('User is in local storage')
+          //if user is the same as previus
+          if(user.uid === userDataFromLocal.uid){
+          //User is the same as in localstorage
+          console.log('User is the same as in localstorage')
 
           if(followStatus){
-            //... if so ...
-
-                      // check if follow in firabase
+            //... if so ..
+            // check if follow in firabase
           firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
             const event = snapshot.val();
               //... if so ..
@@ -243,12 +247,65 @@ class _SignIn extends Component {
             props.dispatch({type: 'WelcomeAnimation' })
           //  navigate('Welcome')    
           }
+
+        } else {
+            //User is not the same as in localstorage
+            console.log('User is not the same as in localstorage')
+            // check if follow in firabase
+            firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
+              userCurrent = snapshot.val();
+              if (userCurrent){
+                const event = userCurrent.event;
+                //... if so ..
+                if (event) {
+                  if (event.follow === true){
+                    console.log('User follow!');
+                    //... find event by id ...
+                    firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
+                      // .. get object and dispatch to the store 
+                        const locationSelected = snapshot.val() 
+                        props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
+                        props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
+                        props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
+                        props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
+                        props.dispatch(ACTIONS.SAVE_USER(user)) 
+                        props.dispatch({ type: 'UserProfileAnimation' }) 
+                       // navigate('UserProfile')    
+                    })
+                  } else {
+                    //... if doesnt follow ...
+                    console.log('USER DOESNT FOLLOW EVENT!!!')
+                    this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
+                    this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
+                    props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+                    props.dispatch(ACTIONS.SAVE_USER(user)) 
+                    props.dispatch({type: 'WelcomeAnimation' })
+                    //navigate('Welcome')
+                  }
+                }
+              } else {
+                console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
+                this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
+                this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
+                props.dispatch(ACTIONS.SAVE_USER(user)) 
+                props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+                props.dispatch({type: 'WelcomeAnimation' })
+              }
+  
+              })
+              //............
+  
+          }
+
+
         } else {
           //user is not in local storage
           console.log('User is not  in local storage')  
           // check if follow in firabase
-          firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
-            const event = snapshot.val();
+          firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
+            userCurrent = snapshot.val();
+            if (userCurrent){
+              const event = userCurrent.event;
               //... if so ..
               if (event) {
                 if (event.follow === true){
@@ -258,6 +315,7 @@ class _SignIn extends Component {
                     // .. get object and dispatch to the store 
                       const locationSelected = snapshot.val() 
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
+                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
                       props.dispatch(ACTIONS.SAVE_USER(user)) 
                       props.dispatch({ type: 'UserProfileAnimation' }) 
                      // navigate('UserProfile')    
@@ -265,17 +323,27 @@ class _SignIn extends Component {
                 } else {
                   //... if doesnt follow ...
                   console.log('USER DOESNT FOLLOW EVENT!!!')
+                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
                   props.dispatch(ACTIONS.SAVE_USER(user)) 
                   props.dispatch({type: 'WelcomeAnimation' })
                   //navigate('Welcome')
                 }
               }
+            } else {
+              console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
+              props.dispatch(ACTIONS.SAVE_USER(user)) 
+              props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+              props.dispatch({type: 'WelcomeAnimation' })
+            }
+
             })
+   
         }
 
     } else {
       // if user doesnt signin to firebase
       console.log('No user signed with Firebase')
+      
       props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
     }
   })
@@ -315,7 +383,7 @@ class _SignIn extends Component {
     const activeTabName = this.props.app.activeTabName // from the store
 
     console.log('SignIn Container')
-    console.log(this.props)
+    console.log(this.props.state)
 
     const SignInScreen = () => <SignIn 
             onNext={(email, password)=> {
@@ -366,7 +434,8 @@ function mapStateToProps(state){
       coords: state.coords,
       app: state.app,
       eventSelected: state.eventSelected,
-      aaaSession: state.aaaSession
+      aaaSession: state.aaaSession,
+
       
   });
 }

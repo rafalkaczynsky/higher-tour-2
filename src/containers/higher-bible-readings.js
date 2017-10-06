@@ -199,7 +199,7 @@ class _HigherBibleReadings extends Component {
     const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store  
 
     console.log('HigherBibleReadings Container')
-    console.log(this.props.bibleReading)
+
     return (
         <HigherBibleReadings 
           readings={bibleReading}

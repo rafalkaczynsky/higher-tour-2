@@ -85,7 +85,7 @@ class UserProfile extends React.Component {
                   iconText='view/edit'
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 /> 
-                {/* Availability needs to be checked dynamicaly*/}
+
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
@@ -130,7 +130,7 @@ class UserProfile extends React.Component {
          
                 return (
                   <ListItem 
-                    key={index + title }
+                    key={'appUserBibleReadingKey'+ index}
                     title={title}
                     progressBar
                     progress={progress}

@@ -46,7 +46,6 @@ class HigherBibleReadings extends React.Component {
         onAvailable,
       } = this.props
 
-      console.log(readings)
       const userData = this.props.user                // data from the store
       const currentDayContent = this.props.app.currentDayContent              // data from the store
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store

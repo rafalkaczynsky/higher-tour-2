@@ -72,6 +72,13 @@ export function SAVE_BIBLE_READING(bibleReading) {
     };
 }
 
+//
+export function DELETE_FORM_DATA() {
+    return {
+        type: types.DELETE_FORM_DATA,
+    };
+}
+
 //SAVE_APP_USER_BIBLE_READINGS
 export function SAVE_APP_USER_BIBLE_READINGS(appUserBibleReading) {
     return {
