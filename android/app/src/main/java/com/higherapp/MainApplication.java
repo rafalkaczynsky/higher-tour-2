@@ -3,7 +3,7 @@ package com.higherapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-
+import com.evollu.react.fcm.FIRMessagingPackage;
 
 import ga.piroro.rnt.RNTPackage;
 import com.goldenowl.twittersignin.TwitterSigninPackage;
@@ -39,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new FIRMessagingPackage(),
             new TwitterSigninPackage(),
             new RNTPackage(),
             new MapsPackage(),
