@@ -87,10 +87,6 @@ class _FindSession extends Component {
     const userData = this.props.user                    // data from the store
     const activeTabName = this.props.app.activeTabName  // data from the store
   
-    console.log('Find Session Container')
-    console.log(params)
-    console.log(this.props)
-
     let churchName = '' // was from params.churchName
 
     return (

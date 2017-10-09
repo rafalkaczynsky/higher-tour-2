@@ -47,7 +47,6 @@ export default class ChurchItem extends React.Component {
     }
     
     render(){
-
     const {onSettings,  onHome, onBible, onGoToWebsite, onGoBack, church, loginStatus} = this.props
 
     const coordinate = {

@@ -29,7 +29,6 @@ class HigherBibleReadings extends React.Component {
     this.setState({isMounted: true})
   }
     render(){
-      console.log('Higher Bible Readings Window')
       const {
         locations, 
         onItemBackPressed, 

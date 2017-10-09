@@ -24,10 +24,7 @@ class BibleReadingList extends React.Component {
     this.setState({isMounted: true})
   }
     render(){
-      console.log('BibleReadingList Window')
-      console.log(readings)
       const { onCompleted, onNew, onItem, buttonsStyle, readings, readingsNames} = this.props
-
       return(
       <View style={StyleSheet.window.default}>
         <Header 

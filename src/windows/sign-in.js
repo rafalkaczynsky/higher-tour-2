@@ -36,7 +36,6 @@ class SignIn extends Component {
 
 
   render() {
-
     const {handleEmail, handlePassword, email, password, onNext, onSettings, onBible, onTwitter, onFacebook, handleSubmit, valid} = this.props
 
     let errorCode = this.props.signInError && this.props.signInError.code;
@@ -64,7 +63,6 @@ class SignIn extends Component {
             }).start();
     }
 
-    console.log(valid)
     return (
       <View style={[StyleSheet.window.default, {alignItems: 'center'}]}>
 

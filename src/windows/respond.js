@@ -28,7 +28,6 @@ export default class Respond extends Component {
   }
 
   render() {
-    console.log('Think Windeow')
     const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed, onGoBack} = this.props
 
     const name = 'profileImage'

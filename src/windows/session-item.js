@@ -47,7 +47,6 @@ export default class SessionItem extends React.Component {
     }
     
     render(){
-
     const {onSettings, location, onStartSession, cancelLabel, onStopSession, onHome, onBible, churchSelected, onHostPressed} = this.props
 
     const coordinate = {

@@ -54,7 +54,6 @@ export default class FindChurch extends React.Component {
   }
 
     render(){
-      console.log('FindChurch Window')
       const {onAlphabetical, onClosest, buttonsStyle, churches} = this.props
       return(
       <View style={StyleSheet.window.default}>

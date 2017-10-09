@@ -42,7 +42,6 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     }
 });
 FCM.on(FCMEvent.RefreshToken, (token) => {
-    console.log(token)
     // fcm token may not be available on first load, catch it here
 });
 
@@ -55,26 +54,29 @@ export default class App extends React.Component {
           initialStore: {},
           store: store,
           cipa: '',
+          FCMtoken: null,
         }
         console.ignoredYellowBox = [
           'Setting a timer'
       ]
+      this.FCMtoken = null
+
       }
+
       componentDidMount() {
+        
         if(Platform.OS ==='ios'){
           FCM.requestPermissions().then(()=>console.log('granted')).catch(()=>console.log('user rejected')); // for iOS
         }
           FCM.getFCMToken().then(token => {
-              console.log(token)
+              this.setState({isMounted: true, FCMtoken: token})
               // store fcm token in your server
           });
-
           this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
               // do some component related stuff
           });
       }
     componentWillMount() {
-      console.log('App Will Mount')
         var self = this;
         AppState.addEventListener('change', this._handleAppStateChange.bind(this));
         this.setState({isStoreLoading: true});
@@ -175,12 +177,14 @@ export default class App extends React.Component {
         render(){
           if(this.state.isStoreLoading){
             return <Text> </Text>
-          }else{
+          }else if (this.state.isMounted){
             return (
-              <Provider store={this.state.store}>
-                <AppWithNavigationState />
+              <Provider  store={this.state.store}>
+                <AppWithNavigationState FCMtoken={this.state.FCMtoken} />
               </Provider>
             )
+          } else {
+            return <Text> </Text>
           }
         }
 }

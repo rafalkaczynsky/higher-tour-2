@@ -31,7 +31,6 @@ class ReadingContentList extends React.Component {
     this.setState({isMounted: true})
   }
     render(){
-      console.log('ReadingContentList Window')
       const {locations, onCompleted, onNew, onItem, buttonsStyle, readings, currentScreen, chosenItem, onDayItem} = this.props
 
       const userData = this.props.user                // data from the store

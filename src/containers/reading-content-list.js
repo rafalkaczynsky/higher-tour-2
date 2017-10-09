@@ -125,10 +125,7 @@ class _ReadingContentList extends Component {
 
 
   componentWillMount(){
-
-
     const loginStatus = this.props.app.loginStatus      // data from the store
-    
   }
   
 
@@ -137,7 +134,6 @@ class _ReadingContentList extends Component {
   }
 
   render() {
-
     const { navigate } = this.props.navigation 
     const  {params}  = this.props.navigation.state
 
@@ -146,9 +142,6 @@ class _ReadingContentList extends Component {
     const loginStatus = this.props.app.loginStatus                            // data from the store
     const activeTabName = this.props.app.activeTabName                        // data from the store
     const currentBibleReading = this.props.currentBibleReading                // data from the store  
-
-
-    console.log('ReadingContentList Container')
 
     return (
         <ReadingContentList 

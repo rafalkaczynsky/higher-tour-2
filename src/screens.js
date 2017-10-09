@@ -100,12 +100,11 @@ export const AppNavigator = StackNavigator({
   headerMode: 'none', 
   initialRouteName: 'SignIn',
   transitionConfig: TransitionConfiguration 
-
 });
 
-const AppWithNavigationState = ({ dispatch, nav }) => (
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
-);
+const AppWithNavigationState = ({ dispatch, nav , FCMtoken}) => 
+  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav , FCMtoken})} />
+
 
 AppWithNavigationState.propTypes = {
   dispatch: PropTypes.func.isRequired,

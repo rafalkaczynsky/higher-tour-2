@@ -8,7 +8,6 @@ export function SAVE_EVENTS(events) {
     return {
         type: types.SAVE_EVENTS,
         events: events,
-
     };
 }
 
@@ -51,7 +50,6 @@ export function SAVE_SESSIONS(sessions) {
     return {
         type: types.SAVE_SESSIONS,
         sessions: sessions,
-
     };
 }
 
@@ -59,7 +57,6 @@ export function SAVE_AAA_SESSION(aaaSession) {
     return {
         type: types.SAVE_AAA_SESSION,
         aaaSession: aaaSession,
-
     };
 }
 
@@ -68,7 +65,6 @@ export function SAVE_BIBLE_READING(bibleReading) {
     return {
         type: types.SAVE_BIBLE_READING,
         bibleReading: bibleReading,
-
     };
 }
 
@@ -199,5 +195,14 @@ export function SAVE_WEEK(week) {
         week: week,
     };
 }
+
+export function SAVE_FCM_TOKEN(FCMtoken) {
+    return {
+        type: types.SAVE_FCM_TOKEN,
+        FCMtoken: FCMtoken,
+    };
+}
+
+///
 
 //...............

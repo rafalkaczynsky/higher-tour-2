@@ -53,7 +53,6 @@ export default class FindSession extends React.Component {
   }
 
     render(){
-      console.log('FindSession Window')
       const {locations, onAlphabetical, onClosest, buttonsStyle, onMoreChurches} = this.props
 
       console.log(this.state)

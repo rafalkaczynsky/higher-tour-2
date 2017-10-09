@@ -43,8 +43,6 @@ handleHome(navigate){
 
 componentDidMount(){
 
-  //wait 5 seconds after that 
-  //update appUser lastReadDayNumber and timesta,[ ]
   const userData = this.props.user          
   const currentBibleReading = this.props.currentBibleReading
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
@@ -53,17 +51,13 @@ componentDidMount(){
 }
 
   render() {
-
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-
 
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
  
-    console.log('Think Container')
-
     return (
         <Think
           onSettings={()=> this.handleOnSettings(navigate)}

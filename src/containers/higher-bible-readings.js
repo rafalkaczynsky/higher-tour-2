@@ -91,7 +91,6 @@ class _HigherBibleReadings extends Component {
       })
   }
 
-
   handleOnAvailable(){
     this.setState({
       showAll: false,
@@ -197,8 +196,6 @@ class _HigherBibleReadings extends Component {
     const currentBibleReading = this.props.currentBibleReading                // data from the store  
     const bibleReading = this.props.bibleReading                              // data from the store   
     const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store  
-
-    console.log('HigherBibleReadings Container')
 
     return (
         <HigherBibleReadings 

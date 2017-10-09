@@ -26,7 +26,6 @@ class _Settings extends Component {
   }
 
   handleLogOut(navigate, route){
-
     const loginStatus = this.props.app.loginStatus  // data from the store
 
     if (loginStatus === 'loggedOut') {

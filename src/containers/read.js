@@ -86,13 +86,6 @@ componentDidMount(){
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
 
-
-  //  const weekList = this.props.app.weekContainer
-    
-  
-    
-    console.log('Read Container')
-
     return (
         <Read 
           onSettings={()=> this.handleOnSettings(navigate)}
