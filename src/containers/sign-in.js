@@ -22,13 +22,9 @@ class _SignIn extends Component {
     this.firebaseBibleReading = firebase.database().ref('bibleReading/');
     this.firebaseAaaSession = firebase.database().ref('aaaSession/');
   
-
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
     this.actionCode = 'resetPassword' 
-
-    console.log('Constructor')
-    console.log(this.props)
 
     this.state = { 
       showContent: false,
@@ -228,7 +224,7 @@ class _SignIn extends Component {
                       props.dispatch(ACTIONS.SAVE_USER(user)) 
             
                       props.dispatch({ type: 'UserProfileAnimation' }) 
-                      //navigate('UserProfile')    
+
                   })
                 } else {
                   //... if doesnt follow ...
@@ -236,7 +232,7 @@ class _SignIn extends Component {
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
                   props.dispatch(ACTIONS.SAVE_USER(user)) 
                   props.dispatch({type: 'WelcomeAnimation' })
-                 // navigate('Welcome')
+
                 }
               }
             })
@@ -247,7 +243,7 @@ class _SignIn extends Component {
             props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
             props.dispatch(ACTIONS.SAVE_USER(user)) 
             props.dispatch({type: 'WelcomeAnimation' })
-          //  navigate('Welcome')    
+
           }
 
         } else {
@@ -272,23 +268,35 @@ class _SignIn extends Component {
                         props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
                         props.dispatch(ACTIONS.SAVE_USER(user)) 
                         props.dispatch({ type: 'UserProfileAnimation' }) 
-                       // navigate('UserProfile')    
+    
                     })
                   } else {
                     //... if doesnt follow ...
                     console.log('USER DOESNT FOLLOW EVENT!!!')
-                    this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
-                    this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
+                    props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
+                    props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                     props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
                     props.dispatch(ACTIONS.SAVE_USER(user)) 
                     props.dispatch({type: 'WelcomeAnimation' })
-                    //navigate('Welcome')
+
                   }
                 }
               } else {
                 console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
-                this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
-                this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
+                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
+                
+                firebaseDataAppUsers.update({
+                  email: user.email,
+                  name: user.displayName,
+                  event: {
+                    follow: false,
+                  },
+                  uid: user.uid,
+                  FCMtoken: props.navigation.FCMtoken,
+                })
+
+                props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
+                props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                 props.dispatch(ACTIONS.SAVE_USER(user)) 
                 props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
                 props.dispatch({type: 'WelcomeAnimation' })
@@ -320,7 +328,7 @@ class _SignIn extends Component {
                       props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
                       props.dispatch(ACTIONS.SAVE_USER(user)) 
                       props.dispatch({ type: 'UserProfileAnimation' }) 
-                     // navigate('UserProfile')    
+        
                   })
                 } else {
                   //... if doesnt follow ...
@@ -328,18 +336,29 @@ class _SignIn extends Component {
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
                   props.dispatch(ACTIONS.SAVE_USER(user)) 
                   props.dispatch({type: 'WelcomeAnimation' })
-                  //navigate('Welcome')
+     
                 }
               }
-            } else {
+            } else { //=============================================
+
               console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
+              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
+                
+                firebaseDataAppUsers.update({
+                  email: user.email,
+                  name: user.displayName,
+                  event: {
+                    follow: false,
+                  },
+                  uid: user.uid,
+                  FCMtoken: props.navigation.FCMtoken,
+                })
+
               props.dispatch(ACTIONS.SAVE_USER(user)) 
               props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
               props.dispatch({type: 'WelcomeAnimation' })
             }
-
             })
-   
         }
 
     } else {
@@ -360,8 +379,6 @@ class _SignIn extends Component {
   
 
     const { navigate } = this.props.navigation
-                         // if churches, events , bibleReading are not in the redux-store then...
-  
 
     this.handleInitialRedirect() 
 
@@ -374,16 +391,12 @@ class _SignIn extends Component {
   }
 
   render() {
- 
     const { navigate } = this.props.navigation
 
     const events = this.props.events                   // from the store 
     const churches = this.props.churches               // from the store
     const coords = this.props.coords                   // from the store - current positions lng and lat 
     const activeTabName = this.props.app.activeTabName // from the store
-
-    console.log('SignIn Container')
-    console.log(this.props.state)
 
     const SignInScreen = () => <SignIn 
             onNext={(email, password)=> {

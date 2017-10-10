@@ -31,7 +31,6 @@ class _UserProfile extends Component {
         // navigate('WeekList', {week: item})
         this.props.dispatch(ACTIONS.SAVE_WEEK(item))
         this.props.dispatch({type: 'GoToWeekListRightToLeftAnimation'})
-
       }
     })
   }
@@ -49,22 +48,19 @@ class _UserProfile extends Component {
       console.log(item[0])
       console.log(bibleReadingTitle)
       if (item[0] === bibleReadingTitle[0]) {
-
         this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item')) 
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(bibleReading[index]))
         this.props.dispatch({type:'AppUserBibleReadingAnimation'})
-        //navigate('HigherBibleReadings')
       }
     })
 
   }
 
-
   componentWillMount(){
-    var events = this.props.events  // data from the store 
-    var churches = this.props.churches // data from the store
-    var crd = this.props.coords  // data from the store
+    var events = this.props.events  
+    var churches = this.props.churches 
+    var crd = this.props.coords  
     
     var geoLoc = {}
   //----------------- map events ----------
@@ -111,9 +107,7 @@ class _UserProfile extends Component {
   
     this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
     this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
-
-   
-              
+  
     this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
@@ -133,8 +127,6 @@ class _UserProfile extends Component {
         var TheDate = new Date().getTime();
         var TheDateFormatted = 'dd'
 
-        console.log(TheDate)
-      
         var sessionsAvailable = []
         sessionArray.map((item, index)=>{
             let sessionDate = item.UTCTime
@@ -187,24 +179,21 @@ class _UserProfile extends Component {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events                 // data from the store
-    const userData = this.props.user                    // data from the store         
-    const activeTabName = this.props.app.activeTabName  // data from the store
-    const eventSelected = this.props.eventSelected      // data from the store
-    const sessions = this.props.sessions                // data from the store
-    const bibleReading = this.props.bibleReading        // data from the store
-    const bibleReadingNames = this.props.bibleReadingNames        // data from the store
-    const aaaSession = this.props.aaaSession                     // data from the store
-    const lastReadDayNumber = this.props.app.lastReadDayNumber   // data from the store
+    const locations = this.props.events                 
+    const userData = this.props.user                            
+    const activeTabName = this.props.app.activeTabName  
+    const eventSelected = this.props.eventSelected      
+    const sessions = this.props.sessions                
+    const bibleReading = this.props.bibleReading       
+    const bibleReadingNames = this.props.bibleReadingNames        
+    const aaaSession = this.props.aaaSession                     
+    const lastReadDayNumber = this.props.app.lastReadDayNumber  
 
-    const appUserBibleReading = this.props.appUserBibleReading   // data from the store
-    const appUserBibleReadingNames =  this.props.appUserBibleReadingNames // data from the store
+    const appUserBibleReading = this.props.appUserBibleReading  
+    const appUserBibleReadingNames =  this.props.appUserBibleReadingNames 
     
-    console.log('UserProfile Container')
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
     
-
-
     const UserProfileScreen= () => 
       <UserProfile
         locations={locations}

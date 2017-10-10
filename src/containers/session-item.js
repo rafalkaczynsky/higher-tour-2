@@ -54,7 +54,8 @@ class _SessionItem extends Component {
             follow: true,
             id: eventSelected.host
           },
-          uid: userData.uid
+          uid: userData.uid,
+          FCMtoken: this.props.navigation.FCMtoken,
         })
         // update database appUser 
        this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
@@ -127,8 +128,6 @@ class _SessionItem extends Component {
     const eventSelected  =this.props.eventSelected     // data from the store
     const loginStatus  = this.props.app.loginStatus   //
     const churchSelected = this.props.selectedChurch
-
-    console.log('SessionItem Container')
 
     return (
         <SessionItem 

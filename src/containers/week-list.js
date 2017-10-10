@@ -9,10 +9,6 @@ import * as ACTIONS from '../actions/actions/actions';
 class _WeekList extends Component {
   constructor(props){
     super(props)
-
-    this.state = {
-
-    }
 }
 
 handleOnBible(navigate, from){
@@ -26,7 +22,7 @@ handleOnSettings(navigate){
 }
 
 handleHome(navigate){
-  const loginStatus = this.props.app.loginStatus  // data from the store
+  const loginStatus = this.props.app.loginStatus 
   
   if (loginStatus && loginStatus === 'loggedOut') {
     this.props.dispatch({type: 'SignInOnHomeAnimation'})
@@ -42,12 +38,9 @@ handleOnGoBack(){
 }
 
   render() {
-
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
     
-    console.log('Week Container')
-
     return (
         <WeekList 
           onSettings={()=> this.handleOnSettings()}

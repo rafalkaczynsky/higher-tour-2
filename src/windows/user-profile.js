@@ -44,12 +44,9 @@ class UserProfile extends React.Component {
     }; 
 
     render(){
-
         const { onSeeAllReadings, onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading,  bibleReadingNames, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
         const name = 'profileImage'
         const image = StyleSheet.icons[name]
-
-        console.log('User profile window')
 
         let userFirstName
 

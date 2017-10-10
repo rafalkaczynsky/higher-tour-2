@@ -63,16 +63,12 @@ componentDidMount(){
 }
 
   render() {
-
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-
 
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
- 
-    console.log('Think Container')
 
     return (
         <Respond

@@ -39,9 +39,7 @@ export default class Read extends Component {
     let mainImage
     let versus
     let content
-
-    console.log('Read Window')
-
+    
   return (
            
   <View style={StyleSheet.window.default}>

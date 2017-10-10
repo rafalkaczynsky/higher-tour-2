@@ -121,11 +121,6 @@ componentDidMount(){
     const userData = this.props.user                    // data from the store
     const activeTabName = this.props.app.activeTabName  // data from the store
 
-    console.log('Welcome Container')
-    console.log(params)
-    console.log(this.props)
-
-    
     function compareDistance(a, b){
       return a.howFar - b.howFar;
     }

@@ -28,7 +28,6 @@ export default class Think extends Component {
   }
 
   render() {
-    console.log('Think Windeow')
     const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
 
     const name = 'profileImage'
@@ -37,6 +36,7 @@ export default class Think extends Component {
     let mainImage
     let versus
     let content
+    
 return (      
   <View style={StyleSheet.window.default}>
 
