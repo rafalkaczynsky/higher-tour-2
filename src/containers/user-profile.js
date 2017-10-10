@@ -175,7 +175,16 @@ class _UserProfile extends Component {
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
   }
 
+  componentWillUpdate(){
+
+  }
+
+
   render() {
+    this.props.screen = this.props.navigation.screen
+    console.log('qqwedsafdsfdsfdfdfsdfsdfdfsdfdsfsdf')
+    console.log(this.props.screen)
+
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
@@ -234,6 +243,8 @@ class _UserProfile extends Component {
   } else return <EmptyScreen/> 
   }
 }
+
+
 
 function mapStateToProps(state){
   return({

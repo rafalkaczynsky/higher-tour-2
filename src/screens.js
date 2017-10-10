@@ -102,8 +102,8 @@ export const AppNavigator = StackNavigator({
   transitionConfig: TransitionConfiguration 
 });
 
-const AppWithNavigationState = ({ dispatch, nav , FCMtoken}) => 
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav , FCMtoken})} />
+const AppWithNavigationState = ({ dispatch, nav , FCMtoken, screen}) => 
+  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav , FCMtoken, screen})} />
 
 
 AppWithNavigationState.propTypes = {

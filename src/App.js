@@ -2,18 +2,23 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
 import logger , {createLogger} from "redux-logger"
-import {Platform,AppState, AsyncStorage, Text, View} from 'react-native'
+import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity} from 'react-native'
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 import {reducers} from './reducers'
 import AppWithNavigationState from './screens'
 
-const middleware = applyMiddleware(logger)
+import Freebie from './windows/freebie'
 
+const middleware = applyMiddleware(logger)
+var screen = null
 let store = createStore(reducers, middleware)
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
 FCM.on(FCMEvent.Notification, async (notif) => {
+
+ // console.log('!!!!!!! FCM.on  - 1')
+ // console.log(notif)
     // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
     if(notif.local_notification){
       //this is a local notification
@@ -43,7 +48,11 @@ FCM.on(FCMEvent.Notification, async (notif) => {
 });
 FCM.on(FCMEvent.RefreshToken, (token) => {
     // fcm token may not be available on first load, catch it here
+    console.log('!!!!!!!')
+
 });
+
+
 
 export default class App extends React.Component {
 
@@ -60,11 +69,21 @@ export default class App extends React.Component {
           'Setting a timer'
       ]
       this.FCMtoken = null
+      this.initialData =  FCM.initialData
+      
+  //    console.log('WIlllllllll')
+  //    console.log(this.initialData)
+  //    FCM.on(FCMEvent.Notification, (data) => console.log(FCMEvent.Notification))
 
       }
 
       componentDidMount() {
-        
+
+
+//169.254.131.121
+//dstBy6atatw:APA91bHdk1MrgeB675b8Xgu0DbbERAhhehpi19Cv3QFtInyHbS31rV0SXEeXsiSOO4B-2Q3cpmWG9bo5frH9mppPCzHWQYtIgOiN1KYlo2ppQInL79EF6py0CbwsxaRiAdJHft-eARpf
+        console.log('DidMOunt  FCM.on  - 2')
+
         if(Platform.OS ==='ios'){
           FCM.requestPermissions().then(()=>console.log('granted')).catch(()=>console.log('user rejected')); // for iOS
         }
@@ -72,6 +91,16 @@ export default class App extends React.Component {
               this.setState({isMounted: true, FCMtoken: token})
               // store fcm token in your server
           });
+
+          FCM.on(FCMEvent.Notification, async (notif) => {
+            
+              if (notif){
+                console.log(notif.screen)
+                this.setState({screen: notif.screen})
+              }
+          
+          });
+
           this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
               // do some component related stuff
           });
@@ -96,6 +125,7 @@ export default class App extends React.Component {
     }
 
     componentWillUnmount() {
+
         AppState.removeEventListener('change', this._handleAppStateChange.bind(this));
         // stop listening for events
         this.notificationListener.remove();
@@ -109,7 +139,7 @@ export default class App extends React.Component {
            }
         }
       }
-
+/*
     otherMethods(){
 
             FCM.subscribeToTopic('/topics/foo-bar');
@@ -174,13 +204,23 @@ export default class App extends React.Component {
                   //Error while deleting instance id
                 });
         }
-        render(){
-          if(this.state.isStoreLoading){
+        */
+
+     //   _onNotification(notif) {
+    //      console.log('_onNotification  - 3')
+    //      console.log(notif)
+    //    }
+
+        render()
+        {
+          if (this.state.screen){
+            return <Freebie onGoBack={()=> this.setState({screen: undefined})}/>
+          }else if(this.state.isStoreLoading){
             return <Text> </Text>
           }else if (this.state.isMounted){
             return (
               <Provider  store={this.state.store}>
-                <AppWithNavigationState FCMtoken={this.state.FCMtoken} />
+                <AppWithNavigationState FCMtoken={this.state.FCMtoken} screen={this.state.screen}/>
               </Provider>
             )
           } else {
