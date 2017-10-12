@@ -45,8 +45,8 @@ class _UserProfile extends Component {
     const bibleReadingNames = this.props.bibleReadingNames
 
     bibleReadingNames.map((item, index)=>{
-      console.log(item[0])
-      console.log(bibleReadingTitle)
+      //console.log(item[0])
+      //console.log(bibleReadingTitle)
       if (item[0] === bibleReadingTitle[0]) {
         this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item')) 
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
@@ -117,7 +117,6 @@ class _UserProfile extends Component {
 
     // check if session ex in the session...
  
-    console.log('ComponentWillMount of UserProfile container')
     firebase.database().ref('sessions/'+ eventSelected.host+'/').once("value", snapshot => {
       const session = snapshot.val();
 
@@ -148,7 +147,7 @@ class _UserProfile extends Component {
     firebase.database().ref('appUsers/'+ this.props.user.uid+'/').once("value", snapshot => {
       const appUser = snapshot.val();
       let bibleReadings = appUser.bibleReadings
-      console.log(bibleReadings)
+      //console.log(bibleReadings)
       let bibleReadingNames = appUser.bibleReadings
 
       if (bibleReadings){
@@ -182,8 +181,6 @@ class _UserProfile extends Component {
 
   render() {
     this.props.screen = this.props.navigation.screen
-    console.log('qqwedsafdsfdsfdfdfsdfsdfdfsdfdsfsdf')
-    console.log(this.props.screen)
 
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state

@@ -28,6 +28,7 @@
               <category android:name="android.intent.category.DEFAULT" />
           </intent-filter>
       </receiver>
+
    <service android:name="com.evollu.react.fcm.MessagingService" android:enabled="true" android:exported="true">
      <intent-filter>
        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
@@ -68,6 +69,10 @@
         android:screenOrientation="portrait"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:windowSoftInputMode="adjustResize">
+        <intent-filter>
+            <action android:name="fcm.ACTION.HELLO" />
+            <category android:name="android.intent.category.DEFAULT" />
+       </intent-filter>
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />

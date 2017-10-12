@@ -54,8 +54,6 @@ export default class FindSession extends React.Component {
 
     render(){
       const {locations, onAlphabetical, onClosest, buttonsStyle, onMoreChurches} = this.props
-
-      console.log(this.state)
       return(
       <View style={StyleSheet.window.default}>
         <Header 

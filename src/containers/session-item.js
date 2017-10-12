@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase'
 
 import {SessionItem} from '../windows'
+
 import * as ACTIONS from '../actions/actions/actions';
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 
 var myPosition = []
@@ -57,6 +59,8 @@ class _SessionItem extends Component {
           uid: userData.uid,
           FCMtoken: this.props.navigation.FCMtoken,
         })
+        FCM.subscribeToTopic(eventSelected.host);
+
         // update database appUser 
        this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
        this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
@@ -75,7 +79,7 @@ class _SessionItem extends Component {
             id: null
           },
         })
-
+    FCM.unsubscribeFromTopic(this.props.eventSelected.host);
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
     this.props.dispatch({type:'FindSessionAnimation'})

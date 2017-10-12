@@ -393,13 +393,7 @@ class _SignIn extends Component {
 
   }
 
-  componentWillReceiveProps(){
-    console.log('componentWillReceiveProps')
-  }
 
-  componentWillUpdate(){
-    console.log('componentWillUpdate')
-  }
   render() {
  
     const { navigate } = this.props.navigation
@@ -408,9 +402,6 @@ class _SignIn extends Component {
     const churches = this.props.churches               // from the store
     const coords = this.props.coords                   // from the store - current positions lng and lat 
     const activeTabName = this.props.app.activeTabName // from the store
-
-    console.log('SignIn Container')
-    console.log(this.props.state)
    
     const SignInScreen = () => <SignIn 
             onNext={(email, password)=> {

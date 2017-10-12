@@ -25,6 +25,8 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     }
     if(notif.opened_from_tray){
       //app is open/resumed because user clicked banner
+
+      console.log('opend tray')
     }
     // await someAsyncCall();
 
@@ -51,7 +53,53 @@ FCM.on(FCMEvent.RefreshToken, (token) => {
     console.log('!!!!!!!')
 
 });
+/**
+ * 
+ * 
+ *         var payload = {
+            notification: {
+              title: "Your youth session is on "+ eventData.meetingDay ,
+              body: "Session will start at "+ eventData.meetingTime,
+              click_action: "fcm.ACTION.HELLO"
+            },
+            "data":{
+              "screen":"doesntmatter"
+            }
 
+            let payload = {
+                data: {
+                  custom_notification: JSON.stringify({
+                    title: 'Your youth session is on '+ eventData.meetingDay ,
+                    body: 'Session will start at '+ eventData.meetingTime,
+                    show_in_foreground": true
+                    screen: doesntmatter"
+                    content_available: true
+                })
+              } 
+
+              {
+            let payload = { 
+                content_available: true,
+                data: { 
+                  show_in_foreground: true, 
+                  remote: true 
+                  screen: doesntmatter"
+                },
+                notification: {
+                  custom_notification: { 
+                    icon: 'icon_notification', 
+                    large_icon: 'ic_launcher' 
+                  },
+                  title: 'Title of your push notification',
+                  body: 'Body of your push notification'
+                  screen: doesntmatter"
+               },
+               priority: 'high' 
+            }
+}
+
+
+ */
 
 
 export default class App extends React.Component {
@@ -69,19 +117,23 @@ export default class App extends React.Component {
           'Setting a timer'
       ]
       this.FCMtoken = null
-      this.initialData =  FCM.initialData
+   
       
-  //    console.log('WIlllllllll')
-  //    console.log(this.initialData)
-  //    FCM.on(FCMEvent.Notification, (data) => console.log(FCMEvent.Notification))
 
       }
 
       componentDidMount() {
-
+        
+        FCM.getInitialNotification().then((notif)=>{
+          console.log("FCM.getInitialNotification");
+          console.log(notif)
+          if (notif){
+            console.log(notif.screen)
+            this.setState({screen: notif.screen})
+          }
+        });
 
 //169.254.131.121
-//dstBy6atatw:APA91bHdk1MrgeB675b8Xgu0DbbERAhhehpi19Cv3QFtInyHbS31rV0SXEeXsiSOO4B-2Q3cpmWG9bo5frH9mppPCzHWQYtIgOiN1KYlo2ppQInL79EF6py0CbwsxaRiAdJHft-eARpf
         console.log('DidMOunt  FCM.on  - 2')
 
         if(Platform.OS ==='ios'){
@@ -90,6 +142,8 @@ export default class App extends React.Component {
           FCM.getFCMToken().then(token => {
               this.setState({isMounted: true, FCMtoken: token})
               // store fcm token in your server
+              console.log('FCM TOKEN')
+              console.log(token)
           });
 
           FCM.on(FCMEvent.Notification, async (notif) => {
