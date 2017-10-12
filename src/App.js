@@ -225,6 +225,8 @@ export default class App extends React.Component {
                 show_in_foreground                                  // notification when app is in foreground (local & remote)
             });
 
+            // 'Your next session is on getDate it is at get time. 
+            
             FCM.scheduleLocalNotification({
                 fire_date: new Date().getTime(),      //RN's converter is used, accept epoch time and whatever that converter supports
                 id: "UNIQ_ID_STRING",    //REQUIRED! this is what you use to lookup and delete notification. In android notification with same ID will override each other

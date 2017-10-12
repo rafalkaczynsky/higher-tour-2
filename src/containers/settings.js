@@ -40,14 +40,13 @@ class _Settings extends Component {
 
     const loginStatus = this.props.app.loginStatus  // data from the store
     
-        if (loginStatus && loginStatus === 'loggedOut') {
-          this.props.dispatch({type: 'SignInOnHomeAnimation'})
-        } else if (loginStatus && loginStatus === 'loggedInPlus') {
-          this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
-        } else { 
-          this.props.dispatch({type: 'GotoWelcomeAnimation'})
-        }
-
+    if (loginStatus && loginStatus === 'loggedOut') {
+      this.props.dispatch({type: 'SignInOnHomeAnimation'})
+    } else if (loginStatus && loginStatus === 'loggedInPlus') {
+      this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+    } else { 
+        this.props.dispatch({type: 'GotoWelcomeAnimation'})
+      }
     }  
 
     handleOnBible(navigate, route){
@@ -69,11 +68,11 @@ class _Settings extends Component {
   }
   
   render() {
-    const buttonTextArray = {
-      signIn: this.state.signIn ? 'Sign Out' : 'Sign In', 
-      notificationsOn: this.state.notificationsOn ? 'Turn Off' : 'Turn On', 
-      locationOn: this.state.locationOn ? 'Turn Off' : 'Turn On'
-    }
+      const buttonTextArray = {
+        signIn: this.state.signIn ? 'Sign Out' : 'Sign In', 
+        notificationsOn: this.state.notificationsOn ? 'Turn Off' : 'Turn On', 
+        locationOn: this.state.locationOn ? 'Turn Off' : 'Turn On'
+      }
 
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
@@ -84,10 +83,6 @@ class _Settings extends Component {
      const activeTabName =this.props.app.activeTabName  // data from the store
      const loginStatus = this.props.app.loginStatus
 
-
-     console.log('Settings Container')
-     console.log(params)
-     console.log(this.props)
     return (
         <Settings 
           onHome={()=> this.handleOnHome()}  
@@ -104,7 +99,6 @@ class _Settings extends Component {
   }
 }
 
-
 function mapStateToProps(state){
   return({
       user: state.user,
@@ -112,7 +106,6 @@ function mapStateToProps(state){
       churches: state.churches,
       coords: state.coords,
       app: state.app,
-
   });
 }
 

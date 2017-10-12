@@ -166,18 +166,11 @@ class _UserProfile extends Component {
         this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES(bibleReadingNames));
       }
     })
-
-
   }
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
   }
-
-  componentWillUpdate(){
-
-  }
-
 
   render() {
     this.props.screen = this.props.navigation.screen
@@ -194,7 +187,6 @@ class _UserProfile extends Component {
     const bibleReadingNames = this.props.bibleReadingNames        
     const aaaSession = this.props.aaaSession                     
     const lastReadDayNumber = this.props.app.lastReadDayNumber  
-
     const appUserBibleReading = this.props.appUserBibleReading  
     const appUserBibleReadingNames =  this.props.appUserBibleReadingNames 
     

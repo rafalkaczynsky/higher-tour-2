@@ -44,28 +44,28 @@ class _SessionItem extends Component {
 
 
   handleOnStartSession(navigate, route, eventSelected){
-        console.log('on start session')
-        console.log(eventSelected)
-        const userData = this.props.user          
-        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
+    console.log('on start session')
+    console.log(eventSelected)
+    const userData = this.props.user          
+    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
 
-        firebaseDataAppUsers.update({
-          email: userData.email,
-          name: userData.displayName,
-          event: {
-            follow: true,
-            id: eventSelected.host
-          },
-          uid: userData.uid,
-          FCMtoken: this.props.navigation.FCMtoken,
-        })
-        FCM.subscribeToTopic(eventSelected.host);
+    firebaseDataAppUsers.update({
+      email: userData.email,
+      name: userData.displayName,
+      event: {
+        follow: true,
+        id: eventSelected.host
+      },
+      uid: userData.uid,
+      FCMtoken: this.props.navigation.FCMtoken,
+    })
+    FCM.subscribeToTopic(eventSelected.host);
 
-        // update database appUser 
-       this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
-       this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
-       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
-       this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
+    // update database appUser 
+    this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
+    this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
+    this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
+    this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
   }
 
   handleOnStopSession(navigate, route){

@@ -266,6 +266,18 @@ class _SignIn extends Component {
                     firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                       // .. get object and dispatch to the store 
                         const locationSelected = snapshot.val() 
+
+                        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                        firebaseDataAppUsers.update({
+                            email: user.email,
+                            name: user.displayName,
+                            event: {
+                                  follow: false,
+                            },
+                            uid: user.uid,
+                            FCMtoken: props.navigation.FCMtoken,
+                        })
+
                         props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                         props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                         props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
@@ -277,6 +289,17 @@ class _SignIn extends Component {
                   } else {
                     //... if doesnt follow ...
                     console.log('USER DOESNT FOLLOW EVENT!!!')
+                    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                    firebaseDataAppUsers.update({
+                        email: user.email,
+                        name: user.displayName,
+                        event: {
+                              follow: false,
+                        },
+                        uid: user.uid,
+                        FCMtoken: props.navigation.FCMtoken,
+                    })
+
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                     props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
@@ -326,6 +349,10 @@ class _SignIn extends Component {
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                     // .. get object and dispatch to the store 
                       const locationSelected = snapshot.val() 
+                      const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                      firebaseDataAppUsers.update({
+                          FCMtoken: props.navigation.FCMtoken,
+                      })
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
                       props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
                       props.dispatch(ACTIONS.SAVE_USER(user)) 
@@ -335,6 +362,10 @@ class _SignIn extends Component {
                 } else {
                   //... if doesnt follow ...
                   console.log('USER DOESNT FOLLOW EVENT!!!')
+                  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                  firebaseDataAppUsers.update({
+                      FCMtoken: props.navigation.FCMtoken,
+                  })
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
                   props.dispatch(ACTIONS.SAVE_USER(user)) 
                   props.dispatch({type: 'WelcomeAnimation' })
@@ -358,7 +389,6 @@ class _SignIn extends Component {
             }
 
             })
-   
         }
 
     } else {
@@ -368,7 +398,7 @@ class _SignIn extends Component {
     }
   })
     
-  }
+}
 
   componentWillMount(){
 
@@ -376,10 +406,7 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
   
-
     const { navigate } = this.props.navigation
-                         // if churches, events , bibleReading are not in the redux-store then...
-  
 
     this.handleInitialRedirect() 
 
