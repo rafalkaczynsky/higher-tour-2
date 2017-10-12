@@ -42,6 +42,49 @@ class _SessionItem extends Component {
     }
   }
 
+  calculateReminderDate(sessionDayName, sessionDayTime){
+    var d = new Date();
+
+    var weekday = new Array(7);
+    weekday[0] = "Sunday"
+    weekday[1] = "Monday"
+    weekday[2] = "Tuesday"
+    weekday[3] = "Wednesday"
+    weekday[4] = "Thursday"
+    weekday[5] = "Friday"
+    weekday[6] = "Saturday"
+
+    
+    var sessionDay = weekday.indexOf(sessionDayName) // is 5
+	  var reminderDay = null
+    
+	  if (sessionDay !== 0) {  
+    	reminderDay = sessionDay - 1
+    } else {
+    	reminderDay = 6
+    }
+
+    var sessionHour = parseInt(sessionDayTime)
+
+    const minutesIndxStart = sessionDayTime.indexOf(':')+1
+    const minutesIndxStop = sessionDayTime.indexOf(':')+ 3
+    var sessionMinute = parseInt(sessionDayTime.substring(minutesIndxStart ,minutesIndxStop))
+
+    const ampmIndxStart = sessionDayTime.length - 2 
+
+    var sessionAMPM = sessionDayTime.substring(ampmIndxStart)
+
+    if (sessionAMPM === 'PM') {
+      sessionHour += 12
+    }
+
+    d.setHours(sessionHour,sessionMinute,0,0);  
+
+    var reminderDate = d.setDate(d.getDate() + (reminderDay+7 - d.getDay())%7)
+
+    return reminderDate
+  }
+
 
   handleOnStartSession(navigate, route, eventSelected){
     console.log('on start session')
@@ -59,9 +102,22 @@ class _SessionItem extends Component {
       uid: userData.uid,
       FCMtoken: this.props.navigation.FCMtoken,
     })
-    FCM.subscribeToTopic(eventSelected.host);
 
-    // update database appUser 
+    FCM.subscribeToTopic(eventSelected.host);
+    const schedulNotifBody = "Your next session is on this " + eventSelected.meetingDay + " it is at " + eventSelected.meetingTime 
+   // 'Your next session is on getDate it is at get time. )
+
+    FCM.scheduleLocalNotification({
+      fire_date: this.calculateReminderDate(eventSelected.meetingDay, eventSelected.meetingTime),
+      id: "schedule_reminder_notif_01",
+      title: 'Session Reminder',
+      body: schedulNotifBody,
+      show_in_foreground: true,
+      priority: 'high',
+      repeat_interval: "week"
+    })
+
+   // update database appUser 
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
@@ -79,7 +135,8 @@ class _SessionItem extends Component {
             id: null
           },
         })
-    FCM.unsubscribeFromTopic(this.props.eventSelected.host);
+    FCM.unsubscribeFromTopic(this.props.eventSelected.host)
+    FCM.cancelAllLocalNotifications()
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
     this.props.dispatch({type:'FindSessionAnimation'})

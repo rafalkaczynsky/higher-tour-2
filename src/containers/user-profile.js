@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {View, ActivityIndicator, Dimensions} from 'react-native'
 import { connect } from 'react-redux'
 import * as firebase from 'firebase'
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 import {TabMenu} from '../components'
 import {UserProfile} from '../windows' 
@@ -170,6 +171,9 @@ class _UserProfile extends Component {
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
+
+    console.log('Schedule')
+    FCM.getScheduledLocalNotifications().then(notif=>console.log(notif));
   }
 
   render() {
