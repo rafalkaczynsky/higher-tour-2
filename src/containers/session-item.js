@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
-
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
+import {Linking} from 'react-native'
+ 
 import {SessionItem} from '../windows'
 
 import * as ACTIONS from '../actions/actions/actions';
-import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
+
 
 
 var myPosition = []
@@ -40,12 +42,14 @@ class _SessionItem extends Component {
       allSessions: '',
       locationSelected: {},
     }
+
+    this.handleOnTelPressed = this.handleOnTelPressed.bind(this)
   }
 
   calculateReminderDate(sessionDayName, sessionDayTime){
-    var d = new Date();
+    let d = new Date();
 
-    var weekday = new Array(7);
+    let weekday = new Array(7);
     weekday[0] = "Sunday"
     weekday[1] = "Monday"
     weekday[2] = "Tuesday"
@@ -54,9 +58,8 @@ class _SessionItem extends Component {
     weekday[5] = "Friday"
     weekday[6] = "Saturday"
 
-    
-    var sessionDay = weekday.indexOf(sessionDayName) // is 5
-	  var reminderDay = null
+    let sessionDay = weekday.indexOf(sessionDayName) // is 5
+	  let reminderDay = null
     
 	  if (sessionDay !== 0) {  
     	reminderDay = sessionDay - 1
@@ -64,15 +67,14 @@ class _SessionItem extends Component {
     	reminderDay = 6
     }
 
-    var sessionHour = parseInt(sessionDayTime)
-
+    let sessionHour = parseInt(sessionDayTime)
     const minutesIndxStart = sessionDayTime.indexOf(':')+1
     const minutesIndxStop = sessionDayTime.indexOf(':')+ 3
-    var sessionMinute = parseInt(sessionDayTime.substring(minutesIndxStart ,minutesIndxStop))
+    let sessionMinute = parseInt(sessionDayTime.substring(minutesIndxStart ,minutesIndxStop))
 
     const ampmIndxStart = sessionDayTime.length - 2 
 
-    var sessionAMPM = sessionDayTime.substring(ampmIndxStart)
+    let sessionAMPM = sessionDayTime.substring(ampmIndxStart)
 
     if (sessionAMPM === 'PM') {
       sessionHour += 12
@@ -80,7 +82,7 @@ class _SessionItem extends Component {
 
     d.setHours(sessionHour,sessionMinute,0,0);  
 
-    var reminderDate = d.setDate(d.getDate() + (reminderDay+7 - d.getDay())%7)
+    let reminderDate = d.setDate(d.getDate() + (reminderDay+7 - d.getDay())%7)
 
     return reminderDate
   }
@@ -125,16 +127,16 @@ class _SessionItem extends Component {
   }
 
   handleOnStopSession(navigate, route){
-        // appData database appUser
-        const userData = this.props.user          
-        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
+    // appData database appUser
+    const userData = this.props.user          
+    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
 
-        firebaseDataAppUsers.update({
-          event: {
-            follow: false,
-            id: null
-          },
-        })
+    firebaseDataAppUsers.update({
+      event: {
+        follow: false,
+        id: null
+      },
+    })
     FCM.unsubscribeFromTopic(this.props.eventSelected.host)
     FCM.cancelAllLocalNotifications()
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
@@ -166,6 +168,18 @@ class _SessionItem extends Component {
     this.props.dispatch({type: 'GotoChurchItemAnimation'})
   }
 
+  handleOnTelPressed(telephone){
+    if (telephone) Linking.openURL("tel:"+telephone)
+  }
+
+  handleOnWebPressed(website){
+    if (website) Linking.openURL(website)
+  }
+
+  handleOnEmailPressed(email){
+    if (email) Linking.openURL("mailto://"+email)
+  }
+
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
   }
@@ -183,11 +197,11 @@ class _SessionItem extends Component {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events                // data from the store
-    const userData = this.props.user                   // data from the store
-    const activeTabName =this.props.app.activeTabName  // data from the store
-    const eventSelected  =this.props.eventSelected     // data from the store
-    const loginStatus  = this.props.app.loginStatus   //
+    const locations = this.props.events               
+    const userData = this.props.user                   
+    const activeTabName =this.props.app.activeTabName 
+    const eventSelected  =this.props.eventSelected     
+    const loginStatus  = this.props.app.loginStatus   
     const churchSelected = this.props.selectedChurch
 
     return (
@@ -195,6 +209,9 @@ class _SessionItem extends Component {
           onHome={()=> this.handleOnHome(navigate)}
           onSettings={()=> this.handleOnSettings()}
           onBible={()=> this.handleOnBible(navigate)}
+          onTelPressed={(telephone)=> this.handleOnTelPressed(telephone)}
+          onEmailPressed={(email)=> this.handleOnEmailPressed(email)}
+          onWebPressed={(website)=> this.handleOnWebPressed(website)}
           myPosition={myPosition[0]}
           location={eventSelected}
           churchSelected={churchSelected}

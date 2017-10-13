@@ -408,16 +408,14 @@ class _SignIn extends Component {
   
     const { navigate } = this.props.navigation
 
-    this.handleInitialRedirect() 
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
       }
     );
 
+    this.handleInitialRedirect() 
     
-
   }
 
 

@@ -47,7 +47,20 @@ export default class SessionItem extends React.Component {
     }
     
     render(){
-    const {onSettings, location, onStartSession, cancelLabel, onStopSession, onHome, onBible, churchSelected, onHostPressed} = this.props
+    const {
+        onSettings, 
+        location, 
+        onStartSession, 
+        cancelLabel, 
+        onStopSession, 
+        onHome, 
+        onBible, 
+        churchSelected, 
+        onHostPressed,
+        onTelPressed,
+        onWebPressed,
+        onEmailPressed,
+    } = this.props
 
     const coordinate = {
         latitude: location.geoLoc.latitude,
@@ -107,26 +120,35 @@ export default class SessionItem extends React.Component {
                         Location
                     </Text>
                     <Text>
-                        {location.address.firstLane}
+                        {location.address.firstLine}
                     </Text>
                     <Text>
-                        {location.address.city} {location.address.postCode}
+                        {location.address.secondline}
+                    </Text>
+                    <Text>
+                        {location.address.city} {location.address.postcode}
                     </Text>
                 </View>
 
                 <View style={{margin: 10}}>
                     <Text style={{fontWeight: 'bold'}}>
-                        Contact:  <Text style={{fontWeight: 'normal'}}>{location.contact}</Text>
+                        Contact:  <Text style={{fontWeight: 'normal'}}>{location.contactPerson}</Text>
                     </Text>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Telephone:  <Text style={{fontWeight: 'normal'}}>{location.telephone}</Text>
-                    </Text>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Email:  <Text style={{fontWeight: 'normal'}}>{location.email}</Text>
-                    </Text>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Website:  <Text style={{fontWeight: 'normal'}}>{location.website}</Text>
-                    </Text>
+                    <TouchableOpacity onPress={()=> onTelPressed(location.telephone)}>
+                        <Text style={{fontWeight: 'bold'}}>
+                            Telephone:  <Text style={{fontWeight: 'normal'}}>{location.telephone}</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> onEmailPressed(location.email)}>
+                        <Text style={{fontWeight: 'bold'}}>
+                            Email:  <Text style={{fontWeight: 'normal'}}>{location.email}</Text>
+                         </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> onWebPressed(location.website)}>
+                        <Text style={{fontWeight: 'bold'}}>
+                            Website:  <Text style={{fontWeight: 'normal'}}>{location.website}</Text>
+                        </Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{margin: 10}}>
@@ -134,11 +156,7 @@ export default class SessionItem extends React.Component {
                         <Text style={{fontWeight: 'bold'}}>
                             Host:  <Text style={{fontWeight: 'normal'}}>{location.name}</Text>
                         </Text>
-                    </TouchableOpacity>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Next session:  <Text style={{fontWeight: 'normal'}}>{location.nextSession}</Text>
-                    </Text>
-                
+                    </TouchableOpacity>     
                 </View>
 
                 <Button 

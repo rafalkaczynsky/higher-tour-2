@@ -47,7 +47,18 @@ export default class ChurchItem extends React.Component {
     }
     
     render(){
-    const {onSettings,  onHome, onBible, onGoToWebsite, onGoBack, church, loginStatus} = this.props
+    const {
+        onSettings,  
+        onHome, 
+        onBible, 
+        onGoToWebsite, 
+        onGoBack, 
+        church, 
+        loginStatus,
+        onTelPressed,
+        onWebPressed,
+        onEmailPressed,
+    } = this.props
 
     const coordinate = {
         latitude: church.geoLoc.latitude,
@@ -120,29 +131,32 @@ export default class ChurchItem extends React.Component {
                         {church.address.city} {church.address.postCode}
                     </Text>
                 </View>
-
                 <View style={{margin: 10}}>
                     <Text style={{fontWeight: 'bold'}}>
-                        Contact:  <Text style={{fontWeight: 'normal'}}>{church.contact}</Text>
+                        Contact:  <Text style={{fontWeight: 'normal'}}>{church.contactPerson}</Text>
                     </Text>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Telephone:  <Text style={{fontWeight: 'normal'}}>{church.telephone}</Text>
-                    </Text>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Email:  <Text style={{fontWeight: 'normal'}}>{church.email}</Text>
-                    </Text>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Website:  <Text style={{fontWeight: 'normal'}}>{church.website}</Text>
-                    </Text>
+                    <TouchableOpacity onPress={()=> onTelPressed(church.telephone)}>
+                        <Text style={{fontWeight: 'bold'}}>
+                            Telephone:  <Text style={{fontWeight: 'normal'}}>{church.telephone}</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> onEmailPressed(church.email)}>
+                        <Text style={{fontWeight: 'bold'}}>
+                            Email:  <Text style={{fontWeight: 'normal'}}>{church.email}</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> onWebPressed(church.website)}>
+                        <Text style={{fontWeight: 'bold'}}>
+                            Website:  <Text style={{fontWeight: 'normal'}}>link to website</Text>
+                        </Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{margin: 10}}>
                     <Text style={{fontWeight: 'bold'}}>
                         Host:  <Text style={{fontWeight: 'normal'}}>{church.name}</Text>
                     </Text>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Next session:  <Text style={{fontWeight: 'normal'}}>{church.nextSession}</Text>
-                    </Text>
+
                 </View>
 
                 <Button 

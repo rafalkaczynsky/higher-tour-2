@@ -42,7 +42,13 @@ class _ChurchItem extends Component {
   }
 
   handleOnGoBack(){
-    this.props.dispatch({type: 'SessionItemAnimation'})
+    const loginStatus = this.props.app.loginStatus
+
+    if (loginStatus === 'loggedInPlus') {
+      this.props.dispatch({type: 'SessionItemAnimation'})
+     } else {
+      this.props.dispatch({type: 'FindChurchesAnimation'})
+     }
   }
 
   handleOnSettings(navigate, from){
@@ -63,7 +69,19 @@ class _ChurchItem extends Component {
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
     this.props.dispatch({ type: 'BibleAnimation' }) 
   }
- 
+
+  handleOnTelPressed(telephone){
+    if (telephone) Linking.openURL("tel:"+telephone)
+  }
+
+  handleOnWebPressed(website){
+    if (website) Linking.openURL(website)
+  }
+
+  handleOnEmailPressed(email){
+    if (email) Linking.openURL("mailto://"+email)
+  }
+
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
@@ -85,6 +103,9 @@ class _ChurchItem extends Component {
           onSettings={()=> this.handleOnSettings(navigate)}
           onGoBack={()=> this.handleOnGoBack()}
           onBible={()=> this.handleOnBible(navigate)}
+          onTelPressed={(telephone)=> this.handleOnTelPressed(telephone)}
+          onEmailPressed={(email)=> this.handleOnEmailPressed(email)}
+          onWebPressed={(website)=> this.handleOnWebPressed(website)}
           loginStatus={loginStatus}
           myPosition={myPosition[0]}
           church={churchSelected}

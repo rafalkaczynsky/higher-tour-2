@@ -272,7 +272,7 @@ export default class App extends React.Component {
           if (this.state.screen){
             return <Freebie onGoBack={()=> this.setState({screen: undefined})}/>
           }else if(this.state.isStoreLoading){
-            return <Text> </Text>
+            return <Text>store is loading... </Text>
           }else if (this.state.isMounted){
             return (
               <Provider  store={this.state.store}>
@@ -280,7 +280,7 @@ export default class App extends React.Component {
               </Provider>
             )
           } else {
-            return <Text> </Text>
+            return <Text>Wait ... </Text>
           }
         }
 }
