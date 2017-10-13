@@ -121,43 +121,60 @@ export default class ChurchItem extends React.Component {
                     style={{flex: 1}}
                 />
                 <View style={{margin: 10}}>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Location
-                    </Text>
-                    <Text>
-                        {church.address.firstLane}
-                    </Text>
-                    <Text>
-                        {church.address.city} {church.address.postCode}
-                    </Text>
-                </View>
-                <View style={{margin: 10}}>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Contact:  <Text style={{fontWeight: 'normal'}}>{church.contactPerson}</Text>
-                    </Text>
-                    <TouchableOpacity onPress={()=> onTelPressed(church.telephone)}>
-                        <Text style={{fontWeight: 'bold'}}>
-                            Telephone:  <Text style={{fontWeight: 'normal'}}>{church.telephone}</Text>
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> onEmailPressed(church.email)}>
-                        <Text style={{fontWeight: 'bold'}}>
-                            Email:  <Text style={{fontWeight: 'normal'}}>{church.email}</Text>
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> onWebPressed(church.website)}>
-                        <Text style={{fontWeight: 'bold'}}>
-                            Website:  <Text style={{fontWeight: 'normal'}}>link to website</Text>
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                <Text style={{fontWeight: 'bold'}}>
+                    Location
+                </Text>
+                <Text>
+                    {church.address.firstLine}
+                </Text>
+                <Text>
+                    {church.address.city} {church.address.postcode}
+                </Text>
+            </View>
 
-                <View style={{margin: 10}}>
+            <View style={{margin: 10}}>
+                <Text style={{fontWeight: 'bold'}}>
+                    Contact:  <Text style={{fontWeight: 'normal'}}>{church.contactPerson}</Text>
+                </Text>
+                <TouchableOpacity style={{marginTop: 5}} onPress={()=> onTelPressed(church.telephone)}>
                     <Text style={{fontWeight: 'bold'}}>
-                        Host:  <Text style={{fontWeight: 'normal'}}>{church.name}</Text>
+                        Telephone:  
+                        <Text style={{fontWeight: 'normal'}}>
+                       {' ' + church.telephone + ' '}        
+                        </Text>
+                        <Icon 
+                            name="externalLink"
+                            style={{width: 30, height: 30}}
+                        />
                     </Text>
 
-                </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{marginTop: 5}} onPress={()=> onEmailPressed(church.email)}>
+                    <Text style={{fontWeight: 'bold'}}>
+                        Email:  
+                        <Text style={{fontWeight: 'normal'}}>
+                            {' ' + church.email + ' '}
+                        </Text>
+                        <Icon 
+                            name="externalLink"
+                            style={{width: 30, height: 30}}
+                        />
+                     </Text>
+                </TouchableOpacity>
+
+            </View>
+
+            <View style={{margin: 10}}>
+                 <TouchableOpacity style={{marginTop: 5}} onPress={()=> onWebPressed(church.website)}>
+                    <Text style={{fontWeight: 'bold'}}>
+                        Visit Website {' '}
+                        <Icon 
+                            name="externalLink"
+                            style={{width: 30, height: 30}}
+                        />
+                    </Text>
+                </TouchableOpacity>
+            </View>
 
                 <Button 
                     type="default"

@@ -123,9 +123,6 @@ export default class SessionItem extends React.Component {
                         {location.address.firstLine}
                     </Text>
                     <Text>
-                        {location.address.secondline}
-                    </Text>
-                    <Text>
                         {location.address.city} {location.address.postcode}
                     </Text>
                 </View>
@@ -134,39 +131,55 @@ export default class SessionItem extends React.Component {
                     <Text style={{fontWeight: 'bold'}}>
                         Contact:  <Text style={{fontWeight: 'normal'}}>{location.contactPerson}</Text>
                     </Text>
-                    <TouchableOpacity onPress={()=> onTelPressed(location.telephone)}>
+                    <TouchableOpacity style={{marginTop: 5}} onPress={()=> onTelPressed(location.telephone)}>
                         <Text style={{fontWeight: 'bold'}}>
-                            Telephone:  <Text style={{fontWeight: 'normal'}}>{location.telephone}</Text>
+                            Telephone:  
+                            <Text style={{fontWeight: 'normal'}}>
+                           {' ' + location.telephone + ' '}        
+                            </Text>
+                            <Icon 
+                                name="externalLink"
+                                style={{width: 30, height: 30}}
+                            />
                         </Text>
+    
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> onEmailPressed(location.email)}>
+                    <TouchableOpacity style={{marginTop: 5}} onPress={()=> onEmailPressed(location.email)}>
                         <Text style={{fontWeight: 'bold'}}>
-                            Email:  <Text style={{fontWeight: 'normal'}}>{location.email}</Text>
+                            Email:  
+                            <Text style={{fontWeight: 'normal'}}>
+                                {' ' + location.email + ' '}
+                            </Text>
+                            <Icon 
+                                name="externalLink"
+                                style={{width: 30, height: 30}}
+                            />
                          </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> onWebPressed(location.website)}>
-                        <Text style={{fontWeight: 'bold'}}>
-                            Website:  <Text style={{fontWeight: 'normal'}}>{location.website}</Text>
-                        </Text>
-                    </TouchableOpacity>
+
                 </View>
 
                 <View style={{margin: 10}}>
-                    <TouchableOpacity onPress={onHostPressed}>
+                     <TouchableOpacity style={{marginTop: 5}} onPress={()=> onWebPressed(location.website)}>
                         <Text style={{fontWeight: 'bold'}}>
-                            Host:  <Text style={{fontWeight: 'normal'}}>{location.name}</Text>
+                            Visit Website {' '}
+                            <Icon 
+                                name="externalLink"
+                                style={{width: 30, height: 30}}
+                            />
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity  style={{marginTop: 5}} onPress={onHostPressed}>
+                        <Text style={{fontWeight: 'bold'}}>
+                            View Host Church {' '}
+                            <Icon 
+                                name="externalLink"
+                                style={{width: 30, height: 30}}
+                            />
                         </Text>
                     </TouchableOpacity>     
                 </View>
 
-                <Button 
-                    type="default"
-                    text={cancelLabel ? "Stop Session" : 'Start session'}
-                    bgColor={cancelLabel ? "brown" : null}
-                    textColor={cancelLabel ? "white" : null}
-                    onPress={cancelLabel ? ()=> onStopSession() : ()=> onStartSession(location)}
-                    style={{flex: 1}}
-                />
                 </View>
                 </ScrollView>
             

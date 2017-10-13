@@ -32,15 +32,73 @@ export default class Read extends Component {
 
   render() {
  
-    const {userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
+    const {
+      userData, 
+      itemDay, 
+      currentReadingDayNumber, 
+      onItemNextPressed, 
+      onItemBackPressed,
+      fromNotification
+    } = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
     let mainImage
     let versus
     let content
+ 
+    /**
+     *  onItemBackPressed={()=> this.setState({screen: undefined})}
+        onItemNextPressed={()=> alert('Next pressed!')}
+        itemDay={bibleReadingItem[this.state.lastReadDayNumber]}
+        fromNotification={true}         
+     * 
+     */
+
+    if (this.state.isMounted){
+      if ((itemDay) && (fromNotification)) return (
+      
+      <View style={StyleSheet.window.default}>
+        <Header 
+          text='Read'
+          onBack
+          onNext
+          onBackCallback={onItemBackPressed}
+          onNextCallback={onItemNextPressed}
+        />
+
+        <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
+          <View style={{backgroundColor: 'white', width: '100%'}}>
     
-  return (
+            <View style={{width: '100%'}}>
+              <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
+            </View>
+            <View style={{padding: 20}}>
+              <View>
+                <Text style={{ fontSize: 12, lineHeight: 18}}>DAY {currentReadingDayNumber}</Text>
+                <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
+                  <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Verse}</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{marginTop: 30}}>
+              <Text style={{ fontSize: 12, lineHeight: 18}}>
+                 {itemDay.Read.Content}
+              </Text>
+            </View>
+            </View>
+          </View>
+
+        </View>
+        <Button 
+          type="default"
+          text={'GO BACK'}
+          onPress={onItemBackPressed}
+          style={{flex: 1}}
+        />
+      </View>)
+
+   else if (!fromNotification) {
+     return (
            
   <View style={StyleSheet.window.default}>
   <Header 
@@ -80,5 +138,8 @@ export default class Read extends Component {
   />
   </View>
   )
+} else return null
+
+} else return null
 }
 }

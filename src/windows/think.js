@@ -9,34 +9,15 @@ import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../compon
 export default class Think extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      dayItem: null,
-      isMounted: true,
-    }
   }
 
-  componentWillMount(){
-    this.setState({
-      dayItem: this.props.dayItem
-    })
-  }
-
-  componentDidMount(){
-    this.setState({
-      isMounted:  true
-    })
-  }
 
   render() {
-    const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed} = this.props
+    const { itemDay, onItemNextPressed, onItemBackPressed, onGoToApp} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
-
-    let mainImage
-    let versus
-    let content
-    
+  
 return (      
   <View style={StyleSheet.window.default}>
 
@@ -60,11 +41,20 @@ return (
       </View>
 
   </View>
+  {this.props.fromNotification &&
+  <Button 
+    type="default"
+    text={'GO TO APP'}
+    onPress={onGoToApp}
+    style={{flex: 1}}
+  />
+  }
+  {!this.props.fromNotification &&
   <TabMenu 
     onSettings={this.props.onSettings}
     onHome={this.props.onHome}
     activeTabName={this.props.activeTabName}
-  />
+  />}
   </View>
   )}
 }

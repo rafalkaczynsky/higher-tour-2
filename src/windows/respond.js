@@ -28,7 +28,7 @@ export default class Respond extends Component {
   }
 
   render() {
-    const { locations, userData, itemDay, currentReadingDayNumber, onWeekBackPressed, week, onItemNextPressed, onItemBackPressed, onGoBack} = this.props
+    const {itemDay, onItemNextPressed, onItemBackPressed, onGoToApp, onGoBack} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
@@ -76,21 +76,31 @@ return (
               </Text>
           </View>
       </View>
+      {!this.props.fromNotification &&
       <Button 
         type="default"
         text={'GO HOME'}
         onPress={onGoBack}
         style={{flex: 1}}
-      />
+      />}
   </View>
 
 </View>
 
-  <TabMenu 
-    onSettings={this.props.onSettings}
-    onHome={this.props.onHome}
-    activeTabName={this.props.activeTabName}
-  />
+{this.props.fromNotification &&
+<Button 
+  type="default"
+  text={'GO TO APP'}
+  onPress={onGoToApp}
+  style={{flex: 1}}
+/>
+}
+{!this.props.fromNotification &&
+<TabMenu 
+  onSettings={this.props.onSettings}
+  onHome={this.props.onHome}
+  activeTabName={this.props.activeTabName}
+/>}
   </View>
   )}
 }

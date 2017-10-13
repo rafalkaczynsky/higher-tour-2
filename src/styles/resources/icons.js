@@ -16,4 +16,5 @@ export default {
     "facebookActive": require('./icons/facebookActive.png'),
     "googleActive": require('./icons/gmailActive.png'),
     "twitterActive": require('./icons/twitterActive.png'), 
+    "externalLink": require('./icons/externalLink.png'), 
 }
