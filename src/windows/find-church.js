@@ -122,7 +122,7 @@ export default class FindChurch extends React.Component {
               </TouchableOpacity>
               )}
               <ListItem
-                title="See more sessions"
+                title="Find by churches"
                 bgColor={colors.grey3}
                 borderBold
                 handleIconPressed={this.props.onMoreSession}

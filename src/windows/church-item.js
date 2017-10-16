@@ -71,7 +71,8 @@ export default class ChurchItem extends React.Component {
       <View style={StyleSheet.window.default}>
         <Header 
           text={church.name}
-          simple
+          onBack
+          onBackCallback={onGoBack}
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={{width: '100%', height: '30%'}}>
@@ -107,7 +108,7 @@ export default class ChurchItem extends React.Component {
 
                 <Button 
                     type="default"
-                    text={'GO TO SESSION'}
+                    text={'SEE SESSION'}
                     onPress={onGoToSession}
                     style={{flex: 1}}
                 />
@@ -166,13 +167,14 @@ export default class ChurchItem extends React.Component {
                     </Text>
                 </TouchableOpacity>
             </View>
-
+             {/*}
                 <Button 
                     type="default"
                     text={loginStatus === 'loggedInPlus' ? 'GO BACK' : 'SEE MORE CHURCHES'}
                     onPress={onGoBack}
                     style={{flex: 1}}
-                />
+                />*/}
+
                 </View>
                 </ScrollView>
             
