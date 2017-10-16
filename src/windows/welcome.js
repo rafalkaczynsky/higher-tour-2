@@ -53,13 +53,6 @@ export default class SignIn extends Component {
                 handleIconPressed={()=> onMoreSession()}
                 
               />
-              <ListItem
-                title="Find a church"
-                bgColor={colors.grey3}
-                borderBold
-                handleIconPressed={()=> onFindChurch()}
-                
-              />
             </ScrollView>
             
         </View>
