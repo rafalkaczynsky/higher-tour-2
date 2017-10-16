@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {HigherBibleReadings} from '../windows'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
-
+import { NavigationActions } from 'react-navigation'
 
 import * as ACTIONS from '../actions/actions/actions';
 
@@ -104,6 +104,10 @@ class _HigherBibleReadings extends Component {
           bgColor: 'transparent',
         }]
       })
+  }
+
+  handleOnGoBack(){
+    this.props.navigation.dispatch(NavigationActions.back())
   }
 
   handleOnItem(itemBibleReading, bibleReadingTitle){
@@ -220,6 +224,7 @@ class _HigherBibleReadings extends Component {
           onAll={()=> this.handleOnAll()}
           onAvailable={()=> this.handleOnAvailable()}
           showAll={this.state.showAll}
+          onGoBack={()=> this.handleOnGoBack()}
           onItemBackPressed={()=> this.handleonItemBackPressed()}
           lastReadDayNumber={this.props.app.lastReadDayNumber}
           currentScreen={bibleReadingScreenStatus}

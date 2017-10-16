@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 
 import * as ACTIONS from '../actions/actions/actions';
 import {FindSession} from '../windows'
@@ -22,6 +23,11 @@ class _FindSession extends Component {
         ]
     }
   }
+
+  handleOnGoBack(){
+    this.props.navigation.dispatch(NavigationActions.back())
+  }
+  
 
   handleOnItem(locationSelected){
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
@@ -47,7 +53,6 @@ class _FindSession extends Component {
         }
       ]
     })
-
   }
 
   handleOnClosest(locations){
@@ -101,6 +106,7 @@ class _FindSession extends Component {
           buttonsStyle={this.state.buttonsStyle}
           locations={locations}
           churchName={churchName}
+          onGoBack={()=> this.handleOnGoBack()}
           onMoreChurches={()=> this.props.dispatch({type: 'FindChurchesAnimation'})}
           onAlphabetical={()=> this.handleOnAlphabetical(locations)}
           onClosest={()=> this.handleOnClosest(locations)}

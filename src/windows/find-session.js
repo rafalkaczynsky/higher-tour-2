@@ -53,12 +53,13 @@ export default class FindSession extends React.Component {
   }
 
     render(){
-      const {locations, onAlphabetical, onClosest, buttonsStyle, onMoreChurches} = this.props
+      const {locations, onAlphabetical, onClosest, buttonsStyle, onMoreChurches,onGoBack} = this.props
       return(
       <View style={StyleSheet.window.default}>
         <Header 
           text='Find a session'
-          simple
+          onBack
+          onBackCallback={onGoBack}
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={{width: '100%', height: '30%'}}>

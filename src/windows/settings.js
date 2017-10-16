@@ -12,7 +12,7 @@ export default class Settings extends Component {
   }
 
   render() {
-    const {userData, loginStatus} = this.props
+    const {userData, loginStatus, onGoBack} = this.props
 
     let userText = ''
     if (loginStatus !== 'loggedOut'){
@@ -28,7 +28,8 @@ export default class Settings extends Component {
       <View style={StyleSheet.window.default}>
         <Header 
           text='Settings'
-          simple
+          onBack
+          onBackCallback={onGoBack}
         />
         <ScrollView style={{width: '100%'}}>
         <View style={StyleSheet.settings.container}>
@@ -74,7 +75,7 @@ export default class Settings extends Component {
         <TabMenu 
             onHome={this.props.onHome}
             onBible={this.props.onBible}
-            activeTabName={this.props.activeTabName}
+            activeTabName={'Settings'}
         /> 
       </View>
     )

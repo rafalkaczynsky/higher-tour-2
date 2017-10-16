@@ -60,6 +60,7 @@ export default class SessionItem extends React.Component {
         onTelPressed,
         onWebPressed,
         onEmailPressed,
+        onGoBack,
     } = this.props
 
     const coordinate = {
@@ -72,7 +73,8 @@ export default class SessionItem extends React.Component {
       <View style={StyleSheet.window.default}>
         <Header 
           text={location.name}
-          simple
+          onBack
+          onBackCallback={onGoBack}
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={{width: '100%', height: '30%'}}>

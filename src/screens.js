@@ -73,6 +73,9 @@ let TransitionConfiguration = () => {
   }
 };
 
+//if we are not Follow , and loginStatus === loggedInPlus
+
+// if logginStatus === loggedIn cant goBack to UserProfile
 
 let noAnimation = () => ({
   transitionSpec: {
@@ -99,7 +102,10 @@ export const AppNavigator = StackNavigator({
 },{ 
   headerMode: 'none', 
   initialRouteName: 'SignIn',
-  transitionConfig: TransitionConfiguration 
+  transitionConfig: TransitionConfiguration,
+  navigationOptions: {
+    gesturesEnabled: false
+  }
 });
 
 const AppWithNavigationState = ({ dispatch, nav , FCMtoken, screen}) => 

@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase'
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import {Linking} from 'react-native'
- 
+
+import { NavigationActions } from 'react-navigation'
+
 import {SessionItem} from '../windows'
 
 import * as ACTIONS from '../actions/actions/actions';
@@ -141,7 +143,8 @@ class _SessionItem extends Component {
     FCM.cancelAllLocalNotifications()
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
-    this.props.dispatch({type:'FindSessionAnimation'})
+    //this.props.dispatch({type:'FindSessionAnimation'})
+    this.props.dispatch({type: 'Navigation/RESET', index: 0, actions: [{ type: 'Navigate', routeName:'Welcome'}]})
   }
 
   handleOnSettings(){
@@ -180,6 +183,16 @@ class _SessionItem extends Component {
     if (email) Linking.openURL("mailto://"+email)
   }
 
+  handleOnGoBack(){
+    this.props.navigation.dispatch(NavigationActions.back())
+/*    const loginStatus  = this.props.app.loginStatus   
+
+    if (loginStatus === 'loggedIn'){
+      this.props.dispatch({type: 'FindSessionAnimation'})
+    } else {//                  
+      this.props.dispatch({type: 'UserProfileOnStartSessionAnimation'})
+    }*/
+  }
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
   }
@@ -212,6 +225,7 @@ class _SessionItem extends Component {
           onTelPressed={(telephone)=> this.handleOnTelPressed(telephone)}
           onEmailPressed={(email)=> this.handleOnEmailPressed(email)}
           onWebPressed={(website)=> this.handleOnWebPressed(website)}
+          onGoBack={()=> this.handleOnGoBack()}
           myPosition={myPosition[0]}
           location={eventSelected}
           churchSelected={churchSelected}

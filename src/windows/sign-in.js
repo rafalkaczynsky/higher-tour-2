@@ -177,7 +177,7 @@ class SignIn extends Component {
         <TabMenu
           onSettings={onSettings}
           onBible={onBible}
-          activeTabName={this.props.activeTabName}
+          activeTabName={'Home'}
         />
       </View>
     )

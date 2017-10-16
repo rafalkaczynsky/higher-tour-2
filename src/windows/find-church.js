@@ -54,12 +54,13 @@ export default class FindChurch extends React.Component {
   }
 
     render(){
-      const {onAlphabetical, onClosest, buttonsStyle, churches} = this.props
+      const {onAlphabetical, onClosest, buttonsStyle, churches, onGoBack} = this.props
       return(
       <View style={StyleSheet.window.default}>
         <Header 
           text='Find a church'
-          simple
+          onBack
+          onBackCallback={onGoBack}
         />
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={{width: '100%', height: '30%'}}>
@@ -122,7 +123,7 @@ export default class FindChurch extends React.Component {
               </TouchableOpacity>
               )}
               <ListItem
-                title="Find by churches"
+                title="Find by session"
                 bgColor={colors.grey3}
                 borderBold
                 handleIconPressed={this.props.onMoreSession}

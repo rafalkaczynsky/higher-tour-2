@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 
 import * as ACTIONS from '../actions/actions/actions';
 import {FindChurch} from '../windows'
@@ -23,6 +24,11 @@ class _FindChurch extends Component {
     }
 
   }
+
+  handleOnGoBack(){
+    this.props.navigation.dispatch(NavigationActions.back())
+  }
+  
 // do actions for SAVE_SELECTED_CHURCH 
   handleOnItem(navigate, churchSelected){
     this.props.dispatch(ACTIONS.SAVE_SELECTED_CHURCH(churchSelected))
@@ -103,6 +109,7 @@ class _FindChurch extends Component {
           onItem={(churchSelected)=> this.handleOnItem(navigate, churchSelected)}
           buttonsStyle={this.state.buttonsStyle}
           churches={churches}
+          onGoBack={()=> this.handleOnGoBack()}
           onHome={()=> this.props.dispatch({type: 'FindSessionAnimation'})}
           onMoreSession={()=> this.props.dispatch({type: 'FindSessionAnimation'})}
           onAlphabetical={()=> this.handleOnAlphabetical(churches)}

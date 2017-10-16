@@ -43,6 +43,7 @@ class HigherBibleReadings extends React.Component {
         showAll,
         onAll,
         onAvailable,
+        onGoBack,
       } = this.props
 
       const userData = this.props.user                // data from the store
@@ -54,8 +55,8 @@ class HigherBibleReadings extends React.Component {
       return(
       <View style={StyleSheet.window.default}>
         <Header 
-          onBack={currentScreen === 'item'}
-          onBackCallback={onItemBackPressed}
+          onBack
+          onBackCallback={currentScreen === 'item' ? onItemBackPressed : onGoBack}
           text='Higher Bible Readings'
           
         />
@@ -127,7 +128,7 @@ class HigherBibleReadings extends React.Component {
         <TabMenu 
           onSettings={this.props.onSettings}
           onHome={this.props.onHome}
-          activeTabName={this.props.activeTabName}
+          activeTabName={'Bible'}
         /> 
       </View>
         )

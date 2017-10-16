@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import _Firebase from '../actions/firebase';
 import {Settings} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
+import { NavigationActions } from 'react-navigation'
 
 class _Settings extends Component {
   constructor(props){
@@ -49,10 +50,13 @@ class _Settings extends Component {
       }
     }  
 
-    handleOnBible(navigate, route){
+  handleOnBible(navigate, route){
       this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
       this.props.dispatch({ type: 'BibleAnimation' }) 
   } 
+  handleOnGoBack(){
+    this.props.navigation.dispatch(NavigationActions.back())
+  }
   
 
   componentDidMount(){
@@ -88,6 +92,7 @@ class _Settings extends Component {
           onHome={()=> this.handleOnHome()}  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
           onSignOut={() => this.handleLogOut(navigate, 'SignIn')}
+          onGoBack={()=> this.handleOnGoBack()}
           userData={userData}
           loginStatus={loginStatus}
           onNotifications={() => this.handleNotification()}  
