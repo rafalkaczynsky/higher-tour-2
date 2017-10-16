@@ -79,7 +79,7 @@ return (
       {!this.props.fromNotification &&
       <Button 
         type="default"
-        text={'GO HOME'}
+        text={'DONE'}
         onPress={onGoBack}
         style={{flex: 1}}
       />}
@@ -90,7 +90,7 @@ return (
 {this.props.fromNotification &&
 <Button 
   type="default"
-  text={'GO TO APP'}
+  text={'DONE'}
   onPress={onGoToApp}
   style={{flex: 1}}
 />

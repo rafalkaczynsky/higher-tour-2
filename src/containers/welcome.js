@@ -19,6 +19,11 @@ class _Welcome extends Component {
     const { params } = this.props.navigation.state
     const loginStatus= this.props.app.loginStatus // data from the store
     
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+      }
+    );
   }
 
   handleOnItem(locationSelected){
@@ -50,8 +55,7 @@ componentWillMount(){
   const { navigate } = this.props.navigation
   const { params } = this.props.navigation.state
   const loginStatus= this.props.app.loginStatus // data from the store
-
-
+  
 }
 
 componentDidMount(){
@@ -60,6 +64,7 @@ componentDidMount(){
   var churches = this.props.churches // data from the store
   var crd = this.props.coords  // data from the store
   
+
   var geoLoc = {}
 //----------------- map events ----------
   events.map((item)=> {

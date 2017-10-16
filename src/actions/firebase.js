@@ -40,10 +40,7 @@ class _Firebase {
                        return auth.signInWithCredential(credential);
                  }
                }).then(credData => {
-                // we are loged successfull
-                //console.log('twitter data')
-                //console.log(credData);
-                navigate(route, {userData: credData})
+            //     navigate(route, {userData: credData})
             }).catch((error)=>{
                  console.log('twitter error')
                  console.log(error);
@@ -74,14 +71,12 @@ class _Firebase {
             return auth.signInWithCredential(credential);
         })
         .then(credData => {
-            // we are logged in successfull
-            //console.log('facebook data')
-            //console.log(credData);
-            navigate(route, {userData: userData})
+
+       //     navigate(route, {userData: credData})
         })
         .catch(err => {
             console.log('Facebook error')
-            console.log(error);
+            console.log(err);
 
         });
     });

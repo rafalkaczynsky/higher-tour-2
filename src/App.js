@@ -139,7 +139,8 @@ export default class App extends React.Component {
               screen: notif.screen,
               lastReadDayNumber: notif.lastReadDayNumber,
               title: notif.title,
-              uid: notif.uid
+              uid: notif.uid,
+              image: notif.image,
             })
           }
         });
@@ -159,7 +160,8 @@ export default class App extends React.Component {
                   screen: notif.screen,
                   lastReadDayNumber: notif.lastReadDayNumber,
                   title: notif.title,
-                  uid: notif.uid
+                  uid: notif.uid,
+                  image: notif.image,
                 })
               }
           
@@ -333,7 +335,7 @@ render()  {
                     />
                 // ... other notification means now freebie one
               } else if (this.state.screen === 'freebie'){
-                return <Freebie onGoBack={()=> this.setState({screen: undefined})}/>
+                return <Freebie image={this.state.image} onGoBack={()=> this.setState({screen: undefined})}/>
               } else return null
   
               console.log('END OF CHECK ')

@@ -12,6 +12,7 @@ import {SignIn} from '../windows'
 
 import * as ACTIONS from '../actions/actions/actions';
 
+
 class _SignIn extends Component {
 
   constructor(props) {
@@ -27,9 +28,6 @@ class _SignIn extends Component {
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
     this.actionCode = 'resetPassword' 
 
-    console.log('Constructor')
-    console.log(this.props)
-
     this.state = { 
       showContent: false,
       appUsers: [],
@@ -41,6 +39,13 @@ class _SignIn extends Component {
       error: '',
       erroR: null,
     }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+      }
+    );
+
   }
 
 
@@ -374,6 +379,7 @@ class _SignIn extends Component {
               }
             } else {
               console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
+              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');      
               firebaseDataAppUsers.update({
                 email: user.email,
                 name: user.displayName,
@@ -407,12 +413,6 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
   
     const { navigate } = this.props.navigation
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
-      }
-    );
 
     this.handleInitialRedirect() 
     

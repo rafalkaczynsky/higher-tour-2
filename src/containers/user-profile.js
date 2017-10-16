@@ -18,6 +18,13 @@ class _UserProfile extends Component {
   constructor(props){
     super(props)
 
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+      }
+    );
+    
   }
 
   handleOnSettings(navigate, locationSelected, from){

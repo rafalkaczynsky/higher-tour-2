@@ -12,6 +12,8 @@ export default class Freebie extends Component {
   }
 
   render() {
+    console.log('FREEBIE SCREEN PROPS')
+    console.log(this.props)
   return (
            
   <View style={StyleSheet.window.default}>
@@ -24,8 +26,9 @@ export default class Freebie extends Component {
       <View style={{backgroundColor: 'white', width: '100%'}}>
          
           <View style={{width: '100%'}}>
-              <Image source={StyleSheet.images["largeImageOne"]} style={{  resizeMode: 'cover', height: 200}} />
+              <Image source={{uri:this.props.image}} style={{resizeMode: 'cover', height: 200}} />
           </View>
+
           <View style={{padding: 20}}>
               <View>
                   <Text style={{ fontSize: 12, lineHeight: 18}}>FREE TITLE </Text>
@@ -38,7 +41,7 @@ export default class Freebie extends Component {
           </View>
           <Button 
         type="default"
-        text={'GO BACK'}
+        text={'DONE'}
         onPress={this.props.onGoBack}
         style={{flex: 1}}
       />
