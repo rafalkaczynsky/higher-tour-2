@@ -68,7 +68,7 @@ export default class Read extends Component {
         />
 
         <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
-          <View style={{backgroundColor: 'white', width: '100%'}}>
+          <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
     
             <View style={{width: '100%'}}>
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
@@ -86,7 +86,7 @@ export default class Read extends Component {
               </Text>
             </View>
             </View>
-          </View>
+          </ScrollView>
 
         </View>
         <Button 
@@ -110,7 +110,7 @@ export default class Read extends Component {
   />
   
   <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
-      <View style={{backgroundColor: 'white', width: '100%'}}>
+      <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
          
           <View style={{width: '100%'}}>
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
@@ -128,7 +128,7 @@ export default class Read extends Component {
                   </Text>
               </View>
           </View>
-      </View>
+      </ScrollView>
 
   </View>
   <TabMenu 

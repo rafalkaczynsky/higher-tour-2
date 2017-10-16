@@ -30,7 +30,9 @@ export default class Settings extends Component {
           text='Settings'
           simple
         />
+        <ScrollView>
         <View style={StyleSheet.settings.container}>
+            
             <View style={StyleSheet.settings.buttonGroup}>
                 <Title 
                     text={userText}
@@ -67,6 +69,7 @@ export default class Settings extends Component {
                 Higher App version 2.0
             </Text>  
         </View>
+        </ScrollView>
 
         <TabMenu 
             onHome={this.props.onHome}
