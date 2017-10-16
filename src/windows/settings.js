@@ -30,7 +30,7 @@ export default class Settings extends Component {
           text='Settings'
           simple
         />
-        <ScrollView>
+        <ScrollView style={{width: '100%'}}>
         <View style={StyleSheet.settings.container}>
             
             <View style={StyleSheet.settings.buttonGroup}>

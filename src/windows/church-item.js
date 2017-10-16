@@ -144,7 +144,7 @@ export default class ChurchItem extends React.Component {
                         </Text>
                         <Icon 
                             name="externalLink"
-                            style={{width: 30, height: 30}}
+                            style={{width: 10, height: 10}}
                         />
                     </Text>
 
@@ -157,7 +157,7 @@ export default class ChurchItem extends React.Component {
                         </Text>
                         <Icon 
                             name="externalLink"
-                            style={{width: 30, height: 30}}
+                            style={{width: 10, height: 10}}
                         />
                      </Text>
                 </TouchableOpacity>
@@ -170,7 +170,7 @@ export default class ChurchItem extends React.Component {
                         Visit Website {' '}
                         <Icon 
                             name="externalLink"
-                            style={{width: 30, height: 30}}
+                            style={{width: 10, height: 10}}
                         />
                     </Text>
                 </TouchableOpacity>
