@@ -24,6 +24,7 @@ class _Welcome extends Component {
         this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
       }
     );
+    
   }
 
   handleOnItem(locationSelected){

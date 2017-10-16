@@ -143,8 +143,8 @@ class _SessionItem extends Component {
     FCM.cancelAllLocalNotifications()
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
-    //this.props.dispatch({type:'FindSessionAnimation'})
-    this.props.dispatch({type: 'Navigation/RESET', index: 0, actions: [{ type: 'Navigate', routeName:'Welcome'}]})
+    this.props.dispatch({type: 'GotoWelcomeAnimation'})
+   // this.props.dispatch({type: 'Navigation/RESET', index: 0, actions: [{ type: 'Navigate', routeName:'Welcome'}]})
   }
 
   handleOnSettings(){

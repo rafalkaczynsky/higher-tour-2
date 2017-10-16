@@ -148,7 +148,7 @@ class UserProfile extends React.Component {
         </View>
         <TabMenu 
           onSettings={onSettings}
-          activeTabName={this.props.activeTabName}
+          activeTabName={'Home'}
           onBible={this.props.onBible}
         /> 
       </View>
