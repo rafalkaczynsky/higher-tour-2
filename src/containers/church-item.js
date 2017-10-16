@@ -82,6 +82,9 @@ class _ChurchItem extends Component {
     if (email) Linking.openURL("mailto://"+email)
   }
 
+  handleOnGoToSession(){
+    this.props.dispatch({type: 'SessionItemAnimation'})
+  }
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
@@ -106,6 +109,7 @@ class _ChurchItem extends Component {
           onTelPressed={(telephone)=> this.handleOnTelPressed(telephone)}
           onEmailPressed={(email)=> this.handleOnEmailPressed(email)}
           onWebPressed={(website)=> this.handleOnWebPressed(website)}
+          onGoToSession={()=> this.handleOnGoToSession()}
           loginStatus={loginStatus}
           myPosition={myPosition[0]}
           church={churchSelected}

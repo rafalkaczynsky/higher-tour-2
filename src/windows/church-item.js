@@ -58,6 +58,7 @@ export default class ChurchItem extends React.Component {
         onTelPressed,
         onWebPressed,
         onEmailPressed,
+        onGoToSession,
     } = this.props
 
     const coordinate = {
@@ -100,24 +101,14 @@ export default class ChurchItem extends React.Component {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     alignItems: 'flex-start',
-     
                     backgroundColor: 'white'
         
                 }}>
 
                 <Button 
                     type="default"
-                    text={'GO TO WEBSITE'}
-                    onPress={()=> {
-	                    const url = church.website;
-	                    Linking.canOpenURL(url)
-		                .then((supported) => {
-			                if (supported) {
-				                return Linking.openURL(url)
-					            .catch(() => null);
-		                    }
-		                });
-                    }}
+                    text={'GO TO SESSION'}
+                    onPress={onGoToSession}
                     style={{flex: 1}}
                 />
                 <View style={{margin: 10}}>

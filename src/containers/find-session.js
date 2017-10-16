@@ -91,7 +91,7 @@ class _FindSession extends Component {
 
     return (
         <FindSession 
-          onSettings={()=> this.props.dispatch({type: 'SettingsInAnimation'})/*navigate('Settings', {from: 'FindSession'})*/}
+          onSettings={()=> this.props.dispatch({type: 'SettingsInAnimation'})}
           onBible={()=> {
             this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
             this.props.dispatch({ type: 'BibleAnimation' }) 
