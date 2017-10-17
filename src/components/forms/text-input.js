@@ -1,17 +1,37 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput} from 'react-native'
+import {View, Text, TextInput, findNodeHandle} from 'react-native'
 
 import StyleSheet from '../../styles'
 import {colors} from '../../styles/resources'
 
-const _TextInput = ({
-  input: {onChange, value, ...restInput},
+export default class _TextInput extends Component{
+  constructor(props){
+    super(props)
+  }
+
+
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder= this.props.handleOnFocus.getScrollResponder()
+   
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        findNodeHandle(this.refs[refName]),
+        240, //additionalOffset
+        true
+      );
+    }, 50);
+  }
+
+render() {
+
+ const  {
+  input: {onChange, value, onFocus, ...restInput},
   onChangeText,
   type,
-  ref,
   placeholder,
   style,
   errors,
+  handleOnFocus,
   autoCapitalize,
   autoCorrect,
   textStyle,
@@ -22,19 +42,27 @@ const _TextInput = ({
   onSubmitEditing,
   icon,
   secureTextEntry,
+  ref,
   clearTextOnFocus,
   multiline,
+  reference,
   rightBar,
   keyboardType,
   meta: {touched, error, warning, dirty,invalid}
-}) => {
+} = this.props
+
+
+
   let borderStyleOnError = null
   let textStyleOnError = null
   let errorOutput = null
 
   touched  && error ? borderStyleOnError = {borderBottomColor: colors.pink} : null
   touched && error ? errorOutput = (<Text style={StyleSheet.signIn.error}>{error}</Text>) : null
-
+  console.log('ref')
+console.log(value)
+console.log(handleOnFocus)
+console.log(reference)
   return (
     <View>
       {errorOutput}
@@ -42,8 +70,9 @@ const _TextInput = ({
         value={value}
         onChangeText={onChange}
         type={type}
-        ref={ref}
+        ref={reference}
         error={errors}
+        onFocus={this.inputFocused.bind(this, reference)}
         placeholder={placeholder}
         style={[style, borderStyleOnError]}
         autoCapitalize={autoCapitalize}
@@ -66,4 +95,4 @@ const _TextInput = ({
   )
 }
 
-export default _TextInput
+}

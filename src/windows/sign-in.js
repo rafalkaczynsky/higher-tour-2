@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, Animated} from 'react-native'
+import {ScrollView, View, Text, Animated, TouchableOpacity, findNodeHandle} from 'react-native'
 import twitter, {auth} from 'react-native-twitter';
 import {Field, reduxForm} from 'redux-form'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import {TextInput as _TextInput} from 'react-native'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -14,7 +15,7 @@ var dataBase
 var Events
 var latestSnapshot = null;
 
-class SignIn extends Component {
+class SignIn extends React.Component {
 
   constructor(props){
     super(props)
@@ -71,8 +72,13 @@ class SignIn extends Component {
           simple
         />
         
-       <ScrollView style={{width: '100%'}}>
-          <View style={{alignItems: 'center'}}>
+       <ScrollView 
+          ref='scrollView'
+
+          style={{width: '100%'}}>
+          <View style={{alignItems: 'center'}}
+          
+      >
           <TextBox
             header="Welcome To The Higher App!!!"
             paragraph="Before you start, let's create an account. Register using one of the following options to receive exclusive freebies."
@@ -120,9 +126,11 @@ class SignIn extends Component {
             type="flat"
             ref="email"
             placeholder={"Email"}
+            reference='emailRef'
             validate={[validation.required, validation.email]}
             autoCapitalize="none"
             autoCorrect={false}
+            handleOnFocus={this.refs.scrollView}
             style={StyleSheet.signIn.textInput}
             returnKeyType="next"
             selectTextOnFocus={true}
@@ -142,36 +150,46 @@ class SignIn extends Component {
               </Animated.View>
             )}
 
+
+
           <Field
             name="password"
             component={TextInput}
             type="flat"
             ref="password"
+            reference='passwordRef'
             placeholder={"Password"}
+            handleOnFocus={this.refs.scrollView}
             validate={[validation.required, validation.minChars]}
             style={StyleSheet.signIn.textInput}
             secureTextEntry={!this.state.showPassword}
             returnKeyType="next"
             selectTextOnFocus={false}
+
             clearTextOnFocus={false}
             enablesReturnKeyAutomatically={true}
             icon="password"
             multiline={false}
           />
-      
+
+ 
+
+       
             <Button
               type={valid ? "default" : "disable"}
               text="Next"
               buttonStyle={{height: 30}}
               onPress={handleSubmit(this.submit)}
             />
+
+
            {/* <Animated.View style={{opacity: this.animateOpacity}}>
               <Text>Some text</Text>
             </Animated.View> */}
 
+          
             </View>
-            
-          <KeyboardSpacer/>
+            <KeyboardSpacer/>
         </View>
       </ScrollView>
         <TabMenu
