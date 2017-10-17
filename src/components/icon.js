@@ -4,12 +4,15 @@ import {Image, View} from 'react-native'
 import StyleSheet from '../styles'
 
 export default class Icon extends Component {
+  componentWillMount(){
+    const {name, active} = this.props
+    this.image = StyleSheet.icons[name + (active ? 'Active' : '')]
+    this.style = this.props.style ? this.props.style : null 
+  }
   render() {
-    const {name, active, style} = this.props
-    const image = StyleSheet.icons[name + (active ? 'Active' : '')]
 
     return (
-        <Image key={image} source={image} style={[StyleSheet.icon, style]}/>
+        <Image key={this.image} source={this.image} style={[this.style]}/>
     );
   }
 }

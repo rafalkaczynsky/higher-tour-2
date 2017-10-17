@@ -131,8 +131,9 @@ export default StyleSheet => StyleSheet.extend({
     },
 
     iconStyle: {
-      resizeMode: "contain", 
-      width: 20, 
+      marginLeft: 5,
+      marginRight: 5,
+      width: 10, 
       height: 20
     },
 
@@ -215,7 +216,6 @@ export default StyleSheet => StyleSheet.extend({
     },
 
     iconStyle: {
-      resizeMode: "contain", 
       width: 20, 
       height: 20
     },

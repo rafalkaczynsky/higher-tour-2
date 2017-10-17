@@ -139,10 +139,10 @@ export default class SessionItem extends React.Component {
                             <Text style={{fontWeight: 'normal'}}>
                            {' ' + location.telephone + ' '}        
                             </Text>
-                            <Icon 
-                                name="externalLink"
-                                style={{width: 10, height: 10}}
-                            />
+                                <Icon 
+                                    name="externalLink"
+                                />
+
                         </Text>
     
                     </TouchableOpacity>
@@ -154,7 +154,7 @@ export default class SessionItem extends React.Component {
                             </Text>
                             <Icon 
                                 name="externalLink"
-                                style={{width: 10, height: 10}}
+
                             />
                          </Text>
                     </TouchableOpacity>
@@ -167,7 +167,6 @@ export default class SessionItem extends React.Component {
                             Visit Website {' '}
                             <Icon 
                                 name="externalLink"
-                                style={{width: 10, height: 10}}
                             />
                         </Text>
                     </TouchableOpacity>
@@ -176,7 +175,6 @@ export default class SessionItem extends React.Component {
                             View Host Church {' '}
                             <Icon 
                                 name="externalLink"
-                                style={{width: 10, height: 10}}
                             />
                         </Text>
                     </TouchableOpacity>     
