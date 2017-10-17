@@ -104,7 +104,7 @@ export const AppNavigator = StackNavigator({
   initialRouteName: 'SignIn',
   transitionConfig: TransitionConfiguration,
   navigationOptions: {
-    gesturesEnabled: false
+ //   gesturesEnabled: false        // disable swaping between screens
   }
 });
 

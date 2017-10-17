@@ -354,3 +354,41 @@ render()  {
             }
           }
   }
+
+
+  // Change navigation structure - To be done 
+
+  /*
+
+// App.js
+
+const HomeNavigation = StackNavigator({
+  Home: { screen: Products },
+  Product: { screen: Product }
+});
+
+const CategoryNavigation = StackNavigator({
+  Categories: { screen: Categories },
+  Category: { screen: Category },
+  Product: { screen: Product }
+});
+
+const AppNavigation = TabNavigator({
+  Home: { screen: HomeNavigation },
+  Categories: { screen: CategoryNavigation },
+}, { lazy: true });
+
+class App extends Component {
+  render(){
+    return(
+      <Provider store={store}>
+        <AppNavigation/>
+      </Provider>
+    )
+  }
+}
+
+AppRegistry.registerComponent('TTTismApp', () => App);
+
+
+  */

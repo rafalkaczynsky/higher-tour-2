@@ -13,6 +13,10 @@ const ASPECT_RATIO = width / height;
 
 class _Welcome extends Component {
 
+  static navigationOptions = {
+    gesturesEnabled: false
+  };
+
   constructor(props) {
     super(props);
 

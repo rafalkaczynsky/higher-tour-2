@@ -15,6 +15,10 @@ import * as ACTIONS from '../actions/actions/actions';
 
 class _SignIn extends Component {
 
+  static navigationOptions = {
+    gesturesEnabled: false
+  };
+
   constructor(props) {
     super(props)
 
@@ -23,7 +27,6 @@ class _SignIn extends Component {
     this.firebaseBibleReading = firebase.database().ref('bibleReading/');
     this.firebaseAaaSession = firebase.database().ref('aaaSession/');
   
-
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
     this.actionCode = 'resetPassword' 

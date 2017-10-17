@@ -14,6 +14,10 @@ const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 
 class _UserProfile extends Component {
+  
+  static navigationOptions = {
+    gesturesEnabled: false
+  };
 
   constructor(props){
     super(props)
