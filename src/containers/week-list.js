@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
+import { NavigationActions } from 'react-navigation'
 
 import {WeekList} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
@@ -34,7 +35,8 @@ handleHome(navigate){
 }
 
 handleOnGoBack(){
-  this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})
+  //this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})
+  this.props.navigation.dispatch(NavigationActions.back())
 }
 
   render() {

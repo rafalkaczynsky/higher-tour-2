@@ -46,7 +46,7 @@ export default class WeekList extends Component {
     <Header 
       text='SESSIONS'
       onBack
-      onBackCallback={onWeekBackPressed}
+      onBackCallback={onGoBack}
     />
  
       <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>      
