@@ -128,41 +128,42 @@ export default class ChurchItem extends React.Component {
                 <Text style={{fontWeight: 'bold'}}>
                     Contact:  <Text style={{fontWeight: 'normal'}}>{church.contactPerson}</Text>
                 </Text>
-                <TouchableOpacity style={{marginTop: 5}} onPress={()=> onTelPressed(church.telephone)}>
+                <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onTelPressed(church.telephone)}>
                     <Text style={{fontWeight: 'bold'}}>
                         Telephone:  
                         <Text style={{fontWeight: 'normal'}}>
                        {' ' + church.telephone + ' '}        
                         </Text>
-                        <Icon 
-                            name="externalLink"
-                        />
                     </Text>
-
+                    <Icon 
+                        name="externalLink"
+                        style={{height: '50%', resizeMode:'contain'}}
+                    />
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginTop: 5}} onPress={()=> onEmailPressed(church.email)}>
+                <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onEmailPressed(church.email)}>
                     <Text style={{fontWeight: 'bold'}}>
                         Email:  
                         <Text style={{fontWeight: 'normal'}}>
                             {' ' + church.email + ' '}
                         </Text>
-                        <Icon 
-                            name="externalLink"
-                        />
                      </Text>
+                     <Icon 
+                        name="externalLink"
+                        style={{height: '50%', resizeMode:'contain'}}
+                     />
                 </TouchableOpacity>
 
             </View>
 
             <View style={{margin: 10}}>
-                 <TouchableOpacity style={{marginTop: 5}} onPress={()=> onWebPressed(church.website)}>
+                 <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onWebPressed(church.website)}>
                     <Text style={{fontWeight: 'bold'}}>
                         Visit Website {' '}
-                        <Icon 
-                            name="externalLink"
-
-                        />
                     </Text>
+                    <Icon 
+                        name="externalLink"
+                        style={{height: '50%', resizeMode:'contain'}}
+                    />
                 </TouchableOpacity>
             </View>
              {/*}

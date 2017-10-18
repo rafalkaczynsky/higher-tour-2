@@ -133,30 +133,33 @@ export default class SessionItem extends React.Component {
                     <Text style={{fontWeight: 'bold'}}>
                         Contact:  <Text style={{fontWeight: 'normal'}}>{location.contactPerson}</Text>
                     </Text>
-                    <TouchableOpacity style={{marginTop: 5}} onPress={()=> onTelPressed(location.telephone)}>
+                    <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}}  onPress={()=> onTelPressed(location.telephone)}>
                         <Text style={{fontWeight: 'bold'}}>
                             Telephone:  
                             <Text style={{fontWeight: 'normal'}}>
                            {' ' + location.telephone + ' '}        
                             </Text>
-                                <Icon 
-                                    name="externalLink"
-                                />
-
                         </Text>
+
+                        <Icon 
+                            name="externalLink"
+                            style={{height: '50%', resizeMode:'contain'}}
+                        />
     
                     </TouchableOpacity>
-                    <TouchableOpacity style={{marginTop: 5}} onPress={()=> onEmailPressed(location.email)}>
+                    <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={onHostPressed}onPress={()=> onEmailPressed(location.email)}>
                         <Text style={{fontWeight: 'bold'}}>
                             Email:  
                             <Text style={{fontWeight: 'normal'}}>
                                 {' ' + location.email + ' '}
                             </Text>
-                            <Icon 
-                                name="externalLink"
-
-                            />
+    
                          </Text>
+
+                        <Icon 
+                            name="externalLink"
+                            style={{height: '50%', resizeMode:'contain'}}
+                        />
                     </TouchableOpacity>
 
                 </View>
@@ -164,19 +167,18 @@ export default class SessionItem extends React.Component {
                 <View style={{margin: 10}}>
                      <TouchableOpacity style={{marginTop: 5}} onPress={()=> onWebPressed(location.website)}>
                         <Text style={{fontWeight: 'bold'}}>
-                            Visit Website {' '}
-                            <Icon 
-                                name="externalLink"
-                            />
+                            Visit Website 
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity  style={{marginTop: 5}} onPress={onHostPressed}>
-                        <Text style={{fontWeight: 'bold'}}>
-                            View Host Church {' '}
-                            <Icon 
-                                name="externalLink"
-                            />
+                    <TouchableOpacity  style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={onHostPressed}>
+                        <Text style={{fontWeight: 'bold', }}>
+                            View Host Church 
                         </Text>
+
+                        <Icon 
+                            name="externalLink"
+                            style={{height: '50%', resizeMode:'contain'}}
+                        />
                     </TouchableOpacity>     
                 </View>
 

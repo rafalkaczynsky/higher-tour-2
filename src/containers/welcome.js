@@ -25,7 +25,8 @@ class _Welcome extends Component {
     
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+
+          this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
       }
     );
     
@@ -73,20 +74,23 @@ componentDidMount(){
   var geoLoc = {}
 //----------------- map events ----------
   events.map((item)=> {
-    geoLoc = {
-      latitude:  item.geoLoc.latitude,
-      longitude: item.geoLoc.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0922 * ASPECT_RATIO,
-    }
 
-    let distance = geolib.getDistance(
-      crd,
-      geoLoc,
-    );
+      geoLoc = {
+        latitude:  item.geoLoc.latitude,
+        longitude: item.geoLoc.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0922 * ASPECT_RATIO,
+      }
   
-    distance = geolib.convertUnit('mi', distance, 1)
-    item.howFar = distance
+      let distance = geolib.getDistance(
+        crd,
+        geoLoc,
+      );
+    
+      distance = geolib.convertUnit('mi', distance, 1)
+      item.howFar = distance
+
+
   })
 // -------------- map churches ------------- 
   churches.map((item)=> {
@@ -97,14 +101,18 @@ componentDidMount(){
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0922 * ASPECT_RATIO,
     }
+    
 
-    let distance = geolib.getDistance(
-      crd,
-      geoLoc,
-    );
+      let distance = geolib.getDistance(
+        crd,
+        geoLoc,
+      );
+    
+
   
     distance = geolib.convertUnit('mi', distance, 1)
     item.howFar = distance
+  
   })
 
   function compareDistance(a, b){

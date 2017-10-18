@@ -45,7 +45,9 @@ class _SignIn extends Component {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+        if (position){
+          this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+        }
       }
     );
 
