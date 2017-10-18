@@ -217,24 +217,7 @@ class _SignIn extends Component {
 
       // if user is signed to firebase
       if(user){
-
-        // CHECK IF USER IS IN USERS IF SO IF IS IN APPUSERS IF NOT SAVE HIM 
-        const appUsers = firebase.database().ref('appUsers/'+ user.uid+'/'); 
-        appUsers.once("value", snapshot => {
-          const appUser = snapshot.val();
-          if (!appUser){
-            appUsers.update({
-              email: user.email,
-              name: user.displayName,
-              event: {
-                    follow: false,
-              },
-              uid: user.uid,
-              FCMtoken: props.navigation.FCMtoken,
-          })
-          }
-        })
-
+        
         // User signed to firebase
         console.log('User Signed to firebase')
         // if user is in local storage 
