@@ -7,19 +7,19 @@ import {colors} from '../../styles/resources'
 export default class _TextInput extends Component{
   constructor(props){
     super(props)
+
   }
 
-
   inputFocused (refName) {
-    setTimeout(() => {
-      let scrollResponder= this.props.handleOnFocus.getScrollResponder()
-   
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        findNodeHandle(this.refs[refName]),
-        240, //additionalOffset
-        true
-      );
-    }, 50);
+/* 
+      setTimeout(() => {
+        let scrollResponder= this.props.handleOnFocus.getScrollResponder()
+        scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+          findNodeHandle(this.refs[refName]),
+          250, //additionalOffset
+          true
+        );
+      }, 50)*/
   }
 
 render() {
@@ -59,11 +59,9 @@ render() {
 
   touched  && error ? borderStyleOnError = {borderBottomColor: colors.pink} : null
   touched && error ? errorOutput = (<Text style={StyleSheet.signIn.error}>{error}</Text>) : null
-  console.log('ref')
-console.log(value)
-console.log(handleOnFocus)
-console.log(reference)
-  return (
+
+
+   return (
     <View>
       {errorOutput}
       <TextInput
@@ -92,7 +90,6 @@ console.log(reference)
         keyboardType={keyboardType}
       />
     </View>
-  )
+  )}
 }
 
-}

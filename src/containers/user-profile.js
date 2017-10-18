@@ -205,7 +205,7 @@ class _UserProfile extends Component {
     const appUserBibleReading = this.props.appUserBibleReading  
     const appUserBibleReadingNames =  this.props.appUserBibleReadingNames 
     
-    const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
+    const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     
     const UserProfileScreen= () => 
       <UserProfile

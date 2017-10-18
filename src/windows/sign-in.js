@@ -171,10 +171,7 @@ class SignIn extends React.Component {
             icon="password"
             multiline={false}
           />
-
- 
-
-       
+   
             <Button
               type={valid ? "default" : "disable"}
               text="Next"
