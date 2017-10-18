@@ -50,9 +50,7 @@ export default class WeekList extends Component {
     />
  
       <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>      
-          <View style={{width: '100%'}}>
-            <Image source={{uri: week.image}} style={{  resizeMode: 'cover', height: 200}} />
-          </View>
+
 
           <View 
             style={{
@@ -63,9 +61,12 @@ export default class WeekList extends Component {
               backgroundColor: 'white'
         
             }}>
-
+            <ScrollView>
+              <View style={{width: '100%'}}>
+                <Image source={{uri: week.image}} style={{  resizeMode: 'cover', height: 200}} />
+              </View>
               <View style={{margin: 10}}>
-                <Text style={{fontWeight: 'bold', fontSize: 30}}>
+                <Text style={{fontWeight: 'bold', fontSize: 35}}>
                     {week.Title + ' - ' + week.sessionTitle}
                 </Text>
               </View>
@@ -97,9 +98,10 @@ export default class WeekList extends Component {
               </View>
 
 
- 
+              </ScrollView>
             </View>
             </View>
+
           <TabMenu 
             onSettings={this.props.onSettings}
             onHome={this.props.onHome}
