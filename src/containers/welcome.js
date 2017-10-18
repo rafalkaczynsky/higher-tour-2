@@ -102,14 +102,11 @@ componentDidMount(){
       longitudeDelta: 0.0922 * ASPECT_RATIO,
     }
     
-
       let distance = geolib.getDistance(
         crd,
         geoLoc,
       );
     
-
-  
     distance = geolib.convertUnit('mi', distance, 1)
     item.howFar = distance
   

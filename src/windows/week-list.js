@@ -32,7 +32,7 @@ export default class WeekList extends Component {
 
   render() {
  
-    const {onWeekBackPressed, week, onGoBack} = this.props
+    const {onWeekBackPressed, week, selectedEvent, onGoBack} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
@@ -40,7 +40,7 @@ export default class WeekList extends Component {
     console.log('Read Window')
 
     console.log(week)
-
+    console.log(this.props.selectedEvent)
     return (
     <View style={StyleSheet.window.default}>
     <Header 
@@ -49,37 +49,63 @@ export default class WeekList extends Component {
       onBackCallback={onWeekBackPressed}
     />
  
-    <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
-        <View style={{backgroundColor: 'white', width: '100%'}}>
-           
-            <View style={{width: '100%'}}>
-                <Image source={{uri: week.image}} style={{  resizeMode: 'cover', height: 200}} />
-            </View>
-            <View style={{padding: 20}}>
-                <View>
-                    <Text style={{ fontSize: 12, lineHeight: 18}}>{week.sessionTitle}</Text>
-                </View>
-                <View style={{marginTop: 30}}>
-                    <Text style={{ fontSize: 12, lineHeight: 18}}>
-                        {week.content}
-                    </Text>
-                </View>
-            </View>
-            <Button 
-              type="default"
-              text={'GO HOME'}
-              onPress={onGoBack}
-              style={{flex: 1}}
-            />
-        </View>
-    </View>
+      <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>      
+          <View style={{width: '100%'}}>
+            <Image source={{uri: week.image}} style={{  resizeMode: 'cover', height: 200}} />
+          </View>
 
-    <TabMenu 
-      onSettings={this.props.onSettings}
-      onHome={this.props.onHome}
-      activeTabName={this.props.activeTabName}
-    /> 
-  </View>
+          <View 
+            style={{
+              flex: 1,
+              width: '100%',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              backgroundColor: 'white'
+        
+            }}>
+
+              <View style={{margin: 10}}>
+                <Text style={{fontWeight: 'bold', fontSize: 30}}>
+                    {week.Title + ' - ' + week.sessionTitle}
+                </Text>
+              </View>
+
+              <View style={{margin: 10}}>
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                      {selectedEvent.name}
+                </Text>
+              </View>
+
+              <View style={{margin: 10}}>
+                <Text style={{fontWeight: 'bold',  fontSize: 15}}>
+                    Location           
+                    <Text style={{fontWeight: 'normal', }}>
+                      {' ' + selectedEvent.address.firstLine + ' ,'}
+                      {selectedEvent.address.city+ ' ,'} {selectedEvent.address.postcode}
+                    </Text>
+
+                </Text>   
+              </View>
+              <View style={{margin: 10}}>
+                <Text style={{fontWeight: 'bold',  fontSize: 15}}>
+                  Time:           
+                  <Text style={{fontWeight: 'normal'}}>
+                    {' ' + selectedEvent.address.firstLine + ' ,'}
+                    {selectedEvent.meetingDay+ ' ,'} {selectedEvent.meetingTime}
+                  </Text>
+                </Text>   
+              </View>
+
+
+ 
+            </View>
+            </View>
+          <TabMenu 
+            onSettings={this.props.onSettings}
+            onHome={this.props.onHome}
+            activeTabName={this.props.activeTabName}
+          /> 
+      </View>
 )
   }
 }

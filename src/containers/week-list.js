@@ -40,13 +40,14 @@ handleOnGoBack(){
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-    
+    console.log(this.props.eventSelected)
     return (
         <WeekList 
           onSettings={()=> this.handleOnSettings()}
           onHome={()=> this.handleHome()}
           onWeekBackPressed={()=> this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})}
           week={this.props.app.week}
+          selectedEvent={this.props.eventSelected}
           onGoBack={()=> this.handleOnGoBack()}
           activeTabName={''}
         />
@@ -57,6 +58,8 @@ handleOnGoBack(){
 function mapStateToProps(state){
   return({
       app: state.app,
+      eventSelected: state.eventSelected
+      
   });
 }
 
