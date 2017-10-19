@@ -135,12 +135,14 @@ class _SignIn extends Component {
     //navigate(route, { activeTabName: 'Bible'})
   }
 
-  onFacebook(navigate, route){
-    _Firebase.fbAuth(navigate, route)
+  onFacebook(){
+    this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
+    _Firebase.fbAuth(this.props)
   }
 
-  onTwitter(navigate, route){
-    _Firebase._twitterSignIn(navigate, route)
+  onTwitter(){
+    this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
+    _Firebase._twitterSignIn(this.props)
   }
 
   getData(fbDataRef , fbDataRef2, fbDataRef3, fbDataRef4 ){
@@ -217,7 +219,7 @@ class _SignIn extends Component {
 
       // if user is signed to firebase
       if(user){
-        
+        props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
         // User signed to firebase
         console.log('User Signed to firebase')
         // if user is in local storage 

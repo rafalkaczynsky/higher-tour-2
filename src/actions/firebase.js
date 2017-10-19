@@ -1,11 +1,10 @@
 
 import React from 'react'
-import * as firebase from "firebase";
-
+import * as firebase from 'firebase'
 import { NavigationActions } from 'react-navigation'
 import {NativeModules} from 'react-native'
-import { LoginManager, AccessToken} from 'react-native-fbsdk';
-
+import { LoginManager, AccessToken} from 'react-native-fbsdk'
+import * as ACTIONS from './actions/actions'
 
 //startWithConsumerKey:@"uOiSkazdnmcQYpeI0r144286A" consumerSecret:@"KpJ2CkeYQcbl7vDAyKWCFxvg6J95RURl7FLsYmM8PqZceTIChC"
 
@@ -25,7 +24,7 @@ var Constants = {
 class _Firebase {
 
       // ================ TWITTER STAFF ================
-      _twitterSignIn(navigate, route) {
+      _twitterSignIn(props) {
         const   RNTwitterSignIn =  NativeModules.RNTwitterSignIn;
         //console.log('twitter')
         RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
@@ -40,10 +39,11 @@ class _Firebase {
                        return auth.signInWithCredential(credential);
                  }
                }).then(credData => {
-            //     navigate(route, {userData: credData})
+                    //..
             }).catch((error)=>{
                  console.log('twitter error')
                  console.log(error);
+                 props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
                });
          }
        
@@ -58,11 +58,11 @@ class _Firebase {
      // =============== FACEBOOK STAFF ==========
 
 
-  fbAuth(navigate, route){
+  fbAuth(props){
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then(loginResult => {
         if (loginResult.isCancelled) {
-            alert('User canceled');
+            props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
             return;
         }
         AccessToken.getCurrentAccessToken()
@@ -71,8 +71,7 @@ class _Firebase {
             return auth.signInWithCredential(credential);
         })
         .then(credData => {
-
-       //     navigate(route, {userData: credData})
+            //...
         })
         .catch(err => {
             console.log('Facebook error')

@@ -175,7 +175,7 @@ class SignIn extends React.Component {
             <Button
               type={valid ? "default" : "disable"}
               text="Next"
-              buttonStyle={{height: 30}}
+              buttonStyle={{height: 30, marginBottom: 30}}
               onPress={handleSubmit(this.submit)}
             />
 
