@@ -196,13 +196,16 @@ export function SAVE_WEEK(week) {
     };
 }
 
+export function SAVE_WEEK_DATE(date) {
+    return {
+        type: types.SAVE_WEEK_DATE,
+        weekDate: date,
+    };
+}
+
 export function SAVE_FCM_TOKEN(FCMtoken) {
     return {
         type: types.SAVE_FCM_TOKEN,
         FCMtoken: FCMtoken,
     };
 }
-
-///
-
-//...............

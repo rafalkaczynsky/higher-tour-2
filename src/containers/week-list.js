@@ -49,6 +49,7 @@ handleOnGoBack(){
           onHome={()=> this.handleHome()}
           onWeekBackPressed={()=> this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})}
           week={this.props.app.week}
+          weekDate={this.props.app.weekDate}
           selectedEvent={this.props.eventSelected}
           onGoBack={()=> this.handleOnGoBack()}
           activeTabName={''}

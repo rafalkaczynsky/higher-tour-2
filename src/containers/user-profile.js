@@ -35,13 +35,14 @@ class _UserProfile extends Component {
     this.props.dispatch( {type: 'SettingsInAnimation'})
   }
 
-  handleOnWeek(navigate, sessionTitle){
+  handleOnWeek(sessionTitle, sessionDateFormatted){
     const aaaSession = this.props.aaaSession
     sessionTitle = sessionTitle.toString()
     aaaSession.map((item)=> {
       if (item.sessionTitle == sessionTitle) {
         // navigate('WeekList', {week: item})
         this.props.dispatch(ACTIONS.SAVE_WEEK(item))
+        this.props.dispatch(ACTIONS.SAVE_WEEK_DATE(sessionDateFormatted))
         this.props.dispatch({type: 'GoToWeekListRightToLeftAnimation'})
       }
     })
@@ -213,7 +214,7 @@ class _UserProfile extends Component {
         onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
         onBible={()=> this.handleOnBible(navigate)}
         onHandleReadingItemPressed={(itemBibleReadingTitle) => this.handleReadingItemPressed(itemBibleReadingTitle)}
-        onWeek={(week)=> this.handleOnWeek(navigate, week)}
+        onWeek={(week, sessionDateFormatted)=> this.handleOnWeek(week, sessionDateFormatted)}
         userData={userData}
         months={months}
         aaaSession={aaaSession}

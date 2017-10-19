@@ -66,7 +66,7 @@ class UserProfile extends React.Component {
         }
        
         return(
-      <View style={[StyleSheet.window.default,]}>
+      <View style={[StyleSheet.window.default]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
             <View style={[StyleSheet.userProfile.header]} >
                 <Image source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} >
@@ -108,7 +108,7 @@ class UserProfile extends React.Component {
                         key={item.aaaSession + '-' + index}
                         title={item.aaaSession}
                         label={sessionDateFormatted}
-                        handleIconPressed={()=>onWeek(item.aaaSession)}
+                        handleIconPressed={()=>onWeek(item.aaaSession, sessionDateFormatted)}
                       /> 
                     )
                 })}
