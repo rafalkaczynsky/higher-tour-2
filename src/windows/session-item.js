@@ -165,10 +165,14 @@ export default class SessionItem extends React.Component {
                 </View>
 
                 <View style={{margin: 10}}>
-                     <TouchableOpacity style={{marginTop: 5}} onPress={()=> onWebPressed(location.website)}>
+                     <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onWebPressed(location.website)}>
                         <Text style={{fontWeight: 'bold'}}>
                             Visit Website 
                         </Text>
+                        <Icon 
+                            name="externalLink"
+                            style={{height: '50%', resizeMode:'contain'}}
+                        />
                     </TouchableOpacity>
                     <TouchableOpacity  style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={onHostPressed}>
                         <Text style={{fontWeight: 'bold', }}>
