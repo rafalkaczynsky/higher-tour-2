@@ -55,15 +55,15 @@ export default class Settings extends Component {
 
                 <Button 
                     type="settings"
-                    text={'Terms and Conditions'}
-                    onPress={()=> alert('About clicked!')}
+                    text={'Privacy Policy'}
+                    onPress={()=>  Linking.openURL('http://highertour.com/higher-app-privacy-policy')}
                 /> 
             </View>
             <View style={StyleSheet.settings.buttonGroup}>
                 <Button 
                     type="settings"
                     text={'About'}
-                    onPress={()=> alert('About clicked!')}
+                    onPress={()=>  Linking.openURL('http://highertour.com/higher-app-about')}
                 /> 
             </View>           
             <Text style={StyleSheet.settings.text}>

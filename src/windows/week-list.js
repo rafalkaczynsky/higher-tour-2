@@ -37,10 +37,6 @@ export default class WeekList extends Component {
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
 
-    console.log('Read Window')
-
-    console.log(week)
-    console.log(this.props.selectedEvent)
     return (
     <View style={StyleSheet.window.default}>
     <Header 

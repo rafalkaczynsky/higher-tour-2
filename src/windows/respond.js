@@ -48,8 +48,7 @@ return (
   />
 
   <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
-  <View style={{backgroundColor: 'white', width: '100%'}}>
-
+  <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
       <View style={{padding: 20}}>
           <View>
               <Text style={{ fontSize: 12, lineHeight: 18, fontWeight: 'bold'}}>Live it</Text>
@@ -83,7 +82,7 @@ return (
         onPress={onGoBack}
         style={{flex: 1}}
       />}
-  </View>
+  </ScrollView>
 
 </View>
 
