@@ -325,7 +325,7 @@ export default class App extends React.Component {
             this._requestPermission()
 
             // handle location OFF both android and iOS
-            if (!this.state.locationPermission){
+            if ((!this.state.locationPermission)&&(Platform.OS === 'android')){
               return (<Animated.View style={{ opacity: this.animateOpacity}}>
                     <Text>Checking location settings.....</Text>
                     <TouchableOpacity
