@@ -13,6 +13,7 @@ import _header from './header'
 import _listItem from './list-item'
 import _settings from './settings'
 import _signIn from './sign-in'
+import _locationAlertWindow from './location-alert-window'
 
 export default {
   window: _window,
@@ -27,5 +28,6 @@ export default {
   listItem: _listItem,
   settings: _settings,
   signIn: _signIn,
+  locationAlertWindow: _locationAlertWindow
   //...//
 }

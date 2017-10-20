@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput} from 'react-native'
+import {ScrollView, View, Text, TextInput, Linking} from 'react-native'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
