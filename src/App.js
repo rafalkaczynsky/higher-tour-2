@@ -2,7 +2,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
 import logger , {createLogger} from "redux-logger"
-import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert} from 'react-native'
+import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated} from 'react-native'
 import * as firebase from "firebase";
 const Permissions = require('react-native-permissions');
 
@@ -20,13 +20,6 @@ import {LocationAlertWindow} from './components'
 const middleware = applyMiddleware(logger)
 var screen = null
 let store = createStore(reducers, middleware)
-
-
-
-Permissions.request('notification', ['alert', 'badge'])
-.then(response => {
-  console.log('notificationPermission: ' + response )
-})
 
 Permissions.request('location')
 .then(response => {
@@ -130,8 +123,11 @@ export default class App extends React.Component {
           isStoreLoading: false,
           initialStore: {},
           store: store,
+          refreshed: false,
+          isMounted: false,
           cipa: '',
           FCMtoken: null,
+          locationChecked: false,
         }
         console.ignoredYellowBox = [
           'Setting a timer'
@@ -143,16 +139,21 @@ export default class App extends React.Component {
         this.state.title ='Journey Through Johny'
         this.state.lastReadDayNumber = '11'
         this.state.uid = '3cAAYQPgrjddrbNuXKwUfCe8iCF3'*/
+        this.animateOpacity = new Animated.Value(0)
+        Animated.timing(this.animateOpacity, {
+          toValue: 1,
+          duration: 2000,
+          delay: 20
+        }).start();
+
       }
 
       componentDidMount() {
-
         Permissions.request('location')
         .then(response => {
           this.setState({locationPermission: response})
         })
 
-        
         FCM.getInitialNotification().then((notif)=>{
           console.log("FCM.getInitialNotification");
           console.log(notif)
@@ -167,8 +168,6 @@ export default class App extends React.Component {
             })
           }
         });
-
-
 
         if(Platform.OS ==='ios'){
           FCM.requestPermissions().then(()=>console.log('granted')).catch(()=>console.log('user rejected')); // for iOS
@@ -201,7 +200,6 @@ export default class App extends React.Component {
 
 
     componentWillMount() {
-
         var self = this;
         AppState.addEventListener('change', this._handleAppStateChange.bind(this));
         this.setState({isStoreLoading: true});
@@ -223,11 +221,9 @@ export default class App extends React.Component {
         .then(response => {
           this.setState({locationPermission: response})
         })
-
     }
 
     componentWillUnmount() {
-
         AppState.removeEventListener('change', this._handleAppStateChange.bind(this));
         // stop listening for events
         this.notificationListener.remove();
@@ -324,19 +320,28 @@ export default class App extends React.Component {
       })
     }
 
-      
-render()  { 
-      Permissions.request('location')
-        .then(response => {
-        this.setState({locationPermission: response})
-      })
+  render()  { 
 
-            if(this.state.locationPermission !== 'authorized'){
+            this._requestPermission()
+
+            // handle location OFF both android and iOS
+            if (!this.state.locationPermission){
+              return (<Animated.View style={{ opacity: this.animateOpacity}}>
+                    <Text>Checking location settings.....</Text>
+                    <TouchableOpacity
+                      onPress={()=> this.setState({refreshed: !this.state.refreshed})}
+                      style={{padding: 3, backgroundColor: 'lightgrey', borderRadius: 3, width: 60}}
+                    >
+                        <Text>Refresh</Text>
+                    </TouchableOpacity>
+                 </Animated.View>
+                )
+            }else if ((this.state.locationPermission !== 'authorized') && (this.state.locationPermission !== 'undetermined')){
               return  <LocationAlertWindow 
                           onPress={Permissions.openSettings}
                       />
             }
-
+            // bibleReading notfication Think and Respond
             if (this.state.showThink) return (
               <Think 
                 fromNotification={true}
