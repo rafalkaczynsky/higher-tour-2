@@ -76,5 +76,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Some description</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Some description</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Some description</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Some description</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Some description</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Some description</string>
 </dict>
 </plist>

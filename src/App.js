@@ -2,8 +2,9 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
 import logger , {createLogger} from "redux-logger"
-import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity} from 'react-native'
+import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert} from 'react-native'
 import * as firebase from "firebase";
+const Permissions = require('react-native-permissions');
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
@@ -13,9 +14,25 @@ import AppWithNavigationState from './screens'
 import Freebie from './windows/freebie'
 import {Read, Think, Respond} from './windows'
 
+import {LocationAlertWindow} from './components'
+
+
 const middleware = applyMiddleware(logger)
 var screen = null
 let store = createStore(reducers, middleware)
+
+
+
+Permissions.request('notification', ['alert', 'badge'])
+.then(response => {
+  console.log('notificationPermission: ' + response )
+})
+
+Permissions.request('location')
+.then(response => {
+  console.log('locationPermission :' + response)
+})
+
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
 FCM.on(FCMEvent.Notification, async (notif) => {
 
@@ -129,6 +146,12 @@ export default class App extends React.Component {
       }
 
       componentDidMount() {
+
+        Permissions.request('location')
+        .then(response => {
+          this.setState({locationPermission: response})
+        })
+
         
         FCM.getInitialNotification().then((notif)=>{
           console.log("FCM.getInitialNotification");
@@ -145,8 +168,7 @@ export default class App extends React.Component {
           }
         });
 
-//169.254.131.121
-        console.log('DidMOunt  FCM.on  - 2')
+
 
         if(Platform.OS ==='ios'){
           FCM.requestPermissions().then(()=>console.log('granted')).catch(()=>console.log('user rejected')); // for iOS
@@ -170,14 +192,14 @@ export default class App extends React.Component {
           FCM.getFCMToken().then(token => {
             this.setState({isMounted: true, FCMtoken: token})
             // store fcm token in your server
-            console.log('FCM TOKEN')
-            console.log(token)
         });
 
           this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
               // do some component related stuff
           });
       }
+
+
     componentWillMount() {
 
         var self = this;
@@ -196,6 +218,12 @@ export default class App extends React.Component {
         }).then((res)=> {
           //...
         })
+
+        Permissions.request('location', 'always')
+        .then(response => {
+          this.setState({locationPermission: response})
+        })
+
     }
 
     componentWillUnmount() {
@@ -204,6 +232,7 @@ export default class App extends React.Component {
         // stop listening for events
         this.notificationListener.remove();
       }
+
       _handleAppStateChange(currentAppState) {
         let storingValue = JSON.stringify(this.state.store.getState())
 
@@ -287,9 +316,27 @@ export default class App extends React.Component {
     //      console.log(notif)
     //    }
 //    const {itemDay, currentReadingDayNumber, onItemNextPressed, onItemBackPressed} = this.props
+
+    _requestPermission() {
+      Permissions.request('location')
+        .then(response => {
+        this.setState({locationPermission: response})
+      })
+    }
+
       
-render()  {
-  
+render()  { 
+      Permissions.request('location')
+        .then(response => {
+        this.setState({locationPermission: response})
+      })
+
+            if(this.state.locationPermission !== 'authorized'){
+              return  <LocationAlertWindow 
+                          onPress={Permissions.openSettings}
+                      />
+            }
+
             if (this.state.showThink) return (
               <Think 
                 fromNotification={true}
