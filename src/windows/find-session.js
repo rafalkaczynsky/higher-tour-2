@@ -123,7 +123,7 @@ export default class FindSession extends React.Component {
               </TouchableOpacity>
               )}
               <ListItem
-                title="Find by churches"
+                title="Find by church"
                 bgColor={colors.grey3}
                 borderBold
                 handleIconPressed={this.props.onMoreChurches}

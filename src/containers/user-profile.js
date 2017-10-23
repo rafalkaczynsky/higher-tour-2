@@ -131,8 +131,11 @@ class _UserProfile extends Component {
     // check if session ex in the session...
  
     firebase.database().ref('sessions/'+ eventSelected.host+'/').once("value", snapshot => {
-      const session = snapshot.val();
 
+      const session = snapshot.val();
+      console.log('event selected.host')
+      console.log(eventSelected.host)
+      console.log(session)
       if (session){
         const sessionArray = Object.keys(session).map(function (key) { return session[key]; })
  
@@ -150,6 +153,11 @@ class _UserProfile extends Component {
 
        // console.log(sessionsAvailable)
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(sessionsAvailable));
+        this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
+      } else {
+        console.log('There is no session in firebase ')
+        const noSessions = []
+        this.props.dispatch(ACTIONS.SAVE_SESSIONS(noSessions));
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       }
     })

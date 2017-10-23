@@ -4,6 +4,9 @@ import {applyMiddleware, createStore} from 'redux'
 import logger , {createLogger} from "redux-logger"
 import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated} from 'react-native'
 import * as firebase from "firebase";
+
+import OpenAppSettings from 'react-native-app-settings'
+
 const Permissions = require('react-native-permissions');
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
@@ -326,22 +329,16 @@ export default class App extends React.Component {
 
             // handle location OFF both android and iOS
             if ((!this.state.locationPermission)&&(Platform.OS === 'android')){
-              return (<Animated.View style={{ opacity: this.animateOpacity}}>
-                    <Text>Checking location settings.....</Text>
-                    <TouchableOpacity
-                      onPress={()=> this.setState({refreshed: !this.state.refreshed})}
-                      style={{padding: 3, backgroundColor: 'lightgrey', borderRadius: 3, width: 60}}
-                    >
-                        <Text>Refresh</Text>
-                    </TouchableOpacity>
-                 </Animated.View>
+              return ( <LocationAlertWindow 
+                          onPress={()=> this.setState({refreshed: !this.state.refreshed})}
+                      />
                 )
             }else if ((this.state.locationPermission !== 'authorized') && (this.state.locationPermission !== 'undetermined')){
               return  <LocationAlertWindow 
                           onPress={Permissions.openSettings}
                       />
             }
-            // bibleReading notfication Think and Respond
+            // bibleReading notfication Think and Respond  //this.setState({refreshed: !this.state.refreshed})
             if (this.state.showThink) return (
               <Think 
                 fromNotification={true}

@@ -77,12 +77,19 @@ class UserProfile extends React.Component {
             </View>
             <ScrollView style={{width: '95%'}}>
             <View style={StyleSheet.userProfile.contentBox}>
+
                 <ListItem 
                   title={locationSelectedName}
                   iconText='view/edit'
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 /> 
-
+                {this.props.sessions.length === 0}{
+                  <ListItem 
+                      title={''}
+                      simple
+                      label={'Higher sessions coming soon'}
+                    /> 
+                }
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
@@ -96,6 +103,8 @@ class UserProfile extends React.Component {
                       /> 
                     )
                 })}
+
+
 
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
@@ -113,6 +122,7 @@ class UserProfile extends React.Component {
                     )
                 })}
 
+ 
             </View>
             <View style={StyleSheet.userProfile.contentBox}>
                 <ListItem 

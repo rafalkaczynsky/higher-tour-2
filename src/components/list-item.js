@@ -10,7 +10,7 @@ import {Icon, Picture} from '../components'
 export default class ListItem extends Component {
 
   render() {
-    const {title, label, noBorder, borderBold, bgColor, listHeader, progressBar, progress, titleStyle, iconText, handleIconPressed, imageName, imageUrl, opacity} = this.props
+    const {title, simple, label, noBorder, borderBold, bgColor, listHeader, progressBar, progress, titleStyle, iconText, handleIconPressed, imageName, imageUrl, opacity} = this.props
 
     const border = noBorder ? null : {borderBottomColor: colors.grey2, borderBottomWidth: 0.5}
     const _borderBold = borderBold ? {borderBottomColor: colors.grey2, borderBottomWidth: 1} : null
@@ -20,7 +20,7 @@ export default class ListItem extends Component {
       <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
-       {imageName || imageUrl && (
+       {imageName || imageUrl && !simple &&(
             <View style={[StyleSheet.listItem.itemDetails,{opacity: opacity}]}>
              {imageName && <Image source={StyleSheet.images[imageName]} style={{width: 60, height: 60, marginRight: 15}} />}
              {imageUrl && <Image source={{uri: imageUrl}} style={{width: 60, height: 60, marginRight: 15}} />}
@@ -35,7 +35,7 @@ export default class ListItem extends Component {
             </View> 
        )}
 
-       {!imageName && !imageUrl && (
+       {!imageName && !imageUrl && !simple && (
           <View>
             <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
@@ -45,10 +45,19 @@ export default class ListItem extends Component {
             </View>}
           </View>
        )}
-       {!listHeader &&
+       {!listHeader && !simple &&
           <TouchableOpacity onPress={handleIconPressed} style={{display: 'flex', flexDirection: 'row'}}>
             <Text style={{color: colors.yellow}}>{iconText}</Text><Icon name="next" style={StyleSheet.listItem.iconStyle}/>
           </TouchableOpacity>
+          }
+        {simple &&
+            <View style={[StyleSheet.listItem.itemDetails,{opacity: opacity}]}>
+             {imageName && <Image source={StyleSheet.images[imageName]} style={{width: 60, height: 60, marginRight: 15}} />}
+             {imageUrl && <Image source={{uri: imageUrl}} style={{width: 60, height: 60, marginRight: 15}} />}
+              <View>
+                {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
+              </View>
+            </View> 
           }
         </View>
       </TouchableOpacity>
