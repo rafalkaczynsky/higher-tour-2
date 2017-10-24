@@ -1,7 +1,7 @@
 import React from 'react'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
-import logger , {createLogger} from "redux-logger"
+//import logger , {createLogger} from "redux-logger"
 import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated, NetInfo} from 'react-native'
 import * as firebase from "firebase";
 
@@ -18,9 +18,13 @@ import {Read, Think, Respond} from './windows'
 import {AlertWindow} from './components'
 
 
-const middleware = applyMiddleware(logger)
+// const middleware = applyMiddleware(logger)
+// const middleware = applyMiddleware(logger)
+
+//const middleware = applyMiddleware()
 var screen = null
-let store = createStore(reducers, middleware)
+
+let store = createStore(reducers)
 
 
 
@@ -349,7 +353,7 @@ export default class App extends React.Component {
 
 
   render()  { 
-            console.log(connection)
+   
             if (!connection){
               return ( <AlertWindow 
                           type='connection'

@@ -118,6 +118,7 @@ class UserProfile extends React.Component {
                         title={item.aaaSession}
                         label={sessionDateFormatted}
                         handleIconPressed={()=>onWeek(item.aaaSession, sessionDateFormatted)}
+                        simplePlus={item.expired ? true : null}
                       /> 
                     )
                 })}

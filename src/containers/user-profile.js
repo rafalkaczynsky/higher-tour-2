@@ -32,12 +32,20 @@ class _UserProfile extends Component {
   }
 
   handleOnSettings(navigate, locationSelected, from){
+    
     this.props.dispatch( {type: 'SettingsInAnimation'})
   }
 
   handleOnWeek(sessionTitle, sessionDateFormatted){
     const aaaSession = this.props.aaaSession
     sessionTitle = sessionTitle.toString()
+
+    if(aaaSession[this.props.eventSelected.host]){
+      this.props.dispatch(ACTIONS.SAVE_WEEK(aaaSession[this.props.eventSelected.host]))
+      this.props.dispatch(ACTIONS.SAVE_WEEK_DATE(sessionDateFormatted))
+      this.props.dispatch({type: 'GoToWeekListRightToLeftAnimation'})
+    }
+
     aaaSession.map((item)=> {
       if (item.sessionTitle == sessionTitle) {
         // navigate('WeekList', {week: item})
@@ -70,56 +78,106 @@ class _UserProfile extends Component {
 
   }
 
+  calculateReminderDate(sessionDayName, sessionDayTime){
+    let d = new Date();
+
+    let weekday = new Array(7);
+    weekday[0] = "Sunday"
+    weekday[1] = "Monday"
+    weekday[2] = "Tuesday"
+    weekday[3] = "Wednesday"
+    weekday[4] = "Thursday"
+    weekday[5] = "Friday"
+    weekday[6] = "Saturday"
+
+    let sessionDay = weekday.indexOf(sessionDayName) // is 5
+
+    console.log(sessionDay)
+	  let reminderDay = null
+    
+	  if (sessionDay !== 0) {  
+    	reminderDay = sessionDay 
+    } else {
+    	reminderDay = 6
+    }
+
+    let sessionHour = parseInt(sessionDayTime)
+    const minutesIndxStart = sessionDayTime.indexOf(':')+1
+    const minutesIndxStop = sessionDayTime.indexOf(':')+ 3
+    let sessionMinute = parseInt(sessionDayTime.substring(minutesIndxStart ,minutesIndxStop))
+
+    const ampmIndxStart = sessionDayTime.length - 2 
+
+    let sessionAMPM = sessionDayTime.substring(ampmIndxStart).toUpperCase()
+
+    if (sessionAMPM === 'PM') {
+      sessionHour += 12
+    }
+
+    console.log(sessionAMPM)
+    console.log(sessionHour+ ' , ' + sessionMinute)
+    console.log(d)
+    console.log(sessionDay)
+
+    d.setHours(sessionHour,sessionMinute,0,0);  
+
+    let reminderDate = d.setDate(d.getDate() + (reminderDay+7 - d.getDay())%7)
+
+    console.log(reminderDate)
+    return reminderDate
+  }
+
+
   componentWillMount(){
     var events = this.props.events  
     var churches = this.props.churches 
     var crd = this.props.coords  
     
     var geoLoc = {}
-  //----------------- map events ----------
-    events.map((item)=> {
-      geoLoc = {
-        latitude:  item.geoLoc.latitude,
-        longitude: item.geoLoc.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0922 * ASPECT_RATIO,
-      }
+  // //----------------- map events ----------
+  //   events.map((item)=> {
+  //     geoLoc = {
+  //       latitude:  item.geoLoc.latitude,
+  //       longitude: item.geoLoc.longitude,
+  //       latitudeDelta: 0.0922,
+  //       longitudeDelta: 0.0922 * ASPECT_RATIO,
+  //     }
   
-      let distance = geolib.getDistance(
-        crd,
-        geoLoc,
-      );
+  //     let distance = geolib.getDistance(
+  //       crd,
+  //       geoLoc,
+  //     );
     
-      distance = geolib.convertUnit('mi', distance, 1)
-      item.howFar = distance
-    })
-  // -------------- map churches ------------- 
-    churches.map((item)=> {
+  //     distance = geolib.convertUnit('mi', distance, 1)
+  //     item.howFar = distance
+  //   })
+  // // -------------- map churches ------------- 
+  //   churches.map((item)=> {
   
-      geoLoc = {
-        latitude:  item.geoLoc.latitude,
-        longitude: item.geoLoc.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0922 * ASPECT_RATIO,
-      }
+  //     geoLoc = {
+  //       latitude:  item.geoLoc.latitude,
+  //       longitude: item.geoLoc.longitude,
+  //       latitudeDelta: 0.0922,
+  //       longitudeDelta: 0.0922 * ASPECT_RATIO,
+  //     }
   
-      let distance = geolib.getDistance(
-        crd,
-        geoLoc,
-      );
+  //     let distance = geolib.getDistance(
+  //       crd,
+  //       geoLoc,
+  //     );
     
-      distance = geolib.convertUnit('mi', distance, 1)
-      item.howFar = distance
-    })
+  //     distance = geolib.convertUnit('mi', distance, 1)
+  //     item.howFar = distance
+  //   })
   
     function compareDistance(a, b){
       return a.howFar - b.howFar;
     }
-    const z = churches.sort(compareDistance);
-    const x = events.sort(compareDistance);
+    // const z = churches.sort(compareDistance);
+    // const x = events.sort(compareDistance);
   
-    this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
-    this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
+    // this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
+    // this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
   
     this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
@@ -148,11 +206,30 @@ class _UserProfile extends Component {
             if (( Date.parse(sessionDate) > TheDate ) && (sessionsAvailable.length <= 2)) {
 
               sessionsAvailable.push(item)
+              
             }
         })
 
+        if(sessionsAvailable.length === 0){
+
+         // eventSelected.meetingDay = // Monday
+         // eventSelected.meetingTime = // 6pm
+          const nextMeeting = this.calculateReminderDate(eventSelected.meetingDay, eventSelected.meetingTime)
+          console.log(nextMeeting)
+          console.log(String(new Date(nextMeeting)))
+
+          nextMetteingObj ={
+            'UTCTime': String(new Date(nextMeeting).toISOString()),
+            'aaaSession': String(eventSelected.name),
+            'expired': true
+          }
+
+          sessionsAvailable.push(nextMetteingObj)
+        }
+        
        // console.log(sessionsAvailable)
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(sessionsAvailable));
+
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       } else {
         console.log('There is no session in firebase ')
