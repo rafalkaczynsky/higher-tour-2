@@ -3,11 +3,11 @@ package com.higherapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.krazylabs.OpenAppSettingsPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
+
 import ga.piroro.rnt.RNTPackage;
 import com.goldenowl.twittersignin.TwitterSigninPackage;
-import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -39,11 +39,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new OpenAppSettingsPackage(),
+            new MapsPackage(),
             new FIRMessagingPackage(),
             new TwitterSigninPackage(),
             new RNTPackage(),
-            new MapsPackage(),
             new FBSDKPackage(mCallbackManager)
       );
     }

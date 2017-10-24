@@ -5,8 +5,6 @@ import logger , {createLogger} from "redux-logger"
 import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated} from 'react-native'
 import * as firebase from "firebase";
 
-import OpenAppSettings from 'react-native-app-settings'
-
 const Permissions = require('react-native-permissions');
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
@@ -17,13 +15,17 @@ import AppWithNavigationState from './screens'
 import Freebie from './windows/freebie'
 import {Read, Think, Respond} from './windows'
 
-import {LocationAlertWindow} from './components'
+import {AlertWindow} from './components'
 
 
 const middleware = applyMiddleware(logger)
 var screen = null
 let store = createStore(reducers, middleware)
 
+
+
+
+//PERMISSION LOCATION CHECK!!
 Permissions.request('location')
 .then(response => {
   console.log('locationPermission :' + response)
@@ -224,6 +226,8 @@ export default class App extends React.Component {
         .then(response => {
           this.setState({locationPermission: response})
         })
+
+
     }
 
     componentWillUnmount() {
@@ -323,18 +327,23 @@ export default class App extends React.Component {
       })
     }
 
+
   render()  { 
 
             this._requestPermission()
 
             // handle location OFF both android and iOS
             if ((!this.state.locationPermission)&&(Platform.OS === 'android')){
-              return ( <LocationAlertWindow 
+              return ( <AlertWindow 
+                          type='location'
+                          text='We need access your location so you can find nearest events HigherApp doesnt work without access to location.'
                           onPress={()=> this.setState({refreshed: !this.state.refreshed})}
                       />
                 )
             }else if ((this.state.locationPermission !== 'authorized') && (this.state.locationPermission !== 'undetermined')){
-              return  <LocationAlertWindow 
+              return  <AlertWindow 
+                          type='location'
+                          text='We need access your location so you can find nearest events HigherApp doesnt work without access to location.'
                           onPress={Permissions.openSettings}
                       />
             }

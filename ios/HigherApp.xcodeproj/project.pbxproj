@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -52,7 +53,6 @@
 		C9C2F93B8266461CA4BB2994 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F308B8E27F24EDF876E4EAB /* libjschelpers.a */; };
 		F1070FB30D90422290A42D8C /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7023DF24F0424699CD02BE /* libyoga.a */; };
 		F1BEE732A2644C5285919E07 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9191B7C59AC2428EAB9196CA /* libRCTFBSDK.a */; };
-		33625BF23B7C4C9A80585425 /* libRNOpenAppSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDDC3F992542447CA48CE705 /* libRNOpenAppSettings.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +308,13 @@
 			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
 			remoteInfo = ReactNativePermissions;
 		};
+		B5C1407D1F9E4B5B00F73541 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD7A8F521A0140648D7953FF /* RNOpenAppSettings.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNOpenAppSettings;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -359,11 +366,10 @@
 		B592A51F1F595B4B00BA3DCF /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
 		B592A5201F595B4B00BA3DCF /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TwitterKitResources.bundle; sourceTree = "<group>"; };
 		B592A5211F595B4B00BA3DCF /* TwitterShareExtensionUIResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TwitterShareExtensionUIResources.bundle; sourceTree = "<group>"; };
+		CD7A8F521A0140648D7953FF /* RNOpenAppSettings.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNOpenAppSettings.xcodeproj; path = "../node_modules/react-native-app-settings/ios/RNOpenAppSettings.xcodeproj"; sourceTree = "<group>"; };
 		F0C09EED0079429D9613157F /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		F3F4B58CA15A4D178698BB5C /* libcxxreact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libcxxreact.a; sourceTree = "<group>"; };
 		F6B89D0E9AE74E67B05BA518 /* RNTwitterSignIn.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTwitterSignIn.xcodeproj; path = "../node_modules/react-native-twitter-signin/ios/RNTwitterSignIn.xcodeproj"; sourceTree = "<group>"; };
-		CD7A8F521A0140648D7953FF /* RNOpenAppSettings.xcodeproj */ = {isa = PBXFileReference; name = "RNOpenAppSettings.xcodeproj"; path = "../node_modules/react-native-app-settings/ios/RNOpenAppSettings.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		EDDC3F992542447CA48CE705 /* libRNOpenAppSettings.a */ = {isa = PBXFileReference; name = "libRNOpenAppSettings.a"; path = "libRNOpenAppSettings.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,7 +411,6 @@
 				9640304F43A2E10935B37184 /* Pods_HigherApp.framework in Frameworks */,
 				4723F593A19D4AA4907527BF /* libRNFIRMessaging.a in Frameworks */,
 				5EB95B019C164B11A09E2A8D /* libReactNativePermissions.a in Frameworks */,
-				33625BF23B7C4C9A80585425 /* libRNOpenAppSettings.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +707,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B5C140591F9E4B5B00F73541 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5C1407E1F9E4B5B00F73541 /* libRNOpenAppSettings.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -886,6 +899,10 @@
 				{
 					ProductGroup = 681CBC6A1F7A478900CC6163 /* Products */;
 					ProjectRef = B28DD8CB69A24B759126C537 /* RNFIRMessaging.xcodeproj */;
+				},
+				{
+					ProductGroup = B5C140591F9E4B5B00F73541 /* Products */;
+					ProjectRef = CD7A8F521A0140648D7953FF /* RNOpenAppSettings.xcodeproj */;
 				},
 				{
 					ProductGroup = B592A5411F59668F00BA3DCF /* Products */;
@@ -1139,6 +1156,13 @@
 			fileType = archive.ar;
 			path = libReactNativePermissions.a;
 			remoteRef = B595BC271F99E0E900288549 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B5C1407E1F9E4B5B00F73541 /* libRNOpenAppSettings.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNOpenAppSettings.a;
+			remoteRef = B5C1407D1F9E4B5B00F73541 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
