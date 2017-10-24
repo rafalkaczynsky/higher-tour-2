@@ -100,8 +100,6 @@ class _ChurchItem extends Component {
     const activeTabName = this.props.app.activeTabName  
     const loginStatus = this.props.app.loginStatus    
 
-    console.log('ChurchItem Container')
-    console.log(churchSelected)
     return (
         <ChurchItem 
           onHome={()=> this.handleOnHome(navigate)}

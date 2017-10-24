@@ -95,8 +95,7 @@ class _FindChurch extends Component {
     const userData = this.props.user      // data from the store
     const churches = this.props.churches  // data from the store
     const activeTabName = this.props.app.activeTabName  // data from the store
-  
-    console.log('Find Church Container')
+
 
     return (
         <FindChurch 

@@ -194,7 +194,6 @@ export default class SessionItem extends React.Component {
           onSettings={onSettings}
           onHome={onHome}
           onBible={onBible}
-          activeTabName={this.props.activeTabName}
         /> 
       </View>
         )

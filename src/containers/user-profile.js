@@ -191,9 +191,6 @@ class _UserProfile extends Component {
     firebase.database().ref('sessions/'+ eventSelected.host+'/').once("value", snapshot => {
 
       const session = snapshot.val();
-      console.log('event selected.host')
-      console.log(eventSelected.host)
-      console.log(session)
       if (session){
         const sessionArray = Object.keys(session).map(function (key) { return session[key]; })
  

@@ -32,7 +32,7 @@ var connection = null
 //PERMISSION LOCATION CHECK!!
 Permissions.request('location')
 .then(response => {
-  console.log('locationPermission :' + response)
+ // console.log('locationPermission :' + response)
 })
 
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
@@ -71,7 +71,7 @@ FCM.on(FCMEvent.Notification, async (notif) => {
 });
 FCM.on(FCMEvent.RefreshToken, (token) => {
     // fcm token may not be available on first load, catch it here
-    console.log('!!!!!!!')
+   //git  console.log('!!!!!!!')
 
 });
 /**

@@ -111,8 +111,7 @@ class _HigherBibleReadings extends Component {
   }
 
   handleOnItem(itemBibleReading, bibleReadingTitle){
-    console.log('On Item clicked')
-    console.log(bibleReadingTitle)
+
 
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))//SAVE_CURRENT_READING_ITEM_TITLE
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
@@ -123,7 +122,7 @@ class _HigherBibleReadings extends Component {
   handleOnDayItem(itemDay, navigate, numberOfDay, from){
       const currentReadingDayNumber = this.props.app.currentReadingDayNumber
       const userDataFromLocal = this.props.user
-      console.log(itemDay)
+
       this.props.dispatch(ACTIONS.UPDATE_CURRENT_BIBLE_READING_DAY_CONTENT(itemDay))
       //check redux store if the last Reading Number is bigger or not than current Clicked
       if (this.props.app.lastReadDayNumber < numberOfDay){

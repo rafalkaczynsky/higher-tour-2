@@ -94,8 +94,6 @@ class _SessionItem extends Component {
 
 
   handleOnStartSession(navigate, route, eventSelected){
-    console.log('on start session')
-    console.log(eventSelected)
     const userData = this.props.user          
     const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
 

@@ -42,7 +42,7 @@ handleOnGoBack(){
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-    console.log(this.props.eventSelected)
+
     return (
         <WeekList 
           onSettings={()=> this.handleOnSettings()}

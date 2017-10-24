@@ -53,9 +53,7 @@ componentDidMount(){
       firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
         const bibleReading = snapshot.val();
 
-        if (bibleReading !== null){
-          console.log(bibleReading.lastReadDayNumber + '<' + currentReadingDayNumber )
-          
+        if (bibleReading !== null){       
           if (bibleReading.lastReadDayNumber < currentReadingDayNumber ) {
             firebaseDataAppUsers.update({
               lastReadTimeStamp: new Date().getTime(),

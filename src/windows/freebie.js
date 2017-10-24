@@ -12,8 +12,7 @@ export default class Freebie extends Component {
   }
 
   render() {
-    console.log('FREEBIE SCREEN PROPS')
-    console.log(this.props)
+
   return (
            
   <View style={StyleSheet.window.default}>
