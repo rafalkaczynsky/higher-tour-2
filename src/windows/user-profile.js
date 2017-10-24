@@ -83,7 +83,7 @@ class UserProfile extends React.Component {
                   iconText='view/edit'
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 /> 
-                {this.props.sessions.length === 0}{
+                {this.props.sessions.length === 0 &&
                   <ListItem 
                       title={''}
                       simple

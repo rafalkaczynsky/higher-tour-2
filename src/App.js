@@ -2,7 +2,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
 import logger , {createLogger} from "redux-logger"
-import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated} from 'react-native'
+import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated, NetInfo} from 'react-native'
 import * as firebase from "firebase";
 
 const Permissions = require('react-native-permissions');
@@ -24,7 +24,7 @@ let store = createStore(reducers, middleware)
 
 
 
-
+var connection = null
 //PERMISSION LOCATION CHECK!!
 Permissions.request('location')
 .then(response => {
@@ -203,9 +203,29 @@ export default class App extends React.Component {
           });
       }
 
+      handleFirstConnectivityChange(isConnected) {
+        console.log('Then, is ' + (isConnected ? 'online' : 'offline'));
+        connection = isConnected
+        NetInfo.isConnected.removeEventListener(
+          'change',
+          this.handleFirstConnectivityChange
+        );
+      }
 
     componentWillMount() {
+
+
         var self = this;
+
+       /* NetInfo.isConnected.fetch().then(isConnected => {
+          console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+        });*/
+        
+        NetInfo.isConnected.addEventListener(
+          'change',
+          this.handleFirstConnectivityChange
+        );
+
         AppState.addEventListener('change', this._handleAppStateChange.bind(this));
         this.setState({isStoreLoading: true});
 
@@ -329,18 +349,26 @@ export default class App extends React.Component {
 
 
   render()  { 
-
+            console.log(connection)
+            if (!connection){
+              return ( <AlertWindow 
+                          type='connection'
+                          text='You are off line Do something with your bills!!!'
+                          onPress={()=> this.setState({refreshed: !this.state.refreshed})}
+                      />
+                )
+            }
             this._requestPermission()
 
             // handle location OFF both android and iOS
-            if ((!this.state.locationPermission)&&(Platform.OS === 'android')){
+            if ((!this.state.locationPermission) && ( Platform.OS === 'android')){
               return ( <AlertWindow 
                           type='location'
                           text='We need access your location so you can find nearest events HigherApp doesnt work without access to location.'
                           onPress={()=> this.setState({refreshed: !this.state.refreshed})}
                       />
                 )
-            }else if ((this.state.locationPermission !== 'authorized') && (this.state.locationPermission !== 'undetermined')){
+            } else if ((this.state.locationPermission !== 'authorized') && (this.state.locationPermission !== 'undetermined')){
               return  <AlertWindow 
                           type='location'
                           text='We need access your location so you can find nearest events HigherApp doesnt work without access to location.'
