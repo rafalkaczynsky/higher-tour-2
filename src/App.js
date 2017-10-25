@@ -9,6 +9,8 @@ const Permissions = require('react-native-permissions');
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
+import { addNavigationHelpers, StackNavigator } from 'react-navigation';
+
 import {reducers} from './reducers'
 import AppWithNavigationState from './screens'
 
@@ -47,7 +49,7 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     if(notif.opened_from_tray){
       //app is open/resumed because user clicked banner
 
-      console.log('opend tray')
+     //console.log('opend tray')
     }
     // await someAsyncCall();
 
@@ -164,10 +166,10 @@ export default class App extends React.Component {
         })
 
         FCM.getInitialNotification().then((notif)=>{
-          console.log("FCM.getInitialNotification");
-          console.log(notif)
+         // console.log("FCM.getInitialNotification");
+         // console.log(notif)
           if (notif){
-            console.log(notif.screen)
+           // console.log(notif.screen)
             this.setState({
               screen: notif.screen,
               lastReadDayNumber: notif.lastReadDayNumber,
@@ -185,7 +187,7 @@ export default class App extends React.Component {
           FCM.on(FCMEvent.Notification, async (notif) => {
             
               if (notif){
-                console.log(notif.screen)
+              //  console.log(notif.screen)
                 this.setState({
                   screen: notif.screen,
                   lastReadDayNumber: notif.lastReadDayNumber,
@@ -208,7 +210,7 @@ export default class App extends React.Component {
       }
 
       handleFirstConnectivityChange(isConnected) {
-        console.log('Then, is ' + (isConnected ? 'online' : 'offline'));
+       // console.log('Then, is ' + (isConnected ? 'online' : 'offline'));
         connection = isConnected
         NetInfo.isConnected.removeEventListener(
           'change',
@@ -217,7 +219,6 @@ export default class App extends React.Component {
       }
 
     componentWillMount() {
-
 
         var self = this;
 

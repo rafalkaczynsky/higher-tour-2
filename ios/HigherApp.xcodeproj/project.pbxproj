@@ -576,6 +576,7 @@
 				F3F4B58CA15A4D178698BB5C /* libcxxreact.a */,
 				0F308B8E27F24EDF876E4EAB /* libjschelpers.a */,
 				A59DCCF4066042C2B53BE555 /* libRNFIRMessaging.a */,
+				F0C09EED0079429D9613157F /* libReactNativePermissions.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";

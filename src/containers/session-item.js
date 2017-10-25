@@ -94,6 +94,15 @@ class _SessionItem extends Component {
 
 
   handleOnStartSession(navigate, route, eventSelected){
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'SessionItem'})
+      ]
+    })
+
     const userData = this.props.user          
     const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
 
@@ -126,10 +135,20 @@ class _SessionItem extends Component {
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
+    this.props.navigation.dispatch(resetAction)
     this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
   }
 
   handleOnStopSession(navigate, route){
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'SessionItem'})
+      ]
+    })
+
     // appData database appUser
     const userData = this.props.user          
     const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
@@ -144,8 +163,8 @@ class _SessionItem extends Component {
     FCM.cancelAllLocalNotifications()
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
+    this.props.navigation.dispatch(resetAction)
     this.props.dispatch({type: 'GotoWelcomeAnimation'})
-   // this.props.dispatch({type: 'Navigation/RESET', index: 0, actions: [{ type: 'Navigate', routeName:'Welcome'}]})
   }
 
   handleOnSettings(){
@@ -153,11 +172,23 @@ class _SessionItem extends Component {
   }
 
   handleOnHome(navigate){
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'SessionItem'})
+      ]
+    })
+
     const loginStatus = this.props.app.loginStatus
+
+    this.props.navigation.dispatch(resetAction)
 
     if (loginStatus && loginStatus === 'loggedInPlus') {
       this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
     } else { 
+      
         this.props.dispatch({type: 'GotoWelcomeAnimation'})
       }
 

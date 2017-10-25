@@ -153,6 +153,15 @@ class _HigherBibleReadings extends Component {
 
 
   handleOnHome(){
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'HigherBibleReadings'})
+      ]
+    })
+    this.props.dispatch(resetAction)
+
     const loginStatus = this.props.app.loginStatus  // data from the store
 
     if (loginStatus && loginStatus === 'loggedOut') {

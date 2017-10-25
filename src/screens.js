@@ -23,17 +23,24 @@ import {
   _ReadingContentList
 } from './containers'
 
+var _noAnimation = false
 
 const MyTransitionSpec = ({
   duration: 400,
   timing: Animated.timing,
 });
 
+const MyTransitionSpecNoAnimation = ({
+  duration: 0,
+});
 
 let TransitionConfiguration = () => {
+  let _transitionSpec = !_noAnimation ? MyTransitionSpec : MyTransitionSpecNoAnimation
+
+ // console.log(_transitionSpec)
   return {
       // Define scene interpolation, eq. custom transition
-      transitionSpec: MyTransitionSpec,
+      transitionSpec: _transitionSpec,
       screenInterpolator: (sceneProps) => {
 
           const {position, scene} = sceneProps;
@@ -41,7 +48,27 @@ let TransitionConfiguration = () => {
           const params = route.params || {};
           const transition = params.transition || 'default'; 
 
-          return {
+        //  console.log('Number of screens in navigator array:' + sceneProps.scenes.length)
+        //  console.log('Current index is: ' + sceneProps.scene.index)
+        //  console.log('Current route Name: ' + sceneProps.scene.route.routeName)
+        //  console.log(_noAnimation)
+                // Disable the transition animation when resetting to the home screen.
+          if (
+            sceneProps.scene.index === 0 &&
+            sceneProps.scene.route.routeName !== 'SignIn' &&
+            sceneProps.scenes.length > 1
+          ) {
+
+          //  console.log('Warunek spelniony')
+            _noAnimation = true
+
+            return null
+
+          } else {
+
+            _noAnimation = false
+
+            return {
                   WelcomeAnimation: customTransitions.WelcomeAnimation(index, position),
                   UserProfileAnimation: customTransitions.UserProfileAnimation(index, position),
                   SettingsInAnimation: customTransitions.SettingsInAnimation(index, position),
@@ -69,6 +96,7 @@ let TransitionConfiguration = () => {
 
                   default: customTransitions.MyTransition(index, position),
           }[transition];
+        }
       }
   }
 };

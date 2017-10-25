@@ -23,6 +23,17 @@ handleOnSettings(navigate){
 }
 
 handleHome(navigate){
+
+  const resetAction = NavigationActions.reset({
+    index: 0,
+    key: null,
+    actions: [
+      NavigationActions.navigate({ routeName: 'WeekList'})
+    ]
+  })
+
+  this.props.navigation.dispatch(resetAction)
+  
   const loginStatus = this.props.app.loginStatus 
   
   if (loginStatus && loginStatus === 'loggedOut') {

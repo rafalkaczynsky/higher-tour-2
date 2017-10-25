@@ -39,6 +39,15 @@ class _Settings extends Component {
 
   handleOnHome(){
 
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Settings'})
+      ]
+    })
+    this.props.dispatch(resetAction
+    )
     const loginStatus = this.props.app.loginStatus  // data from the store
     
     if (loginStatus && loginStatus === 'loggedOut') {

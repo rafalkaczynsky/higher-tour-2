@@ -92,7 +92,7 @@ class _UserProfile extends Component {
 
     let sessionDay = weekday.indexOf(sessionDayName) // is 5
 
-    console.log(sessionDay)
+    //console.log(sessionDay)
 	  let reminderDay = null
     
 	  if (sessionDay !== 0) {  
@@ -114,16 +114,16 @@ class _UserProfile extends Component {
       sessionHour += 12
     }
 
-    console.log(sessionAMPM)
-    console.log(sessionHour+ ' , ' + sessionMinute)
-    console.log(d)
-    console.log(sessionDay)
+  //  console.log(sessionAMPM)
+  //  console.log(sessionHour+ ' , ' + sessionMinute)
+  //  console.log(d)
+  //  console.log(sessionDay)
 
     d.setHours(sessionHour,sessionMinute,0,0);  
 
     let reminderDate = d.setDate(d.getDate() + (reminderDay+7 - d.getDay())%7)
 
-    console.log(reminderDate)
+   // console.log(reminderDate)
     return reminderDate
   }
 
@@ -212,8 +212,8 @@ class _UserProfile extends Component {
          // eventSelected.meetingDay = // Monday
          // eventSelected.meetingTime = // 6pm
           const nextMeeting = this.calculateReminderDate(eventSelected.meetingDay, eventSelected.meetingTime)
-          console.log(nextMeeting)
-          console.log(String(new Date(nextMeeting)))
+         // console.log(nextMeeting)
+        //  console.log(String(new Date(nextMeeting)))
 
           nextMetteingObj ={
             'UTCTime': String(new Date(nextMeeting).toISOString()),
@@ -266,8 +266,10 @@ class _UserProfile extends Component {
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
 
-    console.log('Schedule')
-    FCM.getScheduledLocalNotifications().then(notif=>console.log(notif));
+   // console.log('Schedule')
+    FCM.getScheduledLocalNotifications().then(notif=> {
+     // console.log(notif)
+    });
   }
 
   render() {
