@@ -32,7 +32,7 @@ let store = createStore(reducers)
 
 var connection = null
 var GPS = false
-
+var itemDay = null
 // CHECK FOR GPS
 
 
@@ -46,8 +46,8 @@ Permissions.request('location')
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
 FCM.on(FCMEvent.Notification, async (notif) => {
 
- // console.log('!!!!!!! FCM.on  - 1')
- // console.log(notif)
+  //console.log('!!!!!!! FCM.on  - 1')
+  //console.log(notif)
     // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
     if(notif.local_notification){
       //this is a local notification
@@ -55,7 +55,7 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     if(notif.opened_from_tray){
       //app is open/resumed because user clicked banner
 
-     //console.log('opend tray')
+    // console.log('opend tray')
     }
     // await someAsyncCall();
 
@@ -158,6 +158,8 @@ export default class App extends React.Component {
         this.state.title ='Journey Through Johny'
         this.state.lastReadDayNumber = '11'
         this.state.uid = '3cAAYQPgrjddrbNuXKwUfCe8iCF3'*/
+
+
         this.animateOpacity = new Animated.Value(0)
         Animated.timing(this.animateOpacity, {
           toValue: 1,
@@ -177,7 +179,7 @@ export default class App extends React.Component {
          // console.log("FCM.getInitialNotification");
          // console.log(notif)
           if (notif){
-           // console.log(notif.screen)
+          //  console.log(notif.screen)
             this.setState({
               screen: notif.screen,
               lastReadDayNumber: notif.lastReadDayNumber,
@@ -362,7 +364,7 @@ export default class App extends React.Component {
 
 
   render()  { 
-   
+   /*
 
             if (!connection){
               return ( <AlertWindow 
@@ -373,7 +375,7 @@ export default class App extends React.Component {
                 )
             }
 
-            this._requestPermission()
+            //this._requestPermission()
 
             // handle location OFF both android and iOS
             if ((!this.state.locationPermission) && ( Platform.OS === 'android')){
@@ -389,12 +391,12 @@ export default class App extends React.Component {
                           text='We need access your location so you can find nearest events HigherApp doesnt work without access to location.'
                           onPress={Permissions.openSettings}
                       />
-            }
+            }*/
             // bibleReading notfication Think and Respond  //this.setState({refreshed: !this.state.refreshed})
             if (this.state.showThink) return (
               <Think 
                 fromNotification={true}
-                itemDay={this.state.itemDay} 
+                itemDay={itemDay} 
                 onItemBackPressed={()=> this.setState({showThink: false})}     
                 onItemNextPressed={()=> this.setState({showThink: false, showRespond: true})}    
                 onGoToApp={()=> this.setState({screen: undefined, showThink: false, showRespond: false})} 
@@ -403,7 +405,7 @@ export default class App extends React.Component {
             if (this.state.showRespond) return (
               <Respond
                 fromNotification={true}
-                itemDay={this.state.itemDay} 
+                itemDay={itemDay} 
                 onItemBackPressed={()=> this.setState({showThink: true, showRespond: false})}      
                 onGoToApp={()=> this.setState({screen: undefined, showThink: false, showRespond: false})}
               />)
@@ -413,24 +415,25 @@ export default class App extends React.Component {
               // check what screen render 
               //.. bible reading ? 
               if (this.state.screen === 'reading'){ 
-                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ this.state.uid+'/');                 
+                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ this.state.uid+'/bibleReadings/'+this.state.title);                 
                 firebaseDataAppUsers.update({
                     lastReadDayNumber: parseInt(this.state.lastReadDayNumber) + 1,
                 })
                 
                 var bibleReadingItem = [] 
                 firebase.database().ref('bibleReading/'+ this.state.title +'/').once("value", snapshot => {
-                  bibleReadingItem = snapshot.val() 
+                 bibleReadingItem = snapshot.val() 
                   bibleReadingItem = Object.keys(bibleReadingItem).map(function (key) { return bibleReadingItem[key]; })
-                  this.setState({
-                    itemDay: bibleReadingItem[parseInt(this.state.lastReadDayNumber)]
-                  })
+                  
+                    itemDay = bibleReadingItem[parseInt(this.state.lastReadDayNumber)]
+              
   
                 })
+    
                   return <Read 
                     onItemBackPressed={()=> this.setState({screen: undefined})}
                     onItemNextPressed={()=> this.setState({showThink: true})}   
-                    itemDay={this.state.itemDay}
+                    itemDay={itemDay}
                     currentReadingDayNumber={parseInt(this.state.lastReadDayNumber) + 1}
                     fromNotification={true}             
                     />

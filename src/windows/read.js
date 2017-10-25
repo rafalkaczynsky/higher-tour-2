@@ -54,6 +54,9 @@ export default class Read extends Component {
         fromNotification={true}         
      * 
      */
+console.log(this.state.isMounted)
+console.log(itemDay)
+console.log(this.state.isMounted)
 
     if (this.state.isMounted){
       if ((itemDay) && (fromNotification)) return (
@@ -138,8 +141,10 @@ export default class Read extends Component {
   />
   </View>
   )
-} else return null
+} else return (
+  <Text>First mistake</Text>
+)
 
-} else return null
+} else return (<Text>Second mistake</Text>)
 }
 }

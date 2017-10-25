@@ -302,6 +302,7 @@ class _SignIn extends Component {
                         const locationSelected = snapshot.val() 
 
                         const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                        
                         firebaseDataAppUsers.update({
                             email: user.email,
                             name: user.displayName,
