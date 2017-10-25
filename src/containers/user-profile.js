@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ActivityIndicator, Dimensions} from 'react-native'
+import {View, ActivityIndicator, Dimensions, Alert} from 'react-native'
 import { connect } from 'react-redux'
 import * as firebase from 'firebase'
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
@@ -22,11 +22,26 @@ class _UserProfile extends Component {
   constructor(props){
     super(props)
 
+    //default fixed user location when GPS is OFF
+     const fixedPosition = {
+      coords: {
+        accuracy: 500,
+        altitude: 0,
+        heading: 0,
+        latitude:  53.3998261,
+        longitude: -2.2522895,  // M22 4RG, Harper Rd, Manchester
+        speed: 0,
+       }
+    }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
-      }
+      },
+      error => {
+        this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
+        alert('GPS is OFF! Please switch it ON!')
+      },
     );
     
   }

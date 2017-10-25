@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Welcome} from '../windows'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
-import {Dimensions} from 'react-native'
+import {Dimensions, Alert} from 'react-native'
 import * as firebase from 'firebase'
 
 import * as ACTIONS from '../actions/actions/actions';
@@ -23,11 +23,25 @@ class _Welcome extends Component {
     const { params } = this.props.navigation.state
     const loginStatus= this.props.app.loginStatus // data from the store
     
+    const fixedPosition = {
+      coords: {
+        accuracy: 500,
+        altitude: 0,
+        heading: 0,
+        latitude: 53.4761312,
+        longitude: -2.2612598,
+        speed: 0,
+       }
+    }
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-
-          this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
-      }
+        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+      },
+      error => {
+        this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
+        alert('GPS is OFF! Please switch it ON!')
+      },
     );
     
   }

@@ -31,6 +31,12 @@ let store = createStore(reducers)
 
 
 var connection = null
+var GPS = false
+
+// CHECK FOR GPS
+
+
+
 //PERMISSION LOCATION CHECK!!
 Permissions.request('location')
 .then(response => {
@@ -144,7 +150,9 @@ export default class App extends React.Component {
           'Setting a timer'
       ]
       this.FCMtoken = null
-   
+
+      console.log(navigator.geolocation)
+
      /* // temp values
         this.state.screen ='read'
         this.state.title ='Journey Through Johny'
@@ -355,6 +363,7 @@ export default class App extends React.Component {
 
   render()  { 
    
+
             if (!connection){
               return ( <AlertWindow 
                           type='connection'
@@ -363,6 +372,7 @@ export default class App extends React.Component {
                       />
                 )
             }
+
             this._requestPermission()
 
             // handle location OFF both android and iOS

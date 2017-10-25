@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Button, View, Animated, AsyncStorage, ActivityIndicator} from 'react-native'
 
 import { connect } from 'react-redux';
+import {Alert} from 'react-native'
 
 import * as firebase from 'firebase'
 
@@ -43,14 +44,26 @@ class _SignIn extends Component {
       erroR: null,
     }
 
+    const fixedPosition = {
+      coords: {
+        accuracy: 500,
+        altitude: 0,
+        heading: 0,
+        latitude: 53.4761312,
+        longitude: -2.2612598,
+        speed: 0,
+       }
+    }
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        if (position){
-          this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
-        }
-      }
+        this.props.dispatch(ACTIONS.SAVE_COORDS(position.coords));
+      },
+      error => {
+        this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
+        alert('GPS is OFF! Please switch it ON!')
+      },
     );
-
   }
 
 
