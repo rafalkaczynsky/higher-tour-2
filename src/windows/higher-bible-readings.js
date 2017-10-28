@@ -85,7 +85,7 @@ class HigherBibleReadings extends React.Component {
 
         <ListItem
           title={this.props.bibleReadingNames[indx]}
-          label={item.length + ' days'}
+          label={item.length - 1 + ' days'}
           handleIconPressed={()=> {onItem(item, this.props.bibleReadingNames[indx][0])}}
           key={'ListItemReadingsKey-'+indx}
         />
