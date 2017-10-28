@@ -24,7 +24,7 @@ class UserProfile extends React.Component {
       if (atPosition === -1){
         return str;
        } else return str.substr(0, atPosition);
-    } else  return str.substr(0, spacePosition);   
+    } else  return str.substr(0, spacePosition);
   }
 
   capitalizeFirstLetter(string) {
@@ -36,12 +36,12 @@ class UserProfile extends React.Component {
 
     getMyData(arrayOfObjectsWithIds) {
 
-      var functionArray = arrayOfObjectsWithIds.map( function (value) { 
-         return {myGetDataFunction: MyService.getMyData(value.id)}; 
-      }) 
-      var promises = functionArray.map( function (getDataFunction) { 
-      var deferred =$q.defer(); getDataFunction.myGetDataFunction.success( function(data) { deferred.resolve(data) }). error( function (error) { deferred.reject(); }); return deferred.promise; }); $q.all(promises).then( function (dataArray) { }) 
-    }; 
+      var functionArray = arrayOfObjectsWithIds.map( function (value) {
+         return {myGetDataFunction: MyService.getMyData(value.id)};
+      })
+      var promises = functionArray.map( function (getDataFunction) {
+      var deferred =$q.defer(); getDataFunction.myGetDataFunction.success( function(data) { deferred.resolve(data) }). error( function (error) { deferred.reject(); }); return deferred.promise; }); $q.all(promises).then( function (dataArray) { })
+    };
 
     render(){
         const { onSeeAllReadings, onSettings, locationSelected, locations, handleEditSession, userData, months, bibleReading,  bibleReadingNames, lastReadDayNumber,  onHandleReadingItemPressed, aaaSession, onWeek} = this.props
@@ -64,10 +64,10 @@ class UserProfile extends React.Component {
         } else {
          locationSelectedName = ''
         }
-       
+
         return(
       <View style={[StyleSheet.window.default]}>
-        <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
+        <View style={{flex: 1, alignItems: 'center', width: '100%'}}>
             <View style={[StyleSheet.userProfile.header]} >
                 <Image source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} >
                 </Image>
@@ -78,29 +78,29 @@ class UserProfile extends React.Component {
             <ScrollView style={{width: '95%'}}>
             <View style={StyleSheet.userProfile.contentBox}>
 
-                <ListItem 
+                <ListItem
                   title={locationSelectedName}
                   iconText='view/edit'
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
-                /> 
+                />
                 {this.props.sessions.length === 0 &&
-                  <ListItem 
+                  <ListItem
                       title={''}
                       simple
                       label={'Higher sessions coming soon'}
-                    /> 
+                    />
                 }
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
                    if (index === 1)
                     return(
-                      <ListItem 
+                      <ListItem
                         key={item.aaaSession + '-' + index}
                         title={item.aaaSession}
                         label={'Available from: ' + sessionDateFormatted}
                         titleStyle={{color: colors.grey2}}
-                      /> 
+                      />
                     )
                 })}
 
@@ -108,25 +108,25 @@ class UserProfile extends React.Component {
 
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
-                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)                                 
+                   const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
                    const aaaSessionItem = item.aaaSession
 
                    if (index === 0)
                     return(
-                      <ListItem 
+                      <ListItem
                         key={item.aaaSession + '-' + index}
                         title={item.aaaSession}
                         label={sessionDateFormatted}
                         handleIconPressed={()=>onWeek(item.aaaSession, sessionDateFormatted)}
                         simplePlus={item.expired ? true : null}
-                      /> 
+                      />
                     )
                 })}
 
- 
+
             </View>
             <View style={StyleSheet.userProfile.contentBox}>
-                <ListItem 
+                <ListItem
                   title='Higher Bible Readings'
                   listHeader
                 /> 
@@ -135,16 +135,16 @@ class UserProfile extends React.Component {
 
                 const title = this.props.appUserBibleReadingNames[index]
                 const progress = item.progress + '%'
-         
+
                 return (
-                  <ListItem 
+                  <ListItem
                     key={'appUserBibleReadingKey'+ index}
                     title={title}
                     progressBar
                     progress={progress}
                     handleIconPressed={() => onHandleReadingItemPressed(title)}
                   />
-                  ) 
+                  )
                 })}
 
                 <ListItem
@@ -157,11 +157,11 @@ class UserProfile extends React.Component {
             </View>
             </ScrollView>
         </View>
-        <TabMenu 
+        <TabMenu
           onSettings={onSettings}
           activeTabName={'Home'}
           onBible={this.props.onBible}
-        /> 
+        />
       </View>
         )
     }
@@ -169,4 +169,3 @@ class UserProfile extends React.Component {
 
 
 export default UserProfile
-

@@ -9,8 +9,8 @@ import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../compon
 export default class Read extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      text: 'Useless Placeholder', 
+    this.state = {
+      text: 'Useless Placeholder',
       namePlaceholder: 'Name',
       emailPlaceholder: 'Email',
       dayItem: null,
@@ -31,12 +31,12 @@ export default class Read extends Component {
   }
 
   render() {
- 
+
     const {
-      userData, 
-      itemDay, 
-      currentReadingDayNumber, 
-      onItemNextPressed, 
+      userData,
+      itemDay,
+      currentReadingDayNumber,
+      onItemNextPressed,
       onItemBackPressed,
       fromNotification
     } = this.props
@@ -46,13 +46,13 @@ export default class Read extends Component {
     let mainImage
     let versus
     let content
- 
+
     /**
      *  onItemBackPressed={()=> this.setState({screen: undefined})}
         onItemNextPressed={()=> alert('Next pressed!')}
         itemDay={bibleReadingItem[this.state.lastReadDayNumber]}
-        fromNotification={true}         
-     * 
+        fromNotification={true}
+     *
      */
 console.log(this.state.isMounted)
 console.log(itemDay)
@@ -60,9 +60,9 @@ console.log(this.state.isMounted)
 
     if (this.state.isMounted){
       if ((itemDay) && (fromNotification)) return (
-      
+
       <View style={StyleSheet.window.default}>
-        <Header 
+        <Header
           text='Read'
           onBack
           onNext
@@ -72,7 +72,7 @@ console.log(this.state.isMounted)
 
         <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
           <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
-    
+
             <View style={{width: '100%'}}>
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
             </View>
@@ -92,7 +92,7 @@ console.log(this.state.isMounted)
           </ScrollView>
 
         </View>
-        <Button 
+        <Button
           type="default"
           text={'GO BACK'}
           onPress={onItemBackPressed}
@@ -102,25 +102,24 @@ console.log(this.state.isMounted)
 
    else if (!fromNotification) {
      return (
-           
+
   <View style={StyleSheet.window.default}>
-  <Header 
+  <Header
     text='Read'
     onBack
     onNext
     onBackCallback={onItemBackPressed}
     onNextCallback={onItemNextPressed}
   />
-  
+
   <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
       <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
-         
+
           <View style={{width: '100%'}}>
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
           </View>
           <View style={{padding: 20}}>
               <View>
-                  <Text style={{ fontSize: 12, lineHeight: 18}}>DAY {currentReadingDayNumber}</Text>
                   <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
                     <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Verse}</Text>
                   </TouchableOpacity>
@@ -134,7 +133,7 @@ console.log(this.state.isMounted)
       </ScrollView>
 
   </View>
-  <TabMenu 
+  <TabMenu
     onSettings={this.props.onSettings}
     onHome={this.props.onHome}
     activeTabName={this.props.activeTabName}

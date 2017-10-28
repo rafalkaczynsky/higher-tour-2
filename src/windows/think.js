@@ -17,11 +17,11 @@ export default class Think extends Component {
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
-  
-return (      
+
+return (
   <View style={StyleSheet.window.default}>
 
-  <Header 
+  <Header
     text='Think'
     onBack
     onNext
@@ -34,7 +34,7 @@ return (
           <View style={{padding: 20}}>
               <View style={{marginTop: 30}}>
                   <Text style={{ fontSize: 12, lineHeight: 18}}>
-                      {itemDay.Read.Content}
+                      {itemDay.Think.Content}
                   </Text>
               </View>
           </View>
@@ -42,7 +42,7 @@ return (
 
   </View>
   {this.props.fromNotification &&
-  <Button 
+  <Button
     type="default"
     text={'GO TO APP'}
     onPress={onGoToApp}
@@ -50,7 +50,7 @@ return (
   />
   }
   {!this.props.fromNotification &&
-  <TabMenu 
+  <TabMenu
     onSettings={this.props.onSettings}
     onHome={this.props.onHome}
     activeTabName={this.props.activeTabName}
