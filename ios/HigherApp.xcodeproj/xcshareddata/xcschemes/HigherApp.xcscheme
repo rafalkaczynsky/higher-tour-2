@@ -124,6 +124,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Higher Tour"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
