@@ -96,14 +96,14 @@ export default class ChurchItem extends React.Component {
                 onRegionChangeComplete={this.onRegionChangeComplete.bind(this)}
             >
               <MapView.Marker
-                title="New Marker"
+                title={church.name}
                 pinColor='red'
                 coordinate={coordinate}
                 />
             </MapView>}
             </View>
           <ScrollView style={{width: '95%',margin: 10,flex: 1,}}>
-            <View 
+            <View
                 style={{
                     flex: 1,
                     width: '100%',
