@@ -27,7 +27,7 @@ export default class TabMenu extends Component {
             active={activeTabName === 'Events' ? true : null}
             text="Events"
             iconName="events"
-            onPress={() => Linking.openURL('https://message.org.uk')}
+            onPress={() => Linking.openURL('https://highertour.com/coming-up')}
            />
           <TabItem
             active={activeTabName === 'Settings' ? true : null}

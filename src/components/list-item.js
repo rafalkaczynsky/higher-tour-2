@@ -26,20 +26,20 @@ export default class ListItem extends Component {
              {imageUrl && <Image source={{uri: imageUrl}} style={{width: 60, height: 60, marginRight: 15}} />}
               <View>
                 <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
-                {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
+                {label && <Text style={StyleSheet.listItem.readingLabel}>{label}</Text>}
               </View>
-              {progressBar && 
+              {progressBar &&
               <View style={StyleSheet.listItem.progressBarContainer}>
                 <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
               </View>}
-            </View> 
+            </View>
        )}
 
        {!imageName && !imageUrl && !simple && !simplePlus &&(
           <View>
             <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
-            {progressBar && 
+            {progressBar &&
             <View style={StyleSheet.listItem.progressBarContainer}>
               <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
             </View>}
@@ -57,7 +57,7 @@ export default class ListItem extends Component {
               <View>
                 {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
               </View>
-            </View> 
+            </View>
           }
 
         {simplePlus && !simple &&
@@ -68,7 +68,7 @@ export default class ListItem extends Component {
                 <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
                 {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
               </View>
-            </View> 
+            </View>
           }
         </View>
       </TouchableOpacity>

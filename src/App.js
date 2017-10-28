@@ -394,59 +394,57 @@ export default class App extends React.Component {
             }*/
             // bibleReading notfication Think and Respond  //this.setState({refreshed: !this.state.refreshed})
             if (this.state.showThink) return (
-              <Think 
+              <Think
                 fromNotification={true}
-                itemDay={itemDay} 
-                onItemBackPressed={()=> this.setState({showThink: false})}     
-                onItemNextPressed={()=> this.setState({showThink: false, showRespond: true})}    
-                onGoToApp={()=> this.setState({screen: undefined, showThink: false, showRespond: false})} 
+                itemDay={itemDay}
+                onItemBackPressed={()=> this.setState({showThink: false})}
+                onItemNextPressed={()=> this.setState({showThink: false, showRespond: true})}
+                onGoToApp={()=> this.setState({screen: undefined, showThink: false, showRespond: false})}
               />)
-  
+
             if (this.state.showRespond) return (
               <Respond
                 fromNotification={true}
-                itemDay={itemDay} 
-                onItemBackPressed={()=> this.setState({showThink: true, showRespond: false})}      
+                itemDay={itemDay}
+                onItemBackPressed={()=> this.setState({showThink: true, showRespond: false})}
                 onGoToApp={()=> this.setState({screen: undefined, showThink: false, showRespond: false})}
               />)
-  
+
             // check if render from notification
             if (this.state.screen){
-              // check what screen render 
-              //.. bible reading ? 
-              if (this.state.screen === 'reading'){ 
-                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ this.state.uid+'/bibleReadings/'+this.state.title);                 
+              // check what screen render
+              //.. bible reading ?
+              if (this.state.screen === 'reading'){
+                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ this.state.uid+'/bibleReadings/'+this.state.title);
                 firebaseDataAppUsers.update({
                     lastReadDayNumber: parseInt(this.state.lastReadDayNumber) + 1,
                 })
-                
-                var bibleReadingItem = [] 
+
+                var bibleReadingItem = []
                 firebase.database().ref('bibleReading/'+ this.state.title +'/').once("value", snapshot => {
-                 bibleReadingItem = snapshot.val() 
+                 bibleReadingItem = snapshot.val()
                   bibleReadingItem = Object.keys(bibleReadingItem).map(function (key) { return bibleReadingItem[key]; })
-                  
+
                     itemDay = bibleReadingItem[parseInt(this.state.lastReadDayNumber)]
-              
-  
+
+
                 })
-    
-                  return <Read 
+
+                  return <Read
                     onItemBackPressed={()=> this.setState({screen: undefined})}
-                    onItemNextPressed={()=> this.setState({showThink: true})}   
+                    onItemNextPressed={()=> this.setState({showThink: true})}
                     itemDay={itemDay}
                     currentReadingDayNumber={parseInt(this.state.lastReadDayNumber) + 1}
-                    fromNotification={true}             
+                    fromNotification={true}
                     />
                 // ... other notification means now freebie one
               } else if (this.state.screen === 'freebie'){
                 return <Freebie image={this.state.image} onGoBack={()=> this.setState({screen: undefined})}/>
               } else return null
-  
-              console.log('END OF CHECK ')
               this.setState({canGo: true})
-                // Load Main Application 
+                // Load Main Application
             } else if(this.state.isStoreLoading){
-              return <Text>store is loading... </Text>
+              return <Text>loading... </Text>
             }else if ((this.state.isMounted) && (!this.state.screen)){
               return (
                 <Provider  store={this.state.store}>
@@ -454,13 +452,13 @@ export default class App extends React.Component {
                 </Provider>
               )
             } else {
-              return <Text>Wait ... </Text>
+              return <Text>loading... </Text>
             }
           }
   }
 
 
-  // Change navigation structure - To be done 
+  // Change navigation structure - To be done
 
   /*
 

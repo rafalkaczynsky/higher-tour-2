@@ -21,19 +21,19 @@ class _HigherBibleReadings extends Component {
           },
           {
             textColor: 'white',
-            bgColor: 'brown',           
+            bgColor: 'brown',
           }
         ],
         currentScreen: 'list', //  or 'item', 'dayItem',
         chosenItem: null,
         chosenDayItem: false,
-        showAll: true,
+        showAll: false,
     }
   }
 
   handleOnNew(){
     this.setState({
-        
+
               buttonsStyle: [
                 {
                   textColor: 'brown',
@@ -81,12 +81,12 @@ class _HigherBibleReadings extends Component {
         showAll: true,
         buttonsStyle: [
           {
-            textColor: 'brown',
-            bgColor: 'transparent',
+            textColor: 'white',
+            bgColor: 'brown',
           },
           {
-            textColor: 'white',
-            bgColor: 'brown',           
+            textColor: 'transparent',
+            bgColor: 'white',
           }]
       })
   }
@@ -96,12 +96,12 @@ class _HigherBibleReadings extends Component {
       showAll: false,
       buttonsStyle: [
         {
-          textColor: 'white',
-          bgColor: 'brown',           
-        },
-        {
           textColor: 'brown',
           bgColor: 'transparent',
+        },
+        {
+          textColor: 'white',
+          bgColor: 'brown',
         }]
       })
   }

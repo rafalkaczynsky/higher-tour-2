@@ -31,22 +31,21 @@ export default class WeekList extends Component {
   }
 
   render() {
- 
+
     const {onWeekBackPressed, week, weekDate, selectedEvent, onGoBack} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
-
     return (
     <View style={StyleSheet.window.default}>
-    <Header 
-      text='SESSIONS'
+    <Header
+      text={week.Title}
       onBack
       onBackCallback={onGoBack}
     />
- 
-      <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>      
-          <View 
+
+      <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
+          <View
             style={{
               width: '100%',
               flexDirection: 'column',
@@ -58,16 +57,16 @@ export default class WeekList extends Component {
                 <Image source={{uri: week.image}} style={{  resizeMode: 'cover', height: 200}} />
               </View>
               <View style={{margin: 10}}>
-                <Text style={{fontWeight: 'bold', fontSize: 30}}>
-                    {week.Title + ' - ' + week.sessionTitle}
+                <Text style={{fontWeight: 'bold', fontSize: 22}}>
+                    {week.sessionTitle}
                 </Text>
               </View>
 
               <View style={{margin: 10}}>
-                <Text style={{fontWeight: 'bold',  fontSize: 23}}>       
-                    {selectedEvent.meetingDay+ ', '} {weekDate} 
-                </Text>   
-                <Text style={{fontWeight: 'bold',  fontSize: 20}}>
+                <Text style={{fontWeight: 'bold',  fontSize: 17}}>
+                    {selectedEvent.meetingDay+ ', '} {weekDate}
+                </Text>
+                <Text style={{fontSize: 17}}>
                   {selectedEvent.meetingTime}
                 </Text>
               </View>
@@ -81,17 +80,17 @@ export default class WeekList extends Component {
               <View style={{margin: 10, marginTop:2}}>
                     <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.firstLine}</Text>
                     <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.city} </Text>
-                    <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.postcode}</Text>   
+                    <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.postcode}</Text>
               </View>
               </ScrollView>
             </View>
             </View>
 
-          <TabMenu 
+          <TabMenu
             onSettings={this.props.onSettings}
             onHome={this.props.onHome}
             activeTabName={this.props.activeTabName}
-          /> 
+          />
       </View>
 )
   }

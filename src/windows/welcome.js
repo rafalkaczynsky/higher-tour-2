@@ -22,21 +22,21 @@ export default class SignIn extends Component {
 
     return (
       <View style={StyleSheet.window.default}>
-        <Header 
+        <Header
           text='Welcome'
           simple
         />
-        <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
-            <TextBox 
+        <View style={{flex: 1, alignItems: 'center', width: '100%'}}>
+            <TextBox
                 header="You're signed in!"
-                paragraph="Next, let's find a Higher Session near you. Choose frome the list below."
+                paragraph="Next, let's find a Higher Session near you. Choose from the list below."
                 style={{marginTop: 30, marginBottom: 20}}
             />
             <ScrollView style={{width: '100%'}}>
               {locations.map((item, index)=>{
                 if (index <= 3) {
                   return (
-                 <ListItem 
+                 <ListItem
                   key={'ChurchesList' + index}
                   title={item.name}
                   label={item.howFar + ' miles'}

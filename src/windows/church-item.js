@@ -63,20 +63,28 @@ export default class ChurchItem extends React.Component {
 
     const coordinate = {
         latitude: church.geoLoc.latitude,
-        longitude: church.geoLoc.longitude 
+        longitude: church.geoLoc.longitude
     }
-
+    function addhttp(url) {
+       if (!/^(f|ht)tps?:\/\//i.test(url)) {
+          url = "http://" + url;
+       }
+       return url;
+    }
+    if(church.website){
+      church.website = addhttp(church.website)
+    }
     return(
 
       <View style={StyleSheet.window.default}>
-        <Header 
+        <Header
           text={church.name}
           onBack
           onBackCallback={onGoBack}
         />
-        <View style={{flex: 1, alignItems: 'center', width: '100%'}}> 
+        <View style={{flex: 1, alignItems: 'center', width: '100%'}}>
             <View style={{width: '100%', height: '30%'}}>
-            {this.state.willMount && 
+            {this.state.willMount &&
             <MapView
                 provider={this.props.provider}
                 style={{width: '100%', height: '100%'}}
@@ -103,12 +111,12 @@ export default class ChurchItem extends React.Component {
                     justifyContent: 'space-between',
                     alignItems: 'flex-start',
                     backgroundColor: 'white'
-        
+
                 }}>
 
-                <Button 
+                <Button
                     type="default"
-                    text={'SEE SESSION'}
+                    text={'VIEW SESSION'}
                     onPress={onGoToSession}
                     style={{flex: 1}}
                 />
@@ -125,49 +133,75 @@ export default class ChurchItem extends React.Component {
             </View>
 
             <View style={{margin: 10}}>
-                <Text style={{fontWeight: 'bold'}}>
-                    Contact:  <Text style={{fontWeight: 'normal'}}>{church.contactPerson}</Text>
-                </Text>
-                <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onTelPressed(church.telephone)}>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Telephone:  
-                        <Text style={{fontWeight: 'normal'}}>
-                       {' ' + church.telephone + ' '}        
-                        </Text>
-                    </Text>
-                    <Icon 
-                        name="externalLink"
-                        style={{height: '50%', resizeMode:'contain'}}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onEmailPressed(church.email)}>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Email:  
-                        <Text style={{fontWeight: 'normal'}}>
-                            {' ' + church.email + ' '}
-                        </Text>
-                     </Text>
-                     <Icon 
-                        name="externalLink"
-                        style={{height: '50%', resizeMode:'contain'}}
-                     />
-                </TouchableOpacity>
+               {(!!church.contactPerson && church.contactPerson != "") &&
+                  <Text style={{fontWeight: 'bold'}}>
+                      Contact:  <Text style={{fontWeight: 'normal'}}>{church.contactPerson}</Text>
+                  </Text>
+                }
+                {(!!church.telephone && church.telephone != "")&&
+                  <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onTelPressed(church.telephone)}>
+                      <Text style={{fontWeight: 'bold'}}>
+                          Telephone:
+                          <Text style={{fontWeight: 'normal'}}>
+                         {' ' + church.telephone + ' '}
+                          </Text>
+                      </Text>
+                      <Icon
+                          name="externalLink"
+                          style={{height: '50%', resizeMode:'contain'}}
+                      />
+                  </TouchableOpacity>
+                }
+                {(!!church.email && church.email != "") &&
+                  <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onEmailPressed(church.email)}>
+                      <Text style={{fontWeight: 'bold'}}>
+                          Email:
+                          <Text style={{fontWeight: 'normal'}}>
+                              {' ' + church.email + ' '}
+                          </Text>
+                       </Text>
+                       <Icon
+                          name="externalLink"
+                          style={{height: '50%', resizeMode:'contain'}}
+                       />
+                  </TouchableOpacity>
+                }
 
             </View>
 
             <View style={{margin: 10}}>
-                 <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onWebPressed(church.website)}>
-                    <Text style={{fontWeight: 'bold'}}>
-                        Visit Website {' '}
-                    </Text>
-                    <Icon 
-                        name="externalLink"
-                        style={{height: '50%', resizeMode:'contain'}}
-                    />
-                </TouchableOpacity>
+                {(!!church.facebook && church.facebook != "") &&  <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onWebPressed(church.facebook)}>
+                   <Text style={{fontWeight: 'bold'}}>
+                       Find us on Facebook
+                   </Text>
+                   <Icon
+                       name="externalLink"
+                       style={{height: '50%', resizeMode:'contain'}}
+                   />
+               </TouchableOpacity>}
+               {!!church.twitter && church.twitter != ""  &&  <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onWebPressed(church.twitter)}>
+                  <Text style={{fontWeight: 'bold'}}>
+                      Follow us on Twitter
+                  </Text>
+                  <Icon
+                      name="externalLink"
+                      style={{height: '50%', resizeMode:'contain'}}
+                  />
+              </TouchableOpacity>}
+                {(!!church.website && church.website != "") &&
+                   <TouchableOpacity style={{marginTop: 5, flexDirection: 'row', alignItems: 'center'}} onPress={()=> onWebPressed(church.website)}>
+                      <Text style={{fontWeight: 'bold'}}>
+                          Visit Website {' '}
+                      </Text>
+                      <Icon
+                          name="externalLink"
+                          style={{height: '50%', resizeMode:'contain'}}
+                      />
+                  </TouchableOpacity>
+                }
             </View>
              {/*}
-                <Button 
+                <Button
                     type="default"
                     text={loginStatus === 'loggedInPlus' ? 'GO BACK' : 'SEE MORE CHURCHES'}
                     onPress={onGoBack}
@@ -176,14 +210,14 @@ export default class ChurchItem extends React.Component {
 
                 </View>
                 </ScrollView>
-            
+
         </View>
-        <TabMenu 
+        <TabMenu
           onSettings={onSettings}
           onHome={onHome}
           onBible={onBible}
           activeTabName={this.props.activeTabName}
-        /> 
+        />
       </View>
         )
     }

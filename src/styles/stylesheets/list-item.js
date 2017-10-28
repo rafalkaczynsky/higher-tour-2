@@ -9,31 +9,34 @@ export default StyleSheet => StyleSheet.extend({
     },
 
     wrapper: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent: 'space-between', 
-        padding: 18, 
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 18,
     },
 
     itemDetails: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 
     title: {
-        fontSize: 18, 
+        fontSize: 18,
         color: colors.brown,
     },
 
     label: {
-        color: colors.grey2, 
+        color: colors.grey2,
         marginTop: 5,
     },
-
+    readingLabel: {
+        color: colors.brown,
+        marginTop: 5,
+    },
     iconStyle: {
-        width: 20, 
-        height: 20, 
-        resizeMode: 'contain', 
+        width: 20,
+        height: 20,
+        resizeMode: 'contain',
         opacity: 0.2
     },
 

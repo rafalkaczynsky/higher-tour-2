@@ -71,16 +71,16 @@ class SignIn extends React.Component {
           text='Sign in'
           simple
         />
-        
-       <ScrollView 
+
+       <ScrollView
           ref='scrollView'
 
           style={{width: '100%'}}>
           <View style={{alignItems: 'center'}}
-          
+
       >
           <TextBox
-            header="Welcome To The Higher App!!!"
+            header="Welcome To The Higher App"
             paragraph="Before you start, let's create an account. Register using one of the following options to receive exclusive freebies."
             style={StyleSheet.signIn.textBox}
           />
@@ -100,13 +100,12 @@ class SignIn extends React.Component {
               buttonStyle={StyleSheet.signIn.socialButton}
             />
           </View>
+          <TextBox
+            header="Sign in with email"
+              paragraph="You can also use this form to create an account"
+            style={StyleSheet.signIn.textBox}
+          />
           <View style={{width: '60%', }}>
-            <Title
-              text="Sign in with email"
-              textStyle={{fontSize: 18}}
-              style={{marginTop: 20}}
-            />
-
             {errorCode === 'auth/invalid-email' && showError && (
               <Text style={StyleSheet.signIn.error}>The email address is badly formatted</Text>
             )}
