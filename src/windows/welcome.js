@@ -8,8 +8,8 @@ import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../compon
 export default class SignIn extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      text: 'Useless Placeholder', 
+    this.state = {
+      text: 'Useless Placeholder',
       namePlaceholder: 'Name',
       emailPlaceholder: 'Email',
       events: []
@@ -51,16 +51,16 @@ export default class SignIn extends Component {
                 bgColor={colors.grey3}
                 borderBold
                 handleIconPressed={()=> onMoreSession()}
-                
+
               />
             </ScrollView>
-            
+
         </View>
-        <TabMenu 
+        <TabMenu
           onSettings={this.props.onSettings}
           onBible={this.props.onBible}
           activeTabName={'Home'}
-        /> 
+        />
       </View>
     )
   }

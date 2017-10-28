@@ -14,13 +14,13 @@ const ASPECT_RATIO = width / height;
 export default class SessionItem extends React.Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
           region: {
             latitude: this.props.location.geoLoc.latitude,
             longitude: this.props.location.geoLoc.longitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0922 * ASPECT_RATIO,        
+            longitudeDelta: 0.0922 * ASPECT_RATIO,
           },
           markers: [],
           willMount: false,
@@ -33,7 +33,7 @@ export default class SessionItem extends React.Component {
                 latitude: this.props.location.geoLoc.latitude,
                 longitude: this.props.location.geoLoc.longitude,
                 latitudeDelta: 0.0922,
-                longitudeDelta: 0.0922 * ASPECT_RATIO,        
+                longitudeDelta: 0.0922 * ASPECT_RATIO,
             },
             willMount: true
         })
@@ -45,17 +45,17 @@ export default class SessionItem extends React.Component {
       onRegionChangeComplete(region) {
         this.setState({region: region });
     }
-    
+
     render(){
     const {
-        onSettings, 
-        location, 
-        onStartSession, 
-        cancelLabel, 
-        onStopSession, 
-        onHome, 
-        onBible, 
-        churchSelected, 
+        onSettings,
+        location,
+        onStartSession,
+        cancelLabel,
+        onStopSession,
+        onHome,
+        onBible,
+        churchSelected,
         onHostPressed,
         onTelPressed,
         onWebPressed,

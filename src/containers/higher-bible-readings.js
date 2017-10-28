@@ -6,12 +6,12 @@ import { NavigationActions } from 'react-navigation'
 
 import * as ACTIONS from '../actions/actions/actions';
 
-var readings = require('../data/readings') 
+var readings = require('../data/readings')
 
 class _HigherBibleReadings extends Component {
   constructor(props){
     super(props)
-    
+
     this.state = {
         loginStatus: 'loggedOut',
         buttonsStyle: [
@@ -41,7 +41,7 @@ class _HigherBibleReadings extends Component {
                 },
                 {
                   textColor: 'white',
-                  bgColor: 'brown',           
+                  bgColor: 'brown',
                 }]
             })
   }
@@ -51,7 +51,7 @@ class _HigherBibleReadings extends Component {
         buttonsStyle: [
           {
             textColor: 'white',
-            bgColor: 'brown',           
+            bgColor: 'brown',
           },
           {
             textColor: 'brown',
@@ -67,7 +67,7 @@ class _HigherBibleReadings extends Component {
         buttonsStyle: [
           {
             textColor: 'white',
-            bgColor: 'brown',           
+            bgColor: 'brown',
           },
           {
             textColor: 'brown',
@@ -130,7 +130,7 @@ class _HigherBibleReadings extends Component {
       } else {
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(this.props.app.lastReadDayNumber))
       }
-     
+
       //navigate('Read', {from: from})
       this.props.dispatch({type: 'GoToReadLeftToRightAnimation'})
   }
@@ -167,13 +167,13 @@ class _HigherBibleReadings extends Component {
     if (loginStatus && loginStatus === 'loggedOut') {
       this.props.dispatch({type: 'SignInOnHomeAnimation'})
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
-    } else { 
+      this.props.dispatch({type: 'UserProfileOnHomeAnimation'})
+    } else {
       this.props.dispatch({type: 'GotoWelcomeAnimation'})
     }
   }
 
-  
+
   componentWillMount(){
     const loginStatus = this.props.app.loginStatus                            // data from the store
     const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle  // data from the store
@@ -190,7 +190,7 @@ class _HigherBibleReadings extends Component {
   }
 
   }
-  
+
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Bible'))
@@ -198,22 +198,22 @@ class _HigherBibleReadings extends Component {
 
   render() {
 
-    const { navigate } = this.props.navigation 
+    const { navigate } = this.props.navigation
     const  {params}  = this.props.navigation.state
 
-    const locations = this.props.events                                       // data from the store 
+    const locations = this.props.events                                       // data from the store
     const userData = this.props.user                                          // data from the store
     const loginStatus = this.props.app.loginStatus                            // data from the store
     const activeTabName = this.props.app.activeTabName                        // data from the store
-    const currentBibleReading = this.props.currentBibleReading                // data from the store  
-    const bibleReading = this.props.bibleReading                              // data from the store   
-    const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store  
+    const currentBibleReading = this.props.currentBibleReading                // data from the store
+    const bibleReading = this.props.bibleReading                              // data from the store
+    const bibleReadingScreenStatus = this.props.app.bibleReadingScreenStatus  // data from the store
 
     return (
-        <HigherBibleReadings 
+        <HigherBibleReadings
           readings={bibleReading}
           onSettings={()=> {
-              if (loginStatus === 'loggedIn'){        
+              if (loginStatus === 'loggedIn'){
                 this.handleOnSettings(navigate, 'HigherBibleReadings', 'Settings')
                 } else if (loginStatus === 'loggedInPlus') {
                   this. handleOnSettingsLoggedInPlus(navigate,  'HigherBibleReadings', 'Settings')
@@ -222,7 +222,7 @@ class _HigherBibleReadings extends Component {
               }
             }
           }
-          onHome={()=> this.handleOnHome()}  
+          onHome={()=> this.handleOnHome()}
           onItem={(item, bibleReadingTitle)=> this.handleOnItem(item, bibleReadingTitle)}
           onDayItem={(item, numberOfDay)=> this.handleOnDayItem(item, navigate,  numberOfDay, 'HigherBibleReadings')}
           buttonsStyle={this.state.buttonsStyle}

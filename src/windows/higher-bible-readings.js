@@ -23,22 +23,22 @@ class HigherBibleReadings extends React.Component {
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
     const currentBibleReadingTitle  = this.props.app.currentBibleReadingTitle   // data from the store
-  
+
   }
   componentDidMount(){
     this.setState({isMounted: true})
   }
     render(){
       const {
-        locations, 
-        onItemBackPressed, 
-        onCompleted, 
-        onNew, 
-        onItem, 
-        buttonsStyle, 
-        readings, 
-        currentScreen, 
-        chosenItem, 
+        locations,
+        onItemBackPressed,
+        onCompleted,
+        onNew,
+        onItem,
+        buttonsStyle,
+        readings,
+        currentScreen,
+        chosenItem,
         onDayItem,
         showAll,
         onAll,

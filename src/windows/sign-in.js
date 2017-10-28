@@ -11,7 +11,7 @@ import validation from '../config/validation'
 import {TextBox, Icon, Title, Button, TabMenu, Header} from '../components'
 import {TextInput} from '../components/forms'
 
-var dataBase 
+var dataBase
 var Events
 var latestSnapshot = null;
 
@@ -170,7 +170,7 @@ class SignIn extends React.Component {
             icon="password"
             multiline={false}
           />
-   
+
             <Button
               type={valid ? "default" : "disable"}
               text="Next"
@@ -183,7 +183,7 @@ class SignIn extends React.Component {
               <Text>Some text</Text>
             </Animated.View> */}
 
-          
+
             </View>
             <KeyboardSpacer/>
         </View>

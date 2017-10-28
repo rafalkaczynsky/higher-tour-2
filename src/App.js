@@ -83,8 +83,8 @@ FCM.on(FCMEvent.RefreshToken, (token) => {
 
 });
 /**
- * 
- * 
+ *
+ *
  *         var payload = {
             notification: {
               title: "Your youth session is on "+ eventData.meetingDay ,
@@ -105,26 +105,26 @@ FCM.on(FCMEvent.RefreshToken, (token) => {
                     screen: doesntmatter"
                     content_available: true
                 })
-              } 
+              }
 
               {
-            let payload = { 
+            let payload = {
                 content_available: true,
-                data: { 
-                  show_in_foreground: true, 
-                  remote: true 
+                data: {
+                  show_in_foreground: true,
+                  remote: true
                   screen: doesntmatter"
                 },
                 notification: {
-                  custom_notification: { 
-                    icon: 'icon_notification', 
-                    large_icon: 'ic_launcher' 
+                  custom_notification: {
+                    icon: 'icon_notification',
+                    large_icon: 'ic_launcher'
                   },
                   title: 'Title of your push notification',
                   body: 'Body of your push notification'
                   screen: doesntmatter"
                },
-               priority: 'high' 
+               priority: 'high'
             }
 }
 
@@ -195,7 +195,7 @@ export default class App extends React.Component {
         }
 
           FCM.on(FCMEvent.Notification, async (notif) => {
-            
+
               if (notif){
               //  console.log(notif.screen)
                 this.setState({
@@ -206,7 +206,7 @@ export default class App extends React.Component {
                   image: notif.image,
                 })
               }
-          
+
           });
 
           FCM.getFCMToken().then(token => {
@@ -235,7 +235,7 @@ export default class App extends React.Component {
        /* NetInfo.isConnected.fetch().then(isConnected => {
           console.log('First, is ' + (isConnected ? 'online' : 'offline'));
         });*/
-        
+
         NetInfo.isConnected.addEventListener(
           'change',
           this.handleFirstConnectivityChange
@@ -312,8 +312,8 @@ export default class App extends React.Component {
                 show_in_foreground                                  // notification when app is in foreground (local & remote)
             });
 
-            // 'Your next session is on getDate it is at get time. 
-            
+            // 'Your next session is on getDate it is at get time.
+
             FCM.scheduleLocalNotification({
                 fire_date: new Date().getTime(),      //RN's converter is used, accept epoch time and whatever that converter supports
                 id: "UNIQ_ID_STRING",    //REQUIRED! this is what you use to lookup and delete notification. In android notification with same ID will override each other
@@ -363,32 +363,32 @@ export default class App extends React.Component {
     }
 
 
-  render()  { 
-   /*
+  render()  {
+
 
             if (!connection){
-              return ( <AlertWindow 
+              return ( <AlertWindow
                           type='connection'
-                          text='You are off line Do something with your bills!!!'
+                          text='Unable to connect to server. Please make sure you are online'
                           onPress={()=> this.setState({refreshed: !this.state.refreshed})}
                       />
                 )
             }
-
+ /*
             //this._requestPermission()
 
             // handle location OFF both android and iOS
             if ((!this.state.locationPermission) && ( Platform.OS === 'android')){
-              return ( <AlertWindow 
+              return ( <AlertWindow
                           type='location'
-                          text='We need access your location so you can find nearest events HigherApp doesnt work without access to location.'
+                          text='Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions'
                           onPress={()=> this.setState({refreshed: !this.state.refreshed})}
                       />
                 )
             } else if ((this.state.locationPermission !== 'authorized') && (this.state.locationPermission !== 'undetermined')){
-              return  <AlertWindow 
+              return  <AlertWindow
                           type='location'
-                          text='We need access your location so you can find nearest events HigherApp doesnt work without access to location.'
+                          text='Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions'
                           onPress={Permissions.openSettings}
                       />
             }*/

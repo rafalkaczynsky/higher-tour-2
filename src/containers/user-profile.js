@@ -5,7 +5,7 @@ import * as firebase from 'firebase'
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 import {TabMenu} from '../components'
-import {UserProfile} from '../windows' 
+import {UserProfile} from '../windows'
 import StyleSheet from '../styles'
 import * as ACTIONS from '../actions/actions/actions';
 
@@ -14,7 +14,7 @@ const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 
 class _UserProfile extends Component {
-  
+
   static navigationOptions = {
     gesturesEnabled: false
   };
@@ -40,14 +40,14 @@ class _UserProfile extends Component {
       },
       error => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
-        alert('GPS is OFF! Please switch it ON!')
+        alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
       },
     );
-    
+
   }
 
   handleOnSettings(navigate, locationSelected, from){
-    
+
     this.props.dispatch( {type: 'SettingsInAnimation'})
   }
 
@@ -73,7 +73,7 @@ class _UserProfile extends Component {
 
   handleOnBible(){
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-    this.props.dispatch({ type: 'BibleAnimation' }) 
+    this.props.dispatch({ type: 'BibleAnimation' })
   }
 
   handleReadingItemPressed(bibleReadingTitle){
@@ -84,7 +84,7 @@ class _UserProfile extends Component {
       //console.log(item[0])
       //console.log(bibleReadingTitle)
       if (item[0] === bibleReadingTitle[0]) {
-        this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item')) 
+        this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(bibleReading[index]))
         this.props.dispatch({type:'AppUserBibleReadingAnimation'})
@@ -109,9 +109,9 @@ class _UserProfile extends Component {
 
     //console.log(sessionDay)
 	  let reminderDay = null
-    
-	  if (sessionDay !== 0) {  
-    	reminderDay = sessionDay 
+
+	  if (sessionDay !== 0) {
+    	reminderDay = sessionDay
     } else {
     	reminderDay = 6
     }
@@ -121,7 +121,7 @@ class _UserProfile extends Component {
     const minutesIndxStop = sessionDayTime.indexOf(':')+ 3
     let sessionMinute = parseInt(sessionDayTime.substring(minutesIndxStart ,minutesIndxStop))
 
-    const ampmIndxStart = sessionDayTime.length - 2 
+    const ampmIndxStart = sessionDayTime.length - 2
 
     let sessionAMPM = sessionDayTime.substring(ampmIndxStart).toUpperCase()
 
@@ -134,7 +134,7 @@ class _UserProfile extends Component {
   //  console.log(d)
   //  console.log(sessionDay)
 
-    d.setHours(sessionHour,sessionMinute,0,0);  
+    d.setHours(sessionHour,sessionMinute,0,0);
 
     let reminderDate = d.setDate(d.getDate() + (reminderDay+7 - d.getDay())%7)
 
@@ -144,10 +144,10 @@ class _UserProfile extends Component {
 
 
   componentWillMount(){
-    var events = this.props.events  
-    var churches = this.props.churches 
-    var crd = this.props.coords  
-    
+    var events = this.props.events
+    var churches = this.props.churches
+    var crd = this.props.coords
+
     var geoLoc = {}
   // //----------------- map events ----------
   //   events.map((item)=> {
@@ -157,58 +157,58 @@ class _UserProfile extends Component {
   //       latitudeDelta: 0.0922,
   //       longitudeDelta: 0.0922 * ASPECT_RATIO,
   //     }
-  
+
   //     let distance = geolib.getDistance(
   //       crd,
   //       geoLoc,
   //     );
-    
+
   //     distance = geolib.convertUnit('mi', distance, 1)
   //     item.howFar = distance
   //   })
-  // // -------------- map churches ------------- 
+  // // -------------- map churches -------------
   //   churches.map((item)=> {
-  
+
   //     geoLoc = {
   //       latitude:  item.geoLoc.latitude,
   //       longitude: item.geoLoc.longitude,
   //       latitudeDelta: 0.0922,
   //       longitudeDelta: 0.0922 * ASPECT_RATIO,
   //     }
-  
+
   //     let distance = geolib.getDistance(
   //       crd,
   //       geoLoc,
   //     );
-    
+
   //     distance = geolib.convertUnit('mi', distance, 1)
   //     item.howFar = distance
   //   })
-  
+
     function compareDistance(a, b){
       return a.howFar - b.howFar;
     }
     // const z = churches.sort(compareDistance);
     // const x = events.sort(compareDistance);
-  
+
     // this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
     // this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
-  
+
     this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
 
-    const userData = this.props.user  
-    const eventSelected = this.props.eventSelected   
+    const userData = this.props.user
+    const eventSelected = this.props.eventSelected
 
     // check if session ex in the session...
- 
+
     firebase.database().ref('sessions/'+ eventSelected.host+'/').once("value", snapshot => {
 
       const session = snapshot.val();
       if (session){
         const sessionArray = Object.keys(session).map(function (key) { return session[key]; })
- 
+
         var TheDate = new Date().getTime();
         var TheDateFormatted = 'dd'
 
@@ -218,7 +218,7 @@ class _UserProfile extends Component {
             if (( Date.parse(sessionDate) > TheDate ) && (sessionsAvailable.length <= 2)) {
 
               sessionsAvailable.push(item)
-              
+
             }
         })
 
@@ -238,7 +238,7 @@ class _UserProfile extends Component {
 
           sessionsAvailable.push(nextMetteingObj)
         }
-        
+
        // console.log(sessionsAvailable)
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(sessionsAvailable));
 
@@ -261,17 +261,17 @@ class _UserProfile extends Component {
       let bibleReadingNames = appUser.bibleReadings
 
       if (bibleReadings){
-        bibleReadings = Object.keys(bibleReadings).map(function (key, indx, name) { 
-          return bibleReadings[key]; 
+        bibleReadings = Object.keys(bibleReadings).map(function (key, indx, name) {
+          return bibleReadings[key];
         })
         this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS(bibleReadings));
       }
 
       if (bibleReadingNames){
-        bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) { 
+        bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) {
           let arrayOfNames = []
           arrayOfNames.push(name[indx])
-          return  arrayOfNames; 
+          return  arrayOfNames;
         })
         this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES(bibleReadingNames));
       }
@@ -293,21 +293,21 @@ class _UserProfile extends Component {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const locations = this.props.events                 
-    const userData = this.props.user                            
-    const activeTabName = this.props.app.activeTabName  
-    const eventSelected = this.props.eventSelected      
-    const sessions = this.props.sessions                
-    const bibleReading = this.props.bibleReading       
-    const bibleReadingNames = this.props.bibleReadingNames        
-    const aaaSession = this.props.aaaSession                     
-    const lastReadDayNumber = this.props.app.lastReadDayNumber  
-    const appUserBibleReading = this.props.appUserBibleReading  
-    const appUserBibleReadingNames =  this.props.appUserBibleReadingNames 
-    
+    const locations = this.props.events
+    const userData = this.props.user
+    const activeTabName = this.props.app.activeTabName
+    const eventSelected = this.props.eventSelected
+    const sessions = this.props.sessions
+    const bibleReading = this.props.bibleReading
+    const bibleReadingNames = this.props.bibleReadingNames
+    const aaaSession = this.props.aaaSession
+    const lastReadDayNumber = this.props.app.lastReadDayNumber
+    const appUserBibleReading = this.props.appUserBibleReading
+    const appUserBibleReadingNames =  this.props.appUserBibleReadingNames
+
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    
-    const UserProfileScreen= () => 
+
+    const UserProfileScreen= () =>
       <UserProfile
         locations={locations}
         onSettings={()=> this.handleOnSettings(navigate, eventSelected,  "UserProfile")}
@@ -324,18 +324,18 @@ class _UserProfile extends Component {
         sessions={sessions}
         bibleReading={bibleReading}
         bibleReadingNames={bibleReadingNames}
-        locationSelected={eventSelected} 
+        locationSelected={eventSelected}
         handleEditSession={(locationSelected)=> this.props.dispatch({type: 'SessionItemAnimation'})}
         activeTabName={activeTabName}
       />
- 
-    const EmptyScreen = () => 
+
+    const EmptyScreen = () =>
     <View style={StyleSheet.signIn.emptyScreen}>
       <View style={StyleSheet.signIn.indicator}>
         <ActivityIndicator
           animating={true}
           color='grey'
-        />  
+        />
       </View>
       <View style={StyleSheet.signIn.tabMenu}>
         <TabMenu/>
@@ -344,7 +344,7 @@ class _UserProfile extends Component {
 
   if (this.props.app.showUserProfileContent){
     return <UserProfileScreen/>
-  } else return <EmptyScreen/> 
+  } else return <EmptyScreen/>
   }
 }
 

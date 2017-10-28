@@ -14,13 +14,13 @@ const ASPECT_RATIO = width / height;
 export default class ChurchItem extends React.Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
           region: {
             latitude: this.props.church.geoLoc.latitude,
             longitude: this.props.church.geoLoc.longitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0922 * ASPECT_RATIO,        
+            longitudeDelta: 0.0922 * ASPECT_RATIO,
           },
           markers: [],
           willMount: false,
@@ -33,7 +33,7 @@ export default class ChurchItem extends React.Component {
                 latitude: this.props.church.geoLoc.latitude,
                 longitude: this.props.church.geoLoc.longitude,
                 latitudeDelta: 0.0922,
-                longitudeDelta: 0.0922 * ASPECT_RATIO,        
+                longitudeDelta: 0.0922 * ASPECT_RATIO,
             },
             willMount: true
         })
@@ -45,15 +45,15 @@ export default class ChurchItem extends React.Component {
       onRegionChangeComplete(region) {
         this.setState({region: region });
     }
-    
+
     render(){
     const {
-        onSettings,  
-        onHome, 
-        onBible, 
-        onGoToWebsite, 
-        onGoBack, 
-        church, 
+        onSettings,
+        onHome,
+        onBible,
+        onGoToWebsite,
+        onGoBack,
+        church,
         loginStatus,
         onTelPressed,
         onWebPressed,

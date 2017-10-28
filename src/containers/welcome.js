@@ -22,7 +22,7 @@ class _Welcome extends Component {
 
     const { params } = this.props.navigation.state
     const loginStatus= this.props.app.loginStatus // data from the store
-    
+
     const fixedPosition = {
       coords: {
         accuracy: 500,
@@ -40,10 +40,10 @@ class _Welcome extends Component {
       },
       error => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
-        alert('GPS is OFF! Please switch it ON!')
+        alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
       },
     );
-    
+
   }
 
   handleOnItem(locationSelected){
@@ -54,7 +54,7 @@ class _Welcome extends Component {
 
 handleOnBible(){
   this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-  this.props.dispatch({ type: 'BibleAnimation' }) 
+  this.props.dispatch({ type: 'BibleAnimation' })
 
 }
 
@@ -75,15 +75,15 @@ componentWillMount(){
   const { navigate } = this.props.navigation
   const { params } = this.props.navigation.state
   const loginStatus= this.props.app.loginStatus // data from the store
-  
+
 }
 
 componentDidMount(){
 
-  var events = this.props.events  // data from the store 
+  var events = this.props.events  // data from the store
   var churches = this.props.churches // data from the store
   var crd = this.props.coords  // data from the store
-  
+
 
   var geoLoc = {}
 //----------------- map events ----------
@@ -95,18 +95,18 @@ componentDidMount(){
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0922 * ASPECT_RATIO,
       }
-  
+
       let distance = geolib.getDistance(
         crd,
         geoLoc,
       );
-    
+
       distance = geolib.convertUnit('mi', distance, 1)
       item.howFar = distance
 
 
   })
-// -------------- map churches ------------- 
+// -------------- map churches -------------
   churches.map((item)=> {
 
     geoLoc = {
@@ -115,15 +115,15 @@ componentDidMount(){
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0922 * ASPECT_RATIO,
     }
-    
+
       let distance = geolib.getDistance(
         crd,
         geoLoc,
       );
-    
+
     distance = geolib.convertUnit('mi', distance, 1)
     item.howFar = distance
-  
+
   })
 
   function compareDistance(a, b){
@@ -136,7 +136,7 @@ componentDidMount(){
   this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
   this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn'))
   this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
- 
+
 }
 
   render() {
@@ -146,7 +146,7 @@ componentDidMount(){
 
     const locations = this.props.events                 // data from the store
     const churches = this.props.churches                // data from the store
-    const coords = this.props.coords                    // data from the store 
+    const coords = this.props.coords                    // data from the store
     const userData = this.props.user                    // data from the store
     const activeTabName = this.props.app.activeTabName  // data from the store
 
@@ -157,7 +157,7 @@ componentDidMount(){
     const x = locations.sort(compareDistance);
 
     return (
-        <Welcome 
+        <Welcome
           onSettings={()=> this.handleOnSettings()}
           onBible={() =>  this.handleOnBible()}
           userData={userData}

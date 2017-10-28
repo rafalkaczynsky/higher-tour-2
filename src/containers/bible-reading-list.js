@@ -6,12 +6,12 @@ import * as firebase from 'firebase'
 
 import * as ACTIONS from '../actions/actions/actions';
 
-var readings = require('../data/readings') 
+var readings = require('../data/readings')
 
 class _BibleReadingList extends Component {
   constructor(props){
     super(props)
-    
+
     this.state = {
         loginStatus: 'loggedOut',
         buttonsStyle: [
@@ -21,7 +21,7 @@ class _BibleReadingList extends Component {
           },
           {
             textColor: 'white',
-            bgColor: 'brown',           
+            bgColor: 'brown',
           }
         ],
         currentScreen: 'list', //  or 'item', 'dayItem',
@@ -44,7 +44,7 @@ class _BibleReadingList extends Component {
 
   handleOnNew(){
     this.setState({
-        
+
               buttonsStyle: [
                 {
                   textColor: 'brown',
@@ -52,7 +52,7 @@ class _BibleReadingList extends Component {
                 },
                 {
                   textColor: 'white',
-                  bgColor: 'brown',           
+                  bgColor: 'brown',
                 }]
             })
   }
@@ -62,7 +62,7 @@ class _BibleReadingList extends Component {
         buttonsStyle: [
           {
             textColor: 'white',
-            bgColor: 'brown',           
+            bgColor: 'brown',
           },
           {
             textColor: 'brown',
@@ -89,7 +89,7 @@ class _BibleReadingList extends Component {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
-    const events = this.props.events                // data from the store 
+    const events = this.props.events                // data from the store
     const userData = this.props.user                // data from the store
     const loginStatus = this.props.app.loginStatus  // data from the store
 
@@ -100,11 +100,11 @@ class _BibleReadingList extends Component {
       navigate('SignIn')
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
       navigate('UserProfile')
-    } else if (params.from === 'SessionItemYellow'){ 
+    } else if (params.from === 'SessionItemYellow'){
         console.log('From SessionItem Yellow')
         console.log(params)
         navigate('FindSession')
-      }else if (params.from === 'SessionItemBrown'){ 
+      }else if (params.from === 'SessionItemBrown'){
         console.log('From SessionItem Brown')
         console.log(params)
         navigate('UserProfile')
@@ -122,16 +122,16 @@ class _BibleReadingList extends Component {
         console.log('From HigherBibleReadings')
         console.log(params)
         navigate('FindSession')
-      } else { 
+      } else {
         console.log('From Welcome')
         navigate('Welcome')
       }
-    }  
+    }
 
   componentWillMount(){
     const loginStatus = this.props.app.loginStatus      // data from the store
   }
-  
+
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Bible'))
@@ -139,27 +139,23 @@ class _BibleReadingList extends Component {
 
   render() {
 
-    const { navigate } = this.props.navigation 
+    const { navigate } = this.props.navigation
     const  {params}  = this.props.navigation.state
 
 
     const userData = this.props.user                                          // data from the store
     const loginStatus = this.props.app.loginStatus                            // data from the store
     const activeTabName = this.props.app.activeTabName                        // data from the store
-    const bibleReading = this.props.bibleReading                              // data from the store 
-    const bibleReadingNames = this.props.bibleReadingNames                    // data from the store 
+    const bibleReading = this.props.bibleReading                              // data from the store
+    const bibleReadingNames = this.props.bibleReadingNames                    // data from the store
     
 
-    console.log('BibleReadingList Container')
-    console.log(bibleReading)
-    console.log(this.props)
-
     return (
-        <BibleReadingList 
+        <BibleReadingList
           readings={bibleReading}
           readingsNames={bibleReadingNames}
           onSettings={()=> {
-              if (loginStatus === 'loggedIn'){        
+              if (loginStatus === 'loggedIn'){
                 this.handleOnSettings(navigate, 'HigherBibleReadings', 'Settings')
                 } else if (loginStatus === 'loggedInPlus') {
                   this. handleOnSettingsLoggedInPlus(navigate,  'HigherBibleReadings', 'Settings')
@@ -168,7 +164,7 @@ class _BibleReadingList extends Component {
               }
             }
           }
-          onHome={()=> this.handleOnHome()}  
+          onHome={()=> this.handleOnHome()}
           onItem={(item)=> this.handleOnItem(navigate, item)}
           buttonsStyle={this.state.buttonsStyle}
           onCompleted={()=> this.handleOnCompleted()}

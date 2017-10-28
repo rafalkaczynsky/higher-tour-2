@@ -9,8 +9,8 @@ import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../compon
 export default class WeekList extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      text: 'Useless Placeholder', 
+    this.state = {
+      text: 'Useless Placeholder',
       namePlaceholder: 'Name',
       emailPlaceholder: 'Email',
       dayItem: null,

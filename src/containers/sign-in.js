@@ -27,12 +27,12 @@ class _SignIn extends Component {
     this.firebaseDataChurches = firebase.database().ref('churches/');
     this.firebaseBibleReading = firebase.database().ref('bibleReading/');
     this.firebaseAaaSession = firebase.database().ref('aaaSession/');
-  
+
     this.auth = firebase.auth();
     this.continueUrl = "https://higher-app-a4b52.firebaseapp.com/__/auth/action"
-    this.actionCode = 'resetPassword' 
+    this.actionCode = 'resetPassword'
 
-    this.state = { 
+    this.state = {
       showContent: false,
       appUsers: [],
       email: '',
@@ -61,7 +61,7 @@ class _SignIn extends Component {
       },
       error => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
-        alert('GPS is OFF! Please switch it ON!')
+        alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
       },
     );
   }
@@ -72,18 +72,18 @@ class _SignIn extends Component {
     // Verify the password reset code is valid.
     auth.verifyPasswordResetCode(actionCode).then(function(email) {
       var accountEmail = email;
-  
+
       // TODO: Show the reset screen with the user's email and ask the user for
       // the new password.
-  
+
       // Save the new password.
       auth.confirmPasswordReset(actionCode, newPassword).then(function(resp) {
         // Password reset has been confirmed and new password updated.
-  
+
         // TODO: Display a link back to the app, or sign-in the user directly
         // if the page belongs to the same domain as the app:
         // auth.signInWithEmailAndPassword(accountEmail, newPassword);
-  
+
         // TODO: If a continue URL is available, display a button which on
         // click redirects the user back to the app via continueUrl with
         // additional state determined from that URL's parameters.
@@ -110,20 +110,16 @@ class _SignIn extends Component {
     let handleSignUp = _Firebase.signup(email, password, navigate, route)
 
     handleSignUp.then((error)=> {
-      
+
       if (error){
-        console.log(error)
         if (error.code){
-          console.log(error.code)
           if (error.code === "auth/email-already-in-use") {
-            let handleLogin = _Firebase.login(email, password, navigate, route); 
-            
+            let handleLogin = _Firebase.login(email, password, navigate, route);
+
             handleLogin.then((error)=> {
               this.setState({error: error, showError: true, showErrorWrapper: true});
               var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
               var clearErrorsWrapper = setTimeout(() => this.setState({showErrorWrapper: false}), 10000);
-              console.log('login error')
-              console.log(error)
             })
           }
         }
@@ -144,7 +140,7 @@ class _SignIn extends Component {
 
   handleOnBible(navigate, route , ){
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-    this.props.dispatch({ type: 'BibleAnimation' }) 
+    this.props.dispatch({ type: 'BibleAnimation' })
     //navigate(route, { activeTabName: 'Bible'})
   }
 
@@ -174,22 +170,22 @@ class _SignIn extends Component {
     fbDataRef3.on('value',(snap)=>{
       let bibleReading = snap.val()
       let bibleReadingNames = snap.val()
-      bibleReading = Object.keys(bibleReading).map(function (key, indx, name) { 
-        return bibleReading[key]; 
+      bibleReading = Object.keys(bibleReading).map(function (key, indx, name) {
+        return bibleReading[key];
       })
-      bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) { 
+      bibleReadingNames = Object.keys(bibleReadingNames).map(function (key, indx, name) {
         let arrayOfNames = []
         arrayOfNames.push(name[indx])
-        return  arrayOfNames; 
+        return  arrayOfNames;
       })
       this.props.dispatch(ACTIONS.SAVE_BIBLE_READING(bibleReading));
       this.props.dispatch(ACTIONS.SAVE_BIBLE_READING_NAMES(bibleReadingNames));
      })
-    
+
      fbDataRef4.on('value',(snap)=>{
       let aaaSessions = snap.val()
-      aaaSessions = Object.keys(aaaSessions ).map(function (key) { 
-        return aaaSessions[key]; 
+      aaaSessions = Object.keys(aaaSessions ).map(function (key) {
+        return aaaSessions[key];
       })
       this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSessions));
      })
@@ -205,26 +201,26 @@ class _SignIn extends Component {
     s = (s - secs) / 60;
     var mins = s % 60;
     var hrs = (s - mins) / 60;
-  
+
     return hrs + ' hours, ' + mins + ' minutes, ' + secs + ' secunds';
   }
-  
+
   handleInitialRedirect(){
-  
+
     const { navigate } = this.props.navigation
     const  props = this.props
 
-    const userDataFromLocal = this.props.user     
-    const followStatus = this.props.app.followStatus   
+    const userDataFromLocal = this.props.user
+    const followStatus = this.props.app.followStatus
     const TheDate = new Date().getTime();
 
-    this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase 
+    this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase
     /**
-     * 
-     * 
-     * 
+     *
+     *
+     *
      */
-                
+
 
     this.auth.onAuthStateChanged(function (user) {
       //console.log('New Data from Firebase taken: churches, events, bibleReading ')
@@ -235,7 +231,7 @@ class _SignIn extends Component {
         props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
         // User signed to firebase
        // console.log('User Signed to firebase')
-        // if user is in local storage 
+        // if user is in local storage
         if ((userDataFromLocal) && (userDataFromLocal.uid)){
           //user is in local storage
          // console.log('User is in local storage')
@@ -255,33 +251,33 @@ class _SignIn extends Component {
                 //  console.log('User follow!');
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                    // .. get object and dispatch to the store 
-                      const locationSelected = snapshot.val() 
-                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
-                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
-                      props.dispatch(ACTIONS.SAVE_USER(user)) 
-            
-                      props.dispatch({ type: 'UserProfileAnimation' }) 
-                      //navigate('UserProfile')    
+                    // .. get object and dispatch to the store
+                      const locationSelected = snapshot.val()
+                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                      props.dispatch(ACTIONS.SAVE_USER(user))
+
+                      props.dispatch({ type: 'UserProfileAnimation' })
+                      //navigate('UserProfile')
                   })
                 } else {
                   //... if doesnt follow ...
                  // console.log('USER DOESNT FOLLOW EVENT!!!')
-                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
-                  props.dispatch(ACTIONS.SAVE_USER(user)) 
+                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
+                  props.dispatch(ACTIONS.SAVE_USER(user))
                   props.dispatch({type: 'WelcomeAnimation' })
                  // navigate('Welcome')
                 }
               }
             })
- 
+
           } else {
             //...or user doesnt follow
             console.log('USER DOESNT FOLLOW EVENT!!!')
-            props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
-            props.dispatch(ACTIONS.SAVE_USER(user)) 
+            props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
+            props.dispatch(ACTIONS.SAVE_USER(user))
             props.dispatch({type: 'WelcomeAnimation' })
-          //  navigate('Welcome')    
+          //  navigate('Welcome')
           }
 
         } else {
@@ -298,11 +294,11 @@ class _SignIn extends Component {
                    // console.log('User follow!');
                     //... find event by id ...
                     firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                      // .. get object and dispatch to the store 
-                        const locationSelected = snapshot.val() 
+                      // .. get object and dispatch to the store
+                        const locationSelected = snapshot.val()
 
-                        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
-                        
+                        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
+
                         firebaseDataAppUsers.update({
                             email: user.email,
                             name: user.displayName,
@@ -315,16 +311,16 @@ class _SignIn extends Component {
 
                         props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                         props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
-                        props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
-                        props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
-                        props.dispatch(ACTIONS.SAVE_USER(user)) 
-                        props.dispatch({ type: 'UserProfileAnimation' }) 
-                       // navigate('UserProfile')    
+                        props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                        props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
+                        props.dispatch(ACTIONS.SAVE_USER(user))
+                        props.dispatch({ type: 'UserProfileAnimation' })
+                       // navigate('UserProfile')
                     })
                   } else {
                     //... if doesnt follow ...
                     //console.log('USER DOESNT FOLLOW EVENT!!!')
-                    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                     firebaseDataAppUsers.update({
                         email: user.email,
                         name: user.displayName,
@@ -337,15 +333,15 @@ class _SignIn extends Component {
 
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
-                    props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
-                    props.dispatch(ACTIONS.SAVE_USER(user)) 
+                    props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
+                    props.dispatch(ACTIONS.SAVE_USER(user))
                     props.dispatch({type: 'WelcomeAnimation' })
                     //navigate('Welcome')
                   }
                 }
               } else {
                // console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
-                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                 firebaseDataAppUsers.update({
                     email: user.email,
                     name: user.displayName,
@@ -357,20 +353,20 @@ class _SignIn extends Component {
                 })
                 props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                 props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
-                props.dispatch(ACTIONS.SAVE_USER(user)) 
-                props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+                props.dispatch(ACTIONS.SAVE_USER(user))
+                props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                 props.dispatch({type: 'WelcomeAnimation' })
               }
-  
+
               })
               //............
-  
+
           }
 
 
         } else {
           //user is not in local storage
-          //console.log('User is not  in local storage')  
+          //console.log('User is not  in local storage')
           // check if follow in firabase
           firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
             userCurrent = snapshot.val();
@@ -382,34 +378,34 @@ class _SignIn extends Component {
                   //console.log('User follow!');
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                    // .. get object and dispatch to the store 
-                      const locationSelected = snapshot.val() 
-                      const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                    // .. get object and dispatch to the store
+                      const locationSelected = snapshot.val()
+                      const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                       firebaseDataAppUsers.update({
                           FCMtoken: props.navigation.FCMtoken,
                       })
-                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) 
-                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
-                      props.dispatch(ACTIONS.SAVE_USER(user)) 
-                      props.dispatch({ type: 'UserProfileAnimation' }) 
-                     // navigate('UserProfile')    
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
+                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
+                      props.dispatch(ACTIONS.SAVE_USER(user))
+                      props.dispatch({ type: 'UserProfileAnimation' })
+                     // navigate('UserProfile')
                   })
                 } else {
                   //... if doesnt follow ...
                   //console.log('USER DOESNT FOLLOW EVENT!!!')
-                  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');                 
+                  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                   firebaseDataAppUsers.update({
                       FCMtoken: props.navigation.FCMtoken,
                   })
-                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
-                  props.dispatch(ACTIONS.SAVE_USER(user)) 
+                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
+                  props.dispatch(ACTIONS.SAVE_USER(user))
                   props.dispatch({type: 'WelcomeAnimation' })
                   //navigate('Welcome')
                 }
               }
             } else {
               //console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
-              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');      
+              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
               firebaseDataAppUsers.update({
                 email: user.email,
                 name: user.displayName,
@@ -419,8 +415,8 @@ class _SignIn extends Component {
                 uid: user.uid,
                 FCMtoken: props.navigation.FCMtoken,
             })
-              props.dispatch(ACTIONS.SAVE_USER(user)) 
-              props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
+              props.dispatch(ACTIONS.SAVE_USER(user))
+              props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
               props.dispatch({type: 'WelcomeAnimation' })
             }
 
@@ -429,11 +425,11 @@ class _SignIn extends Component {
 
     } else {
       // if user doesnt signin to firebase
-      //console.log('No user signed with Firebase') 
+      //console.log('No user signed with Firebase')
       props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
     }
   })
-    
+
 }
 
   componentWillMount(){
@@ -441,31 +437,31 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
-  
+
     const { navigate } = this.props.navigation
 
-    this.handleInitialRedirect() 
-    
+    this.handleInitialRedirect()
+
   }
 
 
   render() {
- 
+
     const { navigate } = this.props.navigation
 
-    const events = this.props.events                   // from the store 
+    const events = this.props.events                   // from the store
     const churches = this.props.churches               // from the store
-    const coords = this.props.coords                   // from the store - current positions lng and lat 
+    const coords = this.props.coords                   // from the store - current positions lng and lat
     const activeTabName = this.props.app.activeTabName // from the store
-   
-    const SignInScreen = () => <SignIn 
+
+    const SignInScreen = () => <SignIn
             onNext={(email, password)=> {
               this.handleOnNext(email, password, navigate, 'SignIn')
             }}
             onSettings={()=> {
               this.handleOnSettings(navigate, 'Settings', '', 'loggedOut', 'Settings')
               }
-            }  
+            }
             onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
             onTwitter={()=> this.onTwitter(navigate, 'SignIn')}
             onFacebook={()=> this.onFacebook(navigate, 'SignIn')}
@@ -477,22 +473,22 @@ class _SignIn extends Component {
             signInError={this.state.error}
             activeTabName={activeTabName} />
 
-    const EmptyScreen = () => 
+    const EmptyScreen = () =>
       <View style={StyleSheet.signIn.emptyScreen}>
         <View style={StyleSheet.signIn.indicator}>
           <ActivityIndicator
             animating={true}
             color='grey'
-          />  
+          />
         </View>
         <View style={StyleSheet.signIn.tabMenu}>
           <TabMenu/>
         </View>
       </View>
- 
+
     if (this.props.app.showLogginContent){
       return <SignInScreen/>
-    } else return <EmptyScreen/> 
+    } else return <EmptyScreen/>
 
   }
 }
@@ -509,9 +505,8 @@ function mapStateToProps(state){
       eventSelected: state.eventSelected,
       aaaSession: state.aaaSession,
 
-      
+
   });
 }
 
 export default connect(mapStateToProps)(_SignIn);
-
