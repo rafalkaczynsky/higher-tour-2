@@ -38,12 +38,6 @@ var itemDay = null
 
 
 
-//PERMISSION LOCATION CHECK!!
-Permissions.request('location')
-.then(response => {
-
-})
-
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
 FCM.on(FCMEvent.Notification, async (notif) => {
 
@@ -234,7 +228,7 @@ export default class App extends React.Component {
           //...
         })
 
-        Permissions.request('location', 'always')
+        Permissions.request('location')
         .then(response => {
           this.setState({locationPermission: response})
         })
@@ -258,6 +252,7 @@ export default class App extends React.Component {
         }
       }
 
+
     _requestPermission() {
       Permissions.request('location')
         .then(response => {
@@ -278,6 +273,20 @@ export default class App extends React.Component {
                 )
             }
 
+            
+
+            // handle location OFF both android and iOS
+            if (((!this.state.locationPermission) || (this.state.locationPermission !== 'authorized')) && (Platform.OS === 'android')){
+
+              return ( <AlertWindow
+                          type='location'
+                          text='Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions'
+                          onPress={()=> this._requestPermission()}
+                      />
+                )
+              } 
+
+              
             if (this.state.showThink) return (
               <Think
                 fromNotification={true}

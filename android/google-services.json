@@ -15,6 +15,45 @@
       },
       "oauth_client": [
         {
+          "client_id": "14289284570-s6lcbt90h10mdbar2o2lsru0q6ujo7cl.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "14289284570-1vsq96glgbvu10cvpcshhjh81tmjhbl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg9txpu-BueZch0zHOpdH_kZ80Gm7wdZs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14289284570:android:44229f87dc7cab22",
+        "android_client_info": {
+          "package_name": "com.HigherTour"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14289284570-s6lcbt90h10mdbar2o2lsru0q6ujo7cl.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "14289284570-1vsq96glgbvu10cvpcshhjh81tmjhbl8.apps.googleusercontent.com",
           "client_type": 3
         }

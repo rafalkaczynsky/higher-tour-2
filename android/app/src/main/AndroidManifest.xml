@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.higherapp"
+    package="com.HigherTour"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -65,7 +65,7 @@
     </activity>
       <activity
         android:name=".MainActivity"
-        android:label="HigherApp"
+        android:label="Higher Tour"
         android:screenOrientation="portrait"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:windowSoftInputMode="adjustResize">

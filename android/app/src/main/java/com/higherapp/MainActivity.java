@@ -1,4 +1,4 @@
-package com.higherapp;
+package com.HigherTour;
 
 import com.facebook.react.ReactActivity;
 import android.content.Intent;

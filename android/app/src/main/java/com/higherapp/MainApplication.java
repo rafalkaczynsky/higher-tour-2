@@ -1,4 +1,4 @@
-package com.higherapp;
+package com.HigherTour;
 
 import android.app.Application;
 
