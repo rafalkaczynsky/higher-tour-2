@@ -89,7 +89,7 @@ componentDidMount(){
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
-          goToHome={()=> console.log('iam here')}
+          goToHome={()=> null}
           onItemBackPressed={()=>this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})}
           onItemNextPressed={()=>this.props.dispatch({type: 'GoToThinkLeftToRightAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}

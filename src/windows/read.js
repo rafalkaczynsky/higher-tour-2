@@ -46,14 +46,6 @@ export default class Read extends Component {
     let mainImage
     let versus
     let content
-    console.log(itemDay)
-    /**
-     *  onItemBackPressed={()=> this.setState({screen: undefined})}
-        onItemNextPressed={()=> alert('Next pressed!')}
-        itemDay={bibleReadingItem[this.state.lastReadDayNumber]}
-        fromNotification={true}
-     *
-     */
 
     if ((this.state.isMounted) && (itemDay)){
       if (fromNotification) return (

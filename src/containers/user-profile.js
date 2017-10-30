@@ -81,8 +81,7 @@ class _UserProfile extends Component {
     const bibleReadingNames = this.props.bibleReadingNames
 
     bibleReadingNames.map((item, index)=>{
-      //console.log(item[0])
-      //console.log(bibleReadingTitle)
+
       if (item[0] === bibleReadingTitle[0]) {
         this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
@@ -107,7 +106,7 @@ class _UserProfile extends Component {
 
     let sessionDay = weekday.indexOf(sessionDayName) // is 5
 
-    //console.log(sessionDay)
+
 	  let reminderDay = null
 
 	  if (sessionDay !== 0) {
@@ -129,16 +128,9 @@ class _UserProfile extends Component {
       sessionHour += 12
     }
 
-  //  console.log(sessionAMPM)
-  //  console.log(sessionHour+ ' , ' + sessionMinute)
-  //  console.log(d)
-  //  console.log(sessionDay)
-
     d.setHours(sessionHour,sessionMinute,0,0);
 
     let reminderDate = d.setDate(d.getDate() + (reminderDay+7 - d.getDay())%7)
-
-   // console.log(reminderDate)
     return reminderDate
   }
 
@@ -149,50 +141,12 @@ class _UserProfile extends Component {
     var crd = this.props.coords
 
     var geoLoc = {}
-  // //----------------- map events ----------
-  //   events.map((item)=> {
-  //     geoLoc = {
-  //       latitude:  item.geoLoc.latitude,
-  //       longitude: item.geoLoc.longitude,
-  //       latitudeDelta: 0.0922,
-  //       longitudeDelta: 0.0922 * ASPECT_RATIO,
-  //     }
 
-  //     let distance = geolib.getDistance(
-  //       crd,
-  //       geoLoc,
-  //     );
-
-  //     distance = geolib.convertUnit('mi', distance, 1)
-  //     item.howFar = distance
-  //   })
-  // // -------------- map churches -------------
-  //   churches.map((item)=> {
-
-  //     geoLoc = {
-  //       latitude:  item.geoLoc.latitude,
-  //       longitude: item.geoLoc.longitude,
-  //       latitudeDelta: 0.0922,
-  //       longitudeDelta: 0.0922 * ASPECT_RATIO,
-  //     }
-
-  //     let distance = geolib.getDistance(
-  //       crd,
-  //       geoLoc,
-  //     );
-
-  //     distance = geolib.convertUnit('mi', distance, 1)
-  //     item.howFar = distance
-  //   })
 
     function compareDistance(a, b){
       return a.howFar - b.howFar;
     }
-    // const z = churches.sort(compareDistance);
-    // const x = events.sort(compareDistance);
 
-    // this.props.dispatch(ACTIONS.SAVE_EVENTS(events));
-    // this.props.dispatch(ACTIONS.SAVE_CHURCHES(churches));
 
     this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
@@ -223,12 +177,8 @@ class _UserProfile extends Component {
         })
 
         if(sessionsAvailable.length === 0){
-
-         // eventSelected.meetingDay = // Monday
-         // eventSelected.meetingTime = // 6pm
           const nextMeeting = this.calculateReminderDate(eventSelected.meetingDay, eventSelected.meetingTime)
-         // console.log(nextMeeting)
-        //  console.log(String(new Date(nextMeeting)))
+
 
           nextMetteingObj ={
             'UTCTime': String(new Date(nextMeeting).toISOString()),
@@ -239,12 +189,10 @@ class _UserProfile extends Component {
           sessionsAvailable.push(nextMetteingObj)
         }
 
-       // console.log(sessionsAvailable)
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(sessionsAvailable));
 
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       } else {
-        console.log('There is no session in firebase ')
         const noSessions = []
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(noSessions));
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
@@ -257,7 +205,7 @@ class _UserProfile extends Component {
     firebase.database().ref('appUsers/'+ this.props.user.uid+'/').once("value", snapshot => {
       const appUser = snapshot.val();
       let bibleReadings = appUser.bibleReadings
-      //console.log(bibleReadings)
+
       let bibleReadingNames = appUser.bibleReadings
 
       if (bibleReadings){
@@ -280,19 +228,14 @@ class _UserProfile extends Component {
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
-
-   // console.log('Schedule')
     FCM.getScheduledLocalNotifications().then(notif=> {
-     // console.log(notif)
     });
   }
 
   render() {
     this.props.screen = this.props.navigation.screen
-
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
-
     const locations = this.props.events
     const userData = this.props.user
     const activeTabName = this.props.app.activeTabName

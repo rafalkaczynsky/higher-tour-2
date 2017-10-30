@@ -136,7 +136,6 @@ class UserProfile extends React.Component {
 
                 const title = this.props.appUserBibleReadingNames[index]
                 const progress = item.progress + '%'
-                //console.log(item.progress)
                 return (
                   <ListItem
                     key={'appUserBibleReadingKey'+ index}

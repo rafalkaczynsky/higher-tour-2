@@ -93,37 +93,31 @@ class _BibleReadingList extends Component {
     const userData = this.props.user                // data from the store
     const loginStatus = this.props.app.loginStatus  // data from the store
 
-    console.log('handleHome')
 
     if (loginStatus && loginStatus === 'loggedOut') {
-      console.log('From SignIn')
+
       navigate('SignIn')
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
       navigate('UserProfile')
     } else if (params.from === 'SessionItemYellow'){
-        console.log('From SessionItem Yellow')
-        console.log(params)
+
         navigate('FindSession')
       }else if (params.from === 'SessionItemBrown'){
-        console.log('From SessionItem Brown')
-        console.log(params)
+
         navigate('UserProfile')
       } else if (params.from === 'UserProfile'){
-        console.log('From UserProfile')
-        console.log(params)
+
         navigate('UserProfile',)
       } else if (params.from === 'FindSession'){
-        console.log('From FindSession')
-        console.log(params)
+
         navigate('FindSession')
       }
       else if (params.from === 'HigherBibleReadings'){
         // =========== TO BE CHECKED ==============
-        console.log('From HigherBibleReadings')
-        console.log(params)
+
         navigate('FindSession')
       } else {
-        console.log('From Welcome')
+
         navigate('Welcome')
       }
     }

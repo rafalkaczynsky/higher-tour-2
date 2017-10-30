@@ -223,22 +223,21 @@ class _SignIn extends Component {
 
 
     this.auth.onAuthStateChanged(function (user) {
-      //console.log('New Data from Firebase taken: churches, events, bibleReading ')
+
 
 
       // if user is signed to firebase
       if(user){
         props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
         // User signed to firebase
-       // console.log('User Signed to firebase')
+
         // if user is in local storage
         if ((userDataFromLocal) && (userDataFromLocal.uid)){
           //user is in local storage
-         // console.log('User is in local storage')
+
           //if user is the same as previus
           if(user.uid === userDataFromLocal.uid){
           //User is the same as in localstorage
-        //  console.log('User is the same as in localstorage')
 
           if(followStatus){
             //... if so ..
@@ -248,7 +247,6 @@ class _SignIn extends Component {
               //... if so ..
               if (event) {
                 if (event.follow === true){
-                //  console.log('User follow!');
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                     // .. get object and dispatch to the store
@@ -262,7 +260,6 @@ class _SignIn extends Component {
                   })
                 } else {
                   //... if doesnt follow ...
-                 // console.log('USER DOESNT FOLLOW EVENT!!!')
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                   props.dispatch(ACTIONS.SAVE_USER(user))
                   props.dispatch({type: 'WelcomeAnimation' })
@@ -273,7 +270,6 @@ class _SignIn extends Component {
 
           } else {
             //...or user doesnt follow
-            console.log('USER DOESNT FOLLOW EVENT!!!')
             props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
             props.dispatch(ACTIONS.SAVE_USER(user))
             props.dispatch({type: 'WelcomeAnimation' })
@@ -282,7 +278,7 @@ class _SignIn extends Component {
 
         } else {
             //User is not the same as in localstorage
-            //console.log('User is not the same as in localstorage')
+
             // check if follow in firabase
             firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
               userCurrent = snapshot.val();
@@ -291,7 +287,7 @@ class _SignIn extends Component {
                 //... if so ..
                 if (event) {
                   if (event.follow === true){
-                   // console.log('User follow!');
+
                     //... find event by id ...
                     firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                       // .. get object and dispatch to the store
@@ -319,7 +315,7 @@ class _SignIn extends Component {
                     })
                   } else {
                     //... if doesnt follow ...
-                    //console.log('USER DOESNT FOLLOW EVENT!!!')
+
                     const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                     firebaseDataAppUsers.update({
                         email: user.email,
@@ -340,7 +336,7 @@ class _SignIn extends Component {
                   }
                 }
               } else {
-               // console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
+
                 const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                 firebaseDataAppUsers.update({
                     email: user.email,
@@ -366,7 +362,6 @@ class _SignIn extends Component {
 
         } else {
           //user is not in local storage
-          //console.log('User is not  in local storage')
           // check if follow in firabase
           firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
             userCurrent = snapshot.val();
@@ -375,7 +370,6 @@ class _SignIn extends Component {
               //... if so ..
               if (event) {
                 if (event.follow === true){
-                  //console.log('User follow!');
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                     // .. get object and dispatch to the store
@@ -395,9 +389,7 @@ class _SignIn extends Component {
                      // navigate('UserProfile')
                   })
                 } else {
-                  //... if doesnt follow ...
-                  //console.log('USER DOESNT FOLLOW EVENT!!!')
-                  
+                  //... if doesnt follow ...                
                   const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
 
                   if (props.navigation.FCMtoken){
@@ -414,7 +406,7 @@ class _SignIn extends Component {
                 }
               }
             } else {
-              //console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
+
               const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
 
 
@@ -438,7 +430,7 @@ class _SignIn extends Component {
 
     } else {
       // if user doesnt signin to firebase
-      //console.log('No user signed with Firebase')
+
       props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
     }
   })

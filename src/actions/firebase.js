@@ -26,29 +26,28 @@ class _Firebase {
       // ================ TWITTER STAFF ================
       _twitterSignIn(props) {
         const   RNTwitterSignIn =  NativeModules.RNTwitterSignIn;
-        //console.log('twitter')
+
         RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET);
              RNTwitterSignIn.logIn()
                .then((loginData)=>{
-                 //console.log(loginData);
+           
                  const { authToken, authTokenSecret } = loginData;
                  if (authToken && authTokenSecret) {
                    // we are loged successfull
-                   console.log(authToken)
+            
                        const credential = providerTwitter.credential(authToken, authTokenSecret);
                        return auth.signInWithCredential(credential);
                  }
                }).then(credData => {
                     //..
             }).catch((error)=>{
-                 //console.log('twitter error')
-                 //console.log(error);
+         
                  props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
                });
          }
        
          handleLogout() {
-           //console.log('logout');
+       
            RNTwitterSignIn.logOut();
            this.setState({
              isLoggedIn: false,
@@ -74,8 +73,7 @@ class _Firebase {
             //...
         })
         .catch(err => {
-           // console.log('Facebook error')
-           // console.log(err);
+
 
         });
     });
@@ -111,8 +109,7 @@ class _Firebase {
             // Navigate to SignIn
             navigate
         } catch (error) {
-            console.log('logout error')
-            console.log(error);
+
             return error
         }
 

@@ -20,7 +20,7 @@ import {
   _Respond, 
   _WeekList, 
   _BibleReadingList, 
-  _ReadingContentList
+
 } from './containers'
 
 var _noAnimation = false
@@ -37,7 +37,6 @@ const MyTransitionSpecNoAnimation = ({
 let TransitionConfiguration = () => {
   let _transitionSpec = !_noAnimation ? MyTransitionSpec : MyTransitionSpecNoAnimation
 
- // console.log(_transitionSpec)
   return {
       // Define scene interpolation, eq. custom transition
       transitionSpec: _transitionSpec,
@@ -48,18 +47,12 @@ let TransitionConfiguration = () => {
           const params = route.params || {};
           const transition = params.transition || 'default'; 
 
-        //  console.log('Number of screens in navigator array:' + sceneProps.scenes.length)
-        //  console.log('Current index is: ' + sceneProps.scene.index)
-        //  console.log('Current route Name: ' + sceneProps.scene.route.routeName)
-        //  console.log(_noAnimation)
-                // Disable the transition animation when resetting to the home screen.
           if (
             sceneProps.scene.index === 0 &&
             sceneProps.scene.route.routeName !== 'SignIn' &&
             sceneProps.scenes.length > 1
           ) {
 
-          //  console.log('Warunek spelniony')
             _noAnimation = true
 
             return null
@@ -122,7 +115,6 @@ export const AppNavigator = StackNavigator({
   UserProfile: {screen: _UserProfile},
   HigherBibleReadings: {screen: _HigherBibleReadings},
   BibleReadingList: { screen: _BibleReadingList},
-  ReadingContentList: {screen: _ReadingContentList},
   WeekList: {screen: _WeekList},
   Read: {screen: _Read},
   Think: {screen: _Think},
