@@ -33,10 +33,12 @@ export default class Freebie extends Component {
         </View>}
 
         {video && 
-        <View style={{width: '100%'}}>
-             <Video  source={{uri: video}} />
+        <View style={{width: '100%', height: 220}}>
+            <WebView
+                source={{uri: video}}
+                style={{borderColor: 'black', borderWidth: 3}}
+            />
         </View>}
-
           <View style={{padding: 20}}>
               <View>
                   <Text style={{ fontSize: 12, lineHeight: 18}}></Text>
