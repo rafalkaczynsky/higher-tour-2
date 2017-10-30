@@ -106,6 +106,8 @@ class _SessionItem extends Component {
     const userData = this.props.user          
     const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
 
+
+
     firebaseDataAppUsers.update({
       email: userData.email,
       name: userData.displayName,

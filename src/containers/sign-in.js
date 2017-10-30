@@ -381,9 +381,13 @@ class _SignIn extends Component {
                     // .. get object and dispatch to the store
                       const locationSelected = snapshot.val()
                       const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
-                      firebaseDataAppUsers.update({
+
+                      if (props.navigation.FCMtoken){
+                        firebaseDataAppUsers.update({
                           FCMtoken: props.navigation.FCMtoken,
-                      })
+                        })
+                      } 
+
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
                       props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
                       props.dispatch(ACTIONS.SAVE_USER(user))
@@ -393,10 +397,16 @@ class _SignIn extends Component {
                 } else {
                   //... if doesnt follow ...
                   //console.log('USER DOESNT FOLLOW EVENT!!!')
+                  
                   const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
-                  firebaseDataAppUsers.update({
+
+                  if (props.navigation.FCMtoken){
+                    firebaseDataAppUsers.update({
                       FCMtoken: props.navigation.FCMtoken,
-                  })
+                    })
+                  } 
+                  
+
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                   props.dispatch(ACTIONS.SAVE_USER(user))
                   props.dispatch({type: 'WelcomeAnimation' })
@@ -406,6 +416,9 @@ class _SignIn extends Component {
             } else {
               //console.log('USER DOESNT EXIST IN APPUSER IS NEW USER!!!')
               const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
+
+
+
               firebaseDataAppUsers.update({
                 email: user.email,
                 name: user.displayName,
@@ -413,7 +426,7 @@ class _SignIn extends Component {
                       follow: false,
                 },
                 uid: user.uid,
-                FCMtoken: props.navigation.FCMtoken,
+                FCMtoken:  props.navigation.FCMtoken,
             })
               props.dispatch(ACTIONS.SAVE_USER(user))
               props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))

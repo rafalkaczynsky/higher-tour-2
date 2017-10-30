@@ -177,15 +177,17 @@ export default class App extends React.Component {
 
         FCM.getInitialNotification().then((notif)=>{
          // console.log("FCM.getInitialNotification");
-         // console.log(notif)
+          console.log(notif)
           if (notif){
           //  console.log(notif.screen)
             this.setState({
               screen: notif.screen,
               lastReadDayNumber: notif.lastReadDayNumber,
               title: notif.title,
+              body: notif.body,
               uid: notif.uid,
               image: notif.image,
+              video: notif.video,
             })
           }
         });
@@ -197,19 +199,21 @@ export default class App extends React.Component {
           FCM.on(FCMEvent.Notification, async (notif) => {
 
               if (notif){
-              //  console.log(notif.screen)
+                //console.log(notif.screen)
                 this.setState({
                   screen: notif.screen,
                   lastReadDayNumber: notif.lastReadDayNumber,
                   title: notif.title,
+                  body: notif.body,
                   uid: notif.uid,
                   image: notif.image,
+                  video: notif.video,
                 })
               }
 
           });
 
-          FCM.getFCMToken().then(token => {
+        FCM.getFCMToken().then(token => {
             this.setState({isMounted: true, FCMtoken: token})
             // store fcm token in your server
         });
@@ -439,7 +443,14 @@ export default class App extends React.Component {
                     />
                 // ... other notification means now freebie one
               } else if (this.state.screen === 'freebie'){
-                return <Freebie image={this.state.image} onGoBack={()=> this.setState({screen: undefined})}/>
+                //`console.log('I am in Freebie')
+                return <Freebie 
+                        image={this.state.image} 
+                        video={this.state.video}
+                        onGoBack={()=> this.setState({screen: undefined})}
+                        title = {this.state.title}
+                        body = {this.state.body}
+                      />
               } else return null
               this.setState({canGo: true})
                 // Load Main Application
