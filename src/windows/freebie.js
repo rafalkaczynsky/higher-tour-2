@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput, Image, TouchableOpacity, Linking} from 'react-native'
+import {ScrollView, WebView, View, Text, TextInput, Image, TouchableOpacity, Linking} from 'react-native'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -14,7 +14,6 @@ export default class Freebie extends Component {
   render() {
 
     const {title, body, image, video} = this.props
-
     const _body = body.toUpperCase()
 
   return (
@@ -43,18 +42,18 @@ export default class Freebie extends Component {
               <View>
                   <Text style={{ fontSize: 12, lineHeight: 18}}></Text>
               </View>
-              <View style={{marginTop: 30}}>
+              <View style={{marginTop: 30, marginBottom: 30}}>
                   <Text style={{ fontSize: 28, lineHeight: 45, textAlign: 'center' }}>
                       {_body}
                   </Text>
               </View>
           </View>
           <Button 
-        type="default"
-        text={'DONE'}
-        onPress={this.props.onGoBack}
-        style={{flex: 1}}
-      />
+            type="default"
+            text={'DONE'}
+            onPress={this.props.onGoBack}
+            style={{flex: 1}}
+        />
       </ScrollView>
 
   </View>

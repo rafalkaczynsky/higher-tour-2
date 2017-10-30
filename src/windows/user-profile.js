@@ -70,10 +70,10 @@ class UserProfile extends React.Component {
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}>
             <View style={[StyleSheet.userProfile.header]} >
                 <Image source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} >
+                  <Text style={{ position: 'absolute', bottom: 5, marginLeft: 10, color: colors.white, fontSize: 25 ,backgroundColor: 'transparent'}}>
+                    Welcome Back {userFirstName}!
+                  </Text>
                 </Image>
-                <Text style={{marginTop: '-10%', marginLeft: 10, color: colors.white, fontSize: 25 ,backgroundColor: 'transparent'}}>
-                  Welcome Back {userFirstName}!
-                </Text>
             </View>
             <ScrollView style={{width: '95%'}}>
             <View style={StyleSheet.userProfile.contentBox}>
