@@ -129,13 +129,14 @@ class UserProfile extends React.Component {
                 <ListItem
                   title='Higher Bible Readings'
                   listHeader
+                  disabled
                 /> 
 
                 {this.props.appUserBibleReading.map((item, index) => {
 
                 const title = this.props.appUserBibleReadingNames[index]
                 const progress = item.progress + '%'
-
+                //console.log(item.progress)
                 return (
                   <ListItem
                     key={'appUserBibleReadingKey'+ index}

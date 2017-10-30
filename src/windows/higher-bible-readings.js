@@ -55,7 +55,7 @@ class HigherBibleReadings extends React.Component {
       return(
       <View style={StyleSheet.window.default}>
         <Header
-          onBack
+          onBack={currentScreen === 'item' ? true : null}
           onBackCallback={currentScreen === 'item' ? onItemBackPressed : onGoBack}
           text='Higher Bible Readings'
 

@@ -25,7 +25,8 @@ import {AlertWindow} from './components'
 
 //const middleware = applyMiddleware()
 var screen = null
-
+var _title = null
+var _lastReadDayNumber = null 
 let store = createStore(reducers)
 
 
@@ -149,6 +150,7 @@ export default class App extends React.Component {
         console.ignoredYellowBox = [
           'Setting a timer'
       ]
+      this.itemDay = null
       this.FCMtoken = null
 
       console.log(navigator.geolocation)
@@ -175,22 +177,7 @@ export default class App extends React.Component {
           this.setState({locationPermission: response})
         })
 
-        FCM.getInitialNotification().then((notif)=>{
-         // console.log("FCM.getInitialNotification");
-          console.log(notif)
-          if (notif){
-          //  console.log(notif.screen)
-            this.setState({
-              screen: notif.screen,
-              lastReadDayNumber: notif.lastReadDayNumber,
-              title: notif.title,
-              body: notif.body,
-              uid: notif.uid,
-              image: notif.image,
-              video: notif.video,
-            })
-          }
-        });
+
 
         if(Platform.OS ==='ios'){
           FCM.requestPermissions().then(()=>console.log('granted')).catch(()=>console.log('user rejected')); // for iOS
@@ -205,10 +192,28 @@ export default class App extends React.Component {
                   lastReadDayNumber: notif.lastReadDayNumber,
                   title: notif.title,
                   body: notif.body,
+                  length: notif.length,
                   uid: notif.uid,
                   image: notif.image,
                   video: notif.video,
                 })
+              }
+
+              if (notif.screen === 'reading') {
+                _title = notif.title
+                _lastReadDayNumber = notif.lastReadDayNumber
+     
+                var bibleReadingItem = []
+         
+                firebase.database().ref('bibleReading/'+ _title +'/').once("value", snapshot => {
+                 bibleReadingItem = snapshot.val()
+  
+                    bibleReadingItem = Object.keys(bibleReadingItem).map(function (key) { return bibleReadingItem[key]; })
+                    
+                    itemDay = bibleReadingItem[parseInt(_lastReadDayNumber)-1]
+                    console.log(itemDay)
+                    this.setState({itemDay: itemDay})
+                })    
               }
 
           });
@@ -221,6 +226,8 @@ export default class App extends React.Component {
           this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
               // do some component related stuff
           });
+
+          console.log(this.state.itemDay)
       }
 
       handleFirstConnectivityChange(isConnected) {
@@ -230,11 +237,50 @@ export default class App extends React.Component {
           'change',
           this.handleFirstConnectivityChange
         );
+
+
       }
 
     componentWillMount() {
 
         var self = this;
+
+        FCM.getInitialNotification().then((notif)=>{
+          // console.log("FCM.getInitialNotification");
+          // console.log(notif)
+           if (notif){
+           //  console.log(notif.screen)
+           this.setState({
+             screen: notif.screen,
+             lastReadDayNumber: notif.lastReadDayNumber,
+             title: notif.title,
+             body: notif.body,
+             length: notif.length,
+             uid: notif.uid,
+             image: notif.image,
+             video: notif.video,
+           })
+
+           if(notif.screen ==='reading'){
+            _title = notif.title
+            _lastReadDayNumber = notif.lastReadDayNumber
+ 
+            var bibleReadingItem = []
+            
+            firebase.database().ref('bibleReading/'+ _title +'/').once("value", snapshot => {
+             bibleReadingItem = snapshot.val()
+     
+                bibleReadingItem = Object.keys(bibleReadingItem).map(function (key) { return bibleReadingItem[key]; })
+                
+                itemDay = bibleReadingItem[parseInt(_lastReadDayNumber)-1]
+                console.log(itemDay)
+                this.setState({itemDay: itemDay})
+            })
+           }
+           }
+         });
+
+
 
        /* NetInfo.isConnected.fetch().then(isConnected => {
           console.log('First, is ' + (isConnected ? 'online' : 'offline'));
@@ -415,30 +461,21 @@ export default class App extends React.Component {
               />)
 
             // check if render from notification
-            if (this.state.screen){
+            if ((this.state.screen) && (this.state.isMounted)){
               // check what screen render
               //.. bible reading ?
               if (this.state.screen === 'reading'){
                 const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ this.state.uid+'/bibleReadings/'+this.state.title);
                 firebaseDataAppUsers.update({
-                    lastReadDayNumber: parseInt(this.state.lastReadDayNumber) + 1,
-                })
-
-                var bibleReadingItem = []
-                firebase.database().ref('bibleReading/'+ this.state.title +'/').once("value", snapshot => {
-                 bibleReadingItem = snapshot.val()
-                  bibleReadingItem = Object.keys(bibleReadingItem).map(function (key) { return bibleReadingItem[key]; })
-
-                    itemDay = bibleReadingItem[parseInt(this.state.lastReadDayNumber)]
-
-
+                    lastReadDayNumber: parseInt(this.state.lastReadDayNumber),
+                    progress: parseInt((parseInt(this.state.lastReadDayNumber) / parseInt(this.state.length)) *100 )
                 })
 
                   return <Read
                     onItemBackPressed={()=> this.setState({screen: undefined})}
                     onItemNextPressed={()=> this.setState({showThink: true})}
                     itemDay={itemDay}
-                    currentReadingDayNumber={parseInt(this.state.lastReadDayNumber) + 1}
+                    currentReadingDayNumber={parseInt(this.state.lastReadDayNumber)}
                     fromNotification={true}
                     />
                 // ... other notification means now freebie one

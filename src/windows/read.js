@@ -20,7 +20,7 @@ export default class Read extends Component {
 
   componentWillMount(){
     this.setState({
-      dayItem: this.props.dayItem
+      itemDay: this.props.itemDay
     })
   }
 
@@ -46,7 +46,7 @@ export default class Read extends Component {
     let mainImage
     let versus
     let content
-
+    console.log(itemDay)
     /**
      *  onItemBackPressed={()=> this.setState({screen: undefined})}
         onItemNextPressed={()=> alert('Next pressed!')}
@@ -54,12 +54,9 @@ export default class Read extends Component {
         fromNotification={true}
      *
      */
-console.log(this.state.isMounted)
-console.log(itemDay)
-console.log(this.state.isMounted)
 
-    if (this.state.isMounted){
-      if ((itemDay) && (fromNotification)) return (
+    if ((this.state.isMounted) && (itemDay)){
+      if (fromNotification) return (
 
       <View style={StyleSheet.window.default}>
         <Header
@@ -94,7 +91,7 @@ console.log(this.state.isMounted)
         </View>
         <Button
           type="default"
-          text={'GO BACK'}
+          text={'DONE'}
           onPress={onItemBackPressed}
           style={{flex: 1}}
         />
@@ -141,9 +138,16 @@ console.log(this.state.isMounted)
   </View>
   )
 } else return (
-  <Text>First mistake</Text>
+  <View style={StyleSheet.window.default}>
+    <Text>Unable to find reading</Text>
+    <Button
+      type="default"
+      text={'DONE'}
+      onPress={onItemBackPressed}
+      style={{flex: 1}}
+    />
+  </View>
 )
-
-} else return (<Text>Second mistake</Text>)
+} else return (<Text>Loading ...</Text>)
 }
 }

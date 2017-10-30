@@ -44,7 +44,7 @@ return (
   {this.props.fromNotification &&
   <Button
     type="default"
-    text={'GO TO APP'}
+    text={'DONE'}
     onPress={onGoToApp}
     style={{flex: 1}}
   />

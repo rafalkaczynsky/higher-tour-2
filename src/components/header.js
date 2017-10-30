@@ -19,7 +19,7 @@ export default class Header extends Component {
 
             {!simple && onBack && !onNext && (
                 <View style={StyleSheet.header.onBackContainer}>
-                    <TouchableOpacity onPress={onBackCallback} style={StyleSheet.header.onBackIconButton}>
+                    <TouchableOpacity onPress={onBackCallback} style={[StyleSheet.header.onBackIconButton, {paddingRight: 30}]}>
                         <Icon name='back' style={StyleSheet.header.onBackIconStyle}/>
                     </TouchableOpacity>
                     <View>
@@ -30,7 +30,7 @@ export default class Header extends Component {
             {!simple && onBack && onNext && (
                 <View style={StyleSheet.header.fullHeaderContainer}>
 
-                    <TouchableOpacity  onPress={onBackCallback}   style={StyleSheet.header.fullHeaderIconBtton}>
+                    <TouchableOpacity  onPress={onBackCallback}   style={[StyleSheet.header.fullHeaderIconBtton, {paddingRight: 30}]}>
                         <Icon name='back' style={{width: 20, height: 20, resizeMode: 'contain'}}/>
                     </TouchableOpacity>
 
@@ -38,7 +38,7 @@ export default class Header extends Component {
                         <Text style={StyleSheet.header.text}>{text}</Text>
                     </View>
 
-                    <TouchableOpacity onPress={onNextCallback} style={{flex: 0.1, alignItems: 'center'}}>
+                    <TouchableOpacity onPress={onNextCallback} style={{flex: 0.1, alignItems: 'center', paddingLeft: 30}}>
                         <Icon name='next' style={{width: 20, height: 20, resizeMode: 'contain'}}/>
                     </TouchableOpacity>       
 

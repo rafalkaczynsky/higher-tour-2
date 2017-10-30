@@ -41,8 +41,8 @@ class _Firebase {
                }).then(credData => {
                     //..
             }).catch((error)=>{
-                 console.log('twitter error')
-                 console.log(error);
+                 //console.log('twitter error')
+                 //console.log(error);
                  props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
                });
          }
@@ -74,8 +74,8 @@ class _Firebase {
             //...
         })
         .catch(err => {
-            console.log('Facebook error')
-            console.log(err);
+           // console.log('Facebook error')
+           // console.log(err);
 
         });
     });

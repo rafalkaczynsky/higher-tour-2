@@ -18,6 +18,7 @@ export default StyleSheet => StyleSheet.extend({
     itemDetails: {
         flexDirection: 'row',
         alignItems: 'center',
+        width: '80%',
     },
 
     title: {
