@@ -22,27 +22,42 @@ handleOnSettings(navigate){
   this.props.dispatch( {type: 'SettingsInAnimation'})  
 }
 
-handleHome(navigate){
-
-  const resetAction = NavigationActions.reset({
-    index: 0,
-    key: null,
+handleOnHome(navigate){
+  
+const resetActionSignIn = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'SignIn'})
+  ]
+})
+  
+const resetActionUserProfile = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'UserProfile'})
+  ]
+})
+  
+const resetActionWelcome = NavigationActions.reset({
+  index: 0,
     actions: [
-      NavigationActions.navigate({ routeName: 'WeekList'})
+      NavigationActions.navigate({ routeName: 'Welcome'})
     ]
-  })
-
-  this.props.navigation.dispatch(resetAction)
+})
   
-  const loginStatus = this.props.app.loginStatus 
   
-  if (loginStatus && loginStatus === 'loggedOut') {
-    this.props.dispatch({type: 'SignInOnHomeAnimation'})
-  } else if (loginStatus && loginStatus === 'loggedInPlus') {
-    this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
-  } else { 
-    this.props.dispatch({type: 'GotoWelcomeAnimation'})
-  }
+const loginStatus = this.props.app.loginStatus  // data from the store
+  
+if (loginStatus && loginStatus === 'loggedOut') {
+  //this.props.dispatch({type: 'SignInOnHomeAnimation'})
+  this.props.dispatch(resetActionSignIn)
+} else if (loginStatus && loginStatus === 'loggedInPlus') {
+  // this.props.dispatch({type: 'UserProfileOnHomeAnimation'})
+  this.props.dispatch(resetActionUserProfile)
+} else {
+  // this.props.dispatch({type: 'GotoWelcomeAnimation'})
+  this.props.dispatch(resetActionWelcome)
+}
 }
 
 handleOnGoBack(){

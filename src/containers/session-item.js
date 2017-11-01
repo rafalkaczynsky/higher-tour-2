@@ -96,7 +96,7 @@ class _SessionItem extends Component {
       index: 0,
       key: null,
       actions: [
-        NavigationActions.navigate({ routeName: 'SessionItem'})
+        NavigationActions.navigate({ routeName: 'UserProfile'})
       ]
     })
 
@@ -135,7 +135,7 @@ class _SessionItem extends Component {
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
     this.props.navigation.dispatch(resetAction)
-    this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
+    //this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
   }
 
   handleOnStopSession(navigate, route){
@@ -144,7 +144,7 @@ class _SessionItem extends Component {
       index: 0,
       key: null,
       actions: [
-        NavigationActions.navigate({ routeName: 'SessionItem'})
+        NavigationActions.navigate({ routeName: 'Welcome'})
       ]
     })
 
@@ -163,7 +163,7 @@ class _SessionItem extends Component {
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
     this.props.navigation.dispatch(resetAction)
-    this.props.dispatch({type: 'GotoWelcomeAnimation'})
+ //   this.props.dispatch({type: 'GotoWelcomeAnimation'})
   }
 
   handleOnSettings(){
@@ -180,15 +180,32 @@ class _SessionItem extends Component {
       ]
     })
 
+    const resetActionWelcome = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Welcome'})
+      ]
+    })
+
+    const resetActionUserProfile = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'UserProfile'})
+      ]
+    })
+
     const loginStatus = this.props.app.loginStatus
 
-    this.props.navigation.dispatch(resetAction)
+    //this.props.navigation.dispatch(resetAction)
 
     if (loginStatus && loginStatus === 'loggedInPlus') {
-      this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
-    } else { 
-      
-        this.props.dispatch({type: 'GotoWelcomeAnimation'})
+     // this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
+     this.props.navigation.dispatch(resetActionUserProfile)
+    } else {  
+      //  this.props.dispatch({type: 'GotoWelcomeAnimation'})
+      this.props.navigation.dispatch(resetActionWelcome)
       }
 
   }

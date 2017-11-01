@@ -38,26 +38,42 @@ class _Settings extends Component {
   }
 
   handleOnHome(){
-
-    const resetAction = NavigationActions.reset({
+      
+    const resetActionSignIn = NavigationActions.reset({
       index: 0,
-      key: null,
       actions: [
-        NavigationActions.navigate({ routeName: 'Settings'})
+        NavigationActions.navigate({ routeName: 'SignIn'})
       ]
     })
-    this.props.dispatch(resetAction
-    )
+      
+    const resetActionUserProfile = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'UserProfile'})
+      ]
+    })
+      
+    const resetActionWelcome = NavigationActions.reset({
+      index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Welcome'})
+        ]
+    })
+      
+      
     const loginStatus = this.props.app.loginStatus  // data from the store
-    
+      
     if (loginStatus && loginStatus === 'loggedOut') {
-      this.props.dispatch({type: 'SignInOnHomeAnimation'})
+      //this.props.dispatch({type: 'SignInOnHomeAnimation'})
+      this.props.dispatch(resetActionSignIn)
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
-    } else { 
-        this.props.dispatch({type: 'GotoWelcomeAnimation'})
-      }
-    }  
+      // this.props.dispatch({type: 'UserProfileOnHomeAnimation'})
+      this.props.dispatch(resetActionUserProfile)
+    } else {
+      // this.props.dispatch({type: 'GotoWelcomeAnimation'})
+      this.props.dispatch(resetActionWelcome)
+    }
+ }
 
   handleOnBible(navigate, route){
       this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
