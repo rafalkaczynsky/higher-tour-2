@@ -246,12 +246,15 @@ class _SessionItem extends Component {
   }
 
   componentWillMount(){
-    const eventSelected  =this.props.eventSelected 
-    
+
+    const eventSelected  = this.props.eventSelected 
+
+
     firebase.database().ref('churches/'+eventSelected.host+'/').once("value", snapshot => {
       const church = snapshot.val();
       this.props.dispatch(ACTIONS.SAVE_SELECTED_CHURCH(church))
     })
+
   }
 
   render() {

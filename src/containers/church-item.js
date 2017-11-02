@@ -82,11 +82,23 @@ class _ChurchItem extends Component {
   }
 
   handleOnGoToSession(){
-    this.props.dispatch({type: 'SessionItemAnimation'})
+    const churchSelected  = this.props.selectedChurch
+
+    firebase.database().ref('events/'+churchSelected.host+'/').once("value", snapshot => {
+      const event = snapshot.val();
+      this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(event))
+      this.props.dispatch({type: 'SessionItemAnimation'})
+    })
+
+
   }
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
+  }
+
+  componentWillMount(){
+
   }
 
   render() {
@@ -120,7 +132,8 @@ function mapStateToProps(state){
   return({
       user: state.user,
       app: state.app,
-      selectedChurch: state.selectedChurch
+      eventSelected: state.eventSelected,
+      selectedChurch: state.selectedChurch,
   });
 }
 

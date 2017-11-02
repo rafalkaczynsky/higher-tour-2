@@ -167,10 +167,11 @@ export default class App extends React.Component {
           this.handleFirstConnectivityChange
         );
 
-
       }
 
     componentWillMount() {
+
+
 
         var self = this;
 
