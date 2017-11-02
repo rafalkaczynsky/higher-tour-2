@@ -47,10 +47,14 @@ let TransitionConfiguration = () => {
           const params = route.params || {};
           const transition = params.transition || 'default'; 
 
+         // console.log('index -' + sceneProps.scene.index)
+         // console.log('routeName -' + sceneProps.scene.route.routeName)
+         // console.log('scenes length -'+sceneProps.scenes.length)
+
           if (
             sceneProps.scene.index === 0 &&
-            sceneProps.scene.route.routeName !== 'SignIn' &&
-            sceneProps.scenes.length > 1
+            (sceneProps.scene.route.routeName !== 'SignIn') &&
+            sceneProps.scenes.length > 0
           ) {
 
             _noAnimation = true

@@ -66,7 +66,7 @@ class _SignIn extends Component {
       },
     );
 
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+   // this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
 
   }
 
@@ -121,7 +121,9 @@ class _SignIn extends Component {
             let handleLogin = _Firebase.login(email, password, navigate, route);
 
             handleLogin.then((error)=> {
-              this.setState({error: error, showError: true, showErrorWrapper: true});
+              console.log(error)
+
+             this.setState({error: error, showError: true, showErrorWrapper: true});
               var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
               var clearErrorsWrapper = setTimeout(() => this.setState({showErrorWrapper: false}), 10000);
             })
@@ -129,6 +131,7 @@ class _SignIn extends Component {
         }
 
       } else {
+        console.log(error)
         this.setState({error: error, showError: true, showErrorWrapper: true});
         var clearErrors = setTimeout(() => this.setState({showError: false}), 5000);
         var clearErrorsWrapper = setTimeout(() => this.setState({showErrorWrapper: false}), 10000);
@@ -232,18 +235,22 @@ class _SignIn extends Component {
 
       // if user is signed to firebase
       if(user){
+        console.log("1")
         props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
         // User signed to firebase
 
         // if user is in local storage
         if ((userDataFromLocal) && (userDataFromLocal.uid)){
+          console.log("2")
           //user is in local storage
 
           //if user is the same as previus
           if(user.uid === userDataFromLocal.uid){
+            console.log("3")
           //User is the same as in localstorage
 
           if(followStatus){
+            console.log("4")
             //... if so ..
             // check if follow in firabase
           firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
@@ -251,6 +258,7 @@ class _SignIn extends Component {
               //... if so ..
               if (event) {
                 if (event.follow === true){
+                  console.log("5")
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                     // .. get object and dispatch to the store
@@ -272,6 +280,7 @@ class _SignIn extends Component {
                       //navigate('UserProfile')
                   })
                 } else {
+                  console.log("6")
                   //... if doesnt follow ...
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                   props.dispatch(ACTIONS.SAVE_USER(user))
@@ -291,6 +300,7 @@ class _SignIn extends Component {
             })
 
           } else {
+            console.log("7")
             //...or user doesnt follow
             props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
             props.dispatch(ACTIONS.SAVE_USER(user))
@@ -308,6 +318,7 @@ class _SignIn extends Component {
           }
 
         } else {
+          console.log("8")
             //User is not the same as in localstorage
 
             // check if follow in firabase
@@ -318,7 +329,7 @@ class _SignIn extends Component {
                 //... if so ..
                 if (event) {
                   if (event.follow === true){
-
+                    console.log("9")
                     //... find event by id ...
                     firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                       // .. get object and dispatch to the store
@@ -356,7 +367,7 @@ class _SignIn extends Component {
                     })
                   } else {
                     //... if doesnt follow ...
-
+                    console.log("10")
                     const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                     firebaseDataAppUsers.update({
                         email: user.email,
@@ -387,7 +398,7 @@ class _SignIn extends Component {
                   }
                 }
               } else {
-
+                console.log("11")
                 const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
                 firebaseDataAppUsers.update({
                     email: user.email,
@@ -422,6 +433,7 @@ class _SignIn extends Component {
 
 
         } else {
+          console.log("12")
           //user is not in local storage
           // check if follow in firabase
           firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
@@ -431,6 +443,7 @@ class _SignIn extends Component {
               //... if so ..
               if (event) {
                 if (event.follow === true){
+                  console.log("13")
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                     // .. get object and dispatch to the store
@@ -455,11 +468,12 @@ class _SignIn extends Component {
                         ]
                       })
                       
-                    props.navigation.dispatch(resetAction)
+                      props.navigation.dispatch(resetAction)
                       //props.dispatch({ type: 'UserProfileAnimation' })
-                     // navigate('UserProfile')
+                      navigate('UserProfile')
                   })
                 } else {
+                  console.log("14")
                   //... if doesnt follow ...                
                   const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
 
@@ -483,14 +497,12 @@ class _SignIn extends Component {
                   
                   props.navigation.dispatch(resetAction)
                   //props.dispatch({type: 'WelcomeAnimation' })
-                  //navigate('Welcome')
+                  navigate('Welcome')
                 }
               }
             } else {
-
+              console.log("15")
               const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
-
-
 
               firebaseDataAppUsers.update({
                 email: user.email,
@@ -512,14 +524,16 @@ class _SignIn extends Component {
                 ]
               })
               
-               props.navigation.dispatch(resetAction)
+              props.navigation.dispatch(resetAction)
               //props.dispatch({type: 'WelcomeAnimation' })
+              navigate('Welcome')
             }
 
             })
         }
 
     } else {
+      console.log("16")
       // if user doesnt signin to firebase
 
       props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
@@ -530,7 +544,7 @@ class _SignIn extends Component {
 
   componentWillMount(){
 
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    //BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
@@ -543,7 +557,7 @@ class _SignIn extends Component {
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+   // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
   handleBackButtonClick() {
@@ -552,7 +566,9 @@ class _SignIn extends Component {
   }
 
   render() {
-
+    console.log('SignIN')
+  
+  
     const { navigate } = this.props.navigation
 
     const events = this.props.events                   // from the store

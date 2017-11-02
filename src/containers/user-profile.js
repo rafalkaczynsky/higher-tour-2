@@ -9,6 +9,8 @@ import {UserProfile} from '../windows'
 import StyleSheet from '../styles'
 import * as ACTIONS from '../actions/actions/actions';
 
+import { NavigationActions } from 'react-navigation'
+
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;

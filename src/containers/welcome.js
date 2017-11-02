@@ -4,6 +4,7 @@ import geolib from 'geolib'
 import { connect } from 'react-redux';
 import {Dimensions, Alert, BackHandler} from 'react-native'
 import * as firebase from 'firebase'
+import { NavigationActions } from 'react-navigation'
 
 import * as ACTIONS from '../actions/actions/actions';
 
@@ -16,6 +17,7 @@ class _Welcome extends Component {
   static navigationOptions = {
     gesturesEnabled: false
   };
+  
 
   constructor(props) {
     super(props);
@@ -44,6 +46,8 @@ class _Welcome extends Component {
       },
     );
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+
+    
 
   }
 
@@ -78,7 +82,6 @@ componentWillMount(){
   const loginStatus= this.props.app.loginStatus // data from the store
 
   BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-
 }
 
 componentDidMount(){
@@ -153,6 +156,7 @@ handleBackButtonClick() {
 
   render() {
 
+    //console.log('Welcome Container')
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 

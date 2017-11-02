@@ -20,6 +20,8 @@ export default class SignIn extends Component {
 
     const { onMoreSession, onChurchPressed, locations, userData, onFindChurch} = this.props
 
+    //console.log('Welcome Window')
+
     return (
       <View style={StyleSheet.window.default}>
         <Header

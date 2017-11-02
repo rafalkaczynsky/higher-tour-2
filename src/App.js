@@ -173,7 +173,8 @@ export default class App extends React.Component {
     componentWillMount() {
 
 
-
+      this.handleFirstConnectivityChange
+      
         var self = this;
 
         FCM.getInitialNotification().then((notif)=>{
