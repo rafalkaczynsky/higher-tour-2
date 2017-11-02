@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {View, ActivityIndicator, Dimensions, Alert} from 'react-native'
+import {View, ActivityIndicator, Dimensions, Alert, BackHandler} from 'react-native'
 import { connect } from 'react-redux'
 import * as firebase from 'firebase'
-import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType, } from 'react-native-fcm';
 
 import {TabMenu} from '../components'
 import {UserProfile} from '../windows'
@@ -43,6 +43,8 @@ class _UserProfile extends Component {
         alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
       },
     );
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
 
   }
 
@@ -224,12 +226,23 @@ class _UserProfile extends Component {
         this.props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES(bibleReadingNames));
       }
     })
+
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
     FCM.getScheduledLocalNotifications().then(notif=> {
     });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
   }
 
   render() {

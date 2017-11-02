@@ -2,7 +2,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
 //import logger , {createLogger} from "redux-logger"
-import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated, NetInfo} from 'react-native'
+import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated, NetInfo, BackHandler} from 'react-native'
 import * as firebase from "firebase";
 
 const Permissions = require('react-native-permissions');
@@ -101,6 +101,7 @@ export default class App extends React.Component {
           duration: 2000,
           delay: 20
         }).start();
+        
 
       }
 

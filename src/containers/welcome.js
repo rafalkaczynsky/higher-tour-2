@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Welcome} from '../windows'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
-import {Dimensions, Alert} from 'react-native'
+import {Dimensions, Alert, BackHandler} from 'react-native'
 import * as firebase from 'firebase'
 
 import * as ACTIONS from '../actions/actions/actions';
@@ -43,6 +43,7 @@ class _Welcome extends Component {
         alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
       },
     );
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
 
   }
 
@@ -75,6 +76,8 @@ componentWillMount(){
   const { navigate } = this.props.navigation
   const { params } = this.props.navigation.state
   const loginStatus= this.props.app.loginStatus // data from the store
+
+  BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
 }
 
@@ -137,6 +140,15 @@ componentDidMount(){
   this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn'))
   this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
 
+}
+
+componentWillUnmount() {
+  BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+}
+
+handleBackButtonClick() {
+  this.props.navigation.goBack(null);
+  return true;
 }
 
   render() {

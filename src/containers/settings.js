@@ -29,12 +29,29 @@ class _Settings extends Component {
   handleLogOut(navigate, route){
     const loginStatus = this.props.app.loginStatus  // data from the store
 
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'SignIn'})
+      ]
+    })
+    
+
     if (loginStatus === 'loggedOut') {
+      this.props.navigation.dispatch(resetAction)
+    } else {
+      this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
+      _Firebase.logout(this.props.navigation.dispatch(resetAction) , route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
+
+    } 
+   /* if (loginStatus === 'loggedOut') {
       this.props.dispatch({ type: 'LogoutAnimation' }) 
     } else {
       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
       _Firebase.logout(this.props.dispatch({ type: 'LogoutAnimation' }) , route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
-    }  
+
+    }  */
   }
 
   handleOnHome(){

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Button, View, Animated, AsyncStorage, ActivityIndicator} from 'react-native'
+import {BackHandler, Button, View, Animated, AsyncStorage, ActivityIndicator} from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 import { connect } from 'react-redux';
 import {Alert} from 'react-native'
@@ -64,6 +65,9 @@ class _SignIn extends Component {
         alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
       },
     );
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+
   }
 
 
@@ -255,14 +259,32 @@ class _SignIn extends Component {
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
                       props.dispatch(ACTIONS.SAVE_USER(user))
 
-                      props.dispatch({ type: 'UserProfileAnimation' })
+                   //   props.dispatch({ type: 'UserProfileAnimation' })
+                      const resetAction = NavigationActions.reset({
+                        index: 0,
+                        key: null,
+                        actions: [
+                          NavigationActions.navigate({ routeName: 'UserProfile'})
+                        ]
+                      })
+                      
+                    props.navigation.dispatch(resetAction)
                       //navigate('UserProfile')
                   })
                 } else {
                   //... if doesnt follow ...
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                   props.dispatch(ACTIONS.SAVE_USER(user))
-                  props.dispatch({type: 'WelcomeAnimation' })
+                 // props.dispatch({type: 'WelcomeAnimation' })
+                 const resetAction = NavigationActions.reset({
+                  index: 0,
+                  key: null,
+                  actions: [
+                    NavigationActions.navigate({ routeName: 'Welcome'})
+                  ]
+                  })
+                
+                  props.navigation.dispatch(resetAction)
                  // navigate('Welcome')
                 }
               }
@@ -272,8 +294,17 @@ class _SignIn extends Component {
             //...or user doesnt follow
             props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
             props.dispatch(ACTIONS.SAVE_USER(user))
-            props.dispatch({type: 'WelcomeAnimation' })
-          //  navigate('Welcome')
+            //props.dispatch({type: 'WelcomeAnimation' })
+            //  navigate('Welcome')
+            const resetAction = NavigationActions.reset({
+              index: 0,
+              key: null,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Welcome'})
+              ]
+            })
+            
+            props.navigation.dispatch(resetAction)
           }
 
         } else {
@@ -310,7 +341,17 @@ class _SignIn extends Component {
                         props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
                         props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
                         props.dispatch(ACTIONS.SAVE_USER(user))
-                        props.dispatch({ type: 'UserProfileAnimation' })
+
+                        const resetAction = NavigationActions.reset({
+                          index: 0,
+                          key: null,
+                          actions: [
+                            NavigationActions.navigate({ routeName: 'UserProfile'})
+                          ]
+                        })
+                        
+                      props.navigation.dispatch(resetAction)
+                       // props.dispatch({ type: 'UserProfileAnimation' })
                        // navigate('UserProfile')
                     })
                   } else {
@@ -331,7 +372,17 @@ class _SignIn extends Component {
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                     props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                     props.dispatch(ACTIONS.SAVE_USER(user))
-                    props.dispatch({type: 'WelcomeAnimation' })
+
+                    const resetAction = NavigationActions.reset({
+                      index: 0,
+                      key: null,
+                      actions: [
+                        NavigationActions.navigate({ routeName: 'Welcome'})
+                      ]
+                    })
+                    
+                  props.navigation.dispatch(resetAction)
+                    //props.dispatch({type: 'WelcomeAnimation' })
                     //navigate('Welcome')
                   }
                 }
@@ -351,7 +402,17 @@ class _SignIn extends Component {
                 props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                 props.dispatch(ACTIONS.SAVE_USER(user))
                 props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
-                props.dispatch({type: 'WelcomeAnimation' })
+
+                const resetAction = NavigationActions.reset({
+                  index: 0,
+                  key: null,
+                  actions: [
+                    NavigationActions.navigate({ routeName: 'Welcome'})
+                  ]
+                })
+                
+                props.navigation.dispatch(resetAction)
+                //props.dispatch({type: 'WelcomeAnimation' })
               }
 
               })
@@ -385,7 +446,17 @@ class _SignIn extends Component {
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
                       props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
                       props.dispatch(ACTIONS.SAVE_USER(user))
-                      props.dispatch({ type: 'UserProfileAnimation' })
+
+                      const resetAction = NavigationActions.reset({
+                        index: 0,
+                        key: null,
+                        actions: [
+                          NavigationActions.navigate({ routeName: 'UserProfile'})
+                        ]
+                      })
+                      
+                    props.navigation.dispatch(resetAction)
+                      //props.dispatch({ type: 'UserProfileAnimation' })
                      // navigate('UserProfile')
                   })
                 } else {
@@ -401,7 +472,17 @@ class _SignIn extends Component {
 
                   props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                   props.dispatch(ACTIONS.SAVE_USER(user))
-                  props.dispatch({type: 'WelcomeAnimation' })
+
+                  const resetAction = NavigationActions.reset({
+                    index: 0,
+                    key: null,
+                    actions: [
+                      NavigationActions.navigate({ routeName: 'Welcome'})
+                    ]
+                  })
+                  
+                  props.navigation.dispatch(resetAction)
+                  //props.dispatch({type: 'WelcomeAnimation' })
                   //navigate('Welcome')
                 }
               }
@@ -422,7 +503,17 @@ class _SignIn extends Component {
             })
               props.dispatch(ACTIONS.SAVE_USER(user))
               props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
-              props.dispatch({type: 'WelcomeAnimation' })
+
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                key: null,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'Welcome'})
+                ]
+              })
+              
+               props.navigation.dispatch(resetAction)
+              //props.dispatch({type: 'WelcomeAnimation' })
             }
 
             })
@@ -439,6 +530,8 @@ class _SignIn extends Component {
 
   componentWillMount(){
 
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
@@ -449,6 +542,14 @@ class _SignIn extends Component {
 
   }
 
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
 
   render() {
 
