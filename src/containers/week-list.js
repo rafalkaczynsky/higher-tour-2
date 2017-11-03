@@ -72,7 +72,7 @@ handleOnGoBack(){
     return (
         <WeekList 
           onSettings={()=> this.handleOnSettings()}
-          onHome={()=> this.handleHome()}
+          onHome={()=> this.handleOnHome()}
           onWeekBackPressed={()=> this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})}
           week={this.props.app.week}
           weekDate={this.props.app.weekDate}

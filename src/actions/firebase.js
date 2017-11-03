@@ -84,7 +84,16 @@ class _Firebase {
         try {
             await firebase.auth()
                 .createUserWithEmailAndPassword(email, pass);
-                navigate(route)
+                //navigate(route)
+                const resetAction = NavigationActions.reset({
+                    index: 0,
+                    key: null,
+                    actions: [
+                      NavigationActions.navigate({ routeName: route})
+                    ]
+                    })
+                  
+                    props.navigation.dispatch(resetAction)
         } catch (error) {      
                 return error
         }
@@ -95,7 +104,16 @@ class _Firebase {
         try {
             await firebase.auth()
                 .signInWithEmailAndPassword(email, pass);
-                navigate(route)
+                //navigate(route)
+                const resetAction = NavigationActions.reset({
+                    index: 0,
+                    key: null,
+                    actions: [
+                      NavigationActions.navigate({ routeName: route})
+                    ]
+                    })
+                  
+                    props.navigation.dispatch(resetAction)
         } catch (error) {
             return error
         }

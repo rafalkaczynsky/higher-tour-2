@@ -470,7 +470,7 @@ class _SignIn extends Component {
                       
                       props.navigation.dispatch(resetAction)
                       //props.dispatch({ type: 'UserProfileAnimation' })
-                      navigate('UserProfile')
+                      //navigate('UserProfile')
                   })
                 } else {
                   console.log("14")
@@ -497,7 +497,7 @@ class _SignIn extends Component {
                   
                   props.navigation.dispatch(resetAction)
                   //props.dispatch({type: 'WelcomeAnimation' })
-                  navigate('Welcome')
+                 // navigate('Welcome')
                 }
               }
             } else {
@@ -526,7 +526,7 @@ class _SignIn extends Component {
               
               props.navigation.dispatch(resetAction)
               //props.dispatch({type: 'WelcomeAnimation' })
-              navigate('Welcome')
+             // navigate('Welcome')
             }
 
             })

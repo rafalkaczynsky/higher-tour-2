@@ -48,10 +48,12 @@ class _Welcome extends Component {
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
 
     
-
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    console.log('addListener - Welcome')
   }
 
   handleOnItem(locationSelected){
+
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
     this.props.dispatch({type: 'SessionItemAnimation'})
   }
@@ -64,6 +66,7 @@ handleOnBible(){
 }
 
 handleOnMoreSession(){
+  //BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   this.props.dispatch({type: 'FindSessionAnimation'})
 }
 
@@ -81,7 +84,7 @@ componentWillMount(){
   const { params } = this.props.navigation.state
   const loginStatus= this.props.app.loginStatus // data from the store
 
-  BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
 }
 
 componentDidMount(){
@@ -147,6 +150,7 @@ componentDidMount(){
 
 componentWillUnmount() {
   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  console.log('removeListener - Welcome')
 }
 
 handleBackButtonClick() {

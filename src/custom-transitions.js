@@ -457,7 +457,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -480,7 +480,7 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     

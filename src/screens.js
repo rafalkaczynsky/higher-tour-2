@@ -23,7 +23,7 @@ import {
 
 } from './containers'
 
-var _noAnimation = false
+//var _noAnimation = false
 
 const MyTransitionSpec = ({
   duration: 400,
@@ -35,8 +35,8 @@ const MyTransitionSpecNoAnimation = ({
 });
 
 let TransitionConfiguration = () => {
-  let _transitionSpec = !_noAnimation ? MyTransitionSpec : MyTransitionSpecNoAnimation
-
+ // let _transitionSpec = !_noAnimation ? MyTransitionSpec : MyTransitionSpecNoAnimation
+    let _transitionSpec = MyTransitionSpec
   return {
       // Define scene interpolation, eq. custom transition
       transitionSpec: _transitionSpec,
@@ -47,11 +47,12 @@ let TransitionConfiguration = () => {
           const params = route.params || {};
           const transition = params.transition || 'default'; 
 
-         // console.log('index -' + sceneProps.scene.index)
-         // console.log('routeName -' + sceneProps.scene.route.routeName)
-         // console.log('scenes length -'+sceneProps.scenes.length)
+          console.log('index:  ' + sceneProps.scene.index)
+          console.log('routeName:  ' + sceneProps.scene.route.routeName)
+          console.log('scenes length  '+sceneProps.scenes.length)
+          //console.log('noAnimation: '+_noAnimation )
 
-          if (
+          /*    if (
             sceneProps.scene.index === 0 &&
             (sceneProps.scene.route.routeName !== 'SignIn') &&
             sceneProps.scenes.length > 0
@@ -63,7 +64,7 @@ let TransitionConfiguration = () => {
 
           } else {
 
-            _noAnimation = false
+            _noAnimation = false */
 
             return {
                   WelcomeAnimation: customTransitions.WelcomeAnimation(index, position),
@@ -95,7 +96,7 @@ let TransitionConfiguration = () => {
           }[transition];
         }
       }
-  }
+  
 };
 
 //if we are not Follow , and loginStatus === loggedInPlus
