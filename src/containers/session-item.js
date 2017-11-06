@@ -118,9 +118,8 @@ class _SessionItem extends Component {
 
     FCM.subscribeToTopic(eventSelected.host);
     const schedulNotifBody = "Your next session is on this " + eventSelected.meetingDay + " it is at " + eventSelected.meetingTime 
-   // 'Your next session is on getDate it is at get time. )
 
-    FCM.scheduleLocalNotification({
+  /*  FCM.scheduleLocalNotification({
       fire_date: this.calculateReminderDate(eventSelected.meetingDay, eventSelected.meetingTime),
       id: "schedule_reminder_notif_01",
       title: 'Session Reminder',
@@ -128,7 +127,7 @@ class _SessionItem extends Component {
       show_in_foreground: true,
       priority: 'high',
       repeat_interval: "week"
-    })
+    })*/
 
    // update database appUser 
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 

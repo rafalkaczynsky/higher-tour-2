@@ -42,14 +42,13 @@ class _Welcome extends Component {
       },
       error => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
-        alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
+        alert('Unable to find your location. To make the most of this app, please ensure that you have granted location permissions and your GPS is switched on')
       },
     );
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
 
     
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-    console.log('addListener - Welcome')
   }
 
   handleOnItem(locationSelected){
@@ -150,7 +149,6 @@ componentDidMount(){
 
 componentWillUnmount() {
   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
-  console.log('removeListener - Welcome')
 }
 
 handleBackButtonClick() {
@@ -159,8 +157,6 @@ handleBackButtonClick() {
 }
 
   render() {
-
-    //console.log('Welcome Container')
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 

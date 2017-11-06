@@ -23,8 +23,6 @@ import {
 
 } from './containers'
 
-//var _noAnimation = false
-
 const MyTransitionSpec = ({
   duration: 400,
   timing: Animated.timing,
@@ -35,7 +33,7 @@ const MyTransitionSpecNoAnimation = ({
 });
 
 let TransitionConfiguration = () => {
- // let _transitionSpec = !_noAnimation ? MyTransitionSpec : MyTransitionSpecNoAnimation
+    // let _transitionSpec = !_noAnimation ? MyTransitionSpec : MyTransitionSpecNoAnimation
     let _transitionSpec = MyTransitionSpec
   return {
       // Define scene interpolation, eq. custom transition
@@ -47,25 +45,10 @@ let TransitionConfiguration = () => {
           const params = route.params || {};
           const transition = params.transition || 'default'; 
 
-          console.log('index:  ' + sceneProps.scene.index)
-          console.log('routeName:  ' + sceneProps.scene.route.routeName)
-          console.log('scenes length  '+sceneProps.scenes.length)
-          //console.log('noAnimation: '+_noAnimation )
-
-          /*    if (
-            sceneProps.scene.index === 0 &&
-            (sceneProps.scene.route.routeName !== 'SignIn') &&
-            sceneProps.scenes.length > 0
-          ) {
-
-            _noAnimation = true
-
-            return null
-
-          } else {
-
-            _noAnimation = false */
-
+          // console.log('index:  ' + sceneProps.scene.index)
+          // console.log('routeName:  ' + sceneProps.scene.route.routeName)
+          // console.log('scenes length  '+sceneProps.scenes.length)
+    
             return {
                   WelcomeAnimation: customTransitions.WelcomeAnimation(index, position),
                   UserProfileAnimation: customTransitions.UserProfileAnimation(index, position),

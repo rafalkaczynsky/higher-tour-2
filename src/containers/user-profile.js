@@ -42,7 +42,7 @@ class _UserProfile extends Component {
       },
       error => {
         this.props.dispatch(ACTIONS.SAVE_COORDS(fixedPosition.coords));
-        alert('Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions and your GPS is switched on')
+        alert('Unable to find your location. To make the most of this app, please ensure that you have granted location permissions and your GPS is switched on')
       },
     );
 
@@ -234,8 +234,8 @@ class _UserProfile extends Component {
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
-    FCM.getScheduledLocalNotifications().then(notif=> {
-    });
+   /* FCM.getScheduledLocalNotifications().then(notif=> {
+    });*/
   }
 
   componentWillUnmount() {

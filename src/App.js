@@ -31,7 +31,7 @@ let store = createStore(reducers)
 
 
 
-var connection = null
+var connection = true
 var GPS = false
 var itemDay = null
 // CHECK FOR GPS
@@ -283,7 +283,7 @@ export default class App extends React.Component {
 
               return ( <AlertWindow
                           type='location'
-                          text='Unable to find your location. To make the most of this app, please ensure that you have granted locaion permissions'
+                          text='Unable to find your location. To make the most of this app, please ensure that you have granted location permissions'
                           onPress={()=> this._requestPermission()}
                       />
                 )
