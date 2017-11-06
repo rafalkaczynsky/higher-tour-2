@@ -120,10 +120,11 @@ class _Firebase {
     }
 //  );
 
-    async logout(navigate, route, clearUserDataFromState, ) {
+    async logout(navigate, route, clearUserDataFromState, clearAppUserDataFromState) {
         try {
             await firebase.auth().signOut();
             clearUserDataFromState;
+            clearAppUserDataFromState;
             // Navigate to SignIn
             navigate
         } catch (error) {

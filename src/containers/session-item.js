@@ -99,22 +99,8 @@ class _SessionItem extends Component {
         NavigationActions.navigate({ routeName: 'UserProfile'})
       ]
     })
-
     const userData = this.props.user          
-    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
-
-
-
-    firebaseDataAppUsers.update({
-      email: userData.email,
-      name: userData.displayName,
-      event: {
-        follow: true,
-        id: eventSelected.host
-      },
-      uid: userData.uid,
-      FCMtoken: this.props.navigation.FCMtoken,
-    })
+    this.props.dispatch(ACTIONS.UPDATE_APP_USER(true, eventSelected.host , this.props.navigation.FCMtoken))
 
     FCM.subscribeToTopic(eventSelected.host);
     const schedulNotifBody = "Your next session is on this " + eventSelected.meetingDay + " it is at " + eventSelected.meetingTime 
@@ -129,12 +115,9 @@ class _SessionItem extends Component {
       repeat_interval: "week"
     })*/
 
-   // update database appUser 
-    this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true)) 
     this.props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(eventSelected))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedInPlus'))
     this.props.navigation.dispatch(resetAction)
-    //this.props.dispatch({type:'UserProfileOnStartSessionAnimation'})
   }
 
   handleOnStopSession(navigate, route){
@@ -147,22 +130,14 @@ class _SessionItem extends Component {
       ]
     })
 
-    // appData database appUser
     const userData = this.props.user          
-    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ userData.uid+'/');
 
-    firebaseDataAppUsers.update({
-      event: {
-        follow: false,
-        id: null
-      },
-    })
+    this.props.dispatch(ACTIONS.UPDATE_APP_USER(false, null, this.props.navigation.FCMtoken))
     FCM.unsubscribeFromTopic(this.props.eventSelected.host)
     FCM.cancelAllLocalNotifications()
     this.props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false)) 
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedIn')) 
     this.props.navigation.dispatch(resetAction)
- //   this.props.dispatch({type: 'GotoWelcomeAnimation'})
   }
 
   handleOnSettings(){
@@ -197,13 +172,9 @@ class _SessionItem extends Component {
 
     const loginStatus = this.props.app.loginStatus
 
-    //this.props.navigation.dispatch(resetAction)
-
     if (loginStatus && loginStatus === 'loggedInPlus') {
-     // this.props.dispatch({type: 'UserProfileOnHomeAnimation'}) 
      this.props.navigation.dispatch(resetActionUserProfile)
     } else {  
-      //  this.props.dispatch({type: 'GotoWelcomeAnimation'})
       this.props.navigation.dispatch(resetActionWelcome)
       }
 
@@ -232,13 +203,6 @@ class _SessionItem extends Component {
 
   handleOnGoBack(){
     this.props.navigation.dispatch(NavigationActions.back())
-/*    const loginStatus  = this.props.app.loginStatus   
-
-    if (loginStatus === 'loggedIn'){
-      this.props.dispatch({type: 'FindSessionAnimation'})
-    } else {//                  
-      this.props.dispatch({type: 'UserProfileOnStartSessionAnimation'})
-    }*/
   }
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME(''))
@@ -247,7 +211,6 @@ class _SessionItem extends Component {
   componentWillMount(){
 
     const eventSelected  = this.props.eventSelected 
-
 
     firebase.database().ref('churches/'+eventSelected.host+'/').once("value", snapshot => {
       const church = snapshot.val();

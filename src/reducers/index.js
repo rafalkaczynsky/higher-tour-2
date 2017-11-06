@@ -4,6 +4,7 @@ import {reducer as formReducer} from 'redux-form'
 // Reducers
 import formReducer2 from './formReducer'
 import userReducer from './userReducer'
+import appUserReducer from './appUserReducer'
 import eventsReducer from './eventsReducer'
 import churchesReducer from './churchesReducer'
 import coordsReducer from './coordsReducer'
@@ -44,6 +45,7 @@ export const reducers = combineReducers({
     auth,
     form: formReducer,     
     user: userReducer,
+    appUser: appUserReducer,
     events: eventsReducer,
     bibleReading: bibleReadingReducer,
     churches: churchesReducer,

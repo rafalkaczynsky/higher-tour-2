@@ -1,7 +1,7 @@
 import React from 'react'
 import {Provider} from 'react-redux'
 import {applyMiddleware, createStore} from 'redux'
-//import logger , {createLogger} from "redux-logger"
+import logger , {createLogger} from "redux-logger"
 import {Platform,AppState, AsyncStorage, Text, View, TouchableOpacity, Alert, Animated, NetInfo, BackHandler} from 'react-native'
 import * as firebase from "firebase";
 
@@ -21,13 +21,14 @@ import {AlertWindow} from './components'
 
 
 // const middleware = applyMiddleware(logger)
-// const middleware = applyMiddleware(logger)
+ const middleware = applyMiddleware(logger)
 
 //const middleware = applyMiddleware()
+
 var screen = null
 var _title = null
 var _lastReadDayNumber = null 
-let store = createStore(reducers)
+let store = createStore(reducers, middleware)
 
 
 
@@ -75,7 +76,6 @@ FCM.on(FCMEvent.RefreshToken, (token) => {
 });
 
 
-
 export default class App extends React.Component {
 
     constructor(props){
@@ -102,7 +102,6 @@ export default class App extends React.Component {
           delay: 20
         }).start();
         
-
       }
 
       componentDidMount() {
@@ -110,7 +109,6 @@ export default class App extends React.Component {
         .then(response => {
           this.setState({locationPermission: response})
         })
-
 
 
         if(Platform.OS ==='ios'){
@@ -236,25 +234,44 @@ export default class App extends React.Component {
           this.setState({locationPermission: response})
         })
 
-
     }
 
     componentWillUnmount() {
         AppState.removeEventListener('change', this._handleAppStateChange.bind(this));
         // stop listening for events
         this.notificationListener.remove();
+
       }
 
-      _handleAppStateChange(currentAppState) {
-        let storingValue = JSON.stringify(this.state.store.getState())
 
-        if (storingValue){
-           if (storingValue.form){
-              storingValue.form.SignUpValidation = {}
-           }
-        }
+    _handleAppStateChange(currentAppState) {
+      let storingValue = JSON.stringify(this.state.store.getState())
+      let storeObject = this.state.store.getState()
+      console.log('handleAppStateChange')
+
+      if (storeObject){
+
+          if (storeObject.form){
+            storeObject.form.SignUpValidation = {}
+          }
+          if(storeObject.user){
+            // UPDATE APPUSER IN FIREBASE WHEN COMPONENT UNMOUNT 
+            const userUID = storeObject.user.uid 
+            console.log(userUID)
+            const appUser = storeObject.appUser
+            console.log(appUser)
+            if (userUID){
+              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+userUID+'/');
+              firebaseDataAppUsers.update({
+                FCMtoken: appUser.FCMtoken,
+                event: appUser.event,
+                uid: appUser.uid,
+              })
+            }
+          }
       }
-
+      AsyncStorage.setItem('completeStore', storingValue);
+    }
 
     _requestPermission() {
       Permissions.request('location')
@@ -275,8 +292,6 @@ export default class App extends React.Component {
                       />
                 )
             }
-
-            
 
             // handle location OFF both android and iOS
             if (((!this.state.locationPermission) || (this.state.locationPermission !== 'authorized')) && (Platform.OS === 'android')){

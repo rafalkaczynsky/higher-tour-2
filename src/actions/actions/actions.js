@@ -25,6 +25,23 @@ export function SAVE_USER(userData) {
     };
 }
 
+export function SAVE_APP_USER(appUserData) {
+    return {
+        type: types.SAVE_APP_USER,
+        appUserData: appUserData,
+    };
+}
+
+export function UPDATE_APP_USER(follow, eventId, FCMtoken){
+    return {
+        type: types.UPDATE_APP_USER,
+        follow: follow,
+        eventId: eventId,
+        FCMtoken: FCMtoken
+    }
+}
+
+
 export function SAVE_SELECTED_EVENT(selectedEvent) {
     return {
         type: types.SAVE_SELECTED_EVENT,

@@ -66,8 +66,6 @@ class _SignIn extends Component {
       },
     );
 
-   // this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-
   }
 
 
@@ -193,9 +191,6 @@ class _SignIn extends Component {
       })
       this.props.dispatch(ACTIONS.SAVE_AAA_SESSION(aaaSessions));
      })
-
-
-
   }
   // debugging function needs to be removed
   msToTime(s) {
@@ -215,130 +210,80 @@ class _SignIn extends Component {
     const  props = this.props
 
     const userDataFromLocal = this.props.user
-    const followStatus = this.props.app.followStatus
+    const appUserFromLocal = this.props.appUser
+
     const TheDate = new Date().getTime();
 
-    this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); //... get EVENTS and Churches from firebase
-    /**
-     *
-     *
-     *
-     */
-
+    // IF THERE IS NO USER IN LOCAL STORAGE THEN GET EVENTS, CHURCHES, BIBLEREADINGS, AAASESSION FROM FIRABASE DATABASE 
+    // ....to be done !!!!!
 
     this.auth.onAuthStateChanged(function (user) {
-
-
-
-      // if user is signed to firebase
-      if(user){
-        props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
-        // User signed to firebase
-
-        // if user is in local storage
+      // CHECK IF USER SIGNED IN WTH FIREBASE
+      if(user){ 
+        props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false)) // DONT SHOW SIGN IN SCREEN CONTENT TILL ALL CHECKS DONE
+        // USER SIGNED IN
+        // CHECK IF USER  IS IN LOCAL STORAGE
         if ((userDataFromLocal) && (userDataFromLocal.uid)){
-          //user is in local storage
-
-          //if user is the same as previus
+          // USER IS IN LOCAL STORAGE
+          // CHECK IF USER IS THE SAME AS PREVIUS ONE ON THIS DEVICE
           if(user.uid === userDataFromLocal.uid){
-          //User is the same as in localstorage
-
-          if(followStatus){
-            //... if so ..
-            // check if follow in firabase
-          firebase.database().ref('appUsers/'+ user.uid+'/event/').once("value", snapshot => {
-            const event = snapshot.val();
-              //... if so ..
-              if (event) {
-                if (event.follow === true){
-                  //... find event by id ...
-                  firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                    // .. get object and dispatch to the store
-                      const locationSelected = snapshot.val()
-                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
-                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                      props.dispatch(ACTIONS.SAVE_USER(user))
-
-                   //   props.dispatch({ type: 'UserProfileAnimation' })
-                      const resetAction = NavigationActions.reset({
-                        index: 0,
-                        key: null,
-                        actions: [
-                          NavigationActions.navigate({ routeName: 'UserProfile'})
-                        ]
-                      })
-                      
+            // USER IS THE SAME AS IS IN LOCAL STORAGE
+              const event = appUserFromLocal.event
+                // CHECK IF USER FOLLOW
+                if (event.id){
+                      // IF FOLLOW NAVIGATE TO USER PROFILE
+                    const resetAction = NavigationActions.reset({
+                      index: 0,
+                      key: null,
+                      actions: [
+                        NavigationActions.navigate({ routeName: 'UserProfile'})
+                      ]
+                    })
                     props.navigation.dispatch(resetAction)
-                      //navigate('UserProfile')
-                  })
                 } else {
-                  //... if doesnt follow ...
-                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
-                  props.dispatch(ACTIONS.SAVE_USER(user))
-                 // props.dispatch({type: 'WelcomeAnimation' })
-                 const resetAction = NavigationActions.reset({
-                  index: 0,
-                  key: null,
-                  actions: [
-                    NavigationActions.navigate({ routeName: 'Welcome'})
-                  ]
+                  // IF DOESNT FOLLOW
+                 // NAVIGATE TO WELCOME SCREEN
+                  const resetAction = NavigationActions.reset({
+                    index: 0,
+                    key: null,
+                    actions: [
+                      NavigationActions.navigate({ routeName: 'Welcome'})
+                    ]
                   })             
                   props.navigation.dispatch(resetAction)
                 }
-              }
-            })
+            } else {
+              console.log('6')
+            // USER IS NOT THE SAME AS IS IN LOCAL STORAGE
+            // ALL DATA MUST BE OVERWRITTEN  - USER , APPUSER, eventSelcted 
+            // IN THESE CASE USER CAN BE EVEN NEW IN OUR APP IT MEANS NO DATA IN APPUSERS 
+            const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
 
-          } else {
-            //...or user doesnt follow
-            props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
-            props.dispatch(ACTIONS.SAVE_USER(user))
-            //props.dispatch({type: 'WelcomeAnimation' })
-            //  navigate('Welcome')
-            const resetAction = NavigationActions.reset({
-              index: 0,
-              key: null,
-              actions: [
-                NavigationActions.navigate({ routeName: 'Welcome'})
-              ]
-            })
-            
-            props.navigation.dispatch(resetAction)
-          }
-
-        } else {
-            //User is not the same as in localstorage
-
-            // check if follow in firabase
-            firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
+            firebaseDataAppUsers.once("value", snapshot => {
               userCurrent = snapshot.val();
+              // IF USER IS IN FIREBASE DATABASE APPUSERS 
               if (userCurrent){
+                console.log('7')
                 const event = userCurrent.event;
-                //... if so ..
-                if (event) {
-                  if (event.follow === true){
-                    //... find event by id ...
+                //  CHECK IF FOLLOW EVENT
+                  if (event.id){
+                    console.log('8')
+                    //  IF USER FOLLOW
+                    //  FIND EVENT BY ID 
                     firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                      // .. get object and dispatch to the store
                         const locationSelected = snapshot.val()
-
-                        const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
-
+                        // UPDATE FCM TOKEN
                         firebaseDataAppUsers.update({
-                            email: user.email,
-                            name: user.displayName,
-                            event: {
-                                  follow: false,
-                            },
-                            uid: user.uid,
                             FCMtoken: props.navigation.FCMtoken,
                         })
-
+                        // OVERWRITE DATA IN REDUX STORE
                         props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                         props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                         props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                        props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
                         props.dispatch(ACTIONS.SAVE_USER(user))
+                        props.dispatch(ACTIONS.SAVE_APP_USER(appUser))
 
+                        // NAVIGATE TO USERPROFILE
                         const resetAction = NavigationActions.reset({
                           index: 0,
                           key: null,
@@ -348,27 +293,22 @@ class _SignIn extends Component {
                         })
                         
                       props.navigation.dispatch(resetAction)
-                       // props.dispatch({ type: 'UserProfileAnimation' })
-                       // navigate('UserProfile')
+
                     })
                   } else {
-                    //... if doesnt follow ...
-                    const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
+  
+                    // IF USER DOESNT FOLLOW
+                   //  UPDATE FCM TOKEN 
                     firebaseDataAppUsers.update({
-                        email: user.email,
-                        name: user.displayName,
-                        event: {
-                              follow: false,
-                        },
-                        uid: user.uid,
                         FCMtoken: props.navigation.FCMtoken,
                     })
-
+                    // OVERWRITE DATA IN REDUX STORE
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
-                    props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
                     props.dispatch(ACTIONS.SAVE_USER(user))
+                    props.dispatch(ACTIONS.SAVE_APP_USER(appUser))
 
+                    // NAVIGATE TO WELCOME 
                     const resetAction = NavigationActions.reset({
                       index: 0,
                       key: null,
@@ -378,12 +318,10 @@ class _SignIn extends Component {
                     })
                     
                   props.navigation.dispatch(resetAction)
-                    //props.dispatch({type: 'WelcomeAnimation' })
-                    //navigate('Welcome')
                   }
-                }
+                
               } else {
-                const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
+                // SAVE USER IN FIREBASE APPUSERS
                 firebaseDataAppUsers.update({
                     email: user.email,
                     name: user.displayName,
@@ -393,11 +331,13 @@ class _SignIn extends Component {
                     uid: user.uid,
                     FCMtoken: props.navigation.FCMtoken,
                 })
+                // OVERWRITTE DATA IN REDUX STORE
                 props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
                 props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS_NAMES({}));
                 props.dispatch(ACTIONS.SAVE_USER(user))
-                props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
+                props.dispatch(ACTIONS.SAVE_APP_USER(appUser))
 
+                // NAVIGATE TO WELCOME
                 const resetAction = NavigationActions.reset({
                   index: 0,
                   key: null,
@@ -405,43 +345,37 @@ class _SignIn extends Component {
                     NavigationActions.navigate({ routeName: 'Welcome'})
                   ]
                 })
-                
                 props.navigation.dispatch(resetAction)
-                //props.dispatch({type: 'WelcomeAnimation' })
               }
-
-              })
-              //............
-
+            })
           }
-
-
         } else {
-          //user is not in local storage
-          // check if follow in firabase
-          firebase.database().ref('appUsers/'+ user.uid+'/').once("value", snapshot => {
+          // USER IS NOT IN LOCAL STORAGE
+          // WE HAVE TO CHECK DATA IN FIRABASE  
+          const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');  // THIS IS REF TO APPUSER 
+          firebaseDataAppUsers.once("value", snapshot => {  // IF NO USERS IN LOCAL STORAGE WE MUST SAVE HIM AS -> USER AND APPUSER
             userCurrent = snapshot.val();
-            if (userCurrent){
+            if (userCurrent){  // FIRST WE  HAVE TO CHECK IF USER EXIST IN FIREBASE DATABASE APPUSERS 
               const event = userCurrent.event;
-              //... if so ..
-              if (event) {
-                if (event.follow === true){
+              //... IF SO ..
+              if (event) { 
+                if (event.id){    // IF FOLLOW // < =========== !!!!!!!!!! =======  delete follow true/false from here  
                   //... find event by id ...
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
-                    // .. get object and dispatch to the store
-                      const locationSelected = snapshot.val()
-                      const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
-
+                      const locationSelected = snapshot.val() // EVENT FOLLOWED BE USER 
+                      // UPDATE FCM TOKEN
                       if (props.navigation.FCMtoken){
                         firebaseDataAppUsers.update({
                           FCMtoken: props.navigation.FCMtoken,
                         })
                       } 
+                      // SAVE TO REDUX STORE 
+                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) // EVENT FOLLOWED BE THE USER
+                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))            // UPDATE FOLLOW STATUS TO TRUE   - this will be no longer needed , cause we have this info in APPUSER
+                      props.dispatch(ACTIONS.SAVE_APP_USER(userCurrent))            // SAVE APPUSER 
+                      props.dispatch(ACTIONS.SAVE_USER(user))                       // SAVE USER
 
-                      props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected))
-                      props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))
-                      props.dispatch(ACTIONS.SAVE_USER(user))
-
+                      // NAVIGATE TO USER PROFILE
                       const resetAction = NavigationActions.reset({
                         index: 0,
                         key: null,
@@ -449,25 +383,20 @@ class _SignIn extends Component {
                           NavigationActions.navigate({ routeName: 'UserProfile'})
                         ]
                       })
-                      
                       props.navigation.dispatch(resetAction)
-                      //props.dispatch({ type: 'UserProfileAnimation' })
-                      //navigate('UserProfile')
                   })
                 } else {
-                  //... if doesnt follow ...                
-                  const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
-
+                  console.log('14')
+                  //... IF DOESNT FOLLOW ...                
+                  // UPDATE FCM TOKEN
                   if (props.navigation.FCMtoken){
                     firebaseDataAppUsers.update({
                       FCMtoken: props.navigation.FCMtoken,
                     })
                   } 
-                  
-
-                  props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
-                  props.dispatch(ACTIONS.SAVE_USER(user))
-
+                  props.dispatch(ACTIONS.SAVE_APP_USER(userCurrent))            // SAVE APPUSER 
+                  props.dispatch(ACTIONS.SAVE_USER(user))                       // SAVE USER
+                  // NAVIGATE TO WELCOME
                   const resetAction = NavigationActions.reset({
                     index: 0,
                     key: null,
@@ -475,15 +404,12 @@ class _SignIn extends Component {
                       NavigationActions.navigate({ routeName: 'Welcome'})
                     ]
                   })
-                  
+          
                   props.navigation.dispatch(resetAction)
-                  //props.dispatch({type: 'WelcomeAnimation' })
-                 // navigate('Welcome')
                 }
               }
-            } else {
-              const firebaseDataAppUsers = firebase.database().ref('appUsers/'+ user.uid+'/');
-
+            } else { // USER DOSENT EXIST IN FIREBASE DATABASE APPUSERS - IT IS FIRST TIME WHEN USER USE THIS APP
+              // WE HAVE TO SAVE HIM IN FIRABASE DATABASE APPUSERS 
               firebaseDataAppUsers.update({
                 email: user.email,
                 name: user.displayName,
@@ -492,51 +418,46 @@ class _SignIn extends Component {
                 },
                 uid: user.uid,
                 FCMtoken:  props.navigation.FCMtoken,
-            })
-              props.dispatch(ACTIONS.SAVE_USER(user))
-              props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(false))
-
+              })
+              props.dispatch(ACTIONS.SAVE_APP_USER(userCurrent))            // SAVE APPUSER 
+              props.dispatch(ACTIONS.SAVE_USER(user))                       // SAVE USER
+              // NAVIGATE TO WELCOME 
               const resetAction = NavigationActions.reset({
                 index: 0,
                 key: null,
                 actions: [
                   NavigationActions.navigate({ routeName: 'Welcome'})
                 ]
-              })
-              
+              })      
               props.navigation.dispatch(resetAction)
-              //props.dispatch({type: 'WelcomeAnimation' })
-             // navigate('Welcome')
             }
-
-            })
+          })
         }
-
     } else {
-      // if user doesnt signin to firebase
-
+      // IF USER IS NOT SIGNED IN 
+      // SHOW CONTENT OF SIGN IN SCREEN
       props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(true))
     }
   })
-
 }
 
   componentWillMount(){
-
-    //BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
-
     const { navigate } = this.props.navigation
 
+    if((!this.props.events) || (this.props.events.length === 0)) {
+      console.log('NO EVENTS SAVED')
+      this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); 
+    } else {
+      console.log('WE HAVE DATA IN STORE')
+    }
     this.handleInitialRedirect()
-
   }
 
   componentWillUnmount() {
-   // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+
   }
 
   handleBackButtonClick() {
@@ -593,19 +514,17 @@ class _SignIn extends Component {
   }
 }
 
-// get state from store and pass to props
 function mapStateToProps(state){
   return({
       user: state.user,
+      appUser: state.appUser,
       events: state.events,
       bibleReading: state.bibleReading,
       churches: state.churches,
       coords: state.coords,
       app: state.app,
       eventSelected: state.eventSelected,
-      aaaSession: state.aaaSession,
-
-
+      aaaSession: state.aaaSession
   });
 }
 

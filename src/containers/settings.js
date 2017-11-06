@@ -37,21 +37,13 @@ class _Settings extends Component {
       ]
     })
     
-
     if (loginStatus === 'loggedOut') {
       this.props.navigation.dispatch(resetAction)
     } else {
       this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
-      _Firebase.logout(this.props.navigation.dispatch(resetAction) , route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
+      _Firebase.logout(this.props.navigation.dispatch(resetAction) , route, this.props.dispatch(ACTIONS.SAVE_USER(null), this.props.dispatch(ACTIONS.SAVE_APP_USER(null))));
 
     } 
-   /* if (loginStatus === 'loggedOut') {
-      this.props.dispatch({ type: 'LogoutAnimation' }) 
-    } else {
-      this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
-      _Firebase.logout(this.props.dispatch({ type: 'LogoutAnimation' }) , route, this.props.dispatch(ACTIONS.SAVE_USER(null)));
-
-    }  */
   }
 
   handleOnHome(){
