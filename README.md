@@ -49,6 +49,28 @@ Packages versions :
 	},
 	
 	
+------------------------------------
+Workearound for fleshing screens: 
+
+in node_modules/react-navigation/src/views/ScenesReducer.js file
+
+replace  in line 154 
+
+ - staleScenes.forEach(mergeScene);
+ 
+with 
+ +  let k = null;
+ +  let v = null;
+ +  staleScenes.forEach(scene => {
+ +    let {key} = scene;
+ +    k = key;
+ +    v = scene;
+ +  });
+ 
+ +  newStaleScenes = k && v ? new Map([[k, v]]) : new Map();
+ +  newStaleScenes.forEach(mergeScene);
+------------------------------------
+
 
 For more informations about configurations sgo Wiki: https://bitbucket.org/mediacabin/higher-app/wiki/Home
 
