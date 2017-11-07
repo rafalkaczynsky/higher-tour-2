@@ -13,6 +13,18 @@ How to run it locally from command line
 - react-native link  
 - yarn add react-native-fbsdk@0.6.1
 
+errors after fresh install
+
+where?
+node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java:61  
+node_modules/react-native-twitter/android/src/main/java/ga/piroro/rnt/RNTPackage.java:21:
+node_modules/react-native-twitter-signin/android/src/main/java/com/goldenowl/twittersignin/TwitterSigninPackage.java:28
+
+solution: 
+remove @Override
+
+
+ 
 2.
 - Run on Device Android
 react-native run-android
@@ -56,19 +68,21 @@ in node_modules/react-navigation/src/views/ScenesReducer.js file
 
 replace  in line 154 
 
- - staleScenes.forEach(mergeScene);
+staleScenes.forEach(mergeScene);
  
 with 
- +  let k = null;
- +  let v = null;
- +  staleScenes.forEach(scene => {
- +    let {key} = scene;
- +    k = key;
- +    v = scene;
- +  });
+
+let k = null;
+let v = null;
+staleScenes.forEach(scene => {
+ let {key} = scene;
+ k = key;
+ v = scene;
+});
  
- +  newStaleScenes = k && v ? new Map([[k, v]]) : new Map();
- +  newStaleScenes.forEach(mergeScene);
+newStaleScenes = k && v ? new Map([[k, v]]) : new Map();
+newStaleScenes.forEach(mergeScene);
+   
 ------------------------------------
 
 
