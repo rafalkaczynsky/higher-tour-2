@@ -78,7 +78,8 @@ react-native run-ios
 
 Packages versions : 
 
-{
+
+	{
 	"name": "HigherApp",
 	"version": "0.0.1",
 	"private": true,
@@ -123,7 +124,7 @@ Packages versions :
 	"jest": {
 		"preset": "react-native"
 	}
-}
+	}
 
 	
 	
