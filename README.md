@@ -16,6 +16,7 @@ How to run it locally from command line
 errors after fresh install
 
 where?
+
 - node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java:61  
 - node_modules/react-native-twitter/android/src/main/java/ga/piroro/rnt/RNTPackage.java:21:
 - node_modules/react-native-twitter-signin/android/src/main/java/com/goldenowl/twittersignin/TwitterSigninPackage.java:28
