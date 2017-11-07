@@ -32,7 +32,9 @@ where?
 -node_modules/react-native-fcm/src/main/java/com/evollu/react/fcm/FIRMessagingModule.java
 
 soultion:
+
 replace:
+
     @ReactMethod
     public void getInitialNotification(Promise promise){
         Activity activity = getCurrentActivity();
