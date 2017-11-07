@@ -153,6 +153,18 @@ const initialNavState = AppNavigator.router.getStateForAction({firstAction});
       );
       break;
 
+      case 'GoToQuestionsAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'Questions',
+          params: {
+            transition: 'GoToQuestionsAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
       case 'GoToHigherRightToLeftAnimation':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ 

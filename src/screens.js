@@ -20,6 +20,7 @@ import {
   _Respond, 
   _WeekList, 
   _BibleReadingList, 
+  _Questions,
 
 } from './containers'
 
@@ -72,6 +73,7 @@ let TransitionConfiguration = () => {
                   UserProfileOnStartSessionAnimation: customTransitions.UserProfileOnStartSessionAnimation(index, position),
                   GotoWelcomeAnimation: customTransitions.GotoWelcomeAnimation(index, position),
                   GotoChurchItemAnimation: customTransitions.GotoChurchItemAnimation(index, position),
+                  GoToQuestionsAnimation: customTransitions.GoToQuestionsAnimation(index, position),
                   UserProfileOnHomeAnimation: customTransitions.UserProfileOnHomeAnimation(index, position),
                   SignInOnHomeAnimation: customTransitions.SignInOnHomeAnimation(index, position),
 
@@ -106,7 +108,8 @@ export const AppNavigator = StackNavigator({
   WeekList: {screen: _WeekList},
   Read: {screen: _Read},
   Think: {screen: _Think},
-  Respond: {screen: _Respond}
+  Respond: {screen: _Respond},
+  Questions: {screen: _Questions},
 },{ 
   headerMode: 'none', 
   initialRouteName: 'SignIn',

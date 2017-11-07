@@ -32,18 +32,19 @@ export default class WeekList extends Component {
 
   render() {
 
-    const {onWeekBackPressed, week, weekDate, selectedEvent, onGoBack} = this.props
+    const {onWeekBackPressed, week, weekDate, selectedEvent, onGoBack, onNextPressed} = this.props
 
     const name = 'profileImage'
     const image = StyleSheet.icons[name]
     return (
     <View style={StyleSheet.window.default}>
     <Header
-      text={week.Title}
-      onBack
-      onBackCallback={onGoBack}
+          text={week.Title}
+          onBack
+          onNext
+          onBackCallback={onGoBack}
+          onNextCallback={onNextPressed}
     />
-
       <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
           <View
             style={{

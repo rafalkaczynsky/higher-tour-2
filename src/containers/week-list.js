@@ -65,6 +65,8 @@ handleOnGoBack(){
   this.props.navigation.dispatch(NavigationActions.back())
 }
 
+
+
   render() {
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
@@ -78,6 +80,7 @@ handleOnGoBack(){
           weekDate={this.props.app.weekDate}
           selectedEvent={this.props.eventSelected}
           onGoBack={()=> this.handleOnGoBack()}
+          onNextPressed={()=>this.props.dispatch({type: 'GoToQuestionsAnimation'})}
           activeTabName={''}
         />
     )

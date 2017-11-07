@@ -138,12 +138,12 @@ componentDidMount(){
           onPlayPressed={(musicUrl)=> this.handleOnPlay(musicUrl)}
           onStopPressed={() => this.handleOnStop()}
           onItemBackPressed={()=>{
-              this.sound.release();
+              if(this.sound) this.sound.release();
               this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})
             }
           }
           onItemNextPressed={()=>{
-              this.sound.release();
+              if(this.sound) this.sound.release();
               this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})
             }
           }
