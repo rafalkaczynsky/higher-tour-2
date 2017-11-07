@@ -15,6 +15,7 @@ How to run it locally from command line
 
 errors after fresh install
 
+1. Override error
 where?
 
 - node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java:61  
@@ -24,6 +25,40 @@ where?
 solution: 
 remove @Override
 
+2. getIntent error on close app after press backButton on device
+
+where?
+
+-node_modules/react-native-fcm/src/main/java/com/evollu/react/fcm/FIRMessagingModule.java
+
+soultion:
+replace:
+    @ReactMethod
+    public void getInitialNotification(Promise promise){
+        Activity activity = getCurrentActivity();
+        Intent intent = activity.getIntent();
+         if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
+             promise.resolve(null);
+             return;
+         }
+        promise.resolve(parseIntent(activity.getIntent()));
+    }
+	
+with:
+
+    @ReactMethod
+    public void getInitialNotification(Promise promise){
+        Activity activity = getCurrentActivity();
+        if (activity != null){
+            Intent intent = activity.getIntent();
+            if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
+                promise.resolve(null);
+                return;
+            }
+            promise.resolve(parseIntent(activity.getIntent()));
+        }
+
+    }
 
  
 2.
