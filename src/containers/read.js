@@ -2,30 +2,49 @@ import React, {Component} from 'react'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
+import Sound from 'react-native-sound'
+
 
 import {Read} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
+
+
+
+
+
+
+
+//this.playTrack(this.props.musicUrl)
+
 
 class _Read extends Component {
   constructor(props){
     super(props)
 
     this.state = {
-
+      play: false,
+      playFirstTime: true
     }
 }
 
 handleOnBible(navigate, from){
+  if(this.sound) this.sound.release();
+  
   this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
   this.props.dispatch({ type: 'BibleAnimation' }) 
 }
 
 handleOnSettings(navigate){
+  if(this.sound) this.sound.release();
+
   this.props.dispatch( {type: 'SettingsInAnimation'})
   //navigate('Settings')
 }
 
 handleHome(navigate){
+
+  if(this.sound) this.sound.release();
+  
   const loginStatus = this.props.app.loginStatus  // data from the store
   
       if (loginStatus && loginStatus === 'loggedOut') {
@@ -36,6 +55,32 @@ handleHome(navigate){
         this.props.dispatch({type: 'GotoWelcomeAnimation'})
       }
 }
+
+componentWillMount(){
+  
+}
+
+handleOnPlay(musicUrl){
+  this.sound = new Sound(musicUrl,
+  undefined,
+  error => {
+    if (error) {
+      console.log(error)
+    } else {
+      console.log("Playing sound");
+      this.sound.play(() => {
+        // Release when it's done so we're not using up resources
+        this.sound.release();
+      });
+    }
+  });
+}
+
+handleOnStop(){
+  this.sound.release();
+}
+
+
 
 componentDidMount(){
 
@@ -90,8 +135,18 @@ componentDidMount(){
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
           goToHome={()=> null}
-          onItemBackPressed={()=>this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})}
-          onItemNextPressed={()=>this.props.dispatch({type: 'GoToThinkLeftToRightAnimation'})}
+          onPlayPressed={(musicUrl)=> this.handleOnPlay(musicUrl)}
+          onStopPressed={() => this.handleOnStop()}
+          onItemBackPressed={()=>{
+              this.sound.release();
+              this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})
+            }
+          }
+          onItemNextPressed={()=>{
+              this.sound.release();
+              this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})
+            }
+          }
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}

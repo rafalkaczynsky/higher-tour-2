@@ -447,12 +447,9 @@ class _SignIn extends Component {
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
     const { navigate } = this.props.navigation
 
-    if((!this.props.events) || (this.props.events.length === 0)) {
-      console.log('NO EVENTS SAVED')
-      this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); 
-    } else {
-      console.log('WE HAVE DATA IN STORE')
-    }
+
+    this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); 
+
     this.handleInitialRedirect()
   }
 

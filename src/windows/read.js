@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TextInput, Image, TouchableOpacity, Linking} from 'react-native'
 
+
+
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
 
@@ -15,6 +17,7 @@ export default class Read extends Component {
       emailPlaceholder: 'Email',
       dayItem: null,
       isMounted: true,
+      play: false
     }
   }
 
@@ -38,7 +41,9 @@ export default class Read extends Component {
       currentReadingDayNumber,
       onItemNextPressed,
       onItemBackPressed,
-      fromNotification
+      fromNotification,
+      onPlayPressed,
+      onStopPressed,
     } = this.props
 
     const name = 'profileImage'
@@ -58,7 +63,6 @@ export default class Read extends Component {
           onBackCallback={onItemBackPressed}
           onNextCallback={onItemNextPressed}
         />
-
         <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
           <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
 
@@ -66,6 +70,7 @@ export default class Read extends Component {
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
             </View>
             <View style={{padding: 20}}>
+
               <View>
                 <Text style={{ fontSize: 12, lineHeight: 18}}>DAY {currentReadingDayNumber}</Text>
                 <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
@@ -76,11 +81,13 @@ export default class Read extends Component {
               <Text style={{ fontSize: 12, lineHeight: 18}}>
                  {itemDay.Read.Content}
               </Text>
+    
             </View>
             </View>
           </ScrollView>
 
         </View>
+
         <Button
           type="default"
           text={'DONE'}
@@ -108,10 +115,39 @@ export default class Read extends Component {
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
           </View>
           <View style={{padding: 20}}>
-              <View>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                   <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
                     <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Verse}</Text>
                   </TouchableOpacity>
+                  {!this.state.play &&
+                  <TouchableOpacity 
+                    style={{width: 60, alignItems: 'center'}} 
+                    title="play" 
+                    onPress={()=> {
+                      this.setState({play: !this.state.play})
+                      onPlayPressed('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')
+                      }
+                    }>
+                    <Icon 
+                      name="play"
+                      style={StyleSheet.tabItem.iconStyle}
+                    />
+                  </TouchableOpacity>}
+                  {this.state.play &&
+                  <TouchableOpacity 
+                    style={{width: 60, alignItems: 'center'}} 
+                    title="stop" 
+                    onPress={()=> {
+                      this.setState({play: !this.state.play})
+                      onStopPressed()
+                      }
+                    }
+                  >
+                    <Icon 
+                      name="stop"
+                      style={StyleSheet.tabItem.iconStyle}
+                    />
+                  </TouchableOpacity>}
               </View>
               <View style={{marginTop: 30}}>
                   <Text style={{ fontSize: 12, lineHeight: 18}}>

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
+import com.zmxv.RNSound.RNSoundPackage; // <-- New
 
 import ga.piroro.rnt.RNTPackage;
 import com.goldenowl.twittersignin.TwitterSigninPackage;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new MapsPackage(),
+            new RNSoundPackage(), // <-- New
             new FIRMessagingPackage(),
             new TwitterSigninPackage(),
             new RNTPackage(),
