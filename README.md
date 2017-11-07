@@ -80,7 +80,7 @@ staleScenes.forEach(scene => {
  v = scene;
 });
  
-newStaleScenes = k && v ? new Map([[k, v]]) : new Map();
+newStaleScenes = k && v ? new Map([[k, v]]) : new Map();  
 newStaleScenes.forEach(mergeScene);
    
 ------------------------------------
