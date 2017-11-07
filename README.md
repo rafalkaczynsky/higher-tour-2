@@ -78,17 +78,40 @@ react-native run-ios
 
 Packages versions : 
 
+{
+	"name": "HigherApp",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "react-native start",
+		"ios": "react-native run-ios",
+		"android": "react-native run-android",
+		"test": "jest",
+		"build:ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file='index.ios.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
+	},
 	"dependencies": {
 		"babel-preset-react-native": "2.1.0",
 		"color": "^2.0.0",
 		"firebase": "^4.3.0",
+		"firebase-messaging": "^1.0.6",
 		"geolib": "^2.0.23",
 		"react": "16.0.0-alpha.12",
 		"react-native": "0.47.2",
-		"react-native-fbsdk": "0.6.0",
+		"react-native-fbsdk": "0.6.1",
+		"react-native-fcm": "^9.6.1",
 		"react-native-firebase-auth": "^1.0.0",
+		"react-native-keyboard-aware-scroll-view": "^0.3.0",
+		"react-native-keyboard-spacer": "^0.4.0",
 		"react-native-maps": ">=0.12.4",
-		"react-navigation": "^1.0.0-beta.11"
+		"react-native-permissions": "^1.0.1",
+		"react-native-sound": "^0.10.4",
+		"react-native-twitter": "^0.1.0",
+		"react-native-twitter-signin": "^1.0.2",
+		"react-navigation": "^1.0.0-beta.11",
+		"react-redux": "^5.0.6",
+		"redux": "^3.7.2",
+		"redux-form": "^7.0.4",
+		"redux-logger": "^3.0.6"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",
@@ -97,6 +120,11 @@ Packages versions :
 		"prop-types": "^15.5.10",
 		"react-test-renderer": "~15.4.0-rc.4"
 	},
+	"jest": {
+		"preset": "react-native"
+	}
+}
+
 	
 	
 ------------------------------------
