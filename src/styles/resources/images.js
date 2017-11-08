@@ -3,4 +3,5 @@ export default {
     "largeImageTwo": require('./images/prepare-the-way.jpg'),
     "profileImage": require('./images/profile.png'),
     "mapsPlaceholder": require('./images/maps-placeholder.jpeg'),
+    "freebieExample": require('./images/freebie.jpeg'),
 }

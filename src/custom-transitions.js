@@ -242,7 +242,33 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([-100, 0, 0, 0]),
+        outputRange: ([100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };;
+  };
+
+  //GoToFreebieRightToLeftAnimation
+
+  export const GoToFreebieRightToLeftAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([100, 0, 0, 0]),
     });
       const translateY = 0
     

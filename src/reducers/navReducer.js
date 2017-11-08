@@ -177,6 +177,20 @@ const initialNavState = AppNavigator.router.getStateForAction({firstAction});
       );
       break;
 
+      //GoToFreebieRightToLeftAnimation
+      case 'GoToFreebieRightToLeftAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'Freebie',
+          params: {
+            transition: 'GoToFreebieRightToLeftAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
+
       case 'GoToHigherRightToLeftAnimation':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ 

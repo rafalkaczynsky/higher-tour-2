@@ -14,4 +14,5 @@ export {default as _Respond} from './respond'
 export {default as _BibleReadingList} from './bible-reading-list'
 export {default as _Questions} from './questions'
 export {default as _Reflect} from './reflect'
+export {default as _Freebie} from './freebie'
 

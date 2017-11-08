@@ -12,7 +12,7 @@ export default class Reflect extends Component {
   }
 
   render() {
-    const {onGoBack} = this.props
+    const {onGoBack, onGoNext} = this.props
 
     const Answers = [
         {
@@ -40,7 +40,9 @@ export default class Reflect extends Component {
         <Header
           text='Reflect'
           onBack
+          onNext
           onBackCallback={onGoBack}
+          onNextCallback={onGoNext}
         />
         <ScrollView style={{width: '100%'}}>
           <View style={StyleSheet.settings.container}>

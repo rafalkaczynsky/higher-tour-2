@@ -3,20 +3,15 @@ import {Button, View} from 'react-native'
 import { connect } from 'react-redux';
 
 import _Firebase from '../actions/firebase';
-import {Reflect} from '../windows'
+import {Freebie} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 import { NavigationActions } from 'react-navigation'
 
-class _Reflect extends Component {
+class _Freebie extends Component {
   constructor(props){
     super(props)
-
   }
   
-  handleOnSettings(){
-    this.props.dispatch( {type: 'SettingsInAnimation'})
-  }
-
   handleOnHome(){
       
     const resetActionSignIn = NavigationActions.reset({
@@ -59,13 +54,11 @@ class _Reflect extends Component {
       this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
       this.props.dispatch({ type: 'BibleAnimation' }) 
   } 
+
   handleOnGoBack(){
     this.props.navigation.dispatch(NavigationActions.back())
   }
   
-  handleOnGoNext(){
-    this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
-  }
 
   componentDidMount(){
 
@@ -73,20 +66,20 @@ class _Reflect extends Component {
   
   render() {
 
-
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
 
+     const locations = this.props.events                // data from the store
      const userData = this.props.user                   // data from the store
      const loginStatus = this.props.app.loginStatus
 
     return (
-        <Reflect
+        <Freebie 
           onHome={()=> this.handleOnHome()}  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
-          onGoBack={()=> this.handleOnGoBack()} 
-          onGoNext={()=> this.handleOnGoNext()}
-          onSettings={()=> this.handleOnSettings()}
+          onGoBack={()=> this.handleOnGoBack()}
+          userData={userData}
+          loginStatus={loginStatus}
         />
     )
   }
@@ -96,8 +89,10 @@ function mapStateToProps(state){
   return({
       user: state.user,
       events: state.events,
+      churches: state.churches,
+      coords: state.coords,
       app: state.app,
   });
 }
 
-export default connect(mapStateToProps)(_Reflect);
+export default connect(mapStateToProps)(_Freebie);
