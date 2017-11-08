@@ -21,6 +21,7 @@ import {
   _WeekList, 
   _BibleReadingList, 
   _Questions,
+  _Reflect,
 
 } from './containers'
 
@@ -63,6 +64,7 @@ let TransitionConfiguration = () => {
                   GoToRespondLeftToRightAnimation: customTransitions.GoToRespondLeftToRightAnimation(index, position),
                   GoToHigherRightToLeftAnimation: customTransitions.GoToHigherRightToLeftAnimation(index, position),
                   GoToReadRightToLeftAnimation: customTransitions.GoToReadRightToLeftAnimation(index, position),
+                  GoToReflectRightToLeftAnimation: customTransitions.GoToReflectRightToLeftAnimation(index, position),
                   GoToThinkRightToLeftAnimation: customTransitions.GoToThinkRightToLeftAnimation(index, position),
                   GoToUserProfileLeftToRightAnimation: customTransitions.GoToUserProfileLeftToRightAnimation (index, position),
                   AppUserBibleReadingAnimation: customTransitions.AppUserBibleReadingAnimation(index, position),
@@ -110,6 +112,7 @@ export const AppNavigator = StackNavigator({
   Think: {screen: _Think},
   Respond: {screen: _Respond},
   Questions: {screen: _Questions},
+  Reflect: {screen: _Reflect}
 },{ 
   headerMode: 'none', 
   initialRouteName: 'SignIn',

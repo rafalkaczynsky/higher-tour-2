@@ -165,6 +165,18 @@ const initialNavState = AppNavigator.router.getStateForAction({firstAction});
       );
       break;
 
+      case 'GoToReflectRightToLeftAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'Reflect',
+          params: {
+            transition: 'GoToReflectRightToLeftAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
       case 'GoToHigherRightToLeftAnimation':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ 

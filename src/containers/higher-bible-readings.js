@@ -135,18 +135,10 @@ class _HigherBibleReadings extends Component {
       this.props.dispatch({type: 'GoToReadLeftToRightAnimation'})
   }
 
-  handleOnSettings(navigate, loginStatus, from,){
-    this.props.dispatch( {type: 'SettingsInAnimation'})
-    //navigate('Settings', {loginStatus: loginStatus, from: from})
-  }
-
-  handleOnSettingsLoggedInPlus(navigate, from){
+  handleOnSettings(){
     this.props.dispatch( {type: 'SettingsInAnimation'})
   }
 
-  handleOnSettingsLoggedOut(navigate, route){
-    this.props.dispatch( {type: 'SettingsInAnimation'})
-  }
   handleonItemBackPressed(){
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
   }
@@ -229,16 +221,7 @@ class _HigherBibleReadings extends Component {
     return (
         <HigherBibleReadings
           readings={bibleReading}
-          onSettings={()=> {
-              if (loginStatus === 'loggedIn'){
-                this.handleOnSettings(navigate, 'HigherBibleReadings', 'Settings')
-                } else if (loginStatus === 'loggedInPlus') {
-                  this. handleOnSettingsLoggedInPlus(navigate,  'HigherBibleReadings', 'Settings')
-                } else {
-                  this.handleOnSettingsLoggedOut(navigate, 'Settings', '', 'loggedOut', 'Settings')
-              }
-            }
-          }
+          onSettings={()=> this.handleOnSettings()}
           onHome={()=> this.handleOnHome()}
           onItem={(item, bibleReadingTitle)=> this.handleOnItem(item, bibleReadingTitle)}
           onDayItem={(item, numberOfDay)=> this.handleOnDayItem(item, navigate,  numberOfDay, 'HigherBibleReadings')}

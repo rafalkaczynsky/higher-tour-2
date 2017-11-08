@@ -19,4 +19,5 @@ export default {
     "externalLink": require('./icons/externalLink.png'), 
     "play":  require('./icons/play.png'), 
     "stop":  require('./icons/stop.png'), 
+    "pause":  require('./icons/pause.png'), 
 }

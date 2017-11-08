@@ -206,6 +206,8 @@ export const MyTransition = (index, position) => {
       };;
   };
 
+  
+
   export const GoToThinkLeftToRightAnimation = (index, position) => {
     const inputRange = [index - 1, index, index + 0.99, index + 1];
     
@@ -216,7 +218,31 @@ export const MyTransition = (index, position) => {
     
       const translateX = position.interpolate({
         inputRange,
-        outputRange: ([100, 0, 0, 0]),
+        outputRange: ([-100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };;
+  };
+
+  export const GoToReflectRightToLeftAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([-100, 0, 0, 0]),
     });
       const translateY = 0
     
@@ -402,25 +428,25 @@ export const MyTransition = (index, position) => {
   export const AppUserBibleReadingAnimation = (index, position) => {
     const inputRange = [index - 1, index, index + 0.99, index + 1];
     
-      const opacity = position.interpolate({
+    const opacity = position.interpolate({
           inputRange,
           outputRange: ([0, 1, 1, 0]),
-      });
+    });
     
-      const translateX = position.interpolate({
+    const translateX = position.interpolate({
         inputRange,
         outputRange: ([100, 0, 0, 0]),
     });
-      const translateY = 0
+    const translateY = 0
     
-      return {
+    return {
       
           transform: [
                 {translateY},
                 {translateX}
           
           ],
-      };
+    };
   };
 
 

@@ -3,18 +3,14 @@ import {Button, View} from 'react-native'
 import { connect } from 'react-redux';
 
 import _Firebase from '../actions/firebase';
-import {Questions} from '../windows'
+import {Reflect} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 import { NavigationActions } from 'react-navigation'
 
-class _Settings extends Component {
+class _Reflect extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-        signIn: false,
-        notificationsOn: true,
-    }
   }
   
   handleOnSettings(){
@@ -67,10 +63,6 @@ class _Settings extends Component {
     this.props.navigation.dispatch(NavigationActions.back())
   }
   
-  handleOnGoNext(){
-    this.props.dispatch({type: 'GoToReflectRightToLeftAnimation'})
-  
-  }
 
   componentDidMount(){
 
@@ -82,20 +74,15 @@ class _Settings extends Component {
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
 
-     const locations = this.props.events                // data from the store
      const userData = this.props.user                   // data from the store
-     const coords = this.props.coords                   // data from the store
-     const activeTabName =this.props.app.activeTabName  // data from the store
      const loginStatus = this.props.app.loginStatus
 
     return (
-        <Questions
+        <Reflect
           onHome={()=> this.handleOnHome()}  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
           onGoBack={()=> this.handleOnGoBack()} 
-          onGoNext={()=> this.handleOnGoNext()}
           onSettings={()=> this.handleOnSettings()}
-
         />
     )
   }
@@ -105,10 +92,8 @@ function mapStateToProps(state){
   return({
       user: state.user,
       events: state.events,
-      churches: state.churches,
-      coords: state.coords,
       app: state.app,
   });
 }
 
-export default connect(mapStateToProps)(_Settings);
+export default connect(mapStateToProps)(_Reflect);

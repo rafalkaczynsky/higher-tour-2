@@ -31,9 +31,6 @@ class UserProfile extends React.Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-
-
-
     getMyData(arrayOfObjectsWithIds) {
 
       var functionArray = arrayOfObjectsWithIds.map( function (value) {

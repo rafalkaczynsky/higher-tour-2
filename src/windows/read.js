@@ -115,17 +115,17 @@ export default class Read extends Component {
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
           </View>
           <View style={{padding: 20}}>
-              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                   <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
                     <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Verse}</Text>
                   </TouchableOpacity>
-                  {!this.state.play &&
+                  {!this.state.play && itemDay.Listen &&
                   <TouchableOpacity 
                     style={{width: 60, alignItems: 'center'}} 
                     title="play" 
                     onPress={()=> {
                       this.setState({play: !this.state.play})
-                      onPlayPressed('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')
+                      onPlayPressed(itemDay.Listen)
                       }
                     }>
                     <Icon 
@@ -133,10 +133,10 @@ export default class Read extends Component {
                       style={StyleSheet.tabItem.iconStyle}
                     />
                   </TouchableOpacity>}
-                  {this.state.play &&
+                  {this.state.play && itemDay.Listen &&
                   <TouchableOpacity 
                     style={{width: 60, alignItems: 'center'}} 
-                    title="stop" 
+                    title="pause" 
                     onPress={()=> {
                       this.setState({play: !this.state.play})
                       onStopPressed()
@@ -144,7 +144,7 @@ export default class Read extends Component {
                     }
                   >
                     <Icon 
-                      name="stop"
+                      name="pause"
                       style={StyleSheet.tabItem.iconStyle}
                     />
                   </TouchableOpacity>}

@@ -10,7 +10,26 @@ import {Icon, Picture} from '../components'
 export default class ListItem extends Component {
 
   render() {
-    const {title, simple, simplePlus, label, disabled,noBorder, borderBold, bgColor, listHeader, progressBar, progress, titleStyle, iconText, handleIconPressed, imageName, imageUrl, opacity} = this.props
+    const {
+      title, 
+      simple, 
+      simplePlus, 
+      label, 
+      disabled, 
+      noIcon, 
+      noBorder, 
+      borderBold, 
+      bgColor, 
+      listHeader, 
+      progressBarColor,
+      progressBar, 
+      progress, 
+      titleStyle, 
+      iconText, 
+      handleIconPressed, 
+      imageName, 
+      imageUrl, 
+      opacity} = this.props
 
     const border = noBorder ? null : {borderBottomColor: colors.grey2, borderBottomWidth: 0.5}
     const _borderBold = borderBold ? {borderBottomColor: colors.grey2, borderBottomWidth: 1} : null
@@ -30,7 +49,7 @@ export default class ListItem extends Component {
                 {label && <Text style={StyleSheet.listItem.readingLabel}>{label}</Text>}
               </View>
               {progressBar &&
-              <View style={StyleSheet.listItem.progressBarContainer}>
+              <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor}]}>
                 <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
               </View>}
             </View>
@@ -41,7 +60,7 @@ export default class ListItem extends Component {
             <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
             {progressBar &&
-            <View style={[StyleSheet.listItem.progressBarContainer]}>
+            <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor}]}>
               <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
             </View>}
           </View>
@@ -97,14 +116,15 @@ export default class ListItem extends Component {
         <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
         {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
         {progressBar &&
-        <View style={[StyleSheet.listItem.progressBarContainer]}>
+        <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor}]}>
           <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
         </View>}
       </View>
    )}
-   {!listHeader && !simple && !simplePlus &&
+   {!listHeader && !simple && !simplePlus && !noIcon &&
       <TouchableOpacity onPress={handleIconPressed} style={{display: 'flex', flexDirection: 'row'}}>
-        <Text style={{color: colors.yellow}}>{iconText}</Text><Icon name="next" style={StyleSheet.listItem.iconStyle}/>
+        <Text style={{color: colors.yellow}}>{iconText}</Text>
+        <Icon name="next" style={StyleSheet.listItem.iconStyle}/>
       </TouchableOpacity>
       }
     {simple && !simplePlus &&

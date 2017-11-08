@@ -12,11 +12,9 @@ export default class Question extends Component {
   }
 
   render() {
-    const {onGoBack} = this.props
-
+    const {onGoBack, onGoNext, onHome, onSettings, onBible} = this.props
 
     const questionText = 'How would you describe God?'
-
     const Answers = [
        'He loves me and knows me',
        'He loves me and knows me',
@@ -29,11 +27,12 @@ export default class Question extends Component {
         <Header
           text='Question'
           onBack
+          onNext
           onBackCallback={onGoBack}
+          onNextCallback={onGoNext}
         />
         <ScrollView style={{width: '100%'}}>
-        <View style={StyleSheet.settings.container}>
-
+          <View style={StyleSheet.settings.container}>
             <View style={StyleSheet.settings.buttonGroup}>
                 <Title
                     text={questionText}
@@ -42,21 +41,20 @@ export default class Question extends Component {
                 />
             {Answers.map((answer, indx) =>
                 <Button
+                    key={'answersItem' + indx}
                     type="settings"
                     text={answer}
                     onPress={()=>  alert('Answer ' + (indx+1) + ' pressed!' )}
                     buttonStyle={{marginTop: 5}}
                 />
             )}
-
             </View>
-        </View>
+          </View>
         </ScrollView>
-
         <TabMenu
-            onHome={this.props.onHome}
-            onBible={this.props.onBible}
-            activeTabName={'Settings'}
+            onHome={onHome}
+            onBible={onBible}
+            onSettings={onSettings}
         />
       </View>
     )

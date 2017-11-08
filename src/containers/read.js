@@ -61,23 +61,30 @@ componentWillMount(){
 }
 
 handleOnPlay(musicUrl){
-  this.sound = new Sound(musicUrl,
-  undefined,
-  error => {
-    if (error) {
-      console.log(error)
-    } else {
-      console.log("Playing sound");
-      this.sound.play(() => {
-        // Release when it's done so we're not using up resources
-        this.sound.release();
+  if (!this.sound){
+    this.sound = new Sound(musicUrl,
+      undefined,
+      error => {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log("Playing sound");
+          this.sound.play(() => {
+            // Release when it's done so we're not using up resources
+            this.sound.release();
+          });
+        }
       });
-    }
-  });
+  }else {
+    this.sound.play(() => {
+      // Release when it's done so we're not using up resources
+      this.sound.release();
+    });
+  }
 }
 
 handleOnStop(){
-  this.sound.release();
+  this.sound.pause();
 }
 
 
@@ -144,7 +151,7 @@ componentDidMount(){
           }
           onItemNextPressed={()=>{
               if(this.sound) this.sound.release();
-              this.props.dispatch({type: 'GoToHigherRightToLeftAnimation'})
+              this.props.dispatch({type: 'GoToThinkRightToLeftAnimation'})
             }
           }
           currentReadingDayNumber={currentReadingDayNumber}
