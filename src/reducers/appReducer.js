@@ -13,6 +13,7 @@ initialState = {
     lastReadDayNumber: 0,
     week: null,
     weekDate: null,
+    questionIndex: 0,
 }
 
 export default function appReducer(state = initialState, action){
@@ -44,7 +45,8 @@ export default function appReducer(state = initialState, action){
                 currentBibleReadingTitle: state.currentBibleReadingTitle,
                 lastReadDayNumber: state.lastReadDayNumber,
                 week: state.week,
-                weekDate: state.weekDate
+                weekDate: state.weekDate,
+                questionIndex:state.questionIndex
             }
 
             return new_state;
@@ -63,7 +65,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: state.currentBibleReadingTitle,
                     lastReadDayNumber: state.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;
@@ -82,7 +85,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: state.currentBibleReadingTitle,
                     lastReadDayNumber: state.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;  
@@ -102,7 +106,8 @@ export default function appReducer(state = initialState, action){
                 currentBibleReadingTitle: state.currentBibleReadingTitle,
                 lastReadDayNumber: state.lastReadDayNumber,
                 week: state.week,
-                weekDate: state.weekDate
+                weekDate: state.weekDate,
+                questionIndex:state.questionIndex
         }
         
         return new_state;  
@@ -121,7 +126,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: state.currentBibleReadingTitle,
                     lastReadDayNumber: state.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;
@@ -140,7 +146,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: state.currentBibleReadingTitle,
                     lastReadDayNumber: state.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;
@@ -159,7 +166,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: state.currentBibleReadingTitle,
                     lastReadDayNumber: state.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;
@@ -178,7 +186,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: state.currentBibleReadingTitle,
                     lastReadDayNumber: state.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;
@@ -197,7 +206,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: action.currentBibleReadingTitle,
                     lastReadDayNumber: state.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;
@@ -216,7 +226,8 @@ export default function appReducer(state = initialState, action){
                     currentBibleReadingTitle: state.currentBibleReadingTitle,
                     lastReadDayNumber: action.lastReadDayNumber,
                     week: state.week,
-                    weekDate: state.weekDate
+                    weekDate: state.weekDate,
+                    questionIndex:state.questionIndex
             }
             
             return new_state;
@@ -234,7 +245,8 @@ export default function appReducer(state = initialState, action){
                 currentBibleReadingTitle: state.currentBibleReadingTitle,
                 lastReadDayNumber: state.lastReadDayNumber,
                 week: action.week,
-                weekDate: state.weekDate
+                weekDate: state.weekDate,
+                questionIndex:state.questionIndex
         }
         
         return new_state;
@@ -252,10 +264,30 @@ export default function appReducer(state = initialState, action){
             currentBibleReadingTitle: state.currentBibleReadingTitle,
             lastReadDayNumber: state.lastReadDayNumber,
             week: state.week,
-            weekDate: action.weekDate
-    }
+            weekDate: action.weekDate,
+            questionIndex:state.questionIndex
+        }
     
-    return new_state;
+        return new_state;
+
+        case types.UPDATE_QUESTION_INDEX:        
+        new_state = {
+            loginStatus: state.loginStatus,
+            activeTabName: state.activeTabName,
+            showLogginContent: state.showLogginContent,
+            followStatus: state.followStatus,
+            showUserProfileContent: state.showUserProfileContent,
+            bibleReadingScreenStatus: state.bibleReadingScreenStatus,
+            currentDayContent: state.currentDayContent,
+            currentReadingDayNumber: state.currentReadingDayNumber,
+            currentBibleReadingTitle: state.currentBibleReadingTitle,
+            lastReadDayNumber: state.lastReadDayNumber,
+            week: state.week,
+            weekDate: state.weekDate,
+            questionIndex: action.questionIndex
+        }
+    
+        return new_state;
 
 
         default:

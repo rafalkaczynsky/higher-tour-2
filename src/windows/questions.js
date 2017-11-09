@@ -6,21 +6,21 @@ import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../components'
 
-export default class Question extends Component {
+export default class Questions extends Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    const {onGoBack, onGoNext, onHome, onSettings, onBible} = this.props
+    const {onGoBack, onGoNext, onHome, onSettings, onBible, session, questionIndex, handleAnswer} = this.props
 
-    const questionText = 'How would you describe God?'
-    const Answers = [
-       'He loves me and knows me',
-       'He loves me and knows me',
-       'He loves me and knows me',
-       'He loves me and knows me',
-    ]
+   // console.log(session.Questions)
+   // console.log(questionIndex)
+
+    const questionText = session.Questions[questionIndex+1].Question
+    const Answers =  session.Questions[questionIndex+1].Answers
+
+    console.log(Answers) 
 
     return (
       <View style={StyleSheet.window.default}>
@@ -39,14 +39,19 @@ export default class Question extends Component {
                     textColor="brown"
                     textStyle={{fontSize: 18}}
                 />
-            {Answers.map((answer, indx) =>
+            {Answers.map((answer, indx) =>{
+              if (answer) console.log(answer.Text)
+              console.log(indx)
+              
+              if (answer !==null) return
                 <Button
                     key={'answersItem' + indx}
                     type="settings"
-                    text={answer}
-                    onPress={()=>  alert('Answer ' + (indx+1) + ' pressed!' )}
+                    text={answer.Text}
+                    onPress={()=>  handleAnswer(indx)}
                     buttonStyle={{marginTop: 5}}
                 />
+              }
             )}
             </View>
           </View>

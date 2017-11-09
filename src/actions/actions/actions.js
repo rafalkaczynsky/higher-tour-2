@@ -41,6 +41,12 @@ export function UPDATE_APP_USER(follow, eventId, FCMtoken){
     }
 }
 
+export function UPDATE_QUESTION_INDEX(questionIndex){
+    return {
+        type: types.UPDATE_QUESTION_INDEX,
+        questionIndex: questionIndex
+    }
+}
 
 export function SAVE_SELECTED_EVENT(selectedEvent) {
     return {

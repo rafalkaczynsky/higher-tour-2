@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {Button, View} from 'react-native'
 import { connect } from 'react-redux';
+import * as firebase from 'firebase'
 
 import _Firebase from '../actions/firebase';
 import {Questions} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 import { NavigationActions } from 'react-navigation'
 
-class _Settings extends Component {
+class _Questions extends Component {
   constructor(props){
     super(props)
 
@@ -72,12 +73,33 @@ class _Settings extends Component {
   
   }
 
+  // week1 needs to be generic
+
+  handleAnswer(index){
+    const questionIndex = this.props.app.questionIndex
+
+    const answerRef = firebase.database().ref('aaaSessions/week1/Questions/'+questionIndex+'/Answers/'+index+'/')
+
+    answerRef.once("value", snapshot => {
+    
+      const Answer = snapshot.val()
+      const Results = Answer.Results 
+
+    })
+
+    const updatedResults = Results + 1
+
+    answerRef.update({
+      Results: updatedResults
+    })
+
+  }
+
   componentDidMount(){
 
   }
   
   render() {
-
 
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
@@ -86,7 +108,10 @@ class _Settings extends Component {
      const userData = this.props.user                   // data from the store
      const coords = this.props.coords                   // data from the store
      const activeTabName =this.props.app.activeTabName  // data from the store
-     const loginStatus = this.props.app.loginStatus
+     const loginStatus = this.props.app.loginStatus     //
+
+     const session = this.props.app.week
+     const questionIndex = this.props.app.questionIndex
 
     return (
         <Questions
@@ -95,7 +120,9 @@ class _Settings extends Component {
           onGoBack={()=> this.handleOnGoBack()} 
           onGoNext={()=> this.handleOnGoNext()}
           onSettings={()=> this.handleOnSettings()}
-
+          handleAnswer={(index)=> this.handleAnswer(index)}
+          session={session}
+          questionIndex={questionIndex}
         />
     )
   }
@@ -108,7 +135,8 @@ function mapStateToProps(state){
       churches: state.churches,
       coords: state.coords,
       app: state.app,
+      aaaSession: state.aaaSession
   });
 }
 
-export default connect(mapStateToProps)(_Settings);
+export default connect(mapStateToProps)(_Questions);
