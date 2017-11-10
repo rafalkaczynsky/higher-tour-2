@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Button, View} from 'react-native'
 import { connect } from 'react-redux';
+import RNFetchBlob from 'react-native-fetch-blob'
 
 import _Firebase from '../actions/firebase';
 import {Freebie} from '../windows'
@@ -50,6 +51,43 @@ class _Freebie extends Component {
     }
  }
 
+ download(){
+   console.log('download')
+
+   //save in local storage of app
+  RNFetchBlob
+  .config({
+    // add this option that makes response data to be stored as a file,
+    // this is much more performant.
+    fileCache : true,
+  })
+  .fetch('GET', 'http://www.planwallpaper.com/static/images/33ca912357a40f021a78ef6e06ba1ace.jpg', {
+    //some headers ..
+  })
+  .then((res) => {
+    // the temp file path
+    console.log('The file saved to ', res.path())
+  })
+
+  RNFetchBlob
+  .config({
+      addAndroidDownloads : {
+          useDownloadManager : true, // <-- this is the only thing required
+          // Optional, override notification setting (default to true)
+          notification : true,
+          // Optional, but recommended since android DownloadManager will fail when
+          // the url does not contains a file extension, by default the mime type will be text/plain
+          mime : 'text/plain',
+          description : 'File downloaded by download manager.'
+      }
+  })
+  .fetch('GET', 'http://www.planwallpaper.com/static/images/33ca912357a40f021a78ef6e06ba1ace.jpg')
+  .then((resp) => {
+    // the path of downloaded file
+    resp.path()
+  })
+ }
+
   handleOnBible(navigate, route){
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
       this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
@@ -84,6 +122,7 @@ class _Freebie extends Component {
           onGoBack={()=> this.handleOnGoBack()}
           onSettings={()=> this.handleOnSettings()}
           userData={userData}
+          download={()=>this.download()}
           loginStatus={loginStatus}
         />
     )

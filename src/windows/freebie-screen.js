@@ -38,7 +38,7 @@ export default class Freebie extends Component {
                 <Button
                     type="settings"
                     text={'Download'}
-                    onPress={()=>  Linking.openURL('https://highertour.com/higher-app-privacy-policy')}
+                    onPress={this.props.download}
                     buttonStyle={{marginBottom: 10, backgroundColor: colors.yellow}}
                 />
                 <Button

@@ -6,7 +6,7 @@ import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.zmxv.RNSound.RNSoundPackage; // <-- New
-
+import com.RNFetchBlob.RNFetchBlobPackage;      
 import ga.piroro.rnt.RNTPackage;
 import com.goldenowl.twittersignin.TwitterSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -40,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFetchBlobPackage(),  
             new MapsPackage(),
             new RNSoundPackage(), // <-- New
             new FIRMessagingPackage(),
