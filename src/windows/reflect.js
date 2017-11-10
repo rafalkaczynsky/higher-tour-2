@@ -6,34 +6,18 @@ import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../components'
 
+var totalProgress = 0 
+
 export default class Reflect extends Component {
   constructor(props) {
     super(props)
+
   }
 
   render() {
-    const {onGoBack, onGoNext} = this.props
+    const {onGoBack, onGoNext, question, answers, howMany} = this.props
 
-    const Answers = [
-        {
-            text:'He loves me and knows me',
-            answers: 4,
-        },
-        {
-            text:'He loves me and knows me',
-            answers: 8,
-        },
-        {
-            text:'He loves me and knows me',
-            answers: 12,
-        },
-        {
-            text:'He loves me and knows me',
-            answers: 2,
-        },
-     ]
-
-     const numberOfPeople = 20 
+    const numberOfPeople = howMany
 
     return (
       <View style={StyleSheet.window.default}>
@@ -53,23 +37,37 @@ export default class Reflect extends Component {
                     textStyle={{fontSize: 18}}
                 />
                 {/* ....... list of answers with progress bar ........ */}
-                <View style={{width: '94%', paddingRight: 10}}>
-                {Answers.map((item, index)=> {
-                    const progress = ((item.answers/numberOfPeople)*100) + '%'
+                <View style={{width:'90%'}}>
+                {answers.map((item, index)=> {
+                    const progress = parseInt((item.Results/numberOfPeople)*100)
+                    totalProgress= totalProgress + progress
+
+                    console.log(totalProgress)
                     return(
                         <ListItem
                             key={'reflectReadingKey'+ index}
-                            title={item.text}
+                            title={item.Text}
                             progressBar
-                            progress={progress}
+                            progress={parseInt(progress)+'%'}
+                            disabled
+                            noBorder
+                            noIcon
+                            progressBarColor={'#e3e3e3'}
+                            bgColor={'transparent'}
+         
+                        />
+                    )
+                })}
+                        <ListItem
+                            title={'Test for 100%'}
+                            progressBar
+                            progress={totalProgress + '%'}
                             disabled
                             noBorder
                             noIcon
                             progressBarColor={'#e3e3e3'}
                             bgColor={'transparent'}
                         />
-                    )
-                })}
                 </View>     
                 <View style={{marginTop: 10,width: '60%', alignItems: 'center'}}>
                     <Text style={{fontSize: 18, color: colors.brown, textAlign: 'center'}}>

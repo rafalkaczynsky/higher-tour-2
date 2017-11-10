@@ -12,10 +12,7 @@ export default class Questions extends Component {
   }
 
   render() {
-    const {onGoBack, onGoNext, onHome, onSettings, onBible, session, questionIndex, handleAnswer} = this.props
-
-   // console.log(session.Questions)
-   // console.log(questionIndex)
+    const {onGoBack, onHome, onSettings, onBible, session, questionIndex, handleAnswer} = this.props
 
     const questionText = session.Questions[questionIndex+1].Question
     const Answers =  session.Questions[questionIndex+1].Answers
@@ -27,9 +24,7 @@ export default class Questions extends Component {
         <Header
           text='Question'
           onBack
-          onNext
           onBackCallback={onGoBack}
-          onNextCallback={onGoNext}
         />
         <ScrollView style={{width: '100%'}}>
           <View style={StyleSheet.settings.container}>
@@ -43,14 +38,14 @@ export default class Questions extends Component {
               if (answer) console.log(answer.Text)
               console.log(indx)
               
-              if (answer !==null) return
+              if (answer !==null) return (
                 <Button
                     key={'answersItem' + indx}
                     type="settings"
                     text={answer.Text}
                     onPress={()=>  handleAnswer(indx)}
                     buttonStyle={{marginTop: 5}}
-                />
+                />)
               }
             )}
             </View>

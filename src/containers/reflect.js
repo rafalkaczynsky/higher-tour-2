@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Button, View} from 'react-native'
 import { connect } from 'react-redux';
+import * as firebase from 'firebase'
 
 import _Firebase from '../actions/firebase';
 import {Reflect} from '../windows'
@@ -11,6 +12,12 @@ class _Reflect extends Component {
   constructor(props){
     super(props)
 
+    this.state = {
+      question: null,
+      answers: [],
+      howMany: null,
+      questions: []
+    }
   }
   
   handleOnSettings(){
@@ -64,16 +71,44 @@ class _Reflect extends Component {
   }
   
   handleOnGoNext(){
-    this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
+    let questionIndex = this.props.app.questionIndex 
+    if ((questionIndex+1)<(this.state.questions.length-1)){
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+      this.props.dispatch({type: 'GoToQuestionsAnimation'})
+    } else this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
   }
 
   componentDidMount(){
 
   }
+
+  componentWillMount(){
+    const questionIndex = this.props.app.questionIndex
+    const sessionId = this.props.app.week.id
+
+    const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
+    const questionsRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions')
+
+    questionsRef.once("value", snapshot => {
+      const questions = snapshot.val()
+      this.setState({questions: questions})
+      console.log(questions)
+    })
+
+    questionRef.once("value", snapshot => {
+      const question = snapshot.val()
+      const answers = question.Answers
+      const howMany = question.howMany
+
+      this.setState({question: question})
+      this.setState({answers: answers})
+      this.setState({howMany: howMany})
+    })
+
+  }
   
   render() {
-
-
+    //UPDATE_QUESTION_INDEX
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
 
@@ -87,6 +122,9 @@ class _Reflect extends Component {
           onGoBack={()=> this.handleOnGoBack()} 
           onGoNext={()=> this.handleOnGoNext()}
           onSettings={()=> this.handleOnSettings()}
+          question={this.state.question}
+          answers={this.state.answers}
+          howMany={this.state.howMany}
         />
     )
   }

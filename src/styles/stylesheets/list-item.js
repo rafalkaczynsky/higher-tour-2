@@ -9,6 +9,7 @@ export default StyleSheet => StyleSheet.extend({
     },
 
     wrapper: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -48,7 +49,7 @@ export default StyleSheet => StyleSheet.extend({
 
     progressBarContainer: {
         marginTop: 10,
-        width: '150%',
+        flex: 1,
         height: 2,
         backgroundColor: colors.grey,
     }

@@ -29,6 +29,7 @@ export default class ListItem extends Component {
       handleIconPressed, 
       imageName, 
       imageUrl, 
+      containerStyle,
       opacity} = this.props
 
     const border = noBorder ? null : {borderBottomColor: colors.grey2, borderBottomWidth: 0.5}
@@ -37,7 +38,7 @@ export default class ListItem extends Component {
     const image = StyleSheet.icons[imageName]
 
     if (!disabled) return (
-      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
+      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, containerStyle]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
        {imageName || imageUrl && !simple && !simplePlus &&(
@@ -93,7 +94,7 @@ export default class ListItem extends Component {
         </View>
       </TouchableOpacity>
     ) 
-    else return  ( <View style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
+    else return  ( <View style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, containerStyle]}>
     <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
    {imageName || imageUrl && !simple && !simplePlus &&(
@@ -112,7 +113,7 @@ export default class ListItem extends Component {
    )}
 
    {!imageName && !imageUrl && !simple && !simplePlus &&(
-      <View>
+      <View style={{width: '100%'}}>
         <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
         {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
         {progressBar &&
@@ -121,6 +122,7 @@ export default class ListItem extends Component {
         </View>}
       </View>
    )}
+
    {!listHeader && !simple && !simplePlus && !noIcon &&
       <TouchableOpacity onPress={handleIconPressed} style={{display: 'flex', flexDirection: 'row'}}>
         <Text style={{color: colors.yellow}}>{iconText}</Text>

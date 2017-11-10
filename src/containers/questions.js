@@ -68,31 +68,37 @@ class _Questions extends Component {
     this.props.navigation.dispatch(NavigationActions.back())
   }
   
-  handleOnGoNext(){
-    this.props.dispatch({type: 'GoToReflectRightToLeftAnimation'})
-  
-  }
 
   // week1 needs to be generic
 
   handleAnswer(index){
     const questionIndex = this.props.app.questionIndex
+    const sessionId = this.props.app.week.id
 
-    const answerRef = firebase.database().ref('aaaSessions/week1/Questions/'+questionIndex+'/Answers/'+index+'/')
+    const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/Answers/'+index)
+    const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
+
+    questionRef.once("value", snapshot => {
+      const question = snapshot.val()
+      const howMany = question.howMany 
+      const updatedHowMany = howMany + 1
+
+      questionRef.update({
+        howMany: updatedHowMany
+      })
+    })
 
     answerRef.once("value", snapshot => {
-    
       const Answer = snapshot.val()
       const Results = Answer.Results 
+      const updatedResults = Results + 1
 
+      answerRef.update({
+        Results: updatedResults
+      })
     })
 
-    const updatedResults = Results + 1
-
-    answerRef.update({
-      Results: updatedResults
-    })
-
+    this.props.dispatch({type: 'GoToReflectRightToLeftAnimation'})
   }
 
   componentDidMount(){
@@ -118,7 +124,6 @@ class _Questions extends Component {
           onHome={()=> this.handleOnHome()}  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
           onGoBack={()=> this.handleOnGoBack()} 
-          onGoNext={()=> this.handleOnGoNext()}
           onSettings={()=> this.handleOnSettings()}
           handleAnswer={(index)=> this.handleAnswer(index)}
           session={session}
