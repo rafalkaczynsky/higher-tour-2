@@ -21,11 +21,12 @@ export default class Questions extends Component {
 
     return (
       <View style={StyleSheet.window.default}>
+      {questionIndex === 0 &&
         <Header
           text='Question'
           onBack
           onBackCallback={onGoBack}
-        />
+        />}
         <ScrollView style={{width: '100%'}}>
           <View style={StyleSheet.settings.container}>
             <View style={StyleSheet.settings.buttonGroup}>

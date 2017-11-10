@@ -13,7 +13,7 @@ class _Freebie extends Component {
   }
   
   handleOnHome(){
-      
+    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
     const resetActionSignIn = NavigationActions.reset({
       index: 0,
       actions: [
@@ -51,6 +51,7 @@ class _Freebie extends Component {
  }
 
   handleOnBible(navigate, route){
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
       this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
       this.props.dispatch({ type: 'BibleAnimation' }) 
   } 
@@ -59,6 +60,9 @@ class _Freebie extends Component {
     this.props.navigation.dispatch(NavigationActions.back())
   }
   
+  handleOnSettings(){
+    this.props.dispatch( {type: 'SettingsInAnimation'})
+  }
 
   componentDidMount(){
 
@@ -78,6 +82,7 @@ class _Freebie extends Component {
           onHome={()=> this.handleOnHome()}  
           onBible={() =>  this.handleOnBible(navigate, 'HigherBibleReadings')}
           onGoBack={()=> this.handleOnGoBack()}
+          onSettings={()=> this.handleOnSettings()}
           userData={userData}
           loginStatus={loginStatus}
         />

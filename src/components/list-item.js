@@ -38,7 +38,7 @@ export default class ListItem extends Component {
     const image = StyleSheet.icons[imageName]
 
     if (!disabled) return (
-      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, containerStyle]}>
+      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
         <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
        {imageName || imageUrl && !simple && !simplePlus &&(
@@ -57,11 +57,11 @@ export default class ListItem extends Component {
        )}
 
        {!imageName && !imageUrl && !simple && !simplePlus &&(
-          <View>
+          <View style={{width: iconText ? null : '100%' }}>
             <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
             {progressBar &&
-            <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor}]}>
+            <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor, width: '90%'}]}>
               <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
             </View>}
           </View>
@@ -94,7 +94,7 @@ export default class ListItem extends Component {
         </View>
       </TouchableOpacity>
     ) 
-    else return  ( <View style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold, containerStyle]}>
+    else return  ( <View style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
     <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
 
    {imageName || imageUrl && !simple && !simplePlus &&(

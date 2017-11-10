@@ -111,12 +111,9 @@ class _HigherBibleReadings extends Component {
   }
 
   handleOnItem(itemBibleReading, bibleReadingTitle){
-
-
     this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('item'))//SAVE_CURRENT_READING_ITEM_TITLE
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM_TITLE(bibleReadingTitle))
     this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_ITEM(itemBibleReading))
-
   }
 
   handleOnDayItem(itemDay, navigate, numberOfDay, from){

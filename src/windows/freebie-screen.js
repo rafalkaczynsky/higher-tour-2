@@ -20,12 +20,10 @@ export default class Freebie extends Component {
       <View style={StyleSheet.window.default}>
         <Header
           text='Freebie'
-          onBack
-          onBackCallback={onGoBack}
+          simple
         />
         <ScrollView style={{width: '100%'}}>
         <View style={[StyleSheet.settings.container]}>
-
             <View style={StyleSheet.settings.buttonGroup}>
                 <Title
                     text={'Higher - Twelve24'}
@@ -33,9 +31,6 @@ export default class Freebie extends Component {
                     textStyle={{fontSize: 18, textAlign: 'center'}}
                 />
             </View>
-
-        { /*<Image source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} />*/}
-   
             <View style={{ width: '90%',}}>
                 <Image source={StyleSheet.images[name]}  style={{width: '100%'}}/>
             </View>
@@ -51,15 +46,13 @@ export default class Freebie extends Component {
                     text={'Send by email'}
                     onPress={()=>  Linking.openURL('https://highertour.com/higher-app-about')}
                 />
-
             </View>
-
         </View>
         </ScrollView>
-
         <TabMenu
             onHome={this.props.onHome}
             onBible={this.props.onBible}
+            onSettings={this.props.onSettings}
         />
       </View>
     )

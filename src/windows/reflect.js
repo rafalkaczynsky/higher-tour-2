@@ -22,10 +22,8 @@ export default class Reflect extends Component {
     return (
       <View style={StyleSheet.window.default}>
         <Header
-          text='Reflect'
-          onBack
+          text='Reflect'    
           onNext
-          onBackCallback={onGoBack}
           onNextCallback={onGoNext}
         />
         <ScrollView style={{width: '100%'}}>
@@ -58,16 +56,6 @@ export default class Reflect extends Component {
                         />
                     )
                 })}
-                        <ListItem
-                            title={'Test for 100%'}
-                            progressBar
-                            progress={totalProgress + '%'}
-                            disabled
-                            noBorder
-                            noIcon
-                            progressBarColor={'#e3e3e3'}
-                            bgColor={'transparent'}
-                        />
                 </View>     
                 <View style={{marginTop: 10,width: '60%', alignItems: 'center'}}>
                     <Text style={{fontSize: 18, color: colors.brown, textAlign: 'center'}}>

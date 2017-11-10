@@ -5,11 +5,10 @@ import {colors} from '../resources'
 export default StyleSheet => StyleSheet.extend({
 
     container: {
-       width: "100%"
+
     },
 
     wrapper: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -49,7 +48,7 @@ export default StyleSheet => StyleSheet.extend({
 
     progressBarContainer: {
         marginTop: 10,
-        flex: 1,
+        width: '100%',
         height: 2,
         backgroundColor: colors.grey,
     }

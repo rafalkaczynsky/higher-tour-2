@@ -34,6 +34,20 @@ export default StyleSheet => StyleSheet.extend({
         justifyContent:'center',
         flex: 1, width: '100%'
     },
+    //onNext
+    onNextContainer: {
+        flexDirection: 'row',
+        alignItems: 'center', 
+        justifyContent:'center',
+        flex: 1, width: '100%'
+    },
+
+    onNextIconButton: {
+        position: 'absolute',
+        right: 10, 
+        top: 15, 
+        bottom: 0
+    },
 
     onBackIconButton: {
         position: 'absolute',

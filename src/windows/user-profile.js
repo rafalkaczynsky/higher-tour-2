@@ -139,6 +139,7 @@ class UserProfile extends React.Component {
                     title={title}
                     progressBar
                     progress={progress}
+                    progressBarColor={colors.grey3}
                     handleIconPressed={() => onHandleReadingItemPressed(title)}
                   />
                   )

@@ -106,7 +106,6 @@ class HigherBibleReadings extends React.Component {
          )
      })
    }
-
    {this.state.isMounted && currentScreen === 'item' && !showAll && chosenItem && chosenItem.map((item, indx) =>
      {
        if ((indx > 0) && (indx -1 <= lastReadDayNumber))
@@ -123,7 +122,6 @@ class HigherBibleReadings extends React.Component {
      )
    }
             </ScrollView>
-
         </View>
         <TabMenu
           onSettings={this.props.onSettings}
