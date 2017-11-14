@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput, Linking, Image} from 'react-native'
+import {ScrollView, View, Text, TextInput, Linking, Image,TouchableOpacity} from 'react-native'
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -48,6 +48,11 @@ export default class Freebie extends Component {
                 />
             </View>
         </View>
+        <TouchableOpacity
+            onPress={this.props.onPlay}
+        >
+            <Text>PLAY</Text>
+        </TouchableOpacity>
         </ScrollView>
         <TabMenu
             onHome={this.props.onHome}
