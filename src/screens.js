@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 import  * as customTransitions from './custom-transitions'
-import {
+import { 
+
   _SignIn, 
   _Welcome, 
   _Settings, 
@@ -23,7 +24,7 @@ import {
   _Questions,
   _Reflect,
   _Freebie,
-
+  
 } from './containers'
 
 const MyTransitionSpec = ({

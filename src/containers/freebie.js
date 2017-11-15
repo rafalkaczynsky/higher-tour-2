@@ -176,8 +176,8 @@ class _Freebie extends Component {
   }
   
   render() {
-//http://www.planwallpaper.com/static/images/33ca912357a40f021a78ef6e06ba1ace.jpg
-//https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3
+   //http://www.planwallpaper.com/static/images/33ca912357a40f021a78ef6e06ba1ace.jpg
+   //https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
 

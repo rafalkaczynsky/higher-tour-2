@@ -87,6 +87,8 @@ class UserProfile extends React.Component {
                       label={'Higher sessions coming soon'}
                     />
                 }
+
+                {/*  - -------- !!!!!! ======= !!!!!!--------*/}
                 {this.props.sessions.map((item, index)=> {
                    let sessionDate = item.UTCTime
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
@@ -108,7 +110,7 @@ class UserProfile extends React.Component {
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
                    const aaaSessionItem = item.aaaSession
 
-                   if (index === 0)
+                   if (index === 1)
                     return(
                       <ListItem
                         key={item.aaaSession + '-' + index}

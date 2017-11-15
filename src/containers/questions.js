@@ -127,6 +127,7 @@ class _Questions extends Component {
           onSettings={()=> this.handleOnSettings()}
           handleAnswer={(index)=> this.handleAnswer(index)}
           session={session}
+          onPressDone={()=> this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})}
           questionIndex={questionIndex}
         />
     )
