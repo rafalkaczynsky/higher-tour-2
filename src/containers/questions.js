@@ -101,6 +101,86 @@ class _Questions extends Component {
     this.props.dispatch({type: 'GoToReflectRightToLeftAnimation'})
   }
 
+  handleAgree(index){
+    const questionIndex = this.props.app.questionIndex
+    const sessionId = this.props.app.week.id
+
+    const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
+    const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
+
+    questionRef.once("value", snapshot => {
+      const question = snapshot.val()
+      const howMany = question.howMany 
+      const updatedHowMany = howMany + 1
+
+      questionRef.update({
+        howMany: updatedHowMany
+      })
+    })
+
+    answerRef.once("value", snapshot => {
+      const Answer = snapshot.val()
+      const Results = Answer.agree 
+      const updatedResults = Results + 1
+
+      answerRef.update({
+        agree: updatedResults
+      })
+    })
+
+
+    /* if ((questionIndex+1) === (this.state.questions.length-1)){
+      this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
+    }*/
+
+    if (index <3){
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+    } else {
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
+      this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
+    }
+  }
+
+  handleDisagree(index){
+    const questionIndex = this.props.app.questionIndex
+    const sessionId = this.props.app.week.id
+
+    const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
+    const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
+
+    questionRef.once("value", snapshot => {
+      const question = snapshot.val()
+      const howMany = question.howMany 
+      const updatedHowMany = howMany + 1
+
+      questionRef.update({
+        howMany: updatedHowMany
+      })
+    })
+
+    answerRef.once("value", snapshot => {
+      const Answer = snapshot.val()
+      const Results = Answer.disagree 
+      const updatedResults = Results + 1
+
+      answerRef.update({
+        disagree: updatedResults
+      })
+    })
+    
+    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+   /* if ((questionIndex+1) === (this.state.questions.length-1)){
+      this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
+    }*/
+
+    if (index <3){
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+    } else {
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
+      this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
+    }
+  }
+
   componentDidMount(){
 
   }
@@ -127,6 +207,8 @@ class _Questions extends Component {
           onSettings={()=> this.handleOnSettings()}
           handleAnswer={(index)=> this.handleAnswer(index)}
           session={session}
+          onPressAgree={(index, answer)=> this.handleAgree(index, answer)}
+          onPressDisagree={(index, answer)=>this.handleDisagree(index, answer)}
           onPressDone={()=> this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})}
           questionIndex={questionIndex}
         />
