@@ -74,7 +74,7 @@ export default class Questions extends Component {
 
           if (questionType === 'text')        return <QuestionText Answers={session.Questions[questionIndex+1].Answers} questionText={session.Questions[questionIndex+1].Question} onGoBack={onGoBack} onHome={onHome}  onSettings={onSettings} onBible={onBible} session={session} questionIndex={questionIndex} handleAnswer={handleAnswer}/>
      else if (questionType === 'imageSlider') return <QuestionSlider onPressDone={onPressDone} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imagesArray={imagesArray}/>
-     else if (questionType === 'imageSurvey') return <QuestionImageSurvey  onPressAgree={onPressAgree} onPressDisagree={onPressDisagree} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imagesArray={surveyImagesArray}/>
+     else if (questionType === 'imageSurvey') return <QuestionImageSurvey  onPressDone={onPressDone} onPressAgree={onPressAgree} onPressDisagree={onPressDisagree} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imagesArray={surveyImagesArray}/>
      else return <Text>Warning! Something wrong - no questionType found</Text>
 
   }

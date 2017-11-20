@@ -128,7 +128,6 @@ class _Questions extends Component {
       })
     })
 
-
     /* if ((questionIndex+1) === (this.state.questions.length-1)){
       this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
     }*/
@@ -137,7 +136,6 @@ class _Questions extends Component {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
     } else {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
-      this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
     }
   }
 
@@ -177,7 +175,7 @@ class _Questions extends Component {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
     } else {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
-      this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
+
     }
   }
 
@@ -209,7 +207,10 @@ class _Questions extends Component {
           session={session}
           onPressAgree={(index, answer)=> this.handleAgree(index, answer)}
           onPressDisagree={(index, answer)=>this.handleDisagree(index, answer)}
-          onPressDone={()=> this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})}
+          onPressDone={()=> {
+            this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
+            this.props.dispatch({type: 'UserProfileAfterSettingsAnimation'})
+          }}
           questionIndex={questionIndex}
         />
     )

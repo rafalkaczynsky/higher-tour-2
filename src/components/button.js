@@ -12,7 +12,7 @@ export default class Button extends Component {
         this.iconStyle = StyleSheet.buttons[type].iconStyle
     }
     render(){
-        const {type, text, iconName, bgColor, textColor, buttonStyle, textStyle, onPress} = this.props
+        const {type, text, iconName, bgColor, textColor, buttonStyle, textStyle, onPress, noOpacityOnPress} = this.props
 
 
         return(
