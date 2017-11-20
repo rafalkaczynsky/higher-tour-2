@@ -74,9 +74,19 @@ class _Questions extends Component {
   handleAnswer(index){
     const questionIndex = this.props.app.questionIndex
     const sessionId = this.props.app.week.id
+    const userUid = this.props.user.uid
+
+    console.log(userUid)  
+
+    console.log(index)  
 
     const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/Answers/'+index)
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
+    const appUserRef = firebase.database().ref('appUsers/'+userUid+'/aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/')
+
+    appUserRef.update({
+      answer: index
+    })
 
     questionRef.once("value", snapshot => {
       const question = snapshot.val()
@@ -104,10 +114,18 @@ class _Questions extends Component {
   handleAgree(index){
     const questionIndex = this.props.app.questionIndex
     const sessionId = this.props.app.week.id
+    const userUid = this.props.user.uid
 
+    
     const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
 
+    const appUserRef = firebase.database().ref('appUsers/'+userUid+'/aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/')
+    
+    appUserRef.update({
+      answer: 'agree'
+    })
+  
     questionRef.once("value", snapshot => {
       const question = snapshot.val()
       const howMany = question.howMany 
@@ -142,10 +160,17 @@ class _Questions extends Component {
   handleDisagree(index){
     const questionIndex = this.props.app.questionIndex
     const sessionId = this.props.app.week.id
+    const userUid = this.props.user.uid
+    
 
     const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
-
+    const appUserRef = firebase.database().ref('appUsers/'+userUid+'/aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/')
+    
+    appUserRef.update({
+      answer: 'disagree'
+    })
+  
     questionRef.once("value", snapshot => {
       const question = snapshot.val()
       const howMany = question.howMany 
