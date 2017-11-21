@@ -66,6 +66,8 @@ class _SignIn extends Component {
       },
     );
 
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    
   }
 
 
@@ -442,6 +444,8 @@ class _SignIn extends Component {
 }
 
   componentWillMount(){
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
     this.props.dispatch(ACTIONS.UPDATE_LOGGIN_STATUS('loggedOut'))
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Home'))
@@ -454,7 +458,7 @@ class _SignIn extends Component {
   }
 
   componentWillUnmount() {
-
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
   handleBackButtonClick() {
