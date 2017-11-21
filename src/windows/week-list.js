@@ -83,7 +83,12 @@ export default class WeekList extends Component {
                     <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.city} </Text>
                     <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.postcode}</Text>
               </View>
-              </ScrollView>
+              <Button 
+                type="default"
+                text="BEGIN"
+                onPress={onNextPressed}
+                />
+            </ScrollView>
             </View>
             </View>
 

@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import geolib from 'geolib'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
+
+import {BackHandler} from 'react-native'
+
 import Sound from 'react-native-sound'
 
 
@@ -16,6 +19,9 @@ class _Read extends Component {
       play: false,
       playFirstTime: true
     }
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    
 }
 
 handleOnBible(navigate, from){
@@ -47,7 +53,18 @@ handleHome(navigate){
 }
 
 componentWillMount(){
-  
+  BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);  
+}
+
+componentWillUnmount() {
+  BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+}
+
+handleBackButtonClick() {
+  if(this.sound) this.sound.release();
+  console.log('Back device!!!!!!')
+  this.props.navigation.goBack(null);
+  return true;
 }
 
 handleOnPlay(musicUrl){
@@ -58,6 +75,8 @@ handleOnPlay(musicUrl){
         if (error) {
           console.log(error)
         } else {
+          console.log(new Date())
+          console.log('Play soon music will be soon')
           this.sound.play(() => {
             // Release when it's done so we're not using up resources
             this.sound.release();
@@ -73,7 +92,8 @@ handleOnPlay(musicUrl){
 }
 
 handleOnStop(){
-  this.sound.pause();
+ // this.sound.pause();
+ this.sound.release();
 }
 
 componentDidMount(){
