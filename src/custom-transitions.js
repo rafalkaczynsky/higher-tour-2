@@ -229,7 +229,7 @@ export const MyTransition = (index, position) => {
                 {translateX}
           
           ],
-      };;
+      };
   };
 
   export const GoToReflectRightToLeftAnimation = (index, position) => {

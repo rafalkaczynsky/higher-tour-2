@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import {BackHandler} from 'react-native'
+
 import {HigherBibleReadings} from '../windows'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
@@ -29,21 +31,22 @@ class _HigherBibleReadings extends Component {
         chosenDayItem: false,
         showAll: false,
     }
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
   handleOnNew(){
     this.setState({
-
-              buttonsStyle: [
-                {
-                  textColor: 'brown',
-                  bgColor: 'transparent',
-                },
-                {
-                  textColor: 'white',
-                  bgColor: 'brown',
-                }]
-            })
+        buttonsStyle: [
+            {
+              textColor: 'brown',
+              bgColor: 'transparent',
+            },
+            {
+              textColor: 'white',
+              bgColor: 'brown',
+            }]
+        })
   }
 
   handleOnCompleted(){
@@ -127,7 +130,6 @@ class _HigherBibleReadings extends Component {
       } else {
         this.props.dispatch(ACTIONS.SAVE_CURRENT_READING_DAY_NUMBER(this.props.app.lastReadDayNumber))
       }
-
       //navigate('Read', {from: from})
       this.props.dispatch({type: 'GoToReadLeftToRightAnimation'})
   }
@@ -142,7 +144,6 @@ class _HigherBibleReadings extends Component {
 
 
   handleOnHome(){
-
     const resetActionSignIn = NavigationActions.reset({
       index: 0,
       actions: [
@@ -187,19 +188,28 @@ class _HigherBibleReadings extends Component {
     const screenStatus = this.props.app.bibleReadingScreenStatus              // data from the store
 
 
-  if ((screenStatus === 'item')&& (userData)){
-    firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
-      const bibleReading = snapshot.val();
-      const lastReadDayNumber = bibleReading.lastReadDayNumber
-      this.props.dispatch(ACTIONS.SAVE_CURRENT_LAST_READ_DAY_NUMBER(lastReadDayNumber))
-    })
-  }
-
+    if ((screenStatus === 'item')&& (userData)){
+      firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
+        const bibleReading = snapshot.val();
+        const lastReadDayNumber = bibleReading.lastReadDayNumber
+        this.props.dispatch(ACTIONS.SAVE_CURRENT_LAST_READ_DAY_NUMBER(lastReadDayNumber))
+      }) 
+    }
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
 
   componentDidMount(){
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Bible'))
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
   }
 
   render() {
