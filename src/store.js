@@ -1,4 +1,4 @@
-/*
+
 
 import {applyMiddleware, createStore} from 'redux'
 //import logger , {createLogger} from "redux-logger"
@@ -13,4 +13,3 @@ let store = createStore(reducers, middleware)
 
 export default store
 
-*/

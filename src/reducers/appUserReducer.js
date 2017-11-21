@@ -14,13 +14,13 @@ export default function appUserReducer(state = {}, action){
         case types.UPDATE_APP_USER:
             
             new_state = {
-                email: state.email,
-                name: state.displayName,
+                email: action.email,
+                name: action.displayName,
                 event: {
                   follow: action.follow,
                   id: action.eventId
                 },
-                uid: state.uid,
+                uid: action.uid,
                 FCMtoken: action.FCMtoken,
             }
             

@@ -32,12 +32,15 @@ export function SAVE_APP_USER(appUserData) {
     };
 }
 
-export function UPDATE_APP_USER(follow, eventId, FCMtoken){
+export function UPDATE_APP_USER(follow, eventId, FCMtoken, email, displaName, uid){
     return {
         type: types.UPDATE_APP_USER,
         follow: follow,
         eventId: eventId,
-        FCMtoken: FCMtoken
+        FCMtoken: FCMtoken,
+        email: email,
+        displaName: displaName,
+        uid: uid,
     }
 }
 

@@ -99,8 +99,9 @@ class _SessionItem extends Component {
         NavigationActions.navigate({ routeName: 'UserProfile'})
       ]
     })
-    const userData = this.props.user          
-    this.props.dispatch(ACTIONS.UPDATE_APP_USER(true, eventSelected.host , this.props.navigation.FCMtoken))
+    const userData = this.props.user         
+    
+    this.props.dispatch(ACTIONS.UPDATE_APP_USER(true, eventSelected.host , this.props.navigation.FCMtoken, userData.email, userData.displayName, userData.uid )) ///add email
 
     FCM.subscribeToTopic(eventSelected.host);
     const schedulNotifBody = "Your next session is on this " + eventSelected.meetingDay + " it is at " + eventSelected.meetingTime 
