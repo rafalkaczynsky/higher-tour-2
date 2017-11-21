@@ -39,8 +39,6 @@ export default class Reflect extends Component {
                 {answers.map((item, index)=> {
                     const progress = parseInt((item.Results/numberOfPeople)*100)
                     totalProgress= totalProgress + progress
-
-                    console.log(totalProgress)
                     return(
                         <ListItem
                             key={'reflectReadingKey'+ index}

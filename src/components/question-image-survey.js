@@ -28,13 +28,12 @@ export default class QuestionImageSurvey extends React.Component {
 
   render() {
     const  {onGoBack, onHome, onBible, onSettings, questionIndex, imagesArray, onPressAgree, onPressDisagree, onPressDone} = this.props
-    console.log(imagesArray)
+
     return (
-        <Animated.View style={{flex: 1, backgroundColor: !this.state.displayCard ? null : this.state.agree ? 'lightgreen' : 'red'}}>
+        <View style={{flex: 1, backgroundColor: !this.state.displayCard ? null : this.state.agree ? 'lightgreen' : 'red'}}>
         <Swiper 
             ref={(swiper) => {this._swiper = swiper}}
             autoplay={false} 
-            style={[StyleSheet.walkthrough.swiper]}
             paginationStyle={StyleSheet.walkthrough.paginator}
             dot={<View style={StyleSheet.walkthrough.dot}/>}
             loop={false}
@@ -42,7 +41,7 @@ export default class QuestionImageSurvey extends React.Component {
             autoplayTimeout={5}
             activeDot={<View style={StyleSheet.walkthrough.activeDot}/>}>
             {imagesArray.map((item, indx)=> {
-                console.log(indx)
+
                 return <SingleQuestion
                     displayCard={this.state.displayCard} 
                     buttonText={this.state.buttonText}
@@ -80,7 +79,7 @@ export default class QuestionImageSurvey extends React.Component {
             }
           )}
         </Swiper>
-        </Animated.View>
+        </View>
     );
   }
 }

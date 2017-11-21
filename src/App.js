@@ -8,51 +8,37 @@ import * as firebase from "firebase";
 const Permissions = require('react-native-permissions');
 
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
-
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
-
 import {reducers} from './reducers'
 import AppWithNavigationState from './screens'
-
 import Freebie from './windows/freebie'
 import {Read, Think, Respond} from './windows'
-
 import {AlertWindow} from './components'
 
-
 // const middleware = applyMiddleware(logger)
- const middleware = applyMiddleware(logger)
-
-//const middleware = applyMiddleware()
+ const middleware = applyMiddleware()
 
 var screen = null
 var _title = null
 var _lastReadDayNumber = null 
+
 let store = createStore(reducers, middleware)
-
-
 
 var connection = true
 var GPS = false
 var itemDay = null
 // CHECK FOR GPS
 
-
-
 // this shall be called regardless of app state: running, background or not running. Won't be called when app is killed by user in iOS
 FCM.on(FCMEvent.Notification, async (notif) => {
-
-
     // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
     if(notif.local_notification){
       //this is a local notification
     }
     if(notif.opened_from_tray){
       //app is open/resumed because user clicked banner
-
     }
     // await someAsyncCall();
-
     if(Platform.OS ==='ios'){
       //optional
       //iOS requires developers to call completionHandler to end notification process. If you do not call it your background remote notifications could be throttled, to read more about it see the above documentation link.
@@ -71,10 +57,10 @@ FCM.on(FCMEvent.Notification, async (notif) => {
       }
     }
 });
+
 FCM.on(FCMEvent.RefreshToken, (token) => {
     // fcm token may not be available on first load, catch it here
 });
-
 
 export default class App extends React.Component {
 
@@ -247,7 +233,6 @@ export default class App extends React.Component {
     _handleAppStateChange(currentAppState) {
       let storingValue = JSON.stringify(this.state.store.getState())
       let storeObject = this.state.store.getState()
-      console.log('handleAppStateChange')
 
       if (storeObject){
 
@@ -257,9 +242,7 @@ export default class App extends React.Component {
           if(storeObject.user){
             // UPDATE APPUSER IN FIREBASE WHEN COMPONENT UNMOUNT 
             const userUID = storeObject.user.uid 
-            console.log(userUID)
             const appUser = storeObject.appUser
-            console.log(appUser)
             if (userUID){
               const firebaseDataAppUsers = firebase.database().ref('appUsers/'+userUID+'/');
               firebaseDataAppUsers.update({

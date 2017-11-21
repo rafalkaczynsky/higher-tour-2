@@ -162,39 +162,28 @@ class _UserProfile extends Component {
     // check if session ex in the session...
 
     firebase.database().ref('sessions/'+ eventSelected.host+'/').once("value", snapshot => {
-
       const session = snapshot.val();
       if (session){
         const sessionArray = Object.keys(session).map(function (key) { return session[key]; })
-
         var TheDate = new Date().getTime();
         var TheDateFormatted = 'dd'
-
         var sessionsAvailable = []
         sessionArray.map((item, index)=>{
             let sessionDate = item.UTCTime
             if (( Date.parse(sessionDate) > TheDate ) && (sessionsAvailable.length <= 2)) {
-
               sessionsAvailable.push(item)
-
             }
         })
-
         if(sessionsAvailable.length === 0){
           const nextMeeting = this.calculateReminderDate(eventSelected.meetingDay, eventSelected.meetingTime)
-
-
           nextMetteingObj ={
             'UTCTime': String(new Date(nextMeeting).toISOString()),
             'aaaSession': String(eventSelected.name),
             'expired': true
           }
-
           sessionsAvailable.push(nextMetteingObj)
         }
-
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(sessionsAvailable));
-
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       } else {
         const noSessions = []

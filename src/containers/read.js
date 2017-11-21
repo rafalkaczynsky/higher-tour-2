@@ -8,15 +8,6 @@ import Sound from 'react-native-sound'
 import {Read} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 
-
-
-
-
-
-
-//this.playTrack(this.props.musicUrl)
-
-
 class _Read extends Component {
   constructor(props){
     super(props)
@@ -38,7 +29,6 @@ handleOnSettings(navigate){
   if(this.sound) this.sound.release();
 
   this.props.dispatch( {type: 'SettingsInAnimation'})
-  //navigate('Settings')
 }
 
 handleHome(navigate){
@@ -68,7 +58,6 @@ handleOnPlay(musicUrl){
         if (error) {
           console.log(error)
         } else {
-          console.log("Playing sound");
           this.sound.play(() => {
             // Release when it's done so we're not using up resources
             this.sound.release();
@@ -87,12 +76,8 @@ handleOnStop(){
   this.sound.pause();
 }
 
-
-
 componentDidMount(){
 
-  //wait 5 seconds after that 
-  //update appUser lastReadDayNumber and timesta,[ ]
   const userData = this.props.user          
   const currentBibleReading = this.props.currentBibleReading
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
@@ -123,7 +108,6 @@ componentDidMount(){
  
       })
   }
-
 }
 
   render() {
@@ -151,7 +135,7 @@ componentDidMount(){
           }
           onItemNextPressed={()=>{
               if(this.sound) this.sound.release();
-              this.props.dispatch({type: 'GoToThinkRightToLeftAnimation'})
+              this.props.dispatch({type: 'GoToThinkLeftToRightAnimation'})
             }
           }
           currentReadingDayNumber={currentReadingDayNumber}

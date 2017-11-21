@@ -48,7 +48,7 @@ class RemoteSound extends Component {
       // Play the sound with an onEnd callback
       this.track.play((success) => {
         if (success) {
-          console.log('successfully finished playing');
+
         } else {
           console.log('playback failed due to audio decoding errors');
           // reset the player to its uninitialized state (android only)

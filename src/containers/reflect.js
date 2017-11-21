@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, View} from 'react-native'
+import {Button, View, BackHandler} from 'react-native'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
 
@@ -18,6 +18,8 @@ class _Reflect extends Component {
       howMany: null,
       questions: []
     }
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   
   handleOnSettings(){
@@ -25,7 +27,8 @@ class _Reflect extends Component {
   }
 
   handleOnHome(){
-      
+    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
+
     const resetActionSignIn = NavigationActions.reset({
       index: 0,
       actions: [
@@ -46,26 +49,24 @@ class _Reflect extends Component {
           NavigationActions.navigate({ routeName: 'Welcome'})
         ]
     })
-      
-      
+        
     const loginStatus = this.props.app.loginStatus  // data from the store
       
     if (loginStatus && loginStatus === 'loggedOut') {
-      //this.props.dispatch({type: 'SignInOnHomeAnimation'})
       this.props.dispatch(resetActionSignIn)
     } else if (loginStatus && loginStatus === 'loggedInPlus') {
-      // this.props.dispatch({type: 'UserProfileOnHomeAnimation'})
       this.props.dispatch(resetActionUserProfile)
     } else {
-      // this.props.dispatch({type: 'GotoWelcomeAnimation'})
       this.props.dispatch(resetActionWelcome)
     }
  }
 
   handleOnBible(navigate, route){
-      this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
-      this.props.dispatch({ type: 'BibleAnimation' }) 
+    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
+    this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
+    this.props.dispatch({ type: 'BibleAnimation' }) 
   } 
+
   handleOnGoBack(){
     this.props.navigation.dispatch(NavigationActions.back())
   }
@@ -74,12 +75,18 @@ class _Reflect extends Component {
     let questionIndex = this.props.app.questionIndex 
     if ((questionIndex+1)<(this.state.questions.length-1)){
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+    
       this.props.dispatch({type: 'GoToQuestionsAnimation'})
-    } else this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
-  }
-
-  componentDidMount(){
-
+    } else {
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
+     const resetActionWelcome = NavigationActions.reset({
+      index: 0,
+        actions: [
+          NavigationActions.navigate({routeName: 'UserProfile'})
+        ]
+    })
+    this.props.dispatch(resetActionWelcome)
+    }
   }
 
   componentWillMount(){
@@ -92,7 +99,6 @@ class _Reflect extends Component {
     questionsRef.once("value", snapshot => {
       const questions = snapshot.val()
       this.setState({questions: questions})
-      console.log(questions)
     })
 
     questionRef.once("value", snapshot => {
@@ -105,10 +111,25 @@ class _Reflect extends Component {
       this.setState({howMany: howMany})
     })
 
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
+
+  componentDidMount(){
+    
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
+
+    
   
   render() {
-    //UPDATE_QUESTION_INDEX
      const { navigate } = this.props.navigation
      const { params } = this.props.navigation.state
 

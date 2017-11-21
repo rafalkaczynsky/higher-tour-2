@@ -253,7 +253,7 @@ class _SignIn extends Component {
                   props.navigation.dispatch(resetAction)
                 }
             } else {
-              console.log('6')
+   
             // USER IS NOT THE SAME AS IS IN LOCAL STORAGE
             // ALL DATA MUST BE OVERWRITTEN  - USER , APPUSER, eventSelcted 
             // IN THESE CASE USER CAN BE EVEN NEW IN OUR APP IT MEANS NO DATA IN APPUSERS 
@@ -263,11 +263,11 @@ class _SignIn extends Component {
               userCurrent = snapshot.val();
               // IF USER IS IN FIREBASE DATABASE APPUSERS 
               if (userCurrent){
-                console.log('7')
+ 
                 const event = userCurrent.event;
                 //  CHECK IF FOLLOW EVENT
                   if (event.id){
-                    console.log('8')
+
                     //  IF USER FOLLOW
                     //  FIND EVENT BY ID 
                     firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
@@ -386,7 +386,7 @@ class _SignIn extends Component {
                       props.navigation.dispatch(resetAction)
                   })
                 } else {
-                  console.log('14')
+
                   //... IF DOESNT FOLLOW ...                
                   // UPDATE FCM TOKEN
                   if (props.navigation.FCMtoken){

@@ -3,7 +3,6 @@ import {Button, View} from 'react-native'
 import { connect } from 'react-redux';
 import RNFetchBlob from 'react-native-fetch-blob'
 import Sound from 'react-native-sound'
-
 import _Firebase from '../actions/firebase';
 import {Freebie} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
@@ -36,7 +35,6 @@ class _Freebie extends Component {
           NavigationActions.navigate({ routeName: 'Welcome'})
         ]
     })
-      
       
     const loginStatus = this.props.app.loginStatus  // data from the store
       
@@ -128,10 +126,8 @@ class _Freebie extends Component {
   })
   */
  
-
   handleOnPlay(musicUrl){
     console.log('Play')
-
       this.sound = new Sound(musicUrl,
         undefined,
         error => {

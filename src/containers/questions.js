@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, View} from 'react-native'
+import {Button, View, BackHandler} from 'react-native'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
 
@@ -16,6 +16,8 @@ class _Questions extends Component {
         signIn: false,
         notificationsOn: true,
     }
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   
   handleOnSettings(){
@@ -64,21 +66,18 @@ class _Questions extends Component {
       this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
       this.props.dispatch({ type: 'BibleAnimation' }) 
   } 
+
   handleOnGoBack(){
+    const questionIndex = this.props.app.questionIndex
+    console.log('ongoback in questions: index - ' + questionIndex)
+    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
     this.props.navigation.dispatch(NavigationActions.back())
   }
   
-
-  // week1 needs to be generic
-
   handleAnswer(index){
     const questionIndex = this.props.app.questionIndex
     const sessionId = this.props.app.week.id
     const userUid = this.props.user.uid
-
-    console.log(userUid)  
-
-    console.log(index)  
 
     const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/Answers/'+index)
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
@@ -108,15 +107,26 @@ class _Questions extends Component {
       })
     })
 
-    this.props.dispatch({type: 'GoToReflectRightToLeftAnimation'})
+    const resetActionWelcome = NavigationActions.reset({
+      index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Reflect'})
+        ]
+    })
+
+    this.props.dispatch(resetActionWelcome)
   }
+
+
 
   handleAgree(index){
     const questionIndex = this.props.app.questionIndex
     const sessionId = this.props.app.week.id
     const userUid = this.props.user.uid
+    const numberOfQuestions = this.props.app.week.Questions.length - 1
 
-    
+    console.log('numberOfQuestions: '+numberOfQuestions)
+
     const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
 
@@ -150,7 +160,7 @@ class _Questions extends Component {
       this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
     }*/
 
-    if (index <3){
+    if (index < (numberOfQuestions-1)){
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
     } else {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
@@ -161,7 +171,7 @@ class _Questions extends Component {
     const questionIndex = this.props.app.questionIndex
     const sessionId = this.props.app.week.id
     const userUid = this.props.user.uid
-    
+    const numberOfQuestions = this.props.app.week.Questions.length - 1 
 
     const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
@@ -196,7 +206,7 @@ class _Questions extends Component {
       this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
     }*/
 
-    if (index <3){
+    if (index < (numberOfQuestions-1)){
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
     } else {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
@@ -204,10 +214,36 @@ class _Questions extends Component {
     }
   }
 
-  componentDidMount(){
+  handleOnPressDone(){
+    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      key: null,
+      actions: [
+        NavigationActions.navigate({ routeName: 'UserProfile'})
+      ]
+    })
+    this.props.dispatch(resetAction)
+  }
 
+  componentWillMount(){
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
   
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    const questionIndex = this.props.app.questionIndex
+    console.log('ongoback in questions: index - ' + questionIndex)
+    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
+    this.props.navigation.dispatch(NavigationActions.back())
+
+    return true;
+  }
+
+
   render() {
 
      const { navigate } = this.props.navigation
@@ -232,10 +268,7 @@ class _Questions extends Component {
           session={session}
           onPressAgree={(index, answer)=> this.handleAgree(index, answer)}
           onPressDisagree={(index, answer)=>this.handleDisagree(index, answer)}
-          onPressDone={()=> {
-            this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
-            this.props.dispatch({type: 'UserProfileAfterSettingsAnimation'})
-          }}
+          onPressDone={()=> this.handleOnPressDone()}
           questionIndex={questionIndex}
         />
     )

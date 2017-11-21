@@ -26,8 +26,7 @@ class QuestionText extends Component {
                     textStyle={{fontSize: 18}}
                 />
             {Answers.map((answer, indx) =>{
-              if (answer) console.log(answer.Text)
-    
+  
               if (answer !==null) return (
                 <Button
                     key={'answersItem' + indx}
@@ -64,10 +63,6 @@ export default class Questions extends Component {
     let surveyImagesArray = []  
 
     for (i=1; i<session.Questions.length; i++) {
-      console.log(i)
-      console.log(session.Questions.length)
-      console.log(session.Questions)
-      console.log(session.Questions[i].imageUrl)
       surveyImagesArray.push(session.Questions[i].imageUrl)
     }
     const questionType = session.questionType 
@@ -79,4 +74,3 @@ export default class Questions extends Component {
 
   }
 }
-//onPressAgree, onPressDisagree
