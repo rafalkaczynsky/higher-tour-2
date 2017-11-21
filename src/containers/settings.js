@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, View} from 'react-native'
+import {Button, View, BackHandler} from 'react-native'
 import { connect } from 'react-redux';
 
 import _Firebase from '../actions/firebase';
@@ -16,6 +16,8 @@ class _Settings extends Component {
         notificationsOn: true,
         locationOn: true,
     }
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   
   handleNotification(){
@@ -92,6 +94,9 @@ class _Settings extends Component {
     this.props.navigation.dispatch(NavigationActions.back())
   }
   
+  componentWillMount(){
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
 
   componentDidMount(){
     const { params } = this.props.navigation.state
@@ -105,6 +110,15 @@ class _Settings extends Component {
     this.props.dispatch(ACTIONS.UPDATE_ACTIVE_TAB_NAME('Settings'))
   }
   
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
+
   render() {
       const buttonTextArray = {
         signIn: this.state.signIn ? 'Sign Out' : 'Sign In', 
