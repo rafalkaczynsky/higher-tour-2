@@ -16,7 +16,8 @@ class _Reflect extends Component {
       question: null,
       answers: [],
       howMany: null,
-      questions: []
+      questions: [],
+      buttonText: 'NEXT'
     }
 
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
@@ -136,6 +137,14 @@ class _Reflect extends Component {
      const userData = this.props.user                   // data from the store
      const loginStatus = this.props.app.loginStatus
 
+     let questionIndex = this.props.app.questionIndex 
+     let buttonText= 'NEXT' 
+     
+     if ((questionIndex+1)<(this.state.questions.length-1)){
+         buttonText= 'NEXT' 
+     } else {
+         buttonText = 'DONE' 
+     }
     return (
         <Reflect
           onHome={()=> this.handleOnHome()}  
@@ -146,6 +155,7 @@ class _Reflect extends Component {
           question={this.state.question}
           answers={this.state.answers}
           howMany={this.state.howMany}
+          buttonText={buttonText}
         />
     )
   }

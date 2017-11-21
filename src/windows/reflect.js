@@ -15,7 +15,7 @@ export default class Reflect extends Component {
   }
 
   render() {
-    const {onGoBack, onGoNext, question, answers, howMany} = this.props
+    const {onGoBack, onGoNext, question, answers, howMany, buttonText} = this.props
 
     const numberOfPeople = howMany
 
@@ -23,7 +23,9 @@ export default class Reflect extends Component {
       <View style={StyleSheet.window.default}>
         <Header
           text='Reflect'    
+          onBack
           onNext
+          onBackCallback={onGoBack}
           onNextCallback={onGoNext}
         />
         <ScrollView style={{width: '100%'}}>
@@ -56,14 +58,13 @@ export default class Reflect extends Component {
                 })}
                 </View>     
                 <View style={{marginTop: 10,width: '60%', alignItems: 'center'}}>
-                    <Text style={{fontSize: 18, color: colors.brown, textAlign: 'center'}}>
-                        You have complited the Welcome Session! Have Freebie
-                    </Text>
+
                 </View>
     
                 <Button 
                     type="default"
-                    text="HigerTwelve - 24"
+                    text={buttonText}
+                    onPress={onGoNext}
                     bgColor="yellow"  
                     textColor="brown"
                     buttonStyle={{margin: 10, width: '92%'}}

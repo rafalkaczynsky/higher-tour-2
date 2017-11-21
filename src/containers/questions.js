@@ -106,7 +106,7 @@ class _Questions extends Component {
         Results: updatedResults
       })
     })
-
+/*
     const resetActionWelcome = NavigationActions.reset({
       index: 0,
         actions: [
@@ -115,6 +115,9 @@ class _Questions extends Component {
     })
 
     this.props.dispatch(resetActionWelcome)
+
+    */
+    this.props.dispatch({type: 'GoToReflectRightToLeftAnimation'})
   }
 
 

@@ -109,7 +109,7 @@ class UserProfile extends React.Component {
                    const sessionDateFormatted = sessionDate.substring(8,10)+' '+ months[parseFloat(sessionDate.substring(5,7))-1]+' '+sessionDate.substring(0,4)
                    const aaaSessionItem = item.aaaSession
 
-                   if (index === 2)
+                   if (index === 0)
                     return(
                       <ListItem
                         key={item.aaaSession + '-' + index}
