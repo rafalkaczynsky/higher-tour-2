@@ -59,6 +59,7 @@ export default class Questions extends Component {
     const {onGoBack, onHome, onSettings, onBible, session, questionIndex, handleAnswer, onPressDone, onPressAgree, onPressDisagree} = this.props
     let surveyImagesArray = []  
     let imageUrl = ''
+    let imagesArray = ''
 
       console.log('questionIndex')
       console.log(questionIndex+1)
@@ -66,11 +67,12 @@ export default class Questions extends Component {
       console.log(session.Questions)
 
       const questionType = session.Questions[questionIndex+1].questionType
-
+      const questionsNumber = session.Questions.length -1
     
     if (questionType === 'imageSlider'){
-      const imagesArray =  session.Questions[questionIndex+1].imagesUrls
+      imagesArray =  session.Questions[questionIndex+1].imagesUrls
     }
+
     if (questionType === 'imageSurvey'){
       imageUrl =  session.Questions[questionIndex+1].imageUrl
       console.log(imageUrl)
@@ -80,7 +82,7 @@ export default class Questions extends Component {
     
           if (questionType === 'text')        return <QuestionText Answers={session.Questions[questionIndex+1].Answers} questionText={session.Questions[questionIndex+1].Question} onGoBack={onGoBack} onHome={onHome}  onSettings={onSettings} onBible={onBible} session={session} questionIndex={questionIndex} handleAnswer={handleAnswer}/>
      else if (questionType === 'imageSlider') return <QuestionSlider onPressDone={onPressDone} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imagesArray={imagesArray}/>
-     else if (questionType === 'imageSurvey') return <QuestionImageSurvey  onPressDone={onPressDone} onPressAgree={onPressAgree} onPressDisagree={onPressDisagree} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imageUrl={imageUrl}/>
+     else if (questionType === 'imageSurvey') return <QuestionImageSurvey  questionsNumber={questionsNumber} onPressDone={onPressDone} onPressAgree={onPressAgree} onPressDisagree={onPressDisagree} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imageUrl={imageUrl}/>
      else return <Text>Warning! Something wrong - no questionType found</Text>
 
   }

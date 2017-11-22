@@ -253,8 +253,10 @@ class _Questions extends Component {
 
   handleBackButtonClick() {
     const questionIndex = this.props.app.questionIndex
-    console.log('ongoback in questions: index - ' + questionIndex)
-    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
+    if (questionIndex >= 1){
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex-1)) 
+    } 
+
     this.props.navigation.dispatch(NavigationActions.back())
 
     return true;

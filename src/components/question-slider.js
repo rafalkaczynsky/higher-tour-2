@@ -24,10 +24,6 @@ export default class QuestionSlider extends React.Component {
       imagesArrayNew.push(imagesArray[i])
     }
 
-
-
-
-
  console.log(imagesArrayNew)
     return (
         <Swiper 
@@ -70,7 +66,7 @@ class SlidePageLast extends React.Component {
         <Image style={{flex: 1}} source={{uri: this.props.image}} />
         <Button
           type="default"
-          text={'DONE'}
+          text={'NEXT'}
           style={{flex: 1}}
           onPress={this.props.onPressDone}
         />

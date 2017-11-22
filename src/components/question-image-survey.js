@@ -27,11 +27,10 @@ export default class QuestionImageSurvey extends React.Component {
   }
 
   render() {
-    const  {onGoBack, onHome, onBible, onSettings, questionIndex, imageUrl, onPressAgree, onPressDisagree, onPressDone} = this.props
+    const  {onGoBack, onHome, onBible, questionsNumber, onSettings, questionIndex, imageUrl, onPressAgree, onPressDisagree, onPressDone} = this.props
 
-    console.log(imageUrl)
+    console.log(questionsNumber)
      
-
     const imageArray = []
     imageArray.push(imageUrl)
 
@@ -57,7 +56,7 @@ export default class QuestionImageSurvey extends React.Component {
                         //setTimeout(()=> this.setState({visible: true}), 3000)
 
                         onPressAgree(indx)
-                        if(indx<(imageArray.length-2)){
+                        if(questionIndex<(questionsNumber-2)){
                             this.setState({displayCard: true, agree: true, buttonText: 'NEXT'})
                         } else {
                             this.setState({displayCard: true, agree: true, buttonText: 'DONE'})
@@ -66,7 +65,8 @@ export default class QuestionImageSurvey extends React.Component {
                     onPressDisagree={()=>{
   
                         onPressDisagree(indx)
-                        if(indx<(imageArray.length-2)){
+                      
+                        if(questionIndex<(questionsNumber-2)){
                             this.setState({displayCard: true, agree: false, buttonText: 'NEXT'})
                         } else {
                             this.setState({displayCard: true, agree: false, buttonText: 'DONE'})
