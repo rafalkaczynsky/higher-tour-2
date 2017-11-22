@@ -75,8 +75,7 @@ handleOnPlay(musicUrl){
         if (error) {
           console.log(error)
         } else {
-          console.log(new Date())
-          console.log('Play soon music will be soon')
+  
           this.sound.play(() => {
             // Release when it's done so we're not using up resources
             this.sound.release();

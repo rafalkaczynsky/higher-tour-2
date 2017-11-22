@@ -61,11 +61,6 @@ export default class Questions extends Component {
     let imageUrl = ''
     let imagesArray = ''
 
-      console.log('questionIndex')
-      console.log(questionIndex+1)
-      console.log('Questions')
-      console.log(session.Questions)
-
       const questionType = session.Questions[questionIndex+1].questionType
       const questionsNumber = session.Questions.length -1
     
@@ -75,7 +70,6 @@ export default class Questions extends Component {
 
     if (questionType === 'imageSurvey'){
       imageUrl =  session.Questions[questionIndex+1].imageUrl
-      console.log(imageUrl)
     }
 
     //const questionType = session.questionType

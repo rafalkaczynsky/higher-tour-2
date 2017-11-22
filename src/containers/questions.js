@@ -69,7 +69,7 @@ class _Questions extends Component {
 
   handleOnGoBack(){
     const questionIndex = this.props.app.questionIndex
-    console.log('ongoback in questions: index - ' + questionIndex)
+
     this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
     this.props.navigation.dispatch(NavigationActions.back())
   }
@@ -144,7 +144,6 @@ class _Questions extends Component {
 
     answerRef.once("value", snapshot => {
       const Answer = snapshot.val()
-      console.log(Answer)
       const Results = Answer.Results 
       const updatedResults = Results + 1
 
@@ -187,7 +186,7 @@ class _Questions extends Component {
 
     answerRef.once("value", snapshot => {
       const Answer = snapshot.val()
-      console.log(Answer)
+
       const Results = Answer.Results 
       const updatedResults = Results + 1
 
@@ -212,10 +211,6 @@ class _Questions extends Component {
   handleOnPressDone(){
     const session = this.props.app.week
     let questionIndex = this.props.app.questionIndex 
-
-    console.log(questionIndex+1)
-    console.log(this.state.questions.length-1)
-
 
     if ((questionIndex+1)<(this.state.questions.length-1)){
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))

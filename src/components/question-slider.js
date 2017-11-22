@@ -24,7 +24,6 @@ export default class QuestionSlider extends React.Component {
       imagesArrayNew.push(imagesArray[i])
     }
 
- console.log(imagesArrayNew)
     return (
         <Swiper 
             autoplay={true} 

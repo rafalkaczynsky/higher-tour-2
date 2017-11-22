@@ -28,9 +28,7 @@ export default class QuestionImageSurvey extends React.Component {
 
   render() {
     const  {onGoBack, onHome, onBible, questionsNumber, onSettings, questionIndex, imageUrl, onPressAgree, onPressDisagree, onPressDone} = this.props
-
-    console.log(questionsNumber)
-     
+ 
     const imageArray = []
     imageArray.push(imageUrl)
 
