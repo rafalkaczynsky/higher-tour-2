@@ -26,7 +26,6 @@ class QuestionText extends Component {
                     textStyle={{fontSize: 18}}
                 />
             {Answers.map((answer, indx) =>{
-  
               if (answer !==null) return (
                 <Button
                     key={'answersItem' + indx}
@@ -58,18 +57,30 @@ export default class Questions extends Component {
 
   render() {
     const {onGoBack, onHome, onSettings, onBible, session, questionIndex, handleAnswer, onPressDone, onPressAgree, onPressDisagree} = this.props
-
-    const imagesArray =  session.Questions[questionIndex+1].imagesUrls
     let surveyImagesArray = []  
+    let imageUrl = ''
 
-    for (i=1; i<session.Questions.length; i++) {
-      surveyImagesArray.push(session.Questions[i].imageUrl)
+      console.log('questionIndex')
+      console.log(questionIndex+1)
+      console.log('Questions')
+      console.log(session.Questions)
+
+      const questionType = session.Questions[questionIndex+1].questionType
+
+    
+    if (questionType === 'imageSlider'){
+      const imagesArray =  session.Questions[questionIndex+1].imagesUrls
     }
-    const questionType = session.questionType 
+    if (questionType === 'imageSurvey'){
+      imageUrl =  session.Questions[questionIndex+1].imageUrl
+      console.log(imageUrl)
+    }
 
+    //const questionType = session.questionType
+    
           if (questionType === 'text')        return <QuestionText Answers={session.Questions[questionIndex+1].Answers} questionText={session.Questions[questionIndex+1].Question} onGoBack={onGoBack} onHome={onHome}  onSettings={onSettings} onBible={onBible} session={session} questionIndex={questionIndex} handleAnswer={handleAnswer}/>
      else if (questionType === 'imageSlider') return <QuestionSlider onPressDone={onPressDone} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imagesArray={imagesArray}/>
-     else if (questionType === 'imageSurvey') return <QuestionImageSurvey  onPressDone={onPressDone} onPressAgree={onPressAgree} onPressDisagree={onPressDisagree} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imagesArray={surveyImagesArray}/>
+     else if (questionType === 'imageSurvey') return <QuestionImageSurvey  onPressDone={onPressDone} onPressAgree={onPressAgree} onPressDisagree={onPressDisagree} onGoBack={onGoBack} onHome={onHome} onBible={onBible} onSettings={onSettings}  questionIndex={questionIndex} imageUrl={imageUrl}/>
      else return <Text>Warning! Something wrong - no questionType found</Text>
 
   }

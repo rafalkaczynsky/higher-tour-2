@@ -126,19 +126,12 @@ class _Questions extends Component {
     const questionIndex = this.props.app.questionIndex
     const sessionId = this.props.app.week.id
     const userUid = this.props.user.uid
-    const numberOfQuestions = this.props.app.week.Questions.length - 1
+    const numberOfQuestions = this.props.app.week.Questions.length - 1 
 
-    console.log('numberOfQuestions: '+numberOfQuestions)
-
-    const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
+    const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/Answers/2')
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
-
     const appUserRef = firebase.database().ref('appUsers/'+userUid+'/aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/')
-    
-    appUserRef.update({
-      answer: 'agree'
-    })
-  
+
     questionRef.once("value", snapshot => {
       const question = snapshot.val()
       const howMany = question.howMany 
@@ -151,20 +144,22 @@ class _Questions extends Component {
 
     answerRef.once("value", snapshot => {
       const Answer = snapshot.val()
-      const Results = Answer.agree 
+      console.log(Answer)
+      const Results = Answer.Results 
       const updatedResults = Results + 1
 
       answerRef.update({
-        agree: updatedResults
+        Results: updatedResults
       })
     })
-
-    /* if ((questionIndex+1) === (this.state.questions.length-1)){
+    
+   // this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+   /* if ((questionIndex+1) === (this.state.questions.length-1)){
       this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
     }*/
 
     if (index < (numberOfQuestions-1)){
-      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+     // this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
     } else {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
     }
@@ -176,14 +171,10 @@ class _Questions extends Component {
     const userUid = this.props.user.uid
     const numberOfQuestions = this.props.app.week.Questions.length - 1 
 
-    const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/answers/')
+    const answerRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/Answers/2')
     const questionRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1))
     const appUserRef = firebase.database().ref('appUsers/'+userUid+'/aaaSession/'+sessionId+'/Questions/'+(questionIndex + 1)+'/')
-    
-    appUserRef.update({
-      answer: 'disagree'
-    })
-  
+
     questionRef.once("value", snapshot => {
       const question = snapshot.val()
       const howMany = question.howMany 
@@ -196,40 +187,63 @@ class _Questions extends Component {
 
     answerRef.once("value", snapshot => {
       const Answer = snapshot.val()
-      const Results = Answer.disagree 
+      console.log(Answer)
+      const Results = Answer.Results 
       const updatedResults = Results + 1
 
       answerRef.update({
-        disagree: updatedResults
+        Results: updatedResults
       })
     })
     
-    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+   // this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
    /* if ((questionIndex+1) === (this.state.questions.length-1)){
       this.props.dispatch({type: 'GoToFreebieRightToLeftAnimation'})
     }*/
 
     if (index < (numberOfQuestions-1)){
-      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+     // this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
     } else {
       this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
-
     }
+
   }
 
   handleOnPressDone(){
-    this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0)) 
-    const resetAction = NavigationActions.reset({
+    const session = this.props.app.week
+    let questionIndex = this.props.app.questionIndex 
+
+    console.log(questionIndex+1)
+    console.log(this.state.questions.length-1)
+
+
+    if ((questionIndex+1)<(this.state.questions.length-1)){
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(questionIndex+1))
+    
+      this.props.dispatch({type: 'GoToQuestionsAnimation'})
+    } else {
+      this.props.dispatch(ACTIONS.UPDATE_QUESTION_INDEX(0))
+     const resetActionWelcome = NavigationActions.reset({
       index: 0,
-      key: null,
-      actions: [
-        NavigationActions.navigate({ routeName: 'UserProfile'})
-      ]
+        actions: [
+          NavigationActions.navigate({routeName: 'UserProfile'})
+        ]
     })
-    this.props.dispatch(resetAction)
+    this.props.dispatch(resetActionWelcome)
+    }
+    
   }
 
   componentWillMount(){
+
+    const sessionId = this.props.app.week.id
+    const questionsRef = firebase.database().ref('aaaSession/'+sessionId+'/Questions')
+
+    questionsRef.once("value", snapshot => {
+      const questions = snapshot.val()
+        this.setState({questions: questions})
+    })
+
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
   
@@ -269,8 +283,8 @@ class _Questions extends Component {
           onSettings={()=> this.handleOnSettings()}
           handleAnswer={(index)=> this.handleAnswer(index)}
           session={session}
-          onPressAgree={(index, answer)=> this.handleAgree(index, answer)}
-          onPressDisagree={(index, answer)=>this.handleDisagree(index, answer)}
+          onPressAgree={(index) => this.handleAgree(index)}
+          onPressDisagree={(index)=>this.handleDisagree(index)}
           onPressDone={()=> this.handleOnPressDone()}
           questionIndex={questionIndex}
         />

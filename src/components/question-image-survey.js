@@ -27,7 +27,13 @@ export default class QuestionImageSurvey extends React.Component {
   }
 
   render() {
-    const  {onGoBack, onHome, onBible, onSettings, questionIndex, imagesArray, onPressAgree, onPressDisagree, onPressDone} = this.props
+    const  {onGoBack, onHome, onBible, onSettings, questionIndex, imageUrl, onPressAgree, onPressDisagree, onPressDone} = this.props
+
+    console.log(imageUrl)
+     
+
+    const imageArray = []
+    imageArray.push(imageUrl)
 
     return (
         <View style={{flex: 1, backgroundColor: !this.state.displayCard ? null : this.state.agree ? 'lightgreen' : 'red'}}>
@@ -40,7 +46,7 @@ export default class QuestionImageSurvey extends React.Component {
             scrollEnabled={false}
             autoplayTimeout={5}
             activeDot={<View style={StyleSheet.walkthrough.activeDot}/>}>
-            {imagesArray.map((item, indx)=> {
+            {imageArray.map((item, indx)=> {
 
                 return <SingleQuestion
                     displayCard={this.state.displayCard} 
@@ -51,7 +57,7 @@ export default class QuestionImageSurvey extends React.Component {
                         //setTimeout(()=> this.setState({visible: true}), 3000)
 
                         onPressAgree(indx)
-                        if(indx<3){
+                        if(indx<(imageArray.length-2)){
                             this.setState({displayCard: true, agree: true, buttonText: 'NEXT'})
                         } else {
                             this.setState({displayCard: true, agree: true, buttonText: 'DONE'})
@@ -60,7 +66,7 @@ export default class QuestionImageSurvey extends React.Component {
                     onPressDisagree={()=>{
   
                         onPressDisagree(indx)
-                        if(indx<3){
+                        if(indx<(imageArray.length-2)){
                             this.setState({displayCard: true, agree: false, buttonText: 'NEXT'})
                         } else {
                             this.setState({displayCard: true, agree: false, buttonText: 'DONE'})
@@ -68,7 +74,7 @@ export default class QuestionImageSurvey extends React.Component {
                     }}
                     onPressDone={()=>{
       
-                        if(indx<3){
+                        if(indx<(imageArray.length-2)){
                             this._swiper.scrollBy(1, true)
                             this.setState({displayCard: !this.state.displayCard})
                         } else {

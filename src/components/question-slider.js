@@ -4,6 +4,7 @@ import Swiper from 'react-native-swiper';
 import StyleSheet from '../styles';
 import {Button} from './'
 
+
 export default class QuestionSlider extends React.Component {
 
   static getTest(close) {
@@ -17,6 +18,17 @@ export default class QuestionSlider extends React.Component {
   render() {
     const  {onGoBack, onHome, onBible, onSettings, questionIndex, imagesArray, onPressDone} = this.props
 
+    const imagesArrayNew = []
+    
+    for(i=1; i < (imagesArray.length); i++) {
+      imagesArrayNew.push(imagesArray[i])
+    }
+
+
+
+
+
+ console.log(imagesArrayNew)
     return (
         <Swiper 
             autoplay={true} 
@@ -26,10 +38,14 @@ export default class QuestionSlider extends React.Component {
             loop={false}
             autoplayTimeout={5}
             activeDot={<View style={StyleSheet.walkthrough.activeDot}/>}>
-            <SlidePage image={imagesArray[1].url}/>
-            <SlidePage image={imagesArray[2].url}/>
-            <SlidePage image={imagesArray[3].url}/>
-            <SlidePageLast image={imagesArray[4].url} onPressDone={onPressDone}/>
+            {
+              imagesArrayNew.map((item, i) => {
+              if (i < imagesArrayNew.length-1) return <SlidePage key={i} image={item.url}/>
+              else return <SlidePageLast key={i} image={item.url} onPressDone={onPressDone}/>}
+              ) 
+            }
+            
+              
         </Swiper>
     );
   }
