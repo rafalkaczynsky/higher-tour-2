@@ -12,10 +12,9 @@ class _WeekList extends Component {
     super(props)
 }
 
-handleOnBible(navigate, from){
+handleOnBible(navigate){
   this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
   this.props.dispatch({ type: 'BibleAnimation' }) 
-
 }
 
 handleOnSettings(navigate){
@@ -75,6 +74,7 @@ handleOnGoBack(){
         <WeekList 
           onSettings={()=> this.handleOnSettings()}
           onHome={()=> this.handleOnHome()}
+          onBible={()=> this.handleOnBible(navigate)}
           onWeekBackPressed={()=> this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})}
           week={this.props.app.week}
           weekDate={this.props.app.weekDate}

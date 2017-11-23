@@ -21,7 +21,7 @@ export default StyleSheet => StyleSheet.extend({
     position: 'absolute',
     alignItems: 'flex-start',
     left: 0,
-    bottom: 80,
+    bottom: 100,
     right: 0,
     zIndex: 100
   },

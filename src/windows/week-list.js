@@ -94,7 +94,8 @@ export default class WeekList extends Component {
 
           <TabMenu
             onSettings={this.props.onSettings}
-            onHome={this.props.onHome}
+            onHome={this.props.onHome}    
+            onBible={this.props.onBible}
             activeTabName={this.props.activeTabName}
           />
       </View>
