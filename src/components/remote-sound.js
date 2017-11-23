@@ -19,7 +19,7 @@ class RemoteSound extends Component {
   playTrack = (musicUrl) => {
     const track = new Sound(musicUrl, null, (e) => {
       if (e) {
-        console.log('error loading track:', e)
+        //console.log('error loading track:', e)
       } else {
         track.play()
       }
@@ -50,7 +50,7 @@ class RemoteSound extends Component {
         if (success) {
 
         } else {
-          console.log('playback failed due to audio decoding errors');
+          //console.log('playback failed due to audio decoding errors');
           // reset the player to its uninitialized state (android only)
           // this is the only option to recover after an error occured and use the player again
           this.track.reset();

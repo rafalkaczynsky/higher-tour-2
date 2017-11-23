@@ -59,7 +59,7 @@ class _Freebie extends Component {
   }
 
 
-      console.log('download start for id = ',section.section_id ) //start download
+      //console.log('download start for id = ',section.section_id ) //start download
     RNFetchBlob
       .config({
         path: RNFetchBlob.fs.dirs.DocumentDir + '/courseSections/' + section.section_id + '.mp3',
@@ -69,11 +69,11 @@ class _Freebie extends Component {
         'Cache-Control': 'no-store'
       })
       .progress({ count: 10 }, (received, total) => {
-        console.log(`progress for section ${section.section_id}: `, Math.floor(received/total*100), '%')
-        console.log('id: '+ section.section_id + ', progress: ' + Math.floor(received/total*100)/100)
+       // console.log(`progress for section ${section.section_id}: `, Math.floor(received/total*100), '%')
+       // console.log('id: '+ section.section_id + ', progress: ' + Math.floor(received/total*100)/100)
       })
       .then(res => {
-        console.log(`section ${section.section_id} is saved to: `, res.path())
+      //  console.log(`section ${section.section_id} is saved to: `, res.path())
         filePath = RNFetchBlob.fs.dirs.DocumentDir + '/' + section.section_id + '.mp3'
         return { path: filePath, id: section.section_id }
       })
@@ -127,14 +127,14 @@ class _Freebie extends Component {
   */
  
   handleOnPlay(musicUrl){
-    console.log('Play')
+    //console.log('Play')
       this.sound = new Sound(musicUrl,
         undefined,
         error => {
           if (error) {
             console.log(error)
           } else {
-            console.log("Playing sound");
+           // console.log("Playing sound");
             this.sound.play(() => {
               // Release when it's done so we're not using up resources
               this.sound.release();

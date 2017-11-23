@@ -53,7 +53,6 @@ export default class Read extends Component {
     let versus
     let content
 
-    console.log(soundLoader)
 
     if ((this.state.isMounted) && (itemDay)){
       if (fromNotification) return (
