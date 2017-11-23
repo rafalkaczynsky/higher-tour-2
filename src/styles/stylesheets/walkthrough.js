@@ -20,9 +20,8 @@ export default StyleSheet => StyleSheet.extend({
   paginator: {
     position: 'absolute',
     alignItems: 'flex-start',
-    top: 80,
     left: 0,
-    bottom: 0,
+    bottom: 80,
     right: 0,
     zIndex: 100
   },

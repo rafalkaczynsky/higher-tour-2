@@ -16,8 +16,7 @@ class _Read extends Component {
     super(props)
 
     this.state = {
-      play: false,
-      playFirstTime: true
+      soundLoader: true,
     }
 
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
@@ -25,14 +24,14 @@ class _Read extends Component {
 }
 
 handleOnBible(navigate, from){
-  if(this.sound) this.sound.release();
+  this.sound.release();
   
   this.props.dispatch(ACTIONS.UPDATE_BIBLE_READING_SCREEN('list'))
   this.props.dispatch({ type: 'BibleAnimation' }) 
 }
 
 handleOnSettings(navigate){
-  if(this.sound) this.sound.release();
+   this.sound.release();
 
   this.props.dispatch( {type: 'SettingsInAnimation'})
 }
@@ -53,46 +52,56 @@ handleHome(navigate){
 }
 
 componentWillMount(){
+
+  this.setState({soundLoader: true})
+
+  console.log('Component Will Mount')
+  const currentDayContent = this.props.app.currentDayContent              // data from the store
+  
+  this.sound = new Sound(currentDayContent.Listen, undefined, (error) => {
+
+  if (error) {
+    console.log('failed to load the sound', error);
+    return;
+  }
+  // loaded successfully
+     this.setState({soundLoader: false})
+    console.log('duration in seconds: ' + this.sound.getDuration() + 'number of channels: ' + this.sound.getNumberOfChannels());
+  });
+
   BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);  
 }
 
 componentWillUnmount() {
+  console.log('Component Will Un Mount')
   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
 }
 
 handleBackButtonClick() {
-  if(this.sound) this.sound.release();
-  console.log('Back device!!!!!!')
+  this.sound.release();
+
   this.props.navigation.goBack(null);
   return true;
 }
 
 handleOnPlay(musicUrl){
-  if (!this.sound){
-    this.sound = new Sound(musicUrl,
-      undefined,
-      error => {
-        if (error) {
-          console.log(error)
-        } else {
-  
-          this.sound.play(() => {
-            // Release when it's done so we're not using up resources
-            this.sound.release();
-          });
-        }
-      });
-  }else {
-    this.sound.play(() => {
-      // Release when it's done so we're not using up resources
-      this.sound.release();
-    });
+
+// Play the sound with an onEnd callback
+this.sound.play((success) => {
+  if (success) {
+    console.log('successfully finished playing');
+  } else {
+    console.log('playback failed due to audio decoding errors');
+    // reset the player to its uninitialized state (android only)
+    // this is the only option to recover after an error occured and use the player again
+    this.sound.release();
   }
+ });
 }
 
 handleOnStop(){
- // this.sound.pause();
- this.sound.release();
+ this.sound.pause();
+ //this.sound.release();
 }
 
 componentDidMount(){
@@ -138,12 +147,17 @@ componentDidMount(){
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
-
+  
+    console.log('currentDayContent')
+    console.log(currentDayContent.Listen)
+    console.log('soundLoader')
+    console.log(this.state.soundLoader)
     return (
         <Read 
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
           userData={userData}
+          soundLoader={this.state.soundLoader}
           goToHome={()=> null}
           onPlayPressed={(musicUrl)=> this.handleOnPlay(musicUrl)}
           onStopPressed={() => this.handleOnStop()}

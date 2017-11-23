@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput, Image, TouchableOpacity, Linking} from 'react-native'
+import {ScrollView, ActivityIndicator, View, Text, TextInput, Image, TouchableOpacity, Linking} from 'react-native'
 
 
 
@@ -34,7 +34,7 @@ export default class Read extends Component {
   }
 
   render() {
-
+    
     const {
       userData,
       itemDay,
@@ -44,6 +44,7 @@ export default class Read extends Component {
       fromNotification,
       onPlayPressed,
       onStopPressed,
+      soundLoader,
     } = this.props
 
     const name = 'profileImage'
@@ -51,6 +52,8 @@ export default class Read extends Component {
     let mainImage
     let versus
     let content
+
+    console.log(soundLoader)
 
     if ((this.state.isMounted) && (itemDay)){
       if (fromNotification) return (
@@ -70,7 +73,6 @@ export default class Read extends Component {
               <Image source={{uri: itemDay.Read.Image}} style={{  resizeMode: 'cover', height: 200}} />
             </View>
             <View style={{padding: 20}}>
-
               <View>
                 <Text style={{ fontSize: 12, lineHeight: 18}}>DAY {currentReadingDayNumber}</Text>
                 <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
@@ -119,7 +121,16 @@ export default class Read extends Component {
                   <TouchableOpacity onPress={()=> Linking.openURL(itemDay.Read.VerseLink)}>
                     <Text style={{ fontSize: 12, lineHeight: 18}}>{itemDay.Read.Verse}</Text>
                   </TouchableOpacity>
-                  {!this.state.play && itemDay.Listen &&
+                  {soundLoader && 
+                  <View  style={{width: 60, alignItems: 'center'}} >
+                    <ActivityIndicator
+                    animating={true}
+                    color='grey'
+                    style={StyleSheet.tabItem.iconStyle}
+                    />
+                  </View>
+                    }
+                  {!this.state.play && itemDay.Listen && !soundLoader &&
                   <TouchableOpacity 
                     style={{width: 60, alignItems: 'center'}} 
                     title="play" 
@@ -133,7 +144,7 @@ export default class Read extends Component {
                       style={StyleSheet.tabItem.iconStyle}
                     />
                   </TouchableOpacity>}
-                  {this.state.play && itemDay.Listen &&
+                  {this.state.play && itemDay.Listen && !soundLoader &&
                   <TouchableOpacity 
                     style={{width: 60, alignItems: 'center'}} 
                     title="pause" 
