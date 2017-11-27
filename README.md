@@ -11,58 +11,55 @@ How to run it locally from command line
 - yarn install
 - yarn add react-native-fbsdk@0.6.0
 - react-native link  
-- yarn add react-native-fbsdk@0.6.1
+- yarn add react-native-fbsdk@https://github.com/gitcabin/react-native-fbsdk/archive/9d4f150ed79e58f5b611efc2e6d81da51e5f46ff.tar.gz
 
 errors after fresh install
 
 1. Override error
 where?
+- react-native-fbsdk
+- react-native-twitter
+- react-native-twitter-signin
 
-- node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java:61  
-- node_modules/react-native-twitter/android/src/main/java/ga/piroro/rnt/RNTPackage.java:21:
-- node_modules/react-native-twitter-signin/android/src/main/java/com/goldenowl/twittersignin/TwitterSigninPackage.java:28
+solution:
+Use forked packages with manual fix:
+- react-native-fbsdk: "https://github.com/gitcabin/react-native-fbsdk/archive/9d4f150ed79e58f5b611efc2e6d81da51e5f46ff.tar.gz"
+- react-native-twitter: "https://github.com/gitcabin/react-native-twitter/archive/master.tar.gz"
+- react-native-twitter-signin: "https://github.com/gitcabin/react-native-twitter-signin/archive/master.tar.gz"
 
-solution: 
-remove @Override
 
-2. getIntent error on close app after press backButton on device
 
-where?
 
--node_modules/react-native-fcm/src/main/java/com/evollu/react/fcm/FIRMessagingModule.java
-
-soultion:
-
+which does:
 replace:
-
-    @ReactMethod
-    public void getInitialNotification(Promise promise){
-        Activity activity = getCurrentActivity();
+@ReactMethod
+public void getInitialNotification(Promise promise){
+    Activity activity = getCurrentActivity();
+    Intent intent = activity.getIntent();
+     if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
+         promise.resolve(null);
+         return;
+     }
+    promise.resolve(parseIntent(activity.getIntent()));
+}
+with:
+@ReactMethod
+public void getInitialNotification(Promise promise){
+    Activity activity = getCurrentActivity();
+    if (activity != null){
         Intent intent = activity.getIntent();
-         if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
-             promise.resolve(null);
-             return;
-         }
+        if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
+            promise.resolve(null);
+            return;
+        }
         promise.resolve(parseIntent(activity.getIntent()));
     }
-	
-with:
 
-    @ReactMethod
-    public void getInitialNotification(Promise promise){
-        Activity activity = getCurrentActivity();
-        if (activity != null){
-            Intent intent = activity.getIntent();
-            if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
-                promise.resolve(null);
-                return;
-            }
-            promise.resolve(parseIntent(activity.getIntent()));
-        }
+}
 
-    }
 
- 
+
+
 2.
 - Run on Device Android
 react-native run-android
@@ -76,7 +73,7 @@ react-native run-ios
 
 -----------------------------------------------------
 
-Packages versions : 
+Packages versions :
 
 
 	{
@@ -126,18 +123,22 @@ Packages versions :
 	}
 	}
 
-	
-	
-------------------------------------
-Workearound for fleshing screens: 
 
+
+------------------------------------
+Workearound for fleshing screens:
+
+Use:
+- react-navigation: "https://github.com/gitcabin/react-navigation/archive/master.tar.gz",
+
+Which does:
 in node_modules/react-navigation/src/views/ScenesReducer.js file
 
-replace  in line 154 
+replace  in line 154
 
 staleScenes.forEach(mergeScene);
- 
-with 
+
+with
 
 - let k = null;
 - let v = null;
@@ -146,13 +147,49 @@ with
 -  k = key;
 -  v = scene;
 - });
- 
+
 - newStaleScenes = k && v ? new Map([[k, v]]) : new Map();  
 - newStaleScenes.forEach(mergeScene);
-   
+
 ------------------------------------
 
 
 For more informations about configurations sgo Wiki: https://bitbucket.org/mediacabin/higher-app/wiki/Home
 
 
+(LEGACY) getIntent error on close app after press backButton on device
+
+where?
+
+-node_modules/react-native-fcm/src/main/java/com/evollu/react/fcm/FIRMessagingModule.java
+
+soultion:
+
+replace:
+
+    @ReactMethod
+    public void getInitialNotification(Promise promise){
+        Activity activity = getCurrentActivity();
+        Intent intent = activity.getIntent();
+         if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
+             promise.resolve(null);
+             return;
+         }
+        promise.resolve(parseIntent(activity.getIntent()));
+    }
+
+with:
+
+    @ReactMethod
+    public void getInitialNotification(Promise promise){
+        Activity activity = getCurrentActivity();
+        if (activity != null){
+            Intent intent = activity.getIntent();
+            if(activity == null || (intent.getAction() != null && intent.getAction().equals("android.intent.action.MAIN"))){
+                promise.resolve(null);
+                return;
+            }
+            promise.resolve(parseIntent(activity.getIntent()));
+        }
+
+    }
