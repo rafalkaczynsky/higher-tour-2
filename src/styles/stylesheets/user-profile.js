@@ -18,7 +18,7 @@ export default StyleSheet => StyleSheet.extend({
     contentBox: {
         width: '95%',
         flex: 0,
-        margin:5
+        margin:5,
     },
     headerText: {
         height: 120,

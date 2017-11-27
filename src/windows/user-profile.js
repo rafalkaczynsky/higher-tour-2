@@ -78,6 +78,7 @@ class UserProfile extends React.Component {
                 <ListItem
                   title={locationSelectedName}
                   iconText='view/edit'
+           
                   handleIconPressed={()=>handleEditSession(locationSelected, locations, userData)}
                 />
 
@@ -99,6 +100,7 @@ class UserProfile extends React.Component {
                         title={item.aaaSession}
                         label={'Available from: ' + sessionDateFormatted}
                         titleStyle={{color: colors.grey2}}
+                        disabled
                       />
                     )
                 })}

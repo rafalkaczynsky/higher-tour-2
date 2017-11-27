@@ -38,8 +38,8 @@ export default class ListItem extends Component {
     const image = StyleSheet.icons[imageName]
 
     if (!disabled) return (
-      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
-        <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
+      <TouchableOpacity onPress={handleIconPressed} style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold,]}>
+        <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  , {paddingRight: 30}]}>
 
        {imageName || imageUrl && !simple && !simplePlus &&(
             <View style={[StyleSheet.listItem.itemDetails,{opacity: opacity}]}>
@@ -68,7 +68,8 @@ export default class ListItem extends Component {
        )}
        {!listHeader && !simple && !simplePlus &&
           <TouchableOpacity onPress={handleIconPressed} style={{display: 'flex', flexDirection: 'row'}}>
-            <Text style={{color: colors.yellow}}>{iconText}</Text><Icon name="next" style={StyleSheet.listItem.iconStyle}/>
+            {iconText && <Text style={{color: colors.yellow}}>{iconText}</Text>}
+            {!iconText && <Icon name="next" style={StyleSheet.listItem.iconStyle}/>}
           </TouchableOpacity>
           }
         {simple && !simplePlus &&
@@ -95,7 +96,7 @@ export default class ListItem extends Component {
       </TouchableOpacity>
     ) 
     else return  ( <View style={[{backgroundColor: bgColor ? bgColor : colors.white}, _borderBold]}>
-    <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  ]}>
+    <View style={[StyleSheet.listItem.wrapper, border, !listHeader ? null :  {justifyContent: 'center' }  , {paddingRight: 30} ]}>
 
    {imageName || imageUrl && !simple && !simplePlus &&(
         <View style={[StyleSheet.listItem.itemDetails,{opacity: opacity}]}>
@@ -124,9 +125,9 @@ export default class ListItem extends Component {
    )}
 
    {!listHeader && !simple && !simplePlus && !noIcon &&
-      <TouchableOpacity onPress={handleIconPressed} style={{display: 'flex', flexDirection: 'row'}}>
+      <TouchableOpacity onPress={handleIconPressed} style={{display: 'flex', flexDirection: 'row',}}>
         <Text style={{color: colors.yellow}}>{iconText}</Text>
-        <Icon name="next" style={StyleSheet.listItem.iconStyle}/>
+        <Icon name="next" style={[StyleSheet.listItem.iconStyle, ]}/>
       </TouchableOpacity>
       }
     {simple && !simplePlus &&
