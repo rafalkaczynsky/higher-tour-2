@@ -9,6 +9,28 @@ import {Icon, Picture} from '../components'
 
 export default class ListItem extends Component {
 
+  constructor(props){
+    super(props)
+
+    this.state ={
+      animatedProgress: 0
+    }
+  }
+
+  componentWillMount(){
+    this.setState({animatedProgress: 0})
+  }
+
+  componentDidMount(){
+    if (this.props.progress) {
+      let updatedProgress = parseFloat(this.props.progress / 100).toFixed(2)
+      console.log(updatedProgress)
+      this.setState({animatedProgress: updatedProgress})
+    }
+
+
+  }
+  
   render() {
     const {
       title, 
@@ -30,6 +52,7 @@ export default class ListItem extends Component {
       imageName, 
       imageUrl, 
       containerStyle,
+      animated,
       opacity} = this.props
 
     const border = noBorder ? null : {borderBottomColor: colors.grey2, borderBottomWidth: 0.5}
@@ -62,11 +85,15 @@ export default class ListItem extends Component {
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
             {progressBar &&
             <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor, width: '90%'}]}>
-              {false &&<View style={[StyleSheet.listItem.progressBar, {width: progress}]} />}
-              <AnimatedBar
-                progress={0}
+              {!animated &&<View style={[StyleSheet.listItem.progressBar, {width: progress}]} />}
+              {animated && <AnimatedBar
+                progress={this.state.animatedProgress}
                 duration={2000}
-              />
+                height={5}
+                fillColor={colors.grey}
+                barColor={colors.yellow}
+                borderWidth={0}
+              />}
               </View>}
           </View>
        )}
@@ -122,9 +149,17 @@ export default class ListItem extends Component {
         <Text style={[StyleSheet.listItem.title, titleStyle]}>{title}</Text>
         {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
         {progressBar &&
-        <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor}]}>
-          <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
-        </View>}
+            <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor, width: '90%'}]}>
+              {!animated &&<View style={[StyleSheet.listItem.progressBar, {width: progress}]} />}
+              {animated && <AnimatedBar
+                progress={this.state.animatedProgress}
+                duration={2000}
+                height={5}
+                fillColor={colors.grey}
+                barColor={colors.yellow}
+                borderWidth={0}
+              />}
+              </View>}
       </View>
    )}
 

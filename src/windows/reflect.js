@@ -40,13 +40,17 @@ export default class Reflect extends Component {
                 <View style={{width:'90%'}}>
                 {answers.map((item, index)=> {
                     const progress = parseInt((item.Results/numberOfPeople)*100)
+                    console.log('progress')
+                    console.log(parseFloat(progress))
                     totalProgress= totalProgress + progress
-                    return(
+                    
+                    if (progress) return(
                         <ListItem
                             key={'reflectReadingKey'+ index}
                             title={item.Text}
                             progressBar
-                            progress={parseInt(progress)+'%'}
+                            progress={parseFloat(progress)}
+                            animated
                             disabled
                             noBorder
                             noIcon
@@ -54,6 +58,7 @@ export default class Reflect extends Component {
                             bgColor={'transparent'}
          
                         />
+
                     )
                 })}
                 </View>     
