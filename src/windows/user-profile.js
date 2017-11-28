@@ -61,7 +61,6 @@ class UserProfile extends React.Component {
         } else {
          locationSelectedName = ''
         }
-        console.log(this.props.sessions)
 
         return(
       <View style={[StyleSheet.window.default]}>

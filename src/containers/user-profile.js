@@ -194,7 +194,7 @@ class _UserProfile extends Component {
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(noSessions));
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       }
-      console.log(sessionsAvailable)
+
     })
 
     //----------------- CHeck app user bibleReadings
