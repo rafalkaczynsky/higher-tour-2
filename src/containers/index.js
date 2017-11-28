@@ -16,3 +16,8 @@ export {default as _Questions} from './questions'
 export {default as _Reflect} from './reflect'
 export {default as _Freebie} from './freebie'
 
+export {default as _LiveIt} from './live-it'
+export {default as _Repeat} from './repeat'
+export {default as _Pray} from './pray'
+
+

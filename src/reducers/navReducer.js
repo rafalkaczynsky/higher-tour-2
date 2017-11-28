@@ -141,6 +141,42 @@ const initialNavState = AppNavigator.router.getStateForAction({firstAction});
       );
       break;
 
+      case 'GoToLiveItRightToLeftAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'LiveIt',
+          params: {
+            transition: 'GoToLiveItRightToLeftAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
+      case 'GoToPrayRightToLeftAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'Pray',
+          params: {
+            transition: 'GoToPrayRightToLeftAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
+      case 'GoToRepeatRightToLeftAnimation':
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ 
+          routeName: 'Repeat',
+          params: {
+            transition: 'GoToRepeatRightToLeftAnimation'
+          }  
+        }),
+        state
+      );
+      break;
+
       case 'GoToReadRightToLeftAnimation':
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ 

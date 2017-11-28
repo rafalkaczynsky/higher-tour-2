@@ -62,7 +62,6 @@ export default class WeekList extends Component {
                     {week.sessionTitle}
                 </Text>
               </View>
-
               <View style={{margin: 10}}>
                 <Text style={{fontWeight: 'bold',  fontSize: 17}}>
                     {selectedEvent.meetingDay+ ', '} {weekDate}

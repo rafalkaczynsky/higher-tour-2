@@ -24,6 +24,9 @@ import {
   _Questions,
   _Reflect,
   _Freebie,
+  _LiveIt,
+  _Pray,
+  _Repeat,
   
 } from './containers'
 
@@ -68,6 +71,11 @@ let TransitionConfiguration = () => {
                   GoToReadRightToLeftAnimation: customTransitions.GoToReadRightToLeftAnimation(index, position),
                   GoToReflectRightToLeftAnimation: customTransitions.GoToReflectRightToLeftAnimation(index, position),
                   GoToThinkRightToLeftAnimation: customTransitions.GoToThinkRightToLeftAnimation(index, position),
+
+                  GoToLiveItRightToLeftAnimation: customTransitions.GoToLiveItRightToLeftAnimation(index, position),
+                  GoToPrayRightToLeftAnimation: customTransitions.GoToPrayRightToLeftAnimation(index, position),
+                  GoToRepeatRightToLeftAnimation: customTransitions.GoToRepeatRightToLeftAnimation(index, position),
+
                   GoToFreebieRightToLeftAnimation: customTransitions.GoToFreebieRightToLeftAnimation(index, position),
                   GoToUserProfileLeftToRightAnimation: customTransitions.GoToUserProfileLeftToRightAnimation (index, position),
                   AppUserBibleReadingAnimation: customTransitions.AppUserBibleReadingAnimation(index, position),
@@ -117,6 +125,9 @@ export const AppNavigator = StackNavigator({
   Questions: {screen: _Questions},
   Reflect: {screen: _Reflect},
   Freebie: {screen: _Freebie},
+  Repeat: {screen: _Repeat},
+  Pray: {screen: _Pray},
+  LiveIt: {screen: _LiveIt},
 },{ 
   headerMode: 'none', 
   initialRouteName: 'SignIn',

@@ -3,12 +3,12 @@ import geolib from 'geolib'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
 
-import {Think} from '../windows'
+import {Repeat} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 
 
 
-class _Think extends Component {
+class _Repeat extends Component {
   constructor(props){
     super(props)
 
@@ -23,13 +23,10 @@ handleOnBible(navigate, from){
 }
 
 handleOnSettings(navigate, route){
-  const { params } = this.props.navigation.state
-  const loginStatus = this.props.app.loginStatus  // data from the store
-
   this.props.dispatch( {type: 'SettingsInAnimation'})
 }
 
-handleHome(navigate){
+handleHome(){
   const loginStatus = this.props.app.loginStatus  // data from the store
   
       if (loginStatus && loginStatus === 'loggedOut') {
@@ -41,12 +38,27 @@ handleHome(navigate){
       }
 }
 
+handleOnGoBack(navigate){
+  const loginStatus = this.props.app.loginStatus  // data from the store
+  
+    if (loginStatus === 'loggedOut') {
+      this.props.dispatch({type: 'SignInAfterSettingsAnimation'})
+    } else if (loginStatus === 'loggedIn'){
+      this.props.dispatch({type: 'GotoWelcomeAnimation'})
+      } else {
+          this.props.dispatch({type: 'GoToUserProfileLeftToRightAnimation'})
+        }
+}
+
 componentDidMount(){
 
+  //wait 5 seconds after that 
+  //update appUser lastReadDayNumber and timesta,[ ]
   const userData = this.props.user          
   const currentBibleReading = this.props.currentBibleReading
   const currentReadingDayNumber = this.props.app.currentReadingDayNumber
-  const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle                    
+  const currentBibleReadingTitle = this.props.app.currentBibleReadingTitle     
+  const loginStatus = this.props.app.loginStatus               
 
 }
 
@@ -57,13 +69,14 @@ componentDidMount(){
     const loginStatus = this.props.app.loginStatus                          // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
- 
+
     return (
-        <Think
-          onSettings={()=> this.handleOnSettings(navigate)}
-          onHome={()=> this.handleHome(navigate)}
-          onItemBackPressed={()=> this.props.dispatch({type: 'GoToReadRightToLeftAnimation'})}
-          onItemNextPressed={()=> this.props.dispatch({type: 'GoToLiveItRightToLeftAnimation'})}
+        <Repeat
+          onSettings={()=> this.handleOnSettings()}
+          onHome={()=> this.handleHome()}
+          onGoBack={()=> this.handleOnGoBack()}
+          loginStatus={loginStatus}
+          onItemBackPressed={()=>    this.props.navigation.goBack(null)}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}
@@ -81,4 +94,4 @@ function mapStateToProps(state){
   });
 }
 
-export default connect(mapStateToProps)(_Think);
+export default connect(mapStateToProps)(_Repeat);

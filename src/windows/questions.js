@@ -11,12 +11,11 @@ class QuestionText extends Component {
     const {onGoBack, Answers, questionText, onHome, onSettings, onBible, session, questionIndex, handleAnswer} = this.props
     return (
       <View style={StyleSheet.window.default}>
-      {questionIndex === 0 &&
         <Header
           text='Question'
           onBack
           onBackCallback={onGoBack}
-        />}
+        />
         <ScrollView style={{width: '100%'}}>
           <View style={StyleSheet.settings.container}>
             <View style={StyleSheet.settings.buttonGroup}>

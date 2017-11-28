@@ -3,12 +3,12 @@ import geolib from 'geolib'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase'
 
-import {Think} from '../windows'
+import {LiveIt} from '../windows'
 import * as ACTIONS from '../actions/actions/actions';
 
 
 
-class _Think extends Component {
+class _LiveIt extends Component {
   constructor(props){
     super(props)
 
@@ -59,11 +59,11 @@ componentDidMount(){
     const currentReadingDayNumber = this.props.app.currentReadingDayNumber  // data from the store
  
     return (
-        <Think
+        <LiveIt
           onSettings={()=> this.handleOnSettings(navigate)}
           onHome={()=> this.handleHome(navigate)}
-          onItemBackPressed={()=> this.props.dispatch({type: 'GoToReadRightToLeftAnimation'})}
-          onItemNextPressed={()=> this.props.dispatch({type: 'GoToLiveItRightToLeftAnimation'})}
+          onItemBackPressed={()=>    this.props.navigation.goBack(null)}
+          onItemNextPressed={()=> this.props.dispatch({type: 'GoToPrayRightToLeftAnimation'})}
           currentReadingDayNumber={currentReadingDayNumber}
           itemDay={currentDayContent}
           activeTabName={'Bible'}
@@ -81,4 +81,4 @@ function mapStateToProps(state){
   });
 }
 
-export default connect(mapStateToProps)(_Think);
+export default connect(mapStateToProps)(_LiveIt);

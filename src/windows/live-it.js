@@ -6,7 +6,7 @@ import {colors} from '../styles/resources'
 
 import {TextBox, Icon, Title, Button, TabMenu, Header, ListItem} from '../components'
 
-export default class Think extends Component {
+export default class LiveIt extends Component {
   constructor(props) {
     super(props)
   }
@@ -22,7 +22,7 @@ return (
   <View style={StyleSheet.window.default}>
 
   <Header
-    text='Think'
+    text='Live it'
     onBack
     onNext
     onBackCallback={onItemBackPressed}
@@ -33,13 +33,13 @@ return (
       <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
           <View style={{padding: 20}}>
             <View>
-              <Text style={{ fontSize: 12, lineHeight: 18,fontWeight: 'bold'}}>Think</Text>
+                <Text style={{ fontSize: 12, lineHeight: 18, fontWeight: 'bold'}}>Live it</Text>
             </View>
-              <View style={{marginTop: 20}}>
-                  <Text style={{ fontSize: 12, lineHeight: 18}}>
-                      {itemDay.Think.Content}
-                  </Text>
-              </View>
+            <View style={{marginTop: 15, marginBottom: 25}}>
+                <Text style={{ fontSize: 12, lineHeight: 18}}>
+                    {itemDay.Respond[ 'Live It' ]}
+                </Text>
+            </View>
           </View>
       </ScrollView>
 

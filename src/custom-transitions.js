@@ -330,6 +330,79 @@ export const MyTransition = (index, position) => {
       };;
   };
 
+  export const GoToLiveItRightToLeftAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };;
+  };
+
+  export const GoToPrayRightToLeftAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };;
+  };
+
+  export const GoToRepeatRightToLeftAnimation = (index, position) => {
+    const inputRange = [index - 1, index, index + 0.99, index + 1];
+    
+      const opacity = position.interpolate({
+          inputRange,
+          outputRange: ([0, 1, 1, 0]),
+      });
+    
+      const translateX = position.interpolate({
+        inputRange,
+        outputRange: ([100, 0, 0, 0]),
+    });
+      const translateY = 0
+    
+      return {
+          opacity,
+          transform: [
+                {translateY},
+                {translateX}
+          
+          ],
+      };;
+  };
+
+
   export const GoToReadRightToLeftAnimation = (index, position) => {
     const inputRange = [index - 1, index, index + 0.99, index + 1];
     
