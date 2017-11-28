@@ -86,6 +86,7 @@ class UserProfile extends React.Component {
                   <ListItem
                       title={''}
                       simple
+                      disabled
                       label={'Higher sessions coming soon'}
                     />
                 }

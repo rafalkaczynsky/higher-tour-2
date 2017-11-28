@@ -18,6 +18,7 @@ class HigherBibleReadings extends React.Component {
     }
   }
 
+
   componentWillMount(){
     const userData = this.props.user                // data from the store
     const currentDayContent = this.props.app.currentDayContent              // data from the store
@@ -69,7 +70,7 @@ class HigherBibleReadings extends React.Component {
                   textColor={buttonsStyle[1].textColor}
                   buttonStyle={{margin: 10 , marginRight: 0, width:'40%', height: 30}}
                   onPress={onAvailable}
-                />
+                /> 
                 <Button
                   type="default"
                   text={chosenItem ? 'Coming Up' : 'New'}
@@ -77,7 +78,7 @@ class HigherBibleReadings extends React.Component {
                   textColor={buttonsStyle[0].textColor}
                   buttonStyle={{margin: 10, marginLeft: 0, width: '40%', height: 30}}
                   onPress={onAll}
-                />
+                />   
             </View>
 
             <ScrollView style={{width: '100%'}}>

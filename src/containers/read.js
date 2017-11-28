@@ -123,17 +123,17 @@ componentDidMount(){
             firebaseDataAppUsers.update({
               lastReadTimeStamp: new Date().getTime(),
               lastReadDayNumber : currentReadingDayNumber,
-              progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+              progress: parseInt((currentReadingDayNumber/ (currentBibleReading.length-1)) *100 )
             })
           }  
         } else {
           firebaseDataAppUsers.update({
             lastReadTimeStamp: new Date().getTime(),
             lastReadDayNumber : currentReadingDayNumber,
-            progress: parseInt((currentReadingDayNumber/ currentBibleReading.length) *100 )
+            progress: parseInt((currentReadingDayNumber/ (currentBibleReading.length-1)) *100 )
           })
         }
- 
+        
       })
   }
 }

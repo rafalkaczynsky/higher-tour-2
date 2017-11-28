@@ -38,13 +38,18 @@ export default class WeekList extends Component {
     const image = StyleSheet.icons[name]
     return (
     <View style={StyleSheet.window.default}>
-    <Header
+    {week.Questions && <Header
           text={week.Title}
           onBack
           onNext
           onBackCallback={onGoBack}
           onNextCallback={onNextPressed}
-    />
+    />}   
+        {!week.Questions && <Header
+          text={week.Title}
+          onBack
+          onBackCallback={onGoBack}
+    />} 
       <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
           <View
             style={{
@@ -82,11 +87,11 @@ export default class WeekList extends Component {
                     <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.city} </Text>
                     <Text style={{fontWeight: 'normal', }}>{selectedEvent.address.postcode}</Text>
               </View>
-              <Button 
+              {week.Questions && <Button 
                 type="default"
                 text="BEGIN"
                 onPress={onNextPressed}
-                />
+                />}
             </ScrollView>
             </View>
             </View>
