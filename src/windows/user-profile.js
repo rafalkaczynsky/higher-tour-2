@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TextInput, TouchableOpacity, Image} from 'react-native'
+import {ScrollView, View, Text, TextInput, TouchableOpacity, Image, ImageBackground} from 'react-native'
 import { connect } from 'react-redux'
 
 import StyleSheet from '../styles'
@@ -66,11 +66,11 @@ class UserProfile extends React.Component {
       <View style={[StyleSheet.window.default]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}>
             <View style={[StyleSheet.userProfile.header]} >
-                <Image source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} >
+                <ImageBackground source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} >
                   <Text style={{ position: 'absolute', bottom: 5, marginLeft: 10, color: colors.white, fontSize: 25, backgroundColor: 'transparent'}}>
                     Welcome Back {userFirstName}!
                   </Text>
-                </Image>
+                </ImageBackground>
             </View>
             <ScrollView style={{width: '95%'}}>
             <View style={StyleSheet.userProfile.contentBox}>
@@ -134,17 +134,19 @@ class UserProfile extends React.Component {
                 {this.props.appUserBibleReading.map((item, index) => {
 
                 const title = this.props.appUserBibleReadingNames[index]
-                const progress = item.progress + '%'
+
                 return (
                   <ListItem
                     key={'appUserBibleReadingKey'+ index}
                     title={title}
                     progressBar
-                    progress={progress}
+                    animated
+                    progress={item.progress}
                     progressBarColor={colors.grey3}
                     handleIconPressed={() => onHandleReadingItemPressed(title)}
                   />
                   )
+
                 })}
 
                 <ListItem
