@@ -70,6 +70,8 @@ handleOnGoBack(){
     const { navigate } = this.props.navigation
     const { params } = this.props.navigation.state
 
+    const Questions = this.props.app.week.Questions
+
     return (
         <WeekList 
           onSettings={()=> this.handleOnSettings()}
@@ -80,7 +82,11 @@ handleOnGoBack(){
           weekDate={this.props.app.weekDate}
           selectedEvent={this.props.eventSelected}
           onGoBack={()=> this.handleOnGoBack()}
-          onNextPressed={()=>this.props.dispatch({type: 'GoToQuestionsAnimation'})}
+          onNextPressed={()=>{ 
+            if (Questions) {
+              this.props.dispatch({type: 'GoToQuestionsAnimation'})
+            }
+          }}
           activeTabName={''}
         />
     )
