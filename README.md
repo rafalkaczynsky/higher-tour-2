@@ -87,6 +87,11 @@ Packages versions :
 		"test": "jest",
 		"build:ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file='index.ios.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
 	},
+	"rnpm": {
+		"assets": [
+			"./src/styles/resources/fonts/"
+		]
+	},
 	"dependencies": {
 		"babel-preset-react-native": "2.1.0",
 		"color": "^2.0.0",
@@ -95,17 +100,19 @@ Packages versions :
 		"geolib": "^2.0.23",
 		"react": "16.0.0-alpha.12",
 		"react-native": "0.47.2",
-		"react-native-fbsdk": "0.6.1",
+		"react-native-fbsdk": "https://github.com/gitcabin/react-native-fbsdk/archive/9d4f150ed79e58f5b611efc2e6d81da51e5f46ff.tar.gz",
 		"react-native-fcm": "^9.6.1",
+		"react-native-fetch-blob": "^0.10.8",
 		"react-native-firebase-auth": "^1.0.0",
 		"react-native-keyboard-aware-scroll-view": "^0.3.0",
 		"react-native-keyboard-spacer": "^0.4.0",
 		"react-native-maps": ">=0.12.4",
 		"react-native-permissions": "^1.0.1",
 		"react-native-sound": "^0.10.4",
-		"react-native-twitter": "^0.1.0",
-		"react-native-twitter-signin": "^1.0.2",
-		"react-navigation": "^1.0.0-beta.11",
+		"react-native-swiper": "^1.5.13",
+		"react-native-twitter": "https://github.com/gitcabin/react-native-twitter/archive/master.tar.gz",
+		"react-native-twitter-signin": "https://github.com/gitcabin/react-native-twitter-signin/archive/master.tar.gz",
+		"react-navigation": "https://github.com/gitcabin/react-navigation/archive/master.tar.gz",
 		"react-redux": "^5.0.6",
 		"redux": "^3.7.2",
 		"redux-form": "^7.0.4",
@@ -121,8 +128,7 @@ Packages versions :
 	"jest": {
 		"preset": "react-native"
 	}
-	}
-
+      }
 
 
 ------------------------------------
