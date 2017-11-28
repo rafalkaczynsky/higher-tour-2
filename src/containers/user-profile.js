@@ -166,13 +166,17 @@ class _UserProfile extends Component {
       if (session){
         const sessionArray = Object.keys(session).map(function (key) { return session[key]; })
         var TheDate = new Date().getTime();
+
         var TheDateFormatted = 'dd'
         var sessionsAvailable = []
         sessionArray.map((item, index)=>{
             let sessionDate = item.UTCTime
+
             if (( Date.parse(sessionDate) > TheDate ) && (sessionsAvailable.length <= 2)) {
               sessionsAvailable.push(item)
+
             }
+
         })
         if(sessionsAvailable.length === 0){
           const nextMeeting = this.calculateReminderDate(eventSelected.meetingDay, eventSelected.meetingTime)
@@ -190,6 +194,7 @@ class _UserProfile extends Component {
         this.props.dispatch(ACTIONS.SAVE_SESSIONS(noSessions));
         this.props.dispatch(ACTIONS.UPDATE_SHOW_USERPROFILE_CONTENT(true))
       }
+      console.log(sessionsAvailable)
     })
 
     //----------------- CHeck app user bibleReadings

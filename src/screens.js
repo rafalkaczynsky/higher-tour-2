@@ -52,7 +52,7 @@ let TransitionConfiguration = () => {
           const params = route.params || {};
           const transition = params.transition || 'default'; 
 
-          // console.log('index:  ' + sceneProps.scene.index)
+          //  console.log('index:  ' + sceneProps.scene.index)
           // console.log('routeName:  ' + sceneProps.scene.route.routeName)
           // console.log('scenes length  '+sceneProps.scenes.length)
     

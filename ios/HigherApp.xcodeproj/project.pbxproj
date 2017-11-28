@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -55,6 +54,8 @@
 		C9C2F93B8266461CA4BB2994 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F308B8E27F24EDF876E4EAB /* libjschelpers.a */; };
 		F1070FB30D90422290A42D8C /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7023DF24F0424699CD02BE /* libyoga.a */; };
 		F1BEE732A2644C5285919E07 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9191B7C59AC2428EAB9196CA /* libRCTFBSDK.a */; };
+		84F7ACC9A72744EF9FEDE7F4 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */; };
+		6A3445C630264623A847C13E /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -390,6 +391,8 @@
 		F0C09EED0079429D9613157F /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		F3F4B58CA15A4D178698BB5C /* libcxxreact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libcxxreact.a; sourceTree = "<group>"; };
 		F6B89D0E9AE74E67B05BA518 /* RNTwitterSignIn.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTwitterSignIn.xcodeproj; path = "../node_modules/react-native-twitter-signin/ios/RNTwitterSignIn.xcodeproj"; sourceTree = "<group>"; };
+		89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; name = "Montserrat-Light.ttf"; path = "../src/styles/resources/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; name = "Montserrat-SemiBold.ttf"; path = "../src/styles/resources/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -671,6 +674,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				8261CFE04D8FE6F8DA10364B /* Pods */,
 				6847E55D1F7917E400201E66 /* Recovered References */,
+				8321D7458999448F84D5E721 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -757,6 +761,16 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		8321D7458999448F84D5E721 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */,
+				8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -1249,6 +1263,8 @@
 				681CBCA21F7A853900CC6163 /* GoogleService-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				B592A5251F595B4B00BA3DCF /* TwitterShareExtensionUIResources.bundle in Resources */,
+				84F7ACC9A72744EF9FEDE7F4 /* Montserrat-Light.ttf in Resources */,
+				6A3445C630264623A847C13E /* Montserrat-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

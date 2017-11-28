@@ -61,13 +61,14 @@ class UserProfile extends React.Component {
         } else {
          locationSelectedName = ''
         }
+        console.log(this.props.sessions)
 
         return(
       <View style={[StyleSheet.window.default]}>
         <View style={{flex: 1, alignItems: 'center', width: '100%'}}>
             <View style={[StyleSheet.userProfile.header]} >
                 <Image source={StyleSheet.images[name]} style={StyleSheet.userProfile.headerImage} >
-                  <Text style={{ position: 'absolute', bottom: 5, marginLeft: 10, color: colors.white, fontSize: 25 ,backgroundColor: 'transparent'}}>
+                  <Text style={{ position: 'absolute', bottom: 5, marginLeft: 10, color: colors.white, fontSize: 25, backgroundColor: 'transparent'}}>
                     Welcome Back {userFirstName}!
                   </Text>
                 </Image>

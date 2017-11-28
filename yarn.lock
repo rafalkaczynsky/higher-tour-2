@@ -428,6 +428,13 @@ babel-plugin-transform-class-properties@^6.18.0, babel-plugin-transform-class-pr
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
+babel-plugin-transform-define@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-define/-/babel-plugin-transform-define-1.3.0.tgz#94c5f9459c810c738cc7c50cbd44a31829d6f319"
+  dependencies:
+    lodash "4.17.4"
+    traverse "0.6.6"
+
 babel-plugin-transform-es2015-arrow-functions@^6.5.0, babel-plugin-transform-es2015-arrow-functions@^6.5.2, babel-plugin-transform-es2015-arrow-functions@^6.8.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-arrow-functions/-/babel-plugin-transform-es2015-arrow-functions-6.22.0.tgz#452692cb711d5f79dc7f85e440ce41b9f244d221"
@@ -1474,7 +1481,7 @@ event-target-shim@^1.0.5:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-1.1.1.tgz#a86e5ee6bdaa16054475da797ccddf0c55698491"
 
-eventemitter3@^2.0.2:
+eventemitter3@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
 
@@ -2538,7 +2545,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
-jssha@^2.2.0:
+jssha@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/jssha/-/jssha-2.3.1.tgz#147b2125369035ca4b2f7d210dc539f009b3de9a"
 
@@ -2722,13 +2729,13 @@ lodash.templatesettings@^3.0.0:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
 
+lodash@4.17.4, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.3, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
 lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
-
-lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.3, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -3368,9 +3375,9 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-fbsdk@0.6.1:
+"react-native-fbsdk@https://github.com/gitcabin/react-native-fbsdk/archive/9d4f150ed79e58f5b611efc2e6d81da51e5f46ff.tar.gz":
   version "0.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-0.6.1.tgz#268bdbda5a16f5341ca43e3fa1beb88801e35a92"
+  resolved "https://github.com/gitcabin/react-native-fbsdk/archive/9d4f150ed79e58f5b611efc2e6d81da51e5f46ff.tar.gz#bc44b0e46e85ed55534bd16866f9ea0be2046b20"
 
 react-native-fcm@^9.6.1:
   version "9.6.1"
@@ -3417,23 +3424,23 @@ react-native-swiper@^1.5.13:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-tab-view@^0.0.67:
-  version "0.0.67"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.67.tgz#cdd146fe5e5d4baff6c89f2d5d0b15fa23db39d0"
+react-native-tab-view@^0.0.70:
+  version "0.0.70"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.70.tgz#1dd2ded32acd0cb6bfef38d26e53675db733b37b"
   dependencies:
-    prop-types "^15.5.8"
+    prop-types "^15.5.10"
 
-react-native-twitter-signin@^1.0.2:
+"react-native-twitter-signin@https://github.com/gitcabin/react-native-twitter-signin/archive/master.tar.gz":
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-twitter-signin/-/react-native-twitter-signin-1.0.2.tgz#9cf3666f7c7f35c2d36738f630149664bc03b2de"
+  resolved "https://github.com/gitcabin/react-native-twitter-signin/archive/master.tar.gz#be317a8b90696eb4a62ac1a439f24a54f9ffdba0"
 
-react-native-twitter@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-twitter/-/react-native-twitter-0.1.0.tgz#8f3d957859c65ef8bc498efb037d66a3ea3c7c46"
+"react-native-twitter@https://github.com/gitcabin/react-native-twitter/archive/master.tar.gz":
+  version "0.2.1"
+  resolved "https://github.com/gitcabin/react-native-twitter/archive/master.tar.gz#6369744c7c231f1595f005fcb0f6844cedc88ebf"
   dependencies:
-    eventemitter3 "^2.0.2"
-    jssha "^2.2.0"
-    url-search-params "^0.6.1"
+    eventemitter3 "^2.0.3"
+    jssha "^2.3.1"
+    url-search-params "^0.10.0"
 
 react-native@0.47.2:
   version "0.47.2"
@@ -3522,16 +3529,17 @@ react-native@0.47.2:
     xtend ">=4.0.0 <4.1.0-0"
     yargs "^6.4.0"
 
-react-navigation@^1.0.0-beta.11:
-  version "1.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.0.0-beta.12.tgz#cf0f04ffbf9fefe41f5c5a1dab92106b48a29f0a"
+"react-navigation@https://github.com/gitcabin/react-navigation/archive/master.tar.gz":
+  version "1.0.0-beta.21"
+  resolved "https://github.com/gitcabin/react-navigation/archive/master.tar.gz#93c2d619a7db223c64c7dc606801025766285126"
   dependencies:
+    babel-plugin-transform-define "^1.3.0"
     clamp "^1.0.1"
     hoist-non-react-statics "^2.2.0"
     path-to-regexp "^1.7.0"
     prop-types "^15.5.10"
     react-native-drawer-layout-polyfill "^1.3.2"
-    react-native-tab-view "^0.0.67"
+    react-native-tab-view "^0.0.70"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -4217,6 +4225,10 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
 
+traverse@0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
@@ -4297,9 +4309,9 @@ unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
 
-url-search-params@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/url-search-params/-/url-search-params-0.6.1.tgz#3adb7858b807d56b81e7abf3b9dae4978c03f99d"
+url-search-params@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/url-search-params/-/url-search-params-0.10.0.tgz#d428c1fa9d78d5c5a3feb634147873890f4adcf0"
 
 util-deprecate@1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
