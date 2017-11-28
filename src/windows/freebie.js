@@ -17,27 +17,21 @@ export default class Freebie extends Component {
 
 
   return (
-           
-  <View style={StyleSheet.window.default}>
+<View style={{flex: 1}}>
+  {video && <View style={StyleSheet.window.default}>
   <Header 
     text={title}
     simple
   />
-  
   <View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
       <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
-        {image && 
-        <View style={{width: '100%'}}>
-              <Image source={{uri: image}} style={{resizeMode: 'cover', height: 200}} />
-        </View>}
-
-        {video && 
+     
         <View style={{width: '100%', height: 220}}>
             <WebView
                 source={{uri: video}}
                 style={{borderColor: 'black', borderWidth: 3}}
             />
-        </View>}
+        </View>
           <View style={{padding: 20}}>
               <View>
                   <Text style={{ fontSize: 12, lineHeight: 18}}></Text>
@@ -57,7 +51,21 @@ export default class Freebie extends Component {
       </ScrollView>
 
   </View>
-  </View>
+  </View>}
+
+  {image && 
+  <View style={{flex: 1}}>
+  <Image style={{flex: 1}} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/higher-app-a4b52.appspot.com/o/aaaSessions%2Fslide2.jpg?alt=media&token=20181243-ad85-4a86-9822-a21c8814104d'}} />
+    <Button
+        type="default"
+        text={'NEXT'}
+        style={{flex: 1}}
+        onPress={this.props.onPressDone}
+    />
+    </View>
+    }
+</View>
+
   )
 }
 }
