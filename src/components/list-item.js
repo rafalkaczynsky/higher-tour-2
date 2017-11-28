@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, Image, Platform} from 'react-native'
-
+import AnimatedBar from "react-native-animated-bar";
 
 import StyleSheet from '../styles'
 import {colors} from '../styles/resources'
@@ -62,8 +62,12 @@ export default class ListItem extends Component {
             {label && <Text style={StyleSheet.listItem.label}>{label}</Text>}
             {progressBar &&
             <View style={[StyleSheet.listItem.progressBarContainer,{backgroundColor: progressBarColor, width: '90%'}]}>
-              <View style={[StyleSheet.listItem.progressBar, {width: progress}]} />
-            </View>}
+              {false &&<View style={[StyleSheet.listItem.progressBar, {width: progress}]} />}
+              <AnimatedBar
+                progress={0}
+                duration={2000}
+              />
+              </View>}
           </View>
        )}
        {!listHeader && !simple && !simplePlus &&
