@@ -187,11 +187,14 @@ class _HigherBibleReadings extends Component {
     const userData = this.props.user                                          // data from the store
     const screenStatus = this.props.app.bibleReadingScreenStatus              // data from the store
 
-
     if ((screenStatus === 'item')&& (userData)){
       firebase.database().ref('appUsers/'+ userData.uid +'/bibleReadings/'+ currentBibleReadingTitle +'/').once("value", snapshot => {
         const bibleReading = snapshot.val();
-        const lastReadDayNumber = bibleReading.lastReadDayNumber
+        let lastReadDayNumber = null
+        if (bibleReading){
+          lastReadDayNumber = bibleReading.lastReadDayNumber
+        }
+        
         this.props.dispatch(ACTIONS.SAVE_CURRENT_LAST_READ_DAY_NUMBER(lastReadDayNumber))
       }) 
     }

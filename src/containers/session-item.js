@@ -199,7 +199,7 @@ class _SessionItem extends Component {
   }
 
   handleOnEmailPressed(email){
-    if (email) Linking.openURL("mailto://"+email)
+    if (email) Linking.openURL("mailto:"+email)
   }
 
   handleOnGoBack(){

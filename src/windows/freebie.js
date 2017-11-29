@@ -13,7 +13,7 @@ export default class Freebie extends Component {
 
   render() {
 
-    const {title, body, image, video} = this.props
+    const {title, body, image, video, text} = this.props
 
 
   return (
@@ -55,14 +55,43 @@ export default class Freebie extends Component {
 
   {image && 
   <View style={{flex: 1}}>
-  <Image style={{flex: 1}} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/higher-app-a4b52.appspot.com/o/aaaSessions%2Fslide2.jpg?alt=media&token=20181243-ad85-4a86-9822-a21c8814104d'}} />
+  <Image style={{flex: 1}} source={{uri: image}} />
     <Button
         type="default"
-        text={'NEXT'}
+        text={'DONE'}
         style={{flex: 1}}
-        onPress={this.props.onPressDone}
+        onPress={this.props.onGoBack}
     />
     </View>
+    }
+
+{!image && !video && <View style={StyleSheet.window.default}>
+<Header 
+  text={title}
+  simple
+/>
+<View style={{flex: 1, alignItems: 'center', width: '100%', padding: 10}}>
+    <ScrollView style={{backgroundColor: 'white', width: '100%'}}>
+        <View style={{padding: 20}}>
+            <View>
+                <Text style={{ fontSize: 12, lineHeight: 18}}></Text>
+            </View>
+            <View style={{marginTop: 30, marginBottom: 30}}>
+                <Text style={{ fontSize: 28, lineHeight: 45 }}>
+                    {body}
+                </Text>
+            </View>
+        </View>
+        <Button 
+          type="default"
+          text={'DONE'}
+          onPress={this.props.onGoBack}
+          style={{flex: 1}}
+      />
+    </ScrollView>
+
+</View>
+</View>
     }
 </View>
 

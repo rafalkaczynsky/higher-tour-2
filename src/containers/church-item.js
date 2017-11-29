@@ -78,7 +78,7 @@ class _ChurchItem extends Component {
   }
 
   handleOnEmailPressed(email){
-    if (email) Linking.openURL("mailto://"+email)
+    if (email) Linking.openURL("mailto:"+email)
   }
 
   handleOnGoToSession(){

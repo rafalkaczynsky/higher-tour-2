@@ -201,7 +201,10 @@ class _UserProfile extends Component {
 
     this.firebaseAaaSession = firebase.database().ref('appUsers/');
     firebase.database().ref('appUsers/'+ this.props.user.uid+'/').once("value", snapshot => {
+
       const appUser = snapshot.val();
+      console.log('appUser')
+      console.log(appUser)
       let bibleReadings = appUser.bibleReadings
 
       let bibleReadingNames = appUser.bibleReadings
@@ -258,6 +261,7 @@ class _UserProfile extends Component {
     const appUserBibleReadingNames =  this.props.appUserBibleReadingNames
 
     const months = ['January', 'Fabruary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
 
     const UserProfileScreen= () =>
       <UserProfile

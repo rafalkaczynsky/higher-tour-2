@@ -138,7 +138,12 @@ export const AppNavigator = StackNavigator({
 });
 
 const AppWithNavigationState = ({ dispatch, nav , FCMtoken, screen}) => 
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav , FCMtoken, screen})} />
+{    
+  console.log('AppWithNavigationState')
+  console.log(FCMtoken)
+  return  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav, FCMtoken, screen})}/>
+}
+
 
 
 AppWithNavigationState.propTypes = {

@@ -58,9 +58,7 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     }
 });
 
-FCM.on(FCMEvent.RefreshToken, (token) => {
-    // fcm token may not be available on first load, catch it here
-});
+
 
 export default class App extends React.Component {
 
@@ -100,6 +98,11 @@ export default class App extends React.Component {
         if(Platform.OS ==='ios'){
           FCM.requestPermissions(); // for iOS
         }
+
+        FCM.on(FCMEvent.RefreshToken, (token) => {
+          // fcm token may not be available on first load, catch it here
+          this.setState({FCMtoken: token})
+        });
 
           FCM.on(FCMEvent.Notification, async (notif) => {
 
@@ -233,7 +236,7 @@ export default class App extends React.Component {
     _handleAppStateChange(currentAppState) {
       let storingValue = JSON.stringify(this.state.store.getState())
       let storeObject = this.state.store.getState()
-
+/*
       if (storeObject){
 
           if (storeObject.form){
@@ -243,17 +246,18 @@ export default class App extends React.Component {
             // UPDATE APPUSER IN FIREBASE WHEN COMPONENT UNMOUNT 
             const userUID = storeObject.user.uid 
             const appUser = storeObject.appUser
+
             if (userUID){
               const firebaseDataAppUsers = firebase.database().ref('appUsers/'+userUID+'/');
               firebaseDataAppUsers.update({
-                FCMtoken: appUser.FCMtoken,
                 event: appUser.event,
                 uid: appUser.uid,
               })
             }
           }
-      }
+      }*/
       AsyncStorage.setItem('completeStore', storingValue);
+
     }
 
     _requestPermission() {
@@ -265,7 +269,7 @@ export default class App extends React.Component {
 
 
   render()  {
-
+            console.log(this.state.FCMtoken)
 
             if (!connection){
               return ( <AlertWindow

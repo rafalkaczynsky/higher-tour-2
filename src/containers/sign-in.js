@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {BackHandler, Button, View, Animated, AsyncStorage, ActivityIndicator} from 'react-native'
 import { NavigationActions } from 'react-navigation'
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType, } from 'react-native-fcm';
 
 import { connect } from 'react-redux';
 import {Alert} from 'react-native'
@@ -210,6 +211,13 @@ class _SignIn extends Component {
 
     const { navigate } = this.props.navigation
     const  props = this.props
+    const state = this.state
+
+    console.log('sign inprops')
+    console.log(props)
+
+    console.log('FCMTOKEN INSIDE SIGNIN')
+    console.log(this.state)
 
     const userDataFromLocal = this.props.user
     const appUserFromLocal = this.props.appUser
@@ -218,10 +226,23 @@ class _SignIn extends Component {
 
     // IF THERE IS NO USER IN LOCAL STORAGE THEN GET EVENTS, CHURCHES, BIBLEREADINGS, AAASESSION FROM FIRABASE DATABASE 
     // ....to be done !!!!!
+    var FCMtoken = ''
+
+    FCM.getFCMToken().then(token => {
+      console.log(token)
+      FCMtoken = token
+      // store fcm token in your server
+    });
 
     this.auth.onAuthStateChanged(function (user) {
       // CHECK IF USER SIGNED IN WTH FIREBASE
       if(user){ 
+
+        console.log(user)
+        console.log('FCMTOKEN INSIDE AUTH')
+
+        console.log(FCMtoken)
+
         props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false)) // DONT SHOW SIGN IN SCREEN CONTENT TILL ALL CHECKS DONE
         // USER SIGNED IN
         // CHECK IF USER  IS IN LOCAL STORAGE
@@ -276,7 +297,7 @@ class _SignIn extends Component {
                         const locationSelected = snapshot.val()
                         // UPDATE FCM TOKEN
                         firebaseDataAppUsers.update({
-                            FCMtoken: props.navigation.FCMtoken,
+                            FCMtoken: FCMtoken,
                         })
                         // OVERWRITE DATA IN REDUX STORE
                         props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
@@ -302,7 +323,7 @@ class _SignIn extends Component {
                     // IF USER DOESNT FOLLOW
                    //  UPDATE FCM TOKEN 
                     firebaseDataAppUsers.update({
-                        FCMtoken: props.navigation.FCMtoken,
+                        FCMtoken: FCMtoken,
                     })
                     // OVERWRITE DATA IN REDUX STORE
                     props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
@@ -331,7 +352,7 @@ class _SignIn extends Component {
                           follow: false,
                     },
                     uid: user.uid,
-                    FCMtoken: props.navigation.FCMtoken,
+                    FCMtoken: FCMtoken,
                 })
                 // OVERWRITTE DATA IN REDUX STORE
                 props.dispatch(ACTIONS.SAVE_APP_USER_BIBLE_READINGS({}));
@@ -366,11 +387,11 @@ class _SignIn extends Component {
                   firebase.database().ref('events/'+ event.id +'/').once("value", snapshot => {
                       const locationSelected = snapshot.val() // EVENT FOLLOWED BE USER 
                       // UPDATE FCM TOKEN
-                      if (props.navigation.FCMtoken){
+             
                         firebaseDataAppUsers.update({
-                          FCMtoken: props.navigation.FCMtoken,
+                          FCMtoken: FCMtoken,
                         })
-                      } 
+                  
                       // SAVE TO REDUX STORE 
                       props.dispatch(ACTIONS.SAVE_SELECTED_EVENT(locationSelected)) // EVENT FOLLOWED BE THE USER
                       props.dispatch(ACTIONS.UPDATE_FOLLOW_STATUS(true))            // UPDATE FOLLOW STATUS TO TRUE   - this will be no longer needed , cause we have this info in APPUSER
@@ -391,11 +412,11 @@ class _SignIn extends Component {
 
                   //... IF DOESNT FOLLOW ...                
                   // UPDATE FCM TOKEN
-                  if (props.navigation.FCMtoken){
+          
                     firebaseDataAppUsers.update({
-                      FCMtoken: props.navigation.FCMtoken,
+                      FCMtoken: FCMtoken,
                     })
-                  } 
+                
                   props.dispatch(ACTIONS.SAVE_APP_USER(userCurrent))            // SAVE APPUSER 
                   props.dispatch(ACTIONS.SAVE_USER(user))                       // SAVE USER
                   // NAVIGATE TO WELCOME
@@ -419,7 +440,7 @@ class _SignIn extends Component {
                       follow: false,
                 },
                 uid: user.uid,
-                FCMtoken:  props.navigation.FCMtoken,
+                FCMtoken: FCMtoken,
               })
               props.dispatch(ACTIONS.SAVE_APP_USER(userCurrent))            // SAVE APPUSER 
               props.dispatch(ACTIONS.SAVE_USER(user))                       // SAVE USER
@@ -444,6 +465,13 @@ class _SignIn extends Component {
 }
 
   componentWillMount(){
+
+    FCM.on(FCMEvent.RefreshToken, (token) => {
+      console.log(token)
+      // fcm token may not be available on first load, catch it here
+      this.setState({FCMtoken: token})
+    });
+
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
     this.props.dispatch(ACTIONS.UPDATE_SHOW_LOGGIN_CONTENT(false))
@@ -455,6 +483,9 @@ class _SignIn extends Component {
     this.getData(this.firebaseDataEvents, this.firebaseDataChurches, this.firebaseBibleReading, this.firebaseAaaSession); 
 
     this.handleInitialRedirect()
+  }
+  componentDidMount(){
+
   }
 
   componentWillUnmount() {
@@ -468,7 +499,8 @@ class _SignIn extends Component {
 
   render() {
 
-  
+    console.log(this.state.FCMtoken)
+
     const { navigate } = this.props.navigation
 
     const events = this.props.events                   // from the store
