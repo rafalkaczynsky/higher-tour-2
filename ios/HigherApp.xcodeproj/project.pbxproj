@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -38,7 +39,9 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		5EB95B019C164B11A09E2A8D /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0C09EED0079429D9613157F /* libReactNativePermissions.a */; };
 		681CBCA21F7A853900CC6163 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681CBCA11F7A841000CC6163 /* GoogleService-Info.plist */; };
+		6A3445C630264623A847C13E /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		84F7ACC9A72744EF9FEDE7F4 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */; };
 		8AB1D6FB4DDC49388F5A36B6 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A78C63ABC8F4FBC9C1DAE6D /* libRNSound.a */; };
 		9640304F43A2E10935B37184 /* Pods_HigherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5A11FA61E1BD91E0BEAEDC /* Pods_HigherApp.framework */; };
 		B5715E7B1F599C5B00B072D0 /* libRNTwitterSignIn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B592A5741F59668F00BA3DCF /* libRNTwitterSignIn.a */; };
@@ -54,8 +57,6 @@
 		C9C2F93B8266461CA4BB2994 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F308B8E27F24EDF876E4EAB /* libjschelpers.a */; };
 		F1070FB30D90422290A42D8C /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7023DF24F0424699CD02BE /* libyoga.a */; };
 		F1BEE732A2644C5285919E07 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9191B7C59AC2428EAB9196CA /* libRCTFBSDK.a */; };
-		84F7ACC9A72744EF9FEDE7F4 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */; };
-		6A3445C630264623A847C13E /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -369,7 +370,9 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7F7023DF24F0424699CD02BE /* libyoga.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libyoga.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/styles/resources/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		8B5A11FA61E1BD91E0BEAEDC /* Pods_HigherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HigherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/styles/resources/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		9191B7C59AC2428EAB9196CA /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		920B8C7920064A83877A6C45 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		99783DED81358A22BF834BE9 /* Pods-HigherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HigherApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-HigherApp/Pods-HigherApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -391,8 +394,6 @@
 		F0C09EED0079429D9613157F /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		F3F4B58CA15A4D178698BB5C /* libcxxreact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libcxxreact.a; sourceTree = "<group>"; };
 		F6B89D0E9AE74E67B05BA518 /* RNTwitterSignIn.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTwitterSignIn.xcodeproj; path = "../node_modules/react-native-twitter-signin/ios/RNTwitterSignIn.xcodeproj"; sourceTree = "<group>"; };
-		89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; name = "Montserrat-Light.ttf"; path = "../src/styles/resources/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; name = "Montserrat-SemiBold.ttf"; path = "../src/styles/resources/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -626,6 +627,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8321D7458999448F84D5E721 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */,
+				8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,16 +771,6 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		8321D7458999448F84D5E721 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				89CA9D130BD14C098C766D72 /* Montserrat-Light.ttf */,
-				8E4DA36C2B3F4289B4D08FE8 /* Montserrat-SemiBold.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
